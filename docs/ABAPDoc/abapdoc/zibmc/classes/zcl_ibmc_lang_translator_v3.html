@@ -1,0 +1,136 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_LANG_TRANSLATOR_V3</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_LANG_TRANSLATOR_V3</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <h1>Language Translator</h1>
+ IBM Watson&trade; Language Translator translates text from one language to
+  another. The service offers multiple IBM provided translation models that you
+  can customize based on your unique terminology and language. Use Language
+  Translator to take news from across the globe and present it in your language,
+  communicate with your customers in their own language, and more. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_base_model_id</span> type STRING</td><td><span class="abapDocComment">   Model ID of the base model that was used to customize the model. If the model is
+    not a custom model, this will be absent or an empty string.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_delete_model_result</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_id</span> type STRING</td><td><span class="abapDocComment">   System generated ID identifying a document being translated using one specific
+    translation model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_list</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_status</span> (structured type)</td><td><span class="abapDocComment">   Document information, including translation status.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_language</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_languages</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_language</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_languages</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_model_id</span> type STRING</td><td><span class="abapDocComment">   A globally unique string that identifies the underlying model that is used for
+    translation.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_source</span> type STRING</td><td><span class="abapDocComment">   Translation source language code.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_target</span> type STRING</td><td><span class="abapDocComment">   Translation target language code.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translate_request</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_model</span> (structured type)</td><td><span class="abapDocComment">   Response payload for models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_models</span> (structured type)</td><td><span class="abapDocComment">   The response type for listing existing translation models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_result</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_status</span> type STRING</td><td><span class="abapDocComment">   The status of the translation job associated with a submitted document.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_base_model_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_forced_glossary</span></td><td>type FILE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_parallel_corpus</span></td><td>type FILE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_forced_glossary_ct</span></td><td>type STRING default ZIF_IBMC_SERVICE_ARCH&#x7e;C_MEDIATYPE-ALL</td></tr><tr><td></td><td><span class="identifier parameterName">i_parallel_corpus_ct</span></td><td>type STRING default ZIF_IBMC_SERVICE_ARCH&#x7e;C_MEDIATYPE-ALL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;multipart&#x2f;form-data&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create model.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_base_model_id</span></td><td><span class="abapDocComment">
+   The model ID of the model to use as the base for customization. To see available
+    models, use the `List models` method. Usually all IBM provided models are
+    customizable. In addition, all your models that have been created via parallel
+    corpus customization, can be further customized with a forced glossary.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_forced_glossary</span></td><td><span class="abapDocComment">
+   A TMX file with your customizations. The customizations in the file completely
+    overwrite the domain translaton data, including high frequency or high
+    confidence phrase translations. You can upload only one glossary with a file
+    size less than 10 MB per call. A forced glossary should contain single words or
+    short phrases.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_parallel_corpus</span></td><td><span class="abapDocComment">
+   A TMX file with parallel sentences for source and target language. You can
+    upload multiple parallel_corpus files in one request. All uploaded
+    parallel_corpus files combined, your parallel corpus must contain at least
+    5,000 parallel sentences to train successfully.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_name</span></td><td><span class="abapDocComment">
+   An optional model name that you can use to identify the model. Valid characters
+    are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum
+    length is 32 characters.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRANSLATION_MODEL
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_document</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_document_id</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete document.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   Document ID of the document to delete.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DELETE_MODEL_RESULT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete model.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   Model ID of the model to delete.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DELETE_MODEL_RESULT
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_document_status</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_document_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DOCUMENT_STATUS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get document status.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   The document ID of the document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_STATUS
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get model details.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   Model ID of the model to get.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRANSLATION_MODEL
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_translated_document</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_document_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING optional</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type FILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get translated document.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   The document ID of the document that was submitted for translation.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_accept</span></td><td><span class="abapDocComment">
+   The type of the response: application/powerpoint, application/mspowerpoint,
+    application/x-rtf, application/json, application/xml, application/vnd.ms-excel,
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+    application/vnd.ms-powerpoint,
+    application/vnd.openxmlformats-officedocument.presentationml.presentation,
+    application/msword,
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+    application/vnd.oasis.opendocument.spreadsheet,
+    application/vnd.oasis.opendocument.presentation,
+    application/vnd.oasis.opendocument.text, application/pdf, application/rtf,
+    text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A
+    character encoding can be specified by including a `charset` parameter. For
+    example, 'text/html;charset=utf-8'.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type FILE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">identify</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_IDENTIFIED_LANGUAGES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Identify language.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   Input text in UTF-8 format.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_IDENTIFIED_LANGUAGES
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_documents</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DOCUMENT_LIST</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List documents.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_LIST
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_identifiable_languages</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_IDENTIFIABLE_LANGUAGES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List identifiable languages.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_IDENTIFIABLE_LANGUAGES
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_source</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_target</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_default</span></td><td>type BOOLEAN optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODELS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List models.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_source</span></td><td><span class="abapDocComment">
+   Specify a language code to filter results by source language.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_target</span></td><td><span class="abapDocComment">
+   Specify a language code to filter results by target language.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_default</span></td><td><span class="abapDocComment">
+   If the default parameter isn't specified, the service will return all models
+    (default and non-default) for each language pair. To return only default
+    models, set this to `true`. To return only non-default models, set this to
+    `false`. There is exactly one default model per language pair, the IBM provided
+    base model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRANSLATION_MODELS
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">translate</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_request</span></td><td>type T_TRANSLATE_REQUEST</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_RESULT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Translate.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
+   The translate request containing the text, and either a model ID or source and
+    target language pair.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRANSLATION_RESULT
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">translate_document</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_file</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_filename</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_file_content_type</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_source</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_target</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_document_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;multipart&#x2f;form-data&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DOCUMENT_STATUS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Translate document.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
+   The source file to translate.
+
+   [Supported file
+    types](https://cloud.ibm.com/docs/services/language-translator?topic=language-t
+   ranslator-document-translator-tutorial#supported-file-formats)
+
+   Maximum file size: **20 MB**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filename</span></td><td><span class="abapDocComment">
+   The filename for file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file_content_type</span></td><td><span class="abapDocComment">
+   The content type of file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   The model to use for translation. `model_id` or both `source` and `target` are
+    required.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_source</span></td><td><span class="abapDocComment">
+   Language code that specifies the language of the source document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_target</span></td><td><span class="abapDocComment">
+   Language code that specifies the target language for translation.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   To use a previously submitted document as the source for a new translation,
+    enter the `document_id` of the document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_STATUS
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>

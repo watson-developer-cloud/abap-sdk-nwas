@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>ABAP SDK for IBM Watson - Service Class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>GET_DATATYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Returns data type of a variable</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>GET_FILE_EXTENSION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Returns file extension for given mime type</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>MOVE_DATA_REFERENCE_TO_ABAP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>moves type DATA_REFERENCE to ABAP structure</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>UNESCAPE_UNICODE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Unescapes unicode codepoints</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

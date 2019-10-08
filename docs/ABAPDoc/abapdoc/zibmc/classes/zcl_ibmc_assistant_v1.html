@@ -1,0 +1,611 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_ASSISTANT_V1</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_ASSISTANT_V1</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <h1>Watson Assistant v1</h1>
+ The IBM Watson&trade; Assistant service combines machine learning, natural
+  language understanding, and an integrated dialog editor to create conversation
+  flows between your apps and your users.
+
+ The Assistant v1 API provides authoring methods your application can use to
+  create or update a workspace. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_audit_properties</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_counterexample</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_dialog_node</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_entity</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_example</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_intent</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_message</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_output</span> (structured type)</td><td><span class="abapDocComment">   An output object that includes the response to the user, the dialog nodes that
+    were triggered, and messages from the log.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_synonym</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_value</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_workspace</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_capture_group</span> (structured type)</td><td><span class="abapDocComment">   A recognized capture group for a pattern-based entity.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_context</span> (structured type)</td><td><span class="abapDocComment">   State information for the conversation. To maintain state, include the context
+    from the previous response.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_counterexample</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_counterexample_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_create_entity</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_create_intent</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_create_value</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_create_workspace</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_action</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_collection</span> (structured type)</td><td><span class="abapDocComment">   An array of dialog nodes.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_next_step</span> (structured type)</td><td><span class="abapDocComment">   The next step to execute following this dialog node.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_output</span> (structured type)</td><td><span class="abapDocComment">   The output of the dialog node. For more information about how to specify dialog
+    node output, see the
+    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-d
+   ialog-overview#dialog-overview-responses).</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_output_generic</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_output_modifiers</span> (structured type)</td><td><span class="abapDocComment">   Options that modify how specified output is handled.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_visited_details</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_suggestion</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_suggestion_output</span> (structured type)</td><td><span class="abapDocComment">   The dialog output that will be returned from the Watson Assistant service if the
+    user selects the corresponding option.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_suggestion_value</span> (structured type)</td><td><span class="abapDocComment">   An object defining the message input, intents, and entities to be sent to the
+    Watson Assistant service if the user selects the corresponding disambiguation
+    option.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_otpt_resp_type_pause</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_otpt_resp_typ_cnnct_1</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_otpt_resp_typ_srch_s1</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_otpt_text_values_elem</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_output_opt_elem_value</span> (structured type)</td><td><span class="abapDocComment">   An object defining the message input to be sent to the Watson Assistant service
+    if the user selects the corresponding option.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_output_resp_type_img</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_output_resp_type_opt</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_output_resp_type_text</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_node_output_opt_element</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_suggestion_resp_generic</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty_response</span> type JSONOBJECT</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_entity</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_entity_collection</span> (structured type)</td><td><span class="abapDocComment">   An array of objects describing the entities for the workspace.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_entity_mention</span> (structured type)</td><td><span class="abapDocComment">   An object describing a contextual entity mention.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_entity_mention_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_detail</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_example</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_example_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_intent</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_intent_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log_message</span> (structured type)</td><td><span class="abapDocComment">   Log message details.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log_pagination</span> (structured type)</td><td><span class="abapDocComment">   The pagination data for the returned objects.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_mention</span> (structured type)</td><td><span class="abapDocComment">   A mention of a contextual entity.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_metadata</span> (structured type)</td><td><span class="abapDocComment">   Metadata related to the message.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input</span> (structured type)</td><td><span class="abapDocComment">   An input object that includes the input text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_request</span> (structured type)</td><td><span class="abapDocComment">   A request sent to the workspace, including the user input and context.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_response</span> (structured type)</td><td><span class="abapDocComment">   The response sent by the workspace, including the output text, detected intents
+    and entities, and context.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_output_data</span> (structured type)</td><td><span class="abapDocComment">   An output object that includes the response to the user, the dialog nodes that
+    were triggered, and messages from the log.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_pagination</span> (structured type)</td><td><span class="abapDocComment">   The pagination data for the returned objects.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entity_interpretation</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_date</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_num</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_time</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_response_type_suggestion</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_typ_connect_to_agent</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity</span> (structured type)</td><td><span class="abapDocComment">   A term from the request that was identified as an entity.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity_alternative</span> (structured type)</td><td><span class="abapDocComment">   An alternative value for the recognized entity.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity_role</span> (structured type)</td><td><span class="abapDocComment">   An object describing the role played by a system entity that is specifies the
+    beginning or end of a range recognized in the user input.
+
+   This property is part of the new system entities, which are a beta feature.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_intent</span> (structured type)</td><td><span class="abapDocComment">   An intent identified in the user input.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_generic</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_image</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_option</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_pause</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_text</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_synonym</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_synonym_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_system_response</span> type MAP</td><td><span class="abapDocComment">   For internal use only.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_counterexample</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_dialog_node</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_entity</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_example</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_intent</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_synonym</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_value</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_workspace</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_value</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_value_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_workspace</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_workspace_collection</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_workspace_system_settings</span> (structured type)</td><td><span class="abapDocComment">   Global settings for the workspace.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_ws_system_settings_tooling</span> (structured type)</td><td><span class="abapDocComment">   Workspace settings related to the Watson Assistant user interface.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_ws_systm_sttngs_dsmbgtn</span> (structured type)</td><td><span class="abapDocComment">   Workspace settings related to the disambiguation feature.
+
+   **Note:** This feature is available only to Premium users.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_ws_systm_sttngs_systm_entts</span> (structured type)</td><td><span class="abapDocComment">   Workspace settings related to the behavior of system entities.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_counterexample</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_COUNTEREXAMPLE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_COUNTEREXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create counterexample.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The content of the new counterexample.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COUNTEREXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_dialog_node</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_DIALOG_NODE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DIALOG_NODE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create dialog node.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   A CreateDialogNode object defining the content of the new dialog node.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DIALOG_NODE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_entity</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_CREATE_ENTITY</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_ENTITY</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create entity.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The content of the new entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENTITY
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_example</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_EXAMPLE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_EXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create user input example.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The content of the new user input example.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_intent</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_CREATE_INTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_INTENT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create intent.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The content of the new intent.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_INTENT
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_synonym</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_SYNONYM</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SYNONYM</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create entity value synonym.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The new synonym.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SYNONYM
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_value</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_CREATE_VALUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VALUE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create entity value.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The new entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_VALUE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_workspace</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_body</span></td><td>type T_CREATE_WORKSPACE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORKSPACE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create workspace.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The content of the new workspace.
+
+   The maximum size for this data is 50MB. If you need to import a larger
+    workspace, consider importing the workspace without intents and entities and
+    then adding them separately.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_WORKSPACE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_counterexample</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete counterexample.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of a user input counterexample (for example, `What are you wearing?`).
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_dialog_node</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_dialog_node</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete dialog node.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_dialog_node</span></td><td><span class="abapDocComment">
+   The dialog node ID (for example, `get_order`).
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_entity</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete entity.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_example</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete user input example.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of the user input example.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_intent</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete intent.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_synonym</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_synonym</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete entity value synonym.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_synonym</span></td><td><span class="abapDocComment">
+   The text of the synonym.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customer_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete labeled data.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customer_id</span></td><td><span class="abapDocComment">
+   The customer ID for which all data is to be deleted.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_value</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete entity value.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_workspace</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete workspace.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_counterexample</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_COUNTEREXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get counterexample.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of a user input counterexample (for example, `What are you wearing?`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COUNTEREXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_dialog_node</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_dialog_node</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DIALOG_NODE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get dialog node.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_dialog_node</span></td><td><span class="abapDocComment">
+   The dialog node ID (for example, `get_order`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DIALOG_NODE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_entity</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_ENTITY</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get entity.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENTITY
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_example</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_EXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get user input example.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of the user input example.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_intent</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_INTENT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get intent.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_INTENT
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_synonym</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_synonym</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SYNONYM</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get entity value synonym.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_synonym</span></td><td><span class="abapDocComment">
+   The text of the synonym.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SYNONYM
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_value</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VALUE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get entity value.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_VALUE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_workspace</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORKSPACE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get information about a workspace.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   Indicates how the returned workspace data will be sorted. This parameter is
+    valid only if **export**=`true`. Specify `sort=stable` to sort all workspace
+    objects by unique identifier, in ascending alphabetical order.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_WORKSPACE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_all_logs</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_filter</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_LOG_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List log events in all workspaces.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_filter</span></td><td><span class="abapDocComment">
+   A cacheable parameter that limits the results to those matching the specified
+    filter. You must specify a filter query that includes a value for `language`,
+    as well as a value for `workspace_id` or `request.context.metadata.deployment`.
+    For more information, see the
+    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-f
+   ilter-reference#filter-reference).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   How to sort the returned log events. You can sort by **request_timestamp**. To
+    reverse the sort order, prefix the parameter value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LOG_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_counterexamples</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_COUNTEREXAMPLE_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List counterexamples.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned counterexamples will be sorted. To reverse the
+    sort order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COUNTEREXAMPLE_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_dialog_nodes</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DIALOG_NODE_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List dialog nodes.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned dialog nodes will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DIALOG_NODE_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_entities</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_ENTITY_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List entities.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned entities will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENTITY_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_examples</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_EXAMPLE_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List user input examples.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned examples will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXAMPLE_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_intents</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_INTENT_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List intents.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned intents will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_INTENT_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_logs</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_filter</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_LOG_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List log events in a workspace.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   How to sort the returned log events. You can sort by **request_timestamp**. To
+    reverse the sort order, prefix the parameter value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filter</span></td><td><span class="abapDocComment">
+   A cacheable parameter that limits the results to those matching the specified
+    filter. For more information, see the
+    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-f
+   ilter-reference#filter-reference).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LOG_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_mentions</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_ENTITY_MENTION_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List entity mentions.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENTITY_MENTION_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_synonyms</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SYNONYM_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List entity value synonyms.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned entity value synonyms will be sorted. To reverse
+    the sort order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SYNONYM_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_values</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_export</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VALUE_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List entity values.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_export</span></td><td><span class="abapDocComment">
+   Whether to include all element content in the returned data. If
+    **export**=`false`, the returned data includes only information about the
+    element itself. If **export**=`true`, all content, including subelements, is
+    included.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned entity values will be sorted. To reverse the
+    sort order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_VALUE_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_workspaces</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_audit</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORKSPACE_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List workspaces.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned workspaces will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_WORKSPACE_COLLECTION
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">message</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_MESSAGE_REQUEST optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_nodes_visited_details</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_MESSAGE_RESPONSE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get response to user input.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The message to be sent. This includes the user's input, along with optional
+    intents, entities, and context from the last response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_nodes_visited_details</span></td><td><span class="abapDocComment">
+   Whether to include additional diagnostic information about the dialog nodes that
+    were visited during processing of the message.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_MESSAGE_RESPONSE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_counterexample</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_COUNTEREXAMPLE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_COUNTEREXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update counterexample.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of a user input counterexample (for example, `What are you wearing?`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The text of the counterexample.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COUNTEREXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_dialog_node</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_dialog_node</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_DIALOG_NODE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DIALOG_NODE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update dialog node.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_dialog_node</span></td><td><span class="abapDocComment">
+   The dialog node ID (for example, `get_order`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The updated content of the dialog node.
+
+   Any elements included in the new data will completely replace the equivalent
+    existing elements, including all subelements. (Previously existing subelements
+    are not retained unless they are also included in the new data.) For example,
+    if you update the actions for a dialog node, the previously existing actions
+    are discarded and replaced with the new actions specified in the update.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DIALOG_NODE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_entity</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_ENTITY</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_ENTITY</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update entity.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The updated content of the entity. Any elements included in the new data will
+    completely replace the equivalent existing elements, including all subelements.
+    (Previously existing subelements are not retained unless they are also included
+    in the new data.) For example, if you update the values for an entity, the
+    previously existing values are discarded and replaced with the new values
+    specified in the update.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENTITY
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_example</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_EXAMPLE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_EXAMPLE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update user input example.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
+   The text of the user input example.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The new text of the user input example.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXAMPLE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_intent</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_intent</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_INTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_INTENT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update intent.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_intent</span></td><td><span class="abapDocComment">
+   The intent name.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The updated content of the intent.
+
+   Any elements included in the new data will completely replace the equivalent
+    existing elements, including all subelements. (Previously existing subelements
+    are not retained unless they are also included in the new data.) For example,
+    if you update the user input examples for an intent, the previously existing
+    examples are discarded and replaced with the new examples specified in the
+    update.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_INTENT
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_synonym</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_synonym</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_SYNONYM</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SYNONYM</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update entity value synonym.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_synonym</span></td><td><span class="abapDocComment">
+   The text of the synonym.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The updated entity value synonym.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SYNONYM
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_value</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_entity</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_value</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_VALUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VALUE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update entity value.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_entity</span></td><td><span class="abapDocComment">
+   The name of the entity.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_value</span></td><td><span class="abapDocComment">
+   The text of the entity value.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The updated content of the entity value.
+
+   Any elements included in the new data will completely replace the equivalent
+    existing elements, including all subelements. (Previously existing subelements
+    are not retained unless they are also included in the new data.) For example,
+    if you update the synonyms for an entity value, the previously existing
+    synonyms are discarded and replaced with the new synonyms specified in the
+    update.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_VALUE
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_workspace</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_workspace_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_body</span></td><td>type T_UPDATE_WORKSPACE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_append</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORKSPACE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update workspace.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_workspace_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the workspace.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   Valid data defining the new and updated workspace content.
+
+   The maximum size for this data is 50MB. If you need to import a larger amount of
+    workspace data, consider importing components such as intents and entities
+    using separate operations.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_append</span></td><td><span class="abapDocComment">
+   Whether the new data is to be appended to the existing data in the workspace. If
+    **append**=`false`, elements included in the new data completely replace the
+    corresponding existing elements, including all subelements. For example, if the
+    new data includes **entities** and **append**=`false`, all existing entities in
+    the workspace are discarded and replaced with the new entities.
+
+   If **append**=`true`, existing elements are preserved, and the new elements are
+    added. If any elements in the new data collide with existing elements, the
+    update request fails.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_WORKSPACE
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>

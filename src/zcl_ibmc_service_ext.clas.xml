@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Extended REST API service class</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>ADD_IMAGE_TO_ZIP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Adds an image to zip data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FIELD_NONE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Field Name</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_ALL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_GIF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_JPG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_PNG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_TIF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_UNKNOWN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>C_FORMAT_ZIP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Image encoding (jpg, png, ...)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_BEARER_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Returns the bearer token, if available</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_CONFIG_VALUE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Reads an individual value form table ZIBMC_CONFIG</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_FIELD_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Determines fields containing image name and image data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_INSTANCE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Creates an IBM Cloud service class instance</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_SDK_VERSION_DATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>returns the build date of the method</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>GET_ZIPDATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Creates or Updates a classifier</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>P_TOKEN_SAVED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>IAM tokens</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>SET_BEARER_TOKEN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sets the bearer token</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
