@@ -209,8 +209,8 @@ Using the client library requires two steps:
       i_host     = <host>
       i_apikey   = <api key>
 ...
-	importing   
-	  eo_instance = lo_service_class ).
+    importing   
+      eo_instance = lo_service_class ).
 ```
 
 2. Call the Watson service API endpoint by invoking the corresponding class method.
