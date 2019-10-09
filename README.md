@@ -200,7 +200,7 @@ The following Watson services are currently supported:
 Using the client library requires two steps:
 
 1. Create an instance of the Watson service wrapper ABAP class by calling method `zcl_ibmc_service_ext=>get_instance`.
-```
+```abap
   data:
     lo_service_class type <ABAP Class Name>.
 
@@ -214,7 +214,7 @@ Using the client library requires two steps:
 ```
 
 2. Call the Watson service API endpoint by invoking the corresponding class method.
-```
+```abap
   try.
       lo_service_class->method(
         exporting
@@ -229,7 +229,7 @@ Using the client library requires two steps:
 <details>
   <summary>Text to Speech Example</summary>
 
-```
+```abap
 * List all voices provided by Watson Text to Speech
 
   " declare variables
@@ -269,7 +269,7 @@ Using the client library requires two steps:
 <details>
   <summary>Natural Language Understanding Example</summary>
 
-```
+```abap
 * Analyze www.ibm.com using Watson Natural Language Understanding
 
   " declare variables
@@ -318,7 +318,7 @@ Using the client library requires two steps:
 <details>
   <summary>Personality Insights Example</summary>
 
-```
+```abap
 * Analyze profile using example text using Watson Personality Insights
 
   " declare variables
@@ -375,7 +375,7 @@ Using the client library requires two steps:
 <details>
   <summary>Language Translator Example</summary>
 
-```
+```abap
 * Translate text from English to German using Watson Language Translator
 
   " declare variables
