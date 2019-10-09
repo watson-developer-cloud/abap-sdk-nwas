@@ -170,7 +170,7 @@ Service credentials and other parameters that must be specified at Watson servic
 Identity and Access Management (IAM) is a bearer-token based authentication method. Token management is either performed by the ABAP SDK or must be implemented by the SDK user.<br/>
 If username / password or apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK under the cover generates a bearer-token when needed and refreshes it when it is about to expire.<br/>
 If neither username / password nor apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK user must implement an individual token management. Before a service method is called the first time, a valid bearer-token must be provided to the Watson service wrapper ABAP class instance as follows:
-```
+```abap
   lo_service_class->set_bearer_token( i_bearer_token = '...' ).
 ```
 Afterwards, service methods can be called as long as the provided token is valid. When the token has expired, the method above must be called again with a new (refreshed) bearer-token as parameter.
@@ -200,7 +200,7 @@ The following Watson services are currently supported:
 Using the client library requires two steps:
 
 1. Create an instance of the Watson service wrapper ABAP class by calling method `zcl_ibmc_service_ext=>get_instance`.
-```
+```abap
   data:
     lo_service_class type <ABAP Class Name>.
 
@@ -209,12 +209,12 @@ Using the client library requires two steps:
       i_host     = <host>
       i_apikey   = <api key>
 ...
-	importing   
-	  eo_instance = lo_service_class ).
+    importing   
+      eo_instance = lo_service_class ).
 ```
 
 2. Call the Watson service API endpoint by invoking the corresponding class method.
-```
+```abap
   try.
       lo_service_class->method(
         exporting
@@ -229,7 +229,7 @@ Using the client library requires two steps:
 <details>
   <summary>Text to Speech Example</summary>
 
-```
+```abap
 * List all voices provided by Watson Text to Speech
 
   " declare variables
@@ -269,7 +269,7 @@ Using the client library requires two steps:
 <details>
   <summary>Natural Language Understanding Example</summary>
 
-```
+```abap
 * Analyze www.ibm.com using Watson Natural Language Understanding
 
   " declare variables
@@ -318,7 +318,7 @@ Using the client library requires two steps:
 <details>
   <summary>Personality Insights Example</summary>
 
-```
+```abap
 * Analyze profile using example text using Watson Personality Insights
 
   " declare variables
@@ -375,7 +375,7 @@ Using the client library requires two steps:
 <details>
   <summary>Language Translator Example</summary>
 
-```
+```abap
 * Translate text from English to German using Watson Language Translator
 
   " declare variables
