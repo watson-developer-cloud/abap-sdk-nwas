@@ -170,7 +170,7 @@ Service credentials and other parameters that must be specified at Watson servic
 Identity and Access Management (IAM) is a bearer-token based authentication method. Token management is either performed by the ABAP SDK or must be implemented by the SDK user.<br/>
 If username / password or apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK under the cover generates a bearer-token when needed and refreshes it when it is about to expire.<br/>
 If neither username / password nor apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK user must implement an individual token management. Before a service method is called the first time, a valid bearer-token must be provided to the Watson service wrapper ABAP class instance as follows:
-```
+```abap
   lo_service_class->set_bearer_token( i_bearer_token = '...' ).
 ```
 Afterwards, service methods can be called as long as the provided token is valid. When the token has expired, the method above must be called again with a new (refreshed) bearer-token as parameter.
