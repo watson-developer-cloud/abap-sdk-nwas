@@ -13,6 +13,7 @@
     <item>/.travis.yml</item>
     <item>/.gitlab-ci.yml</item>
     <item>/abaplint.json</item>
+    <item>/MIGRATION-V0.2.0.md</item>
    </IGNORE>
   </DATA>
  </asx:values>
