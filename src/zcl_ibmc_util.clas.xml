@@ -38,6 +38,18 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_UTIL</CLSNAME>
+     <CMPNAME>ITAB_TO_TABLESCHEMA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Converts an internal table to table schema JSON format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_UTIL</CLSNAME>
+     <CMPNAME>TABLESCHEMA_TO_ITAB</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Converts a JSON string in table schema format to an itab</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_UTIL</CLSNAME>
      <CMPNAME>UTC_TO_TIMEZONE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Converts an UTC timestamp to the specified timezone</DESCRIPT>

@@ -10,7 +10,7 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 
 | **abap-sdk-nwas** | [abap-sdk-scp](https://github.com/watson-developer-cloud/abap-sdk-scp) |
 |---|---|
-| for SAP NetWeaver AS ABAP 7.50+ | for SAP Cloud Platform ABAP Environment 1911+ |
+| for SAP NetWeaver AS ABAP 7.50+ | for SAP Cloud Platform ABAP Environment 2002+ |
 | tested on SAP ECC and SAP S/4HANA |  |
 | `this repository` |  |
 
@@ -19,6 +19,7 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 <details>
   <summary>Table of Contents</summary>
 
+  * [Announcements](#announcements)
   * [Before you begin](#before-you-begin)
   * [Installation](#installation)
   * [SAP System Configuration](#sap-system-configuration)
@@ -27,7 +28,7 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
     * [SSL Certificates](#ssl-certificates)
   * [Credentials](#credentials)
   * [Configuration table](#configuration-table)
-  * [IAM Authentication](#iam-reference)
+  * [IAM Authentication](#iam-authentication)
   * [Usage](#usage)
   * [API Reference](#api-reference)
   * [Questions](#questions)
@@ -35,6 +36,10 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
   * [Contributors](#contributors)
   * [Acknowledgements](#acknowledgements)
 </details>
+
+## ANNOUNCEMENTS
+### Minor version 0.2.0 released
+Version v0.2.0 of the SDK has been released and includes two breaking changes - see what's changed in the [migration guide](MIGRATION-V0.2.0.md).
 
 ## Before you begin
 * You need an [IBM Cloud][ibm_cloud_onboarding] account.
@@ -133,7 +138,7 @@ It is recommended to restart the ICM after a new SSL certificate has been applie
 
 Before you can access a specific service from your SAP system, you must create a service instance in the IBM Cloud and obtain credentials. The credentials can be shared among multiple end users of the SAP system, but you must ensure that the selected plan is sufficient to support the expected number of calls or the expected data volume. Please note that some plans may have restrictions on the allowed methods, so make sure to select the right plan for your purpose.
 
-All currently supported services support IAM authentication (see below). Service credentials consist of an API Key and a URL. Both the API Key and the URL are character values that can be viewed through the IBM dashboard and need to be provided as parameters `i_apikey` and `i_host` to method `zcl_ibmc_service_ext=>get_instance`.
+All currently supported services support IAM authentication (see below). Service credentials consist of an API Key and a URL. Both the API Key and the URL are character values that can be viewed through the IBM Cloud dashboard and need to be provided as parameters `i_apikey` and `i_url` to method `zcl_ibmc_service_ext=>get_instance`.
 
 You can store the values with your application, but it is suggested to do that in an encrypted format. Using cloud services usually creates costs based on usage for the owner of the service instance, and anyone with the credentials can use the service instance at the owner's expenses. If you want to distribute the costs over multiple cost centers, you need to create a service instance and provide service credentials for each cost center separately.
 
@@ -153,9 +158,7 @@ Service credentials and other parameters that must be specified at Watson servic
 
 | Parameter Name    | Default Value     | Description                                                                 |
 |:----------------- |:----------------- |:--------------------------------------------------------------------------- |
-| HOST              | service-dependent | Watson service endpoint host, e.g. https://gateway-lon.watsonplatform.net   |
-| USERNAME          |                   | Watson service user name                                                    |
-| PASSWORD          |                   | Watson service password                                                     |
+| URL               | service-dependent | Watson service url                                                          |
 | APIKEY            |                   | Watson service API keys                                                     |
 | PROXY_HOST        |                   | Proxy server                                                                |
 | PROXY_PORT        |                   | Proxy server port                                                           |
@@ -168,8 +171,8 @@ Service credentials and other parameters that must be specified at Watson servic
 ## IAM Authentication
 
 Identity and Access Management (IAM) is a bearer-token based authentication method. Token management is either performed by the ABAP SDK or must be implemented by the SDK user.<br/>
-If username / password or apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK under the cover generates a bearer-token when needed and refreshes it when it is about to expire.<br/>
-If neither username / password nor apikey are provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK user must implement an individual token management. Before a service method is called the first time, a valid bearer-token must be provided to the Watson service wrapper ABAP class instance as follows:
+If a value for apikey is provided by the caller in method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK generates a bearer-token under the cover when needed and refreshes it when it is about to expire.<br/>
+If apikey is not provided for method `zcl_ibmc_service_ext=>get_instance()`, the ABAP SDK user must implement an individual token management. Before a service method is called the first time, a valid bearer-token must be provided to the Watson service wrapper ABAP class instance as follows:
 ```abap
   lo_service_class->set_bearer_token( i_bearer_token = '...' ).
 ```
@@ -206,7 +209,7 @@ Using the client library requires two steps:
 
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_host     = <host>
+      i_url      = <url>
       i_apikey   = <api key>
 ...
     importing   
@@ -243,8 +246,8 @@ Using the client library requires two steps:
   " get Watson Text-to-Speech service instance
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_host     = 'https://gateway-lon.watsonplatform.net'
-      i_apikey   = lv_apikey
+      i_url    = 'https://api.kr-seo.text-to-speech.watson.cloud.ibm.com/instances/<uuid>'
+      i_apikey = lv_apikey
     importing
       eo_instance = lo_text_to_speech ).
 
@@ -258,9 +261,9 @@ Using the client library requires two steps:
       message lo_service_exception type 'E'.
   endtry.
 
-  " print voices
+  " evaluate voices
   loop at lt_voices-voices into ls_voice.
-    write: / ls_voice-name.
+    ...
   endloop.
 ```
 
@@ -283,9 +286,9 @@ Using the client library requires two steps:
   " get Watson Natural Language Understanding service instance
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_host     = 'https://gateway-lon.watsonplatform.net'
-      i_apikey   = lv_apikey
-      i_version  = '2019-07-12'
+      i_url     = 'https://api.eu-de.natural-language-understanding.watson.cloud.ibm.com/instances/<uuid>'
+      i_apikey  = lv_apikey
+      i_version = '2019-07-12'
     importing
       eo_instance = lo_instance ).
 
@@ -339,7 +342,7 @@ Using the client library requires two steps:
   " get Watson Personality Insights service instance
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_host     = 'https://gateway-lon.watsonplatform.net'
+      i_url     = 'https://api.eu-gb.personality-insights.watson.cloud.ibm.com/instances/<uuid>'
       i_apikey   = lv_apikey
       i_version  = '2018-05-01'
     importing
@@ -390,7 +393,7 @@ Using the client library requires two steps:
   " get Watson Language Translator service instance
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_host     = 'https://gateway-lon.watsonplatform.net'
+      i_url      = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/<uudi>'
       i_apikey   = lv_apikey
       i_version  = '2018-05-01'
     importing

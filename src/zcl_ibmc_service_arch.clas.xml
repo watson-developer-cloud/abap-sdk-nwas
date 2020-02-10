@@ -16,79 +16,43 @@
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>BASE64_DECODE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>decodes base64 encoded data to binary</DESCRIPT>
+     <DESCRIPT>Decodes base64 encoded data to binary</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
+     <CMPNAME>CONVERT_STRING_TO_UTF8</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Converts STRING data to UTF8 encoded XSTRING</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>CREATE_CLIENT_BY_URL</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns a HTTP/REST client based on an URL</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>ESCAPE_URL</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Makes a string to url conform</DESCRIPT>
+     <DESCRIPT>Returns a HTTP/REST client based on an URL</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>EXECUTE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>executes a HTTP request (GET, POST or DELETE)</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>FORM_PART_ADD</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>adds a part to a multipart request</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>FORM_PART_SET_CDATA</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>sets character data for a part of a multipart request</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>FORM_PART_SET_HEADER</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>sets a header within a part of a multiform request</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>FORM_PART_SET_XDATA</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>sets binary data for a part of a multipart request</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>GET_COMPONENTS</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>returns the component names of a given structure</DESCRIPT>
+     <DESCRIPT>Executes a HTTP request (GET, POST or DELETE)</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_DEFAULT_PROXY</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns the default proxy host and port</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
-     <CMPNAME>GET_FIELD_TYPE</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>returns the absolute type of a field</DESCRIPT>
+     <DESCRIPT>Returns the default proxy host and port</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_HTTP_STATUS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns the status of a http response</DESCRIPT>
+     <DESCRIPT>Returns the status of a http response</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_PROGNAME</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns the ABAP program name</DESCRIPT>
+     <DESCRIPT>Returns the ABAP program name</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
@@ -106,43 +70,43 @@
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_REST_REQUEST</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns a request object from a HTTP client object</DESCRIPT>
+     <DESCRIPT>Returns a request object from a HTTP client object</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_TIMEZONE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns the user&apos;s time zone</DESCRIPT>
+     <DESCRIPT>Returns the user&apos;s time zone</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>SET_AUTHENTICATION_BASIC</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>sets request header for basic authentication</DESCRIPT>
+     <DESCRIPT>Sets request header for basic authentication</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>SET_REQUEST_BODY_CDATA</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>sets the body of a HTTP request object</DESCRIPT>
+     <DESCRIPT>Sets the body of a HTTP request object</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>SET_REQUEST_BODY_XDATA</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>sets the body of a HTTP request object</DESCRIPT>
+     <DESCRIPT>Sets the body of a HTTP request object</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>SET_REQUEST_HEADER</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>sets a HTTP header</DESCRIPT>
+     <DESCRIPT>Sets a HTTP header</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>SET_REQUEST_URI</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>sets the URI for a HTTP request</DESCRIPT>
+     <DESCRIPT>Sets the URI for a HTTP request</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>

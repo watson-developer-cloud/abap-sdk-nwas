@@ -6,7 +6,7 @@
     indicates greater likelihood that the class is depicted in the image. The
     default threshold for returning scores from a classifier is 0.5.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_custom_classes_processed</span> type INTEGER</td><td><span class="abapDocComment">   Number of custom classes identified in the images.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty</span> type JSONOBJECT</td><td><span class="abapDocComment">   Empty object.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_html</span> (structured type)</td><td><span class="abapDocComment">   Error information.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_info</span> (structured type)</td><td><span class="abapDocComment">   Information about what might have caused a failure, such as an image that is too
     large. Not returned when there is no error.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td><span class="abapDocComment">   Error information.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_images_processed</span> type INTEGER</td><td><span class="abapDocComment">   Number of images processed for the API call.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_image_file</span> type STRING</td><td><span class="abapDocComment">   Relative path of the image file if uploaded directly. Not returned when the
-    image is passed by URL.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object2</span> (structured type)</td><td>&#160;</td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_resolved_url</span> type STRING</td><td><span class="abapDocComment">   Fully resolved URL of the image after redirects are followed. Not returned when
+    image is passed by URL.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td><span class="abapDocComment">   No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td><span class="abapDocComment">   No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object2</span> (structured type)</td><td><span class="abapDocComment">   No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_resolved_url</span> type STRING</td><td><span class="abapDocComment">   Fully resolved URL of the image after redirects are followed. Not returned when
     the image is uploaded.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_source_url</span> type STRING</td><td><span class="abapDocComment">   Source of the image before any redirects. Not returned when the image is
     uploaded.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_type_hierarchy</span> type STRING</td><td><span class="abapDocComment">   Knowledge graph of the property. For example, `/fruit/pome/apple/eating
     apple/Granny Smith`. Included only if identified.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_warning_info</span> (structured type)</td><td><span class="abapDocComment">   Information about something that went wrong.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">classify</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_images_file</span></td><td>type FILE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_images_filename</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_images_file_content_type</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_url</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_owners</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_classifier_ids</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;multipart&#x2f;form-data&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_CLASSIFIED_IMAGES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Classify images.
@@ -16,8 +16,8 @@
     size is 10 MB. Include no more than 20 images and limit the .zip file to 100
     MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII
     characters. The service assumes UTF-8 encoding if it encounters non-ASCII
-    characters.
-
+    characters.<br/>
+   <br/>
    You can also include an image with the **url** parameter.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_images_filename</span></td><td><span class="abapDocComment">
    The filename for imagesFile.
@@ -26,30 +26,32 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_url</span></td><td><span class="abapDocComment">
    The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
     pixel density is 32X32 pixels, but the service tends to perform better with
-    images that are at least 224 x 224 pixels. The maximum image size is 10 MB.
-
+    images that are at least 224 x 224 pixels. The maximum image size is 10
+    MB.<br/>
+   <br/>
    You can also include images with the **images_file** parameter.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_threshold</span></td><td><span class="abapDocComment">
    The minimum score a class must have to be displayed in the response. Set the
     threshold to `0.0` to return all identified classes.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_owners</span></td><td><span class="abapDocComment">
    The categories of classifiers to apply. The **classifier_ids** parameter
-    overrides **owners**, so make sure that **classifier_ids** is empty.
+    overrides **owners**, so make sure that **classifier_ids** is empty. <br/>
    - Use `IBM` to classify against the `default` general classifier. You get the
-    same result if both **classifier_ids** and **owners** parameters are empty.
+    same result if both **classifier_ids** and **owners** parameters are
+    empty.<br/>
    - Use `me` to classify against all your custom classifiers. However, for better
     performance use **classifier_ids** to specify the specific custom classifiers
-    to apply.
+    to apply.<br/>
    - Use both `IBM` and `me` to analyze the image against both classifier
     categories.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_ids</span></td><td><span class="abapDocComment">
    Which classifiers to apply. Overrides the **owners** parameter. You can specify
     both custom and built-in classifier IDs. The built-in `default` classifier is
-    used if both **classifier_ids** and **owners** parameters are empty.
-
-   The following built-in classifier IDs require no training:
-   - `default`: Returns classes from thousands of general tags.
-   - `food`: Enhances specificity and accuracy for images of food items.
+    used if both **classifier_ids** and **owners** parameters are empty.<br/>
+   <br/>
+   The following built-in classifier IDs require no training:<br/>
+   - `default`: Returns classes from thousands of general tags.<br/>
+   - `food`: Enhances specificity and accuracy for images of food items.<br/>
    - `explicit`: Evaluates whether the image might be pornographic.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_accept_language</span></td><td><span class="abapDocComment">
    The desired language of parts of the response. See the response for details.
@@ -61,21 +63,22 @@
    The name of the new classifier. Encode special characters in UTF-8.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_positive_examples</span></td><td><span class="abapDocComment">
    A .zip file of images that depict the visual subject of a class in the new
-    classifier. You can include more than one positive example file in a call.
-
+    classifier. You can include more than one positive example file in a call.<br/>
+   <br/>
    Specify the parameter name by appending `_positive_examples` to the class name.
     For example, `goldenretriever_positive_examples` creates the class
-    **goldenretriever**.
-
+    **goldenretriever**. The string cannot contain the following characters: ``$ *
+    - &#123; &#125; \ | / ' " ` [ ]``.<br/>
+   <br/>
    Include at least 10 images in .jpg or .png format. The minimum recommended image
     resolution is 32X32 pixels. The maximum number of images is 10,000 images or
-    100 MB per .zip file.
-
+    100 MB per .zip file.<br/>
+   <br/>
    Encode special characters in the file name in UTF-8.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_negative_examples</span></td><td><span class="abapDocComment">
    A .zip file of images that do not depict the visual subject of any of the
-    classes of the new classifier. Must contain a minimum of 10 images.
-
+    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+   <br/>
    Encode special characters in the file name in UTF-8.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_negative_examples_filename</span></td><td><span class="abapDocComment">
    The filename for negativeExamples.
@@ -115,24 +118,25 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_positive_examples</span></td><td><span class="abapDocComment">
    A .zip file of images that depict the visual subject of a class in the
     classifier. The positive examples create or update classes in the classifier.
-    You can include more than one positive example file in a call.
-
+    You can include more than one positive example file in a call.<br/>
+   <br/>
    Specify the parameter name by appending `_positive_examples` to the class name.
     For example, `goldenretriever_positive_examples` creates the class
-    `goldenretriever`.
-
+    `goldenretriever`. The string cannot contain the following characters: ``$ * -
+    &#123; &#125; \ | / ' " ` [ ]``.<br/>
+   <br/>
    Include at least 10 images in .jpg or .png format. The minimum recommended image
     resolution is 32X32 pixels. The maximum number of images is 10,000 images or
-    100 MB per .zip file.
-
+    100 MB per .zip file.<br/>
+   <br/>
    Encode special characters in the file name in UTF-8.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_negative_examples</span></td><td><span class="abapDocComment">
    A .zip file of images that do not depict the visual subject of any of the
-    classes of the new classifier. Must contain a minimum of 10 images.
-
+    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+   <br/>
    Encode special characters in the file name in UTF-8.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_negative_examples_filename</span></td><td><span class="abapDocComment">
    The filename for negativeExamples.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_CLASSIFIER
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>
