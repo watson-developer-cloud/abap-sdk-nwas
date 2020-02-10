@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,13 +13,7 @@
 * limitations under the License.
 "! <h1>Visual Recognition v4</h1>
 "! Provide images to the IBM Watson&trade; Visual Recognition service for analysis.
-"!  The service detects objects based on a set of images with training data.
-"!
-"! **Beta:** The Visual Recognition v4 API and Object Detection model are beta
-"!  features. For more information about beta features, see the [Release
-"!  notes](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-reco
-"! gnition-release-notes#beta).
-"! &#123;: important&#125; <br/>
+"!  The service detects objects based on a set of images with training data. <br/>
 class ZCL_IBMC_VISUAL_RECOGNITION_V4 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -29,113 +23,191 @@ public section.
   types:
     "!   Defines the location of the bounding box around the object.
     begin of T_LOCATION,
+      "!   Y-position of top-left pixel of the bounding box.
       TOP type INTEGER,
+      "!   X-position of top-left pixel of the bounding box.
       LEFT type INTEGER,
+      "!   Width in pixels of of the bounding box.
       WIDTH type INTEGER,
+      "!   Height in pixels of the bounding box.
       HEIGHT type INTEGER,
     end of T_LOCATION.
   types:
     "!   Training status for the objects in the collection.
     begin of T_OBJECT_TRAINING_STATUS,
+      "!   Whether you can analyze images in the collection with the **objects** feature.
       READY type BOOLEAN,
+      "!   Whether training is in progress.
       IN_PROGRESS type BOOLEAN,
+      "!   Whether there are changes to the training data since the most recent training.
       DATA_CHANGED type BOOLEAN,
+      "!   Whether the most recent training failed.
       LATEST_FAILED type BOOLEAN,
+      "!   Details about the training. If training is in progress, includes information
+      "!    about the status. If training is not in progress, includes a success message or
+      "!    information about why training failed.
       DESCRIPTION type STRING,
     end of T_OBJECT_TRAINING_STATUS.
   types:
     "!   Training status information for the collection.
     begin of T_TRAINING_STATUS,
+      "!   Training status for the objects in the collection.
       OBJECTS type T_OBJECT_TRAINING_STATUS,
     end of T_TRAINING_STATUS.
   types:
+    "!   Basic information about an object.
+    begin of T_OBJECT_METADATA,
+      "!   The name of the object.
+      OBJECT type STRING,
+      "!   Number of bounding boxes with this object name in the collection.
+      COUNT type INTEGER,
+    end of T_OBJECT_METADATA.
+  types:
     "!   The source type of the image.
     begin of T_IMAGE_SOURCE,
+      "!   The source type of the image.
       TYPE type STRING,
+      "!   Name of the image file if uploaded. Not returned when the image is passed by
+      "!    URL.
       FILENAME type STRING,
+      "!   Name of the .zip file of images if uploaded. Not returned when the image is
+      "!    passed directly or by URL.
       ARCHIVE_FILENAME type STRING,
+      "!   Source of the image before any redirects. Not returned when the image is
+      "!    uploaded.
       SOURCE_URL type STRING,
+      "!   Fully resolved URL of the image after redirects are followed. Not returned when
+      "!    the image is uploaded.
       RESOLVED_URL type STRING,
     end of T_IMAGE_SOURCE.
   types:
     "!   Details about the training data.
     begin of T_TRAINING_DATA_OBJECT,
+      "!   The name of the object.
       OBJECT type STRING,
+      "!   Defines the location of the bounding box around the object.
       LOCATION type T_LOCATION,
     end of T_TRAINING_DATA_OBJECT.
   types:
     "!   Training data for all objects.
     begin of T_TRAINING_DATA_OBJECTS,
+      "!   Training data for specific objects.
       OBJECTS type STANDARD TABLE OF T_TRAINING_DATA_OBJECT WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_DATA_OBJECTS.
   types:
     "!   Details about a collection.
     begin of T_COLLECTION,
+      "!   The identifier of the collection.
       COLLECTION_ID type STRING,
+      "!   The name of the collection.
       NAME type STRING,
+      "!   The description of the collection.
       DESCRIPTION type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that the collection was
+      "!    created.
       CREATED type DATETIME,
+      "!   Date and time in Coordinated Universal Time (UTC) that the collection was most
+      "!    recently updated.
       UPDATED type DATETIME,
+      "!   Number of images in the collection.
       IMAGE_COUNT type INTEGER,
+      "!   Training status information for the collection.
       TRAINING_STATUS type T_TRAINING_STATUS,
     end of T_COLLECTION.
   types:
     "!   Height and width of an image.
     begin of T_IMAGE_DIMENSIONS,
+      "!   Height in pixels of the image.
       HEIGHT type INTEGER,
+      "!   Width in pixels of the image.
       WIDTH type INTEGER,
     end of T_IMAGE_DIMENSIONS.
   types:
     "!   Details about the specific area of the problem.
     begin of T_ERROR_TARGET,
+      "!   The parameter or property that is the focus of the problem.
       TYPE type STRING,
+      "!   The property that is identified with the problem.
       NAME type STRING,
     end of T_ERROR_TARGET.
   types:
     "!   Details about an error.
     begin of T_ERROR,
+      "!   Identifier of the problem.
       CODE type STRING,
+      "!   An explanation of the problem with possible solutions.
       MESSAGE type STRING,
+      "!   A URL for more information about the solution.
       MORE_INFO type STRING,
+      "!   Details about the specific area of the problem.
       TARGET type T_ERROR_TARGET,
     end of T_ERROR.
   types:
     "!   A container for the list of request-level problems.
     begin of T_ERROR_RESPONSE,
+      "!   A container for the problems in the request.
       ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
+      "!   A unique identifier of the request.
       TRACE type STRING,
     end of T_ERROR_RESPONSE.
   types:
     "!   Details about an object and its location.
     begin of T_BASE_OBJECT,
+      "!   The name of the object. The name can contain alphanumeric, underscore, hyphen,
+      "!    space, and dot characters. It cannot begin with the reserved prefix `sys-`.
       OBJECT type STRING,
+      "!   Defines the location of the bounding box around the object.
       LOCATION type T_LOCATION,
     end of T_BASE_OBJECT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT,
+      "!   The IDs of the collections to analyze.
       COLLECTION_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The features to analyze.
       FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of image files (.jpg or .png) or .zip files with images.<br/>
+      "!   - Include a maximum of 20 images in a request.<br/>
+      "!   - Limit the .zip file to 100 MB.<br/>
+      "!   - Limit each image file to 10 MB.<br/>
+      "!   <br/>
+      "!   You can also include an image with the **image_url** parameter.
       IMAGES_FILE type STANDARD TABLE OF FILE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of URLs of image files (.jpg or .png).<br/>
+      "!   - Include a maximum of 20 images in a request.<br/>
+      "!   - Limit each image file to 10 MB.<br/>
+      "!   - Minimum width and height is 30 pixels, but the service tends to perform better
+      "!    with images that are at least 300 x 300 pixels. Maximum is 5400 pixels for
+      "!    either height or width.<br/>
+      "!   <br/>
+      "!   You can also include images with the **images_file** parameter.
       IMAGE_URL type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The minimum score a feature must have to be returned.
       THRESHOLD type FLOAT,
     end of T_INLINE_OBJECT.
   types:
     "!   Details about an object in the collection.
     begin of T_OBJECT_DETAIL,
+      "!   The label for the object.
       OBJECT type STRING,
+      "!   Defines the location of the bounding box around the object.
       LOCATION type T_LOCATION,
+      "!   Confidence score for the object in the range of 0 to 1. A higher score indicates
+      "!    greater likelihood that the object is depicted at this location in the image.
       SCORE type FLOAT,
     end of T_OBJECT_DETAIL.
   types:
     "!   The objects in a collection that are detected in an image.
     begin of T_COLLECTION_OBJECTS,
+      "!   The identifier of the collection.
       COLLECTION_ID type STRING,
+      "!   The identified objects in a collection.
       OBJECTS type STANDARD TABLE OF T_OBJECT_DETAIL WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTION_OBJECTS.
   types:
     "!   Container for the list of collections that have objects detected in an image.
     begin of T_DETECTED_OBJECTS,
+      "!   The collections with identified objects.
       COLLECTIONS type STANDARD TABLE OF T_COLLECTION_OBJECTS WITH NON-UNIQUE DEFAULT KEY,
     end of T_DETECTED_OBJECTS.
   types:
@@ -144,31 +216,81 @@ public section.
   types:
     "!   A container for the list of collections.
     begin of T_COLLECTIONS_LIST,
+      "!   The collections in this service instance.
       COLLECTIONS type STANDARD TABLE OF T_COLLECTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTIONS_LIST.
   types:
+    "!   Details about the training event.
+    begin of T_TRAINING_EVENT,
+      "!   Trained object type. Only `objects` is currently supported.
+      TYPE type STRING,
+      "!   Identifier of the trained collection.
+      COLLECTION_ID type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that training on the
+      "!    collection finished.
+      COMPLETION_TIME type DATETIME,
+      "!   Training status of the training event.
+      STATUS type STRING,
+      "!   The total number of images that were used in training for this training event.
+      IMAGE_COUNT type INTEGER,
+    end of T_TRAINING_EVENT.
+  types:
+    "!   Details about the training events.
+    begin of T_TRAINING_EVENTS,
+      "!   The starting day for the returned training events in Coordinated Universal Time
+      "!    (UTC). If not specified in the request, it identifies the earliest training
+      "!    event.
+      START_TIME type DATETIME,
+      "!   The ending day for the returned training events in Coordinated Universal Time
+      "!    (UTC). If not specified in the request, it lists the current time.
+      END_TIME type DATETIME,
+      "!   The total number of training events in the response for the start and end times.
+      "!
+      COMPLETED_EVENTS type INTEGER,
+      "!   The total number of images that were used in training for the start and end
+      "!    times.
+      TRAINED_IMAGES type INTEGER,
+      "!   The completed training events for the start and end time.
+      EVENTS type STANDARD TABLE OF T_TRAINING_EVENT WITH NON-UNIQUE DEFAULT KEY,
+    end of T_TRAINING_EVENTS.
+  types:
     "!   Details about an image.
     begin of T_IMAGE_DETAILS,
+      "!   The identifier of the image.
       IMAGE_ID type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that the image was most
+      "!    recently updated.
       UPDATED type DATETIME,
+      "!   Date and time in Coordinated Universal Time (UTC) that the image was created.
       CREATED type DATETIME,
+      "!   The source type of the image.
       SOURCE type T_IMAGE_SOURCE,
+      "!   Height and width of an image.
       DIMENSIONS type T_IMAGE_DIMENSIONS,
-      ERRORS type T_ERROR,
+      "!   No documentation available.
+      ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
+      "!   Training data for all objects.
       TRAINING_DATA type T_TRAINING_DATA_OBJECTS,
     end of T_IMAGE_DETAILS.
   types:
     "!   Details about a problem.
     begin of T_WARNING,
+      "!   Identifier of the problem.
       CODE type STRING,
+      "!   An explanation of the problem with possible solutions.
       MESSAGE type STRING,
+      "!   A URL for more information about the solution.
       MORE_INFO type STRING,
     end of T_WARNING.
   types:
     "!   List of information about the images.
     begin of T_IMAGE_DETAILS_LIST,
+      "!   The images in the collection.
       IMAGES type STANDARD TABLE OF T_IMAGE_DETAILS WITH NON-UNIQUE DEFAULT KEY,
+      "!   Information about what might cause less than optimal output.
       WARNINGS type STANDARD TABLE OF T_WARNING WITH NON-UNIQUE DEFAULT KEY,
+      "!   A unique identifier of the request. Included only when an error or warning is
+      "!    returned.
       TRACE type STRING,
     end of T_IMAGE_DETAILS_LIST.
   types:
@@ -177,63 +299,125 @@ public section.
   types:
     "!   Basic information about an image.
     begin of T_IMAGE_SUMMARY,
+      "!   The identifier of the image.
       IMAGE_ID type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that the image was most
+      "!    recently updated.
       UPDATED type DATETIME,
     end of T_IMAGE_SUMMARY.
   types:
     "!   Container for the training data.
     begin of T_BASE_TRAINING_DATA_OBJECTS,
+      "!   Training data for specific objects.
       OBJECTS type STANDARD TABLE OF T_TRAINING_DATA_OBJECT WITH NON-UNIQUE DEFAULT KEY,
     end of T_BASE_TRAINING_DATA_OBJECTS.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT1,
+      "!   An array of image files (.jpg or .png) or .zip files with images.<br/>
+      "!   - Include a maximum of 20 images in a request.<br/>
+      "!   - Limit the .zip file to 100 MB.<br/>
+      "!   - Limit each image file to 10 MB.<br/>
+      "!   <br/>
+      "!   You can also include an image with the **image_url** parameter.
       IMAGES_FILE type STANDARD TABLE OF FILE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The array of URLs of image files (.jpg or .png).<br/>
+      "!   - Include a maximum of 20 images in a request.<br/>
+      "!   - Limit each image file to 10 MB.<br/>
+      "!   - Minimum width and height is 30 pixels, but the service tends to perform better
+      "!    with images that are at least 300 x 300 pixels. Maximum is 5400 pixels for
+      "!    either height or width.<br/>
+      "!   <br/>
+      "!   You can also include images with the **images_file** parameter.
       IMAGE_URL type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   Training data for a single image. Include training data only if you add one
+      "!    image with the request.<br/>
+      "!   <br/>
+      "!   The `object` property can contain alphanumeric, underscore, hyphen, space, and
+      "!    dot characters. It cannot begin with the reserved prefix `sys-` and must be no
+      "!    longer than 32 characters.
       TRAINING_DATA type STRING,
     end of T_INLINE_OBJECT1.
   types:
     "!   List of images.
     begin of T_IMAGE_SUMMARY_LIST,
+      "!   The images in the collection.
       IMAGES type STANDARD TABLE OF T_IMAGE_SUMMARY WITH NON-UNIQUE DEFAULT KEY,
     end of T_IMAGE_SUMMARY_LIST.
   types:
     "!   Details about an image.
     begin of T_IMAGE,
+      "!   The source type of the image.
       SOURCE type T_IMAGE_SOURCE,
+      "!   Height and width of an image.
       DIMENSIONS type T_IMAGE_DIMENSIONS,
+      "!   Container for the list of collections that have objects detected in an image.
       OBJECTS type T_DETECTED_OBJECTS,
-      ERRORS type T_ERROR,
+      "!   A container for the problems in the request.
+      ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
     end of T_IMAGE.
   types:
     "!   Results for all images.
     begin of T_ANALYZE_RESPONSE,
+      "!   Analyzed images.
       IMAGES type STANDARD TABLE OF T_IMAGE WITH NON-UNIQUE DEFAULT KEY,
+      "!   Information about what might cause less than optimal output.
       WARNINGS type STANDARD TABLE OF T_WARNING WITH NON-UNIQUE DEFAULT KEY,
+      "!   A unique identifier of the request. Included only when an error or warning is
+      "!    returned.
       TRACE type STRING,
     end of T_ANALYZE_RESPONSE.
   types:
     "!   Base details about a collection.
     begin of T_BASE_COLLECTION,
+      "!   The identifier of the collection.
       COLLECTION_ID type STRING,
+      "!   The name of the collection. The name can contain alphanumeric, underscore,
+      "!    hyphen, and dot characters. It cannot begin with the reserved prefix `sys-`.
       NAME type STRING,
+      "!   The description of the collection.
       DESCRIPTION type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that the collection was
+      "!    created.
       CREATED type DATETIME,
+      "!   Date and time in Coordinated Universal Time (UTC) that the collection was most
+      "!    recently updated.
       UPDATED type DATETIME,
+      "!   Number of images in the collection.
       IMAGE_COUNT type INTEGER,
+      "!   Training status information for the collection.
       TRAINING_STATUS type T_TRAINING_STATUS,
     end of T_BASE_COLLECTION.
+  types:
+    "!   Basic information about an updated object.
+    begin of T_UPDATE_OBJECT_METADATA,
+      "!   The updated name of the object. The name can contain alphanumeric, underscore,
+      "!    hyphen, space, and dot characters. It cannot begin with the reserved prefix
+      "!    `sys-`.
+      OBJECT type STRING,
+      "!   Number of bounding boxes in the collection with the updated object name.
+      COUNT type INTEGER,
+    end of T_UPDATE_OBJECT_METADATA.
+  types:
+    "!   List of objects.
+    begin of T_OBJECT_METADATA_LIST,
+      "!   Number of unique named objects in the collection.
+      OBJECT_COUNT type INTEGER,
+      "!   The objects in the collection.
+      OBJECTS type STANDARD TABLE OF T_OBJECT_METADATA WITH NON-UNIQUE DEFAULT KEY,
+    end of T_OBJECT_METADATA_LIST.
 
 constants:
   begin of C_REQUIRED_FIELDS,
     T_LOCATION type string value '|TOP|LEFT|WIDTH|HEIGHT|',
     T_OBJECT_TRAINING_STATUS type string value '|READY|IN_PROGRESS|DATA_CHANGED|LATEST_FAILED|DESCRIPTION|',
     T_TRAINING_STATUS type string value '|OBJECTS|',
+    T_OBJECT_METADATA type string value '|',
     T_IMAGE_SOURCE type string value '|TYPE|',
     T_TRAINING_DATA_OBJECT type string value '|',
-    T_TRAINING_DATA_OBJECTS type string value '|OBJECTS|',
+    T_TRAINING_DATA_OBJECTS type string value '|',
     T_COLLECTION type string value '|COLLECTION_ID|NAME|DESCRIPTION|CREATED|UPDATED|IMAGE_COUNT|TRAINING_STATUS|',
-    T_IMAGE_DIMENSIONS type string value '|HEIGHT|WIDTH|',
+    T_IMAGE_DIMENSIONS type string value '|',
     T_ERROR_TARGET type string value '|TYPE|NAME|',
     T_ERROR type string value '|CODE|MESSAGE|',
     T_ERROR_RESPONSE type string value '|ERRORS|TRACE|',
@@ -243,7 +427,9 @@ constants:
     T_COLLECTION_OBJECTS type string value '|COLLECTION_ID|OBJECTS|',
     T_DETECTED_OBJECTS type string value '|',
     T_COLLECTIONS_LIST type string value '|COLLECTIONS|',
-    T_IMAGE_DETAILS type string value '|IMAGE_ID|UPDATED|CREATED|SOURCE|DIMENSIONS|TRAINING_DATA|',
+    T_TRAINING_EVENT type string value '|',
+    T_TRAINING_EVENTS type string value '|',
+    T_IMAGE_DETAILS type string value '|SOURCE|',
     T_WARNING type string value '|CODE|MESSAGE|',
     T_IMAGE_DETAILS_LIST type string value '|',
     T_IMAGE_SUMMARY type string value '|',
@@ -253,6 +439,8 @@ constants:
     T_IMAGE type string value '|SOURCE|DIMENSIONS|OBJECTS|',
     T_ANALYZE_RESPONSE type string value '|IMAGES|',
     T_BASE_COLLECTION type string value '|',
+    T_UPDATE_OBJECT_METADATA type string value '|',
+    T_OBJECT_METADATA_LIST type string value '|OBJECT_COUNT|',
     __DUMMY type string value SPACE,
   end of C_REQUIRED_FIELDS .
 
@@ -275,7 +463,17 @@ constants:
      IMAGE_COUNT type string value 'image_count',
      TRAINING_STATUS type string value 'training_status',
      COLLECTIONS type string value 'collections',
+     START_TIME type string value 'start_time',
+     END_TIME type string value 'end_time',
+     COMPLETED_EVENTS type string value 'completed_events',
+     TRAINED_IMAGES type string value 'trained_images',
+     EVENTS type string value 'events',
+     COMPLETION_TIME type string value 'completion_time',
+     STATUS type string value 'status',
      OBJECTS type string value 'objects',
+     OBJECT_COUNT type string value 'object_count',
+     OBJECT type string value 'object',
+     COUNT type string value 'count',
      READY type string value 'ready',
      IN_PROGRESS type string value 'in_progress',
      DATA_CHANGED type string value 'data_changed',
@@ -286,7 +484,6 @@ constants:
      TRAINING_DATA type string value 'training_data',
      HEIGHT type string value 'height',
      WIDTH type string value 'width',
-     OBJECT type string value 'object',
      LOCATION type string value 'location',
      FILENAME type string value 'filename',
      ARCHIVE_FILENAME type string value 'archive_filename',
@@ -316,38 +513,39 @@ constants:
 
     "! Analyze images.
     "!
-    "! @parameter I_collection_ids |
+    "! @parameter I_COLLECTION_IDS |
     "!   The IDs of the collections to analyze.
-    "! @parameter I_features |
+    "! @parameter I_FEATURES |
     "!   The features to analyze.
-    "! @parameter I_images_file |
-    "!   An array of image files (.jpg or .png) or .zip files with images.
-    "!   - Include a maximum of 20 images in a request.
-    "!   - Limit the .zip file to 100 MB.
-    "!   - Limit each image file to 10 MB.
-    "!
+    "! @parameter I_IMAGES_FILE |
+    "!   An array of image files (.jpg or .png) or .zip files with images.<br/>
+    "!   - Include a maximum of 20 images in a request.<br/>
+    "!   - Limit the .zip file to 100 MB.<br/>
+    "!   - Limit each image file to 10 MB.<br/>
+    "!   <br/>
     "!   You can also include an image with the **image_url** parameter.
-    "! @parameter I_image_url |
-    "!   An array of URLs of image files (.jpg or .png).
-    "!   - Include a maximum of 20 images in a request.
-    "!   - Limit each image file to 10 MB.
+    "! @parameter I_IMAGE_URL |
+    "!   An array of URLs of image files (.jpg or .png).<br/>
+    "!   - Include a maximum of 20 images in a request.<br/>
+    "!   - Limit each image file to 10 MB.<br/>
     "!   - Minimum width and height is 30 pixels, but the service tends to perform better
     "!    with images that are at least 300 x 300 pixels. Maximum is 5400 pixels for
-    "!    either height or width.
-    "!
+    "!    either height or width.<br/>
+    "!   <br/>
     "!   You can also include images with the **images_file** parameter.
-    "! @parameter I_threshold |
+    "! @parameter I_THRESHOLD |
     "!   The minimum score a feature must have to be returned.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ANALYZE_RESPONSE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods ANALYZE
     importing
-      !I_collection_ids type TT_STRING
-      !I_features type TT_STRING
-      !I_images_file type TT_FILE_WITH_METADATA optional
-      !I_image_url type TT_STRING optional
-      !I_threshold type FLOAT optional
+      !I_COLLECTION_IDS type TT_STRING
+      !I_FEATURES type TT_STRING
+      !I_IMAGES_FILE type TT_FILE_WITH_METADATA optional
+      !I_IMAGE_URL type TT_STRING optional
+      !I_THRESHOLD type FLOAT optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -357,14 +555,15 @@ constants:
 
     "! Create a collection.
     "!
-    "! @parameter I_collection_info |
+    "! @parameter I_COLLECTION_INFO |
     "!   The new collection.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_COLLECTION
     importing
-      !I_collection_info type T_BASE_COLLECTION
+      !I_COLLECTION_INFO type T_BASE_COLLECTION
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -375,6 +574,7 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTIONS_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_COLLECTIONS
     importing
@@ -385,14 +585,15 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get collection details.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_COLLECTION
     importing
-      !I_collection_id type STRING
+      !I_COLLECTION_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_COLLECTION
@@ -400,17 +601,18 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update a collection.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_collection_info |
+    "! @parameter I_COLLECTION_INFO |
     "!   The updated collection.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_COLLECTION
     importing
-      !I_collection_id type STRING
-      !I_collection_info type T_BASE_COLLECTION optional
+      !I_COLLECTION_ID type STRING
+      !I_COLLECTION_INFO type T_BASE_COLLECTION optional
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -419,52 +621,54 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete a collection.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_COLLECTION
     importing
-      !I_collection_id type STRING
+      !I_COLLECTION_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! Add images.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_images_file |
-    "!   An array of image files (.jpg or .png) or .zip files with images.
-    "!   - Include a maximum of 20 images in a request.
-    "!   - Limit the .zip file to 100 MB.
-    "!   - Limit each image file to 10 MB.
-    "!
+    "! @parameter I_IMAGES_FILE |
+    "!   An array of image files (.jpg or .png) or .zip files with images.<br/>
+    "!   - Include a maximum of 20 images in a request.<br/>
+    "!   - Limit the .zip file to 100 MB.<br/>
+    "!   - Limit each image file to 10 MB.<br/>
+    "!   <br/>
     "!   You can also include an image with the **image_url** parameter.
-    "! @parameter I_image_url |
-    "!   The array of URLs of image files (.jpg or .png).
-    "!   - Include a maximum of 20 images in a request.
-    "!   - Limit each image file to 10 MB.
+    "! @parameter I_IMAGE_URL |
+    "!   The array of URLs of image files (.jpg or .png).<br/>
+    "!   - Include a maximum of 20 images in a request.<br/>
+    "!   - Limit each image file to 10 MB.<br/>
     "!   - Minimum width and height is 30 pixels, but the service tends to perform better
     "!    with images that are at least 300 x 300 pixels. Maximum is 5400 pixels for
-    "!    either height or width.
-    "!
+    "!    either height or width.<br/>
+    "!   <br/>
     "!   You can also include images with the **images_file** parameter.
-    "! @parameter I_training_data |
+    "! @parameter I_TRAINING_DATA |
     "!   Training data for a single image. Include training data only if you add one
-    "!    image with the request.
-    "!
+    "!    image with the request.<br/>
+    "!   <br/>
     "!   The `object` property can contain alphanumeric, underscore, hyphen, space, and
     "!    dot characters. It cannot begin with the reserved prefix `sys-` and must be no
     "!    longer than 32 characters.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_IMAGE_DETAILS_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods ADD_IMAGES
     importing
-      !I_collection_id type STRING
-      !I_images_file type TT_FILE_WITH_METADATA optional
-      !I_image_url type TT_STRING optional
-      !I_training_data type STRING optional
+      !I_COLLECTION_ID type STRING
+      !I_IMAGES_FILE type TT_FILE_WITH_METADATA optional
+      !I_IMAGE_URL type TT_STRING optional
+      !I_TRAINING_DATA type STRING optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -473,14 +677,15 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! List images.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_IMAGE_SUMMARY_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_IMAGES
     importing
-      !I_collection_id type STRING
+      !I_COLLECTION_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_IMAGE_SUMMARY_LIST
@@ -488,17 +693,18 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get image details.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_image_id |
+    "! @parameter I_IMAGE_ID |
     "!   The identifier of the image.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_IMAGE_DETAILS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_IMAGE_DETAILS
     importing
-      !I_collection_id type STRING
-      !I_image_id type STRING
+      !I_COLLECTION_ID type STRING
+      !I_IMAGE_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_IMAGE_DETAILS
@@ -506,50 +712,129 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete an image.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_image_id |
+    "! @parameter I_IMAGE_ID |
     "!   The identifier of the image.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_IMAGE
     importing
-      !I_collection_id type STRING
-      !I_image_id type STRING
+      !I_COLLECTION_ID type STRING
+      !I_IMAGE_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get a JPEG file of an image.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_image_id |
+    "! @parameter I_IMAGE_ID |
     "!   The identifier of the image.
-    "! @parameter I_size |
-    "!   Specify the image size.
+    "! @parameter I_SIZE |
+    "!   The image size. Specify `thumbnail` to return a version that maintains the
+    "!    original aspect ratio but is no larger than 200 pixels in the larger dimension.
+    "!    For example, an original 800 x 1000 image is resized to 160 x 200 pixels.
     "! @parameter E_RESPONSE |
     "!   Service return value of type FILE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_JPEG_IMAGE
     importing
-      !I_collection_id type STRING
-      !I_image_id type STRING
-      !I_size type STRING default 'full'
+      !I_COLLECTION_ID type STRING
+      !I_IMAGE_ID type STRING
+      !I_SIZE type STRING default 'full'
       !I_accept      type string default 'image/jpeg'
     exporting
       !E_RESPONSE type FILE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
+    "! List object metadata.
+    "!
+    "! @parameter I_COLLECTION_ID |
+    "!   The identifier of the collection.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_OBJECT_METADATA_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods LIST_OBJECT_METADATA
+    importing
+      !I_COLLECTION_ID type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_OBJECT_METADATA_LIST
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! Update an object name.
+    "!
+    "! @parameter I_COLLECTION_ID |
+    "!   The identifier of the collection.
+    "! @parameter I_OBJECT |
+    "!   The name of the object.
+    "! @parameter I_UPDATEOBJECTMETADATA |
+    "!   No documentation available.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_UPDATE_OBJECT_METADATA
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods UPDATE_OBJECT_METADATA
+    importing
+      !I_COLLECTION_ID type STRING
+      !I_OBJECT type STRING
+      !I_UPDATEOBJECTMETADATA type T_UPDATE_OBJECT_METADATA optional
+      !I_contenttype type string default 'application/json'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_UPDATE_OBJECT_METADATA
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! Get object metadata.
+    "!
+    "! @parameter I_COLLECTION_ID |
+    "!   The identifier of the collection.
+    "! @parameter I_OBJECT |
+    "!   The name of the object.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_OBJECT_METADATA
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods GET_OBJECT_METADATA
+    importing
+      !I_COLLECTION_ID type STRING
+      !I_OBJECT type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_OBJECT_METADATA
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! Delete an object.
+    "!
+    "! @parameter I_COLLECTION_ID |
+    "!   The identifier of the collection.
+    "! @parameter I_OBJECT |
+    "!   The name of the object.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods DELETE_OBJECT
+    importing
+      !I_COLLECTION_ID type STRING
+      !I_OBJECT type STRING
+      !I_accept      type string default 'application/json'
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+
     "! Train a collection.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods TRAIN
     importing
-      !I_collection_id type STRING
+      !I_COLLECTION_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_COLLECTION
@@ -557,35 +842,60 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Add training data to an image.
     "!
-    "! @parameter I_collection_id |
+    "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
-    "! @parameter I_image_id |
+    "! @parameter I_IMAGE_ID |
     "!   The identifier of the image.
-    "! @parameter I_training_data |
+    "! @parameter I_TRAINING_DATA |
     "!   Training data. Elements in the request replace the existing elements.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TRAINING_DATA_OBJECTS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods ADD_IMAGE_TRAINING_DATA
     importing
-      !I_collection_id type STRING
-      !I_image_id type STRING
-      !I_training_data type T_BASE_TRAINING_DATA_OBJECTS
+      !I_COLLECTION_ID type STRING
+      !I_IMAGE_ID type STRING
+      !I_TRAINING_DATA type T_BASE_TRAINING_DATA_OBJECTS
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_TRAINING_DATA_OBJECTS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
+    "! Get training usage.
+    "!
+    "! @parameter I_START_TIME |
+    "!   The earliest day to include training events. Specify dates in YYYY-MM-DD format.
+    "!    If empty or not specified, the earliest training event is included.
+    "! @parameter I_END_TIME |
+    "!   The most recent day to include training events. Specify dates in YYYY-MM-DD
+    "!    format. All events for the day are included. If empty or not specified, the
+    "!    current day is used. Specify the same value as `start_time` to request events
+    "!    for a single day.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_TRAINING_EVENTS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods GET_TRAINING_USAGE
+    importing
+      !I_START_TIME type STRING optional
+      !I_END_TIME type STRING optional
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_TRAINING_EVENTS
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! Delete labeled data.
     "!
-    "! @parameter I_customer_id |
+    "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_USER_DATA
     importing
-      !I_customer_id type STRING
+      !I_CUSTOMER_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
@@ -626,7 +936,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -658,7 +968,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122856'.
+    e_sdk_version_date = '20200210092831'.
 
   endmethod.
 
@@ -667,11 +977,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->ANALYZE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_ids        TYPE TT_STRING
-* | [--->] I_features        TYPE TT_STRING
-* | [--->] I_images_file        TYPE TT_FILE_WITH_METADATA(optional)
-* | [--->] I_image_url        TYPE TT_STRING(optional)
-* | [--->] I_threshold        TYPE FLOAT(optional)
+* | [--->] I_COLLECTION_IDS        TYPE TT_STRING
+* | [--->] I_FEATURES        TYPE TT_STRING
+* | [--->] I_IMAGES_FILE        TYPE TT_FILE_WITH_METADATA(optional)
+* | [--->] I_IMAGE_URL        TYPE TT_STRING(optional)
+* | [--->] I_THRESHOLD        TYPE FLOAT(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ANALYZE_RESPONSE
@@ -711,67 +1021,67 @@ method ANALYZE.
       lv_extension     type string ##NEEDED.
 
 
-    if not i_collection_ids is initial.
+    if not i_COLLECTION_IDS is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="collection_ids"'  ##NO_TEXT.
       field-symbols:
-        <l_collection_ids> like line of i_collection_ids.
-      loop at i_collection_ids assigning <l_collection_ids>.
-        ls_form_part-cdata = <l_collection_ids>.
+        <l_COLLECTION_IDS> like line of i_COLLECTION_IDS.
+      loop at i_COLLECTION_IDS assigning <l_COLLECTION_IDS>.
+        ls_form_part-cdata = <l_COLLECTION_IDS>.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_features is initial.
+    if not i_FEATURES is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="features"'  ##NO_TEXT.
       field-symbols:
-        <l_features> like line of i_features.
-      loop at i_features assigning <l_features>.
-        ls_form_part-cdata = <l_features>.
+        <l_FEATURES> like line of i_FEATURES.
+      loop at i_FEATURES assigning <l_FEATURES>.
+        ls_form_part-cdata = <l_FEATURES>.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_image_url is initial.
+    if not i_IMAGE_URL is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="image_url"'  ##NO_TEXT.
       field-symbols:
-        <l_image_url> like line of i_image_url.
-      loop at i_image_url assigning <l_image_url>.
-        ls_form_part-cdata = <l_image_url>.
+        <l_IMAGE_URL> like line of i_IMAGE_URL.
+      loop at i_IMAGE_URL assigning <l_IMAGE_URL>.
+        ls_form_part-cdata = <l_IMAGE_URL>.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_threshold is initial.
+    if not i_THRESHOLD is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="threshold"'  ##NO_TEXT.
-      lv_formdata = i_threshold.
+      lv_formdata = i_THRESHOLD.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
 
 
-    if not i_images_file is initial.
+    if not i_IMAGES_FILE is initial.
       data:
         lv_filename     type string,
         lv_content_type type string.
       field-symbols:
-        <lv_images_file> like line of i_images_file.
-      loop at i_images_file assigning <lv_images_file>.
-        if not <lv_images_file>-content_type is initial.
-          lv_content_type = <lv_images_file>-content_type.
+        <lv_IMAGES_FILE> like line of i_IMAGES_FILE.
+      loop at i_IMAGES_FILE assigning <lv_IMAGES_FILE>.
+        if not <lv_IMAGES_FILE>-content_type is initial.
+          lv_content_type = <lv_IMAGES_FILE>-content_type.
         else.
           lv_content_type = 'application/octet-stream'  ##NO_TEXT.
         endif.
-        if not <lv_images_file>-filename is initial.
-          lv_filename = <lv_images_file>-filename.
+        if not <lv_IMAGES_FILE>-filename is initial.
+          lv_filename = <lv_IMAGES_FILE>-filename.
         else.
           lv_extension = get_file_extension( lv_content_type ).
           lv_filename = `file` && lv_index && `.` && lv_extension  ##NO_TEXT.
@@ -780,7 +1090,7 @@ method ANALYZE.
         clear ls_form_part.
         ls_form_part-content_type = lv_content_type.
         ls_form_part-content_disposition = `form-data; name="images_file"; filename="` && lv_filename && `"`  ##NO_TEXT.
-        ls_form_part-xdata = <lv_images_file>-data.
+        ls_form_part-xdata = <lv_IMAGES_FILE>-data.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
@@ -807,7 +1117,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->CREATE_COLLECTION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_info        TYPE T_BASE_COLLECTION
+* | [--->] I_COLLECTION_INFO        TYPE T_BASE_COLLECTION
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COLLECTION
@@ -844,20 +1154,20 @@ method CREATE_COLLECTION.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_collection_info ).
+    lv_datatype = get_datatype( i_COLLECTION_INFO ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_collection_info i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_COLLECTION_INFO i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'collection_info' i_value = i_collection_info ).
+        lv_bodyparam = abap_to_json( i_name = 'collection_info' i_value = i_COLLECTION_INFO ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_collection_info to <lv_text>.
+      assign i_COLLECTION_INFO to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -937,7 +1247,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_COLLECTION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -952,7 +1262,7 @@ method GET_COLLECTION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -985,8 +1295,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->UPDATE_COLLECTION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_collection_info        TYPE T_BASE_COLLECTION(optional)
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_COLLECTION_INFO        TYPE T_BASE_COLLECTION(optional)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COLLECTION
@@ -1002,7 +1312,7 @@ method UPDATE_COLLECTION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -1024,21 +1334,21 @@ method UPDATE_COLLECTION.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_collection_info is initial.
-    lv_datatype = get_datatype( i_collection_info ).
+    if not i_COLLECTION_INFO is initial.
+    lv_datatype = get_datatype( i_COLLECTION_INFO ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_collection_info i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_COLLECTION_INFO i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'collection_info' i_value = i_collection_info ).
+        lv_bodyparam = abap_to_json( i_name = 'collection_info' i_value = i_COLLECTION_INFO ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_collection_info to <lv_text>.
+      assign i_COLLECTION_INFO to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -1073,7 +1383,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->DELETE_COLLECTION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -1087,7 +1397,7 @@ method DELETE_COLLECTION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1113,10 +1423,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->ADD_IMAGES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_images_file        TYPE TT_FILE_WITH_METADATA(optional)
-* | [--->] I_image_url        TYPE TT_STRING(optional)
-* | [--->] I_training_data        TYPE STRING(optional)
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_IMAGES_FILE        TYPE TT_FILE_WITH_METADATA(optional)
+* | [--->] I_IMAGE_URL        TYPE TT_STRING(optional)
+* | [--->] I_TRAINING_DATA        TYPE STRING(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_IMAGE_DETAILS_LIST
@@ -1132,7 +1442,7 @@ method ADD_IMAGES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -1157,43 +1467,43 @@ method ADD_IMAGES.
       lv_extension     type string ##NEEDED.
 
 
-    if not i_image_url is initial.
+    if not i_IMAGE_URL is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="image_url"'  ##NO_TEXT.
       field-symbols:
-        <l_image_url> like line of i_image_url.
-      loop at i_image_url assigning <l_image_url>.
-        ls_form_part-cdata = <l_image_url>.
+        <l_IMAGE_URL> like line of i_IMAGE_URL.
+      loop at i_IMAGE_URL assigning <l_IMAGE_URL>.
+        ls_form_part-cdata = <l_IMAGE_URL>.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_training_data is initial.
+    if not i_TRAINING_DATA is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="training_data"'  ##NO_TEXT.
-      lv_formdata = i_training_data.
+      lv_formdata = i_TRAINING_DATA.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
 
 
-    if not i_images_file is initial.
+    if not i_IMAGES_FILE is initial.
       data:
         lv_filename     type string,
         lv_content_type type string.
       field-symbols:
-        <lv_images_file> like line of i_images_file.
-      loop at i_images_file assigning <lv_images_file>.
-        if not <lv_images_file>-content_type is initial.
-          lv_content_type = <lv_images_file>-content_type.
+        <lv_IMAGES_FILE> like line of i_IMAGES_FILE.
+      loop at i_IMAGES_FILE assigning <lv_IMAGES_FILE>.
+        if not <lv_IMAGES_FILE>-content_type is initial.
+          lv_content_type = <lv_IMAGES_FILE>-content_type.
         else.
           lv_content_type = 'application/octet-stream'  ##NO_TEXT.
         endif.
-        if not <lv_images_file>-filename is initial.
-          lv_filename = <lv_images_file>-filename.
+        if not <lv_IMAGES_FILE>-filename is initial.
+          lv_filename = <lv_IMAGES_FILE>-filename.
         else.
           lv_extension = get_file_extension( lv_content_type ).
           lv_filename = `file` && lv_index && `.` && lv_extension  ##NO_TEXT.
@@ -1202,7 +1512,7 @@ method ADD_IMAGES.
         clear ls_form_part.
         ls_form_part-content_type = lv_content_type.
         ls_form_part-content_disposition = `form-data; name="images_file"; filename="` && lv_filename && `"`  ##NO_TEXT.
-        ls_form_part-xdata = <lv_images_file>-data.
+        ls_form_part-xdata = <lv_IMAGES_FILE>-data.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
@@ -1228,7 +1538,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->LIST_IMAGES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_IMAGE_SUMMARY_LIST
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1243,7 +1553,7 @@ method LIST_IMAGES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1276,8 +1586,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_IMAGE_DETAILS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_image_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_IMAGE_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_IMAGE_DETAILS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1292,8 +1602,8 @@ method GET_IMAGE_DETAILS.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images/{image_id}'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
-    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_image_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_IMAGE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1326,8 +1636,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->DELETE_IMAGE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_image_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_IMAGE_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -1341,8 +1651,8 @@ method DELETE_IMAGE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images/{image_id}'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
-    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_image_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_IMAGE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1367,9 +1677,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_JPEG_IMAGE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_image_id        TYPE STRING
-* | [--->] I_size        TYPE STRING (default ='full')
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_IMAGE_ID        TYPE STRING
+* | [--->] I_SIZE        TYPE STRING (default ='full')
 * | [--->] I_accept            TYPE string (default ='image/jpeg')
 * | [<---] E_RESPONSE                    TYPE        FILE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1384,8 +1694,8 @@ method GET_JPEG_IMAGE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images/{image_id}/jpeg'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
-    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_image_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_IMAGE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1397,8 +1707,8 @@ method GET_JPEG_IMAGE.
     data:
       lv_queryparam type string.
 
-    if i_size is supplied.
-    lv_queryparam = escape( val = i_size format = cl_abap_format=>e_uri_full ).
+    if i_SIZE is supplied.
+    lv_queryparam = escape( val = i_SIZE format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `size`
@@ -1423,9 +1733,239 @@ endmethod.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->LIST_OBJECT_METADATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_OBJECT_METADATA_LIST
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method LIST_OBJECT_METADATA.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/collections/{collection_id}/objects'.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->UPDATE_OBJECT_METADATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_OBJECT        TYPE STRING
+* | [--->] I_UPDATEOBJECTMETADATA        TYPE T_UPDATE_OBJECT_METADATA(optional)
+* | [--->] I_contenttype       TYPE string (default ='application/json')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_UPDATE_OBJECT_METADATA
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method UPDATE_OBJECT_METADATA.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/collections/{collection_id}/objects/{object}'.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{object}` in ls_request_prop-url-path with i_OBJECT ignoring case.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+    " process body parameters
+    data:
+      lv_body      type string,
+      lv_bodyparam type string,
+      lv_datatype  type char.
+    field-symbols:
+      <lv_text> type any.
+    lv_separator = ''.
+    if not i_UPDATEOBJECTMETADATA is initial.
+    lv_datatype = get_datatype( i_UPDATEOBJECTMETADATA ).
+
+    if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+       lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
+       ls_request_prop-header_content_type cp '*json*'.
+      if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+         lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
+        lv_bodyparam = abap_to_json( i_value = i_UPDATEOBJECTMETADATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      else.
+        lv_bodyparam = abap_to_json( i_name = 'UpdateObjectMetadata' i_value = i_UPDATEOBJECTMETADATA ).
+      endif.
+      lv_body = lv_body && lv_separator && lv_bodyparam.
+    else.
+      assign i_UPDATEOBJECTMETADATA to <lv_text>.
+      lv_bodyparam = <lv_text>.
+      concatenate lv_body lv_bodyparam into lv_body.
+    endif.
+    endif.
+    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
+	  lv_body = `{` && lv_body && `}`.
+	endif.
+
+	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+	else.
+	  ls_request_prop-body = lv_body.
+	endif.
+
+
+    " execute HTTP POST request
+    lo_response = HTTP_POST( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_OBJECT_METADATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_OBJECT        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_OBJECT_METADATA
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method GET_OBJECT_METADATA.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/collections/{collection_id}/objects/{object}'.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{object}` in ls_request_prop-url-path with i_OBJECT ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->DELETE_OBJECT
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_OBJECT        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method DELETE_OBJECT.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/collections/{collection_id}/objects/{object}'.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{object}` in ls_request_prop-url-path with i_OBJECT ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP DELETE request
+    lo_response = HTTP_DELETE( i_request_prop = ls_request_prop ).
+
+
+
+endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->TRAIN
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
+* | [--->] I_COLLECTION_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1440,7 +1980,7 @@ method TRAIN.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/train'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1473,9 +2013,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->ADD_IMAGE_TRAINING_DATA
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_collection_id        TYPE STRING
-* | [--->] I_image_id        TYPE STRING
-* | [--->] I_training_data        TYPE T_BASE_TRAINING_DATA_OBJECTS
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_IMAGE_ID        TYPE STRING
+* | [--->] I_TRAINING_DATA        TYPE T_BASE_TRAINING_DATA_OBJECTS
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_TRAINING_DATA_OBJECTS
@@ -1491,8 +2031,8 @@ method ADD_IMAGE_TRAINING_DATA.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v4/collections/{collection_id}/images/{image_id}/training_data'.
-    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_collection_id ignoring case.
-    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_image_id ignoring case.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+    replace all occurrences of `{image_id}` in ls_request_prop-url-path with i_IMAGE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -1514,20 +2054,20 @@ method ADD_IMAGE_TRAINING_DATA.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_training_data ).
+    lv_datatype = get_datatype( i_TRAINING_DATA ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_training_data i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_TRAINING_DATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'training_data' i_value = i_training_data ).
+        lv_bodyparam = abap_to_json( i_name = 'training_data' i_value = i_TRAINING_DATA ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_training_data to <lv_text>.
+      assign i_TRAINING_DATA to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -1558,11 +2098,81 @@ method ADD_IMAGE_TRAINING_DATA.
 
 endmethod.
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_TRAINING_USAGE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_START_TIME        TYPE STRING(optional)
+* | [--->] I_END_TIME        TYPE STRING(optional)
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_TRAINING_EVENTS
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method GET_TRAINING_USAGE.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/training_usage'.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+    " process query parameters
+    data:
+      lv_queryparam type string.
+
+    if i_START_TIME is supplied.
+    lv_queryparam = escape( val = i_START_TIME format = cl_abap_format=>e_uri_full ).
+    add_query_parameter(
+      exporting
+        i_parameter  = `start_time`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_END_TIME is supplied.
+    lv_queryparam = escape( val = i_END_TIME format = cl_abap_format=>e_uri_full ).
+    add_query_parameter(
+      exporting
+        i_parameter  = `end_time`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->DELETE_USER_DATA
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_customer_id        TYPE STRING
+* | [--->] I_CUSTOMER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -1587,7 +2197,7 @@ method DELETE_USER_DATA.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_customer_id format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_CUSTOMER_ID format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `customer_id`

@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019,2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -44,13 +44,6 @@ public section.
   class-methods GET_PROGNAME
     returning
       value(E_PROGNAME) type STRING .
-  class-methods GET_FIELD_TYPE
-    importing
-      !I_FIELD type ANY
-    exporting
-      !E_TECHNICAL_TYPE type ZIF_IBMC_SERVICE_ARCH~CHAR
-      !E_RELATIVE_TYPE type STRING
-      !E_LENGTH type I .
   class-methods BASE64_DECODE
     importing
       !I_BASE64 type STRING
@@ -66,24 +59,12 @@ public section.
       !E_CLIENT type TS_CLIENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  class-methods FORM_PART_SET_CDATA
+  methods ADD_FORM_PART
     importing
-      !I_FORM_PART type TO_FORM_PART
-      !I_DATA type STRING .
-  class-methods FORM_PART_SET_HEADER
-    importing
-      !I_FORM_PART type TO_FORM_PART
-      !I_NAME type STRING
-      !I_VALUE type STRING .
-  class-methods FORM_PART_SET_XDATA
-    importing
-      !I_FORM_PART type TO_FORM_PART
-      !I_DATA type XSTRING .
-  class-methods GET_COMPONENTS
-    importing
-      !I_STRUCTURE type ANY
-    exporting
-      value(E_COMPONENTS) type ZIF_IBMC_SERVICE_ARCH~TT_STRING .
+      !I_CLIENT type TS_CLIENT
+      !IT_FORM_PART type ZIF_IBMC_SERVICE_ARCH=>TT_FORM_PART
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
   class-methods GET_DEFAULT_PROXY
     importing
       !I_URL type TS_URL optional
@@ -104,11 +85,6 @@ public section.
     importing
       !I_CLIENT type TS_CLIENT
       !I_URI type STRING .
-  class-methods FORM_PART_ADD
-    importing
-      !I_CLIENT type TS_CLIENT
-    returning
-      value(E_FORM_PART) type TO_FORM_PART .
   class-methods EXECUTE
     importing
       !I_CLIENT type TS_CLIENT
@@ -122,14 +98,6 @@ public section.
       !I_RESPONSE type TO_REST_RESPONSE
     returning
       value(E_DATA) type STRING .
-  class-methods PARSE_JSON
-    importing
-      !I_JSON type STRING
-      !I_DICTIONARY type ANY optional
-    changing
-      value(C_ABAP) type ANY
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
   class-methods SET_REQUEST_BODY_CDATA
     importing
       !I_CLIENT type TS_CLIENT
@@ -138,11 +106,6 @@ public section.
     importing
       !I_CLIENT type TS_CLIENT
       !I_DATA type XSTRING .
-  class-methods ESCAPE_URL
-    importing
-      !I_UNESCAPED type STRING
-    returning
-      value(E_ESCAPED) type STRING .
   class-methods GET_RESPONSE_BINARY
     importing
       !I_RESPONSE type TO_REST_RESPONSE
@@ -172,6 +135,36 @@ ENDCLASS.
 
 
 CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
+
+
+  method add_form_part.
+
+    data:
+      ls_form_part type zif_ibmc_service_arch=>ts_form_part,
+      lo_part      type to_form_part.
+
+    loop at it_form_part into ls_form_part.
+      lo_part = i_client-http->request->if_http_entity~add_multipart( ). "form_part_add( i_client = i_client ).
+      if not ls_form_part-content_type is initial.
+        lo_part->set_header_field( name = 'Content-Type' value = ls_form_part-content_type ) ##NO_TEXT.
+        "form_part_set_header( i_form_part = lo_part i_name = 'Content-Type' i_value = ls_form_part-content_type )  ##NO_TEXT.
+      endif.
+      if not ls_form_part-content_disposition is initial.
+        lo_part->set_header_field( name = 'Content-Disposition' value = ls_form_part-content_disposition ) ##NO_TEXT.
+        "form_part_set_header( i_form_part = lo_part i_name = 'Content-Disposition' i_value = ls_form_part-content_disposition )  ##NO_TEXT.
+      endif.
+      if not ls_form_part-xdata is initial.
+        data(lv_length) = xstrlen( ls_form_part-xdata ).
+        lo_part->set_data( data = ls_form_part-xdata offset = 0 length = lv_length ).
+        "form_part_set_xdata( i_form_part = lo_part i_data = ls_form_part-xdata ).
+      endif.
+      if not ls_form_part-cdata is initial.
+        lo_part->append_cdata( data = ls_form_part-cdata ).
+        "form_part_set_cdata( i_form_part = lo_part i_data = ls_form_part-cdata ).
+      endif.
+    endloop.
+
+  endmethod.
 
 
   method base64_decode.
@@ -270,13 +263,6 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
-  method escape_url.
-
-    e_escaped = cl_http_utility=>escape_url( unescaped = i_unescaped ).
-
-  endmethod.
-
-
   method execute.
 
     data:
@@ -315,58 +301,6 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
-  method form_part_add.
-
-    e_form_part = i_client-http->request->if_http_entity~add_multipart( ).
-
-  endmethod.
-
-
-  method form_part_set_cdata.
-
-    i_form_part->append_cdata( data = i_data ).
-
-  endmethod.
-
-
-  method form_part_set_header.
-
-    i_form_part->set_header_field( name = i_name value = i_value ).
-
-  endmethod.
-
-
-  method form_part_set_xdata.
-
-    data:
-      lv_length type i.
-
-    lv_length = xstrlen( i_data ).
-    i_form_part->set_data( data = i_data offset = 0 length = lv_length ).
-
-  endmethod.
-
-
-  method get_components.
-
-    data:
-      lo_abap_struc type ref to cl_abap_structdescr,
-      lt_comp       type cl_abap_structdescr=>component_table.
-
-    field-symbols:
-      <ls_comp>     type line of cl_abap_structdescr=>component_table.
-
-    lo_abap_struc ?= cl_abap_structdescr=>describe_by_data( i_structure ).
-    lt_comp = lo_abap_struc->get_components( ).
-
-    clear e_components[].
-    loop at lt_comp assigning <ls_comp>.
-      append <ls_comp>-name to e_components.
-    endloop.
-
-  endmethod.
-
-
   method get_default_proxy.
 
     data:
@@ -399,35 +333,6 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
     else.
       e_proxy_host = ls_proxy-host.
       e_proxy_port = ls_proxy-port.
-    endif.
-
-  endmethod.
-
-
-  method get_field_type.
-    data:
-      lo_abap_type type ref to cl_abap_typedescr.
-
-    describe field i_field type e_technical_type.
-
-    if e_relative_type is requested.
-      if e_technical_type eq zif_ibmc_service_arch~c_datatype-objectref.
-        data lo_refdescr type ref to cl_abap_refdescr.
-        lo_refdescr ?= cl_abap_typedescr=>describe_by_data( i_field ).
-        lo_abap_type ?= lo_refdescr->get_referenced_type( ).
-      else.
-        lo_abap_type = cl_abap_typedescr=>describe_by_data( i_field ).
-      endif.
-      e_relative_type = lo_abap_type->get_relative_name( ).
-    endif.
-
-    if e_length is requested.
-      if e_technical_type eq zif_ibmc_service_arch~c_datatype-c or
-         e_technical_type eq zif_ibmc_service_arch~c_datatype-n.
-        describe field i_field length e_length in character mode.
-      else.
-        e_length = 0.
-      endif.
     endif.
 
   endmethod.
@@ -475,61 +380,6 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
     e_timezone = sy-zonlo.
 
   endmethod.
-
-
-  method PARSE_JSON.
-
-    data:
-      lv_json       type string,
-      lt_dictionary type zif_ibmc_service_arch~tt_string,
-      lv_dictionary type string,
-      lv_orgname    type string,
-      lv_abapname   type string,
-      lv_regex      type string,
-      lo_json       type ref to /ui2/cl_json,
-      lv_msg        type string,
-      lr_exception  type ref to cx_sy_move_cast_error.
-    field-symbols:
-      <lv_orgname> type string.
-
-    if not i_json is initial.
-
-      lv_json = i_json.
-
-      if i_dictionary is supplied.
-        get_components(
-          exporting
-            i_structure = i_dictionary
-          importing
-            e_components = lt_dictionary ).
-
-        loop at lt_dictionary into lv_dictionary.
-          assign component lv_dictionary of structure i_dictionary to <lv_orgname>.
-          lv_orgname = <lv_orgname>.
-          translate lv_orgname to upper case.
-          if lv_dictionary ne lv_orgname.
-            lv_regex = `"` && <lv_orgname> && `"\s*:`.
-            lv_abapname = `"` && lv_dictionary && `":`.
-            replace all occurrences of regex lv_regex in lv_json with lv_abapname.
-          endif.
-        endloop.
-
-      endif.
-
-
-      " copy code to execute /ui2/cl_json=>deserialize( exporting json = lv_json changing data = c_abap ) and catch exception
-      create object lo_json.
-      try.
-          lo_json->deserialize_int( exporting json = lv_json changing data = c_abap ).
-          catch cx_sy_move_cast_error into lr_exception.
-            zcl_ibmc_service=>raise_exception(
-              exporting
-                i_msgno = 20 ).
-        endtry.
-
-      endif.
-
-    endmethod.
 
 
   method set_authentication_basic.

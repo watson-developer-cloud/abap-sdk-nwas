@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -25,78 +25,121 @@ public section.
   types:
     "!   Response payload for HTTP errors.
     begin of T_ERROR_RESPONSE,
+      "!   HTTP status code.
       CODE type INTEGER,
+      "!   Error name.
       ERROR type STRING,
+      "!   Error description.
       DESCRIPTION type STRING,
     end of T_ERROR_RESPONSE.
   types:
     "!   Request payload to classify.
     begin of T_CLASSIFY_INPUT,
+      "!   The submitted phrase. The maximum length is 2048 characters.
       TEXT type STRING,
     end of T_CLASSIFY_INPUT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT,
+      "!   Metadata in JSON format. The metadata identifies the language of the data, and
+      "!    an optional name to identify the classifier. Specify the language with the
+      "!    2-letter primary language code as assigned in ISO standard 639.<br/>
+      "!   <br/>
+      "!   Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German,
+      "!    (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese
+      "!    (`pt`), and Spanish (`es`).
       TRAINING_METADATA type FILE,
+      "!   Training data in CSV format. Each text value must have at least one class. The
+      "!    data can include up to 3,000 classes and 20,000 records. For details, see [Data
+      "!    preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natur
+      "!   al-language-classifier-using-your-data).
       TRAINING_DATA type FILE,
     end of T_INLINE_OBJECT.
   types:
     "!   Class and confidence.
     begin of T_CLASSIFIED_CLASS,
+      "!   A decimal percentage that represents the confidence that Watson has in this
+      "!    class. Higher values represent higher confidences.
       CONFIDENCE type DOUBLE,
+      "!   Class label.
       CLASS_NAME type STRING,
     end of T_CLASSIFIED_CLASS.
   types:
     "!   Response from the classifier for a phrase in a collection.
     begin of T_COLLECTION_ITEM,
+      "!   The submitted phrase. The maximum length is 2048 characters.
       TEXT type STRING,
+      "!   The class with the highest confidence.
       TOP_CLASS type STRING,
+      "!   An array of up to ten class-confidence pairs sorted in descending order of
+      "!    confidence.
       CLASSES type STANDARD TABLE OF T_CLASSIFIED_CLASS WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTION_ITEM.
   types:
     "!   A classifier for natural language phrases.
     begin of T_CLASSIFIER,
+      "!   User-supplied name for the classifier.
       NAME type STRING,
+      "!   Link to the classifier.
       URL type STRING,
+      "!   The state of the classifier.
       STATUS type STRING,
+      "!   Unique identifier for this classifier.
       CLASSIFIER_ID type STRING,
+      "!   Date and time (UTC) the classifier was created.
       CREATED type DATETIME,
+      "!   Additional detail about the status.
       STATUS_DESCRIPTION type STRING,
+      "!   The language used for the classifier.
       LANGUAGE type STRING,
     end of T_CLASSIFIER.
   types:
     "!   List of available classifiers.
     begin of T_CLASSIFIER_LIST,
+      "!   The classifiers available to the user. Returns an empty array if no classifiers
+      "!    are available.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIER_LIST.
   types:
     "!   Response from the classifier for a phrase.
     begin of T_CLASSIFICATION,
+      "!   Unique identifier for this classifier.
       CLASSIFIER_ID type STRING,
+      "!   Link to the classifier.
       URL type STRING,
+      "!   The submitted phrase.
       TEXT type STRING,
+      "!   The class with the highest confidence.
       TOP_CLASS type STRING,
+      "!   An array of up to ten class-confidence pairs sorted in descending order of
+      "!    confidence.
       CLASSES type STANDARD TABLE OF T_CLASSIFIED_CLASS WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFICATION.
   types:
     "!   Request payload to classify.
     begin of T_CLASSIFY_COLLECTION_INPUT,
+      "!   The submitted phrases.
       COLLECTION type STANDARD TABLE OF T_CLASSIFY_INPUT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFY_COLLECTION_INPUT.
   types:
     "!   Response payload for Cloud errors.
     begin of T_ERROR_CLOUD,
+      "!   HTTP status code.
       CODE type INTEGER,
+      "!   Error name.
       ERROR type STRING,
     end of T_ERROR_CLOUD.
   types:
-    "!
+    "!   No documentation available.
       T_EMPTY type JSONOBJECT.
   types:
     "!   Response from the classifier for multiple phrases.
     begin of T_CLASSIFICATION_COLLECTION,
+      "!   Unique identifier for this classifier.
       CLASSIFIER_ID type STRING,
+      "!   Link to the classifier.
       URL type STRING,
+      "!   An array of classifier responses for each submitted phrase.
       COLLECTION type STANDARD TABLE OF T_COLLECTION_ITEM WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFICATION_COLLECTION.
 
@@ -151,17 +194,18 @@ constants:
 
     "! Classify a phrase.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to use.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   Phrase to classify.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFICATION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CLASSIFY
     importing
-      !I_classifier_id type STRING
-      !I_body type T_CLASSIFY_INPUT
+      !I_CLASSIFIER_ID type STRING
+      !I_BODY type T_CLASSIFY_INPUT
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -170,17 +214,18 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Classify multiple phrases.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to use.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   Phrase to classify. You can submit up to 30 text phrases in a request.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFICATION_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CLASSIFY_COLLECTION
     importing
-      !I_classifier_id type STRING
-      !I_body type T_CLASSIFY_COLLECTION_INPUT
+      !I_CLASSIFIER_ID type STRING
+      !I_BODY type T_CLASSIFY_COLLECTION_INPUT
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -190,28 +235,29 @@ constants:
 
     "! Create classifier.
     "!
-    "! @parameter I_training_metadata |
+    "! @parameter I_TRAINING_METADATA |
     "!   Metadata in JSON format. The metadata identifies the language of the data, and
     "!    an optional name to identify the classifier. Specify the language with the
-    "!    2-letter primary language code as assigned in ISO standard 639.
-    "!
+    "!    2-letter primary language code as assigned in ISO standard 639.<br/>
+    "!   <br/>
     "!   Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German,
     "!    (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Brazilian Portuguese
     "!    (`pt`), and Spanish (`es`).
-    "! @parameter I_training_data |
+    "! @parameter I_TRAINING_DATA |
     "!   Training data in CSV format. Each text value must have at least one class. The
     "!    data can include up to 3,000 classes and 20,000 records. For details, see [Data
-    "!    preparation](https://cloud.ibm.com/docs/services/natural-language-classifier?to
-    "!   pic=natural-language-classifier-using-your-data).
+    "!    preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natur
+    "!   al-language-classifier-using-your-data).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_CLASSIFIER
     importing
-      !I_training_metadata type FILE
-      !I_training_data type FILE
-      !I_training_metadata_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
-      !I_training_data_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_TRAINING_METADATA type FILE
+      !I_TRAINING_DATA type FILE
+      !I_TRAINING_METADATA_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_TRAINING_DATA_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -222,6 +268,7 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_CLASSIFIERS
     importing
@@ -232,14 +279,15 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get information about a classifier.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to query.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_CLASSIFIER
     importing
-      !I_classifier_id type STRING
+      !I_CLASSIFIER_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_CLASSIFIER
@@ -247,12 +295,13 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete classifier.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to delete.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_CLASSIFIER
     importing
-      !I_classifier_id type STRING
+      !I_CLASSIFIER_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
@@ -293,7 +342,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -329,7 +378,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122844'.
+    e_sdk_version_date = '20200210092820'.
 
   endmethod.
 
@@ -338,8 +387,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_NAT_LANG_CLASS_V1->CLASSIFY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
-* | [--->] I_body        TYPE T_CLASSIFY_INPUT
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_CLASSIFY_INPUT
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATION
@@ -355,7 +404,7 @@ method CLASSIFY.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/classifiers/{classifier_id}/classify'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -377,20 +426,20 @@ method CLASSIFY.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -424,8 +473,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_NAT_LANG_CLASS_V1->CLASSIFY_COLLECTION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
-* | [--->] I_body        TYPE T_CLASSIFY_COLLECTION_INPUT
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_CLASSIFY_COLLECTION_INPUT
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATION_COLLECTION
@@ -441,7 +490,7 @@ method CLASSIFY_COLLECTION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/classifiers/{classifier_id}/classify_collection'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -463,20 +512,20 @@ method CLASSIFY_COLLECTION.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -511,10 +560,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_NAT_LANG_CLASS_V1->CREATE_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_training_metadata        TYPE FILE
-* | [--->] I_training_data        TYPE FILE
-* | [--->] I_training_metadata_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
-* | [--->] I_training_data_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_TRAINING_METADATA        TYPE FILE
+* | [--->] I_TRAINING_DATA        TYPE FILE
+* | [--->] I_TRAINING_METADATA_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_TRAINING_DATA_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIER
@@ -556,25 +605,25 @@ method CREATE_CLASSIFIER.
 
 
 
-    if not i_training_metadata is initial.
-      lv_extension = get_file_extension( I_training_metadata_CT ).
+    if not i_TRAINING_METADATA is initial.
+      lv_extension = get_file_extension( I_TRAINING_METADATA_CT ).
       lv_value = `form-data; name="training_metadata"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_training_metadata_CT.
+      ls_form_part-content_type = I_TRAINING_METADATA_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_training_metadata.
+      ls_form_part-xdata = i_TRAINING_METADATA.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_training_data is initial.
-      lv_extension = get_file_extension( I_training_data_CT ).
+    if not i_TRAINING_DATA is initial.
+      lv_extension = get_file_extension( I_TRAINING_DATA_CT ).
       lv_value = `form-data; name="training_data"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_training_data_CT.
+      ls_form_part-content_type = I_TRAINING_DATA_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_training_data.
+      ls_form_part-xdata = i_TRAINING_DATA.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -645,7 +694,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_NAT_LANG_CLASS_V1->GET_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIER
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -660,7 +709,7 @@ method GET_CLASSIFIER.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/classifiers/{classifier_id}'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -693,7 +742,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_NAT_LANG_CLASS_V1->DELETE_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -707,7 +756,7 @@ method DELETE_CLASSIFIER.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/classifiers/{classifier_id}'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.

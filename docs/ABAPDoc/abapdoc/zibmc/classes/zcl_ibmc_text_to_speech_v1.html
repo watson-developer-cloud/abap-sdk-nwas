@@ -3,14 +3,14 @@
   speech-synthesis capabilities to synthesize text into natural-sounding speech
   in a variety of languages, dialects, and voices. The service supports at least
   one male or female voice, sometimes both, for each language. The audio is
-  streamed back to the client with minimal delay.
-
+  streamed back to the client with minimal delay. <br/>
+ <br/>
  For speech synthesis, the service supports a synchronous HTTP Representational
   State Transfer (REST) interface. It also supports a WebSocket interface that
   provides both plain text and SSML input, including the SSML &lt;mark&gt;
   element and word timings. SSML is an XML-based markup language that provides
-  text annotation for speech-synthesis applications.
-
+  text annotation for speech-synthesis applications. <br/>
+ <br/>
  The service also offers a customization interface. You can use the interface to
   define sounds-like or phonetic translations for words. A sounds-like
   translation consists of one or more words that, when combined, sound like the
@@ -21,8 +21,8 @@
     an XML-based markup language that provides text annotation for speech-synthesis
     applications. Pass a maximum of 5 KB of input text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation</span> (structured type)</td><td><span class="abapDocComment">   Information about the translation for the specified text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_voice_model</span> (structured type)</td><td><span class="abapDocComment">   Information about the updated custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice</span> (structured type)</td><td><span class="abapDocComment">   Information about an available voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voices</span> (structured type)</td><td><span class="abapDocComment">   Information about all available voice models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_model</span> (structured type)</td><td><span class="abapDocComment">   Information about an existing custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_models</span> (structured type)</td><td><span class="abapDocComment">   Information about existing custom voice models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_word</span> (structured type)</td><td><span class="abapDocComment">   Information about a word for the custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_words</span> (structured type)</td><td><span class="abapDocComment">   For the **Add custom words** method, one or more words that are to be added or
     updated for the custom voice model and the translation for each specified word.
-
-
+    <br/>
+   <br/>
    For the **List custom words** method, the words and their translations from the
     custom voice model.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">add_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_translation</span></td><td>type T_TRANSLATION</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Add a custom word.
 
@@ -39,7 +39,7 @@
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_custom_words</span></td><td><span class="abapDocComment">
-
+   No documentation available.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_create_voice_model</span></td><td>type T_CREATE_VOICE_MODEL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create a custom model.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_create_voice_model</span></td><td><span class="abapDocComment">
@@ -133,7 +133,7 @@
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">synthesize</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type T_TEXT</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;audio&#x2f;ogg&#x3b;codecs&#x3d;opus&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING default &#x27;en-US_MichaelVoice&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type FILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Synthesize audio.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
-
+   No documentation available.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_accept</span></td><td><span class="abapDocComment">
    The requested format (MIME type) of the audio. You can use the `Accept` header
     or the `accept` parameter to specify the audio format. For more information
@@ -157,4 +157,4 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_update_voice_model</span></td><td><span class="abapDocComment">
    An `UpdateVoiceModel` object that contains information that is to be updated for
     the custom voice model.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>

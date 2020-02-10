@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@ public section.
     "!   The numeric location of the identified element in the document, represented with
     "!    two integers labeled `begin` and `end`.
     begin of T_LOCATION,
+      "!   The element's `begin` index.
       BEGIN type LONG,
+      "!   The element's `end` index.
       END type LONG,
     end of T_LOCATION.
   types:
@@ -32,109 +34,174 @@ public section.
     "!    effect of the element on the identified `party`, and the `party` object
     "!    identifies the affected party.
     begin of T_LABEL,
+      "!   The identified `nature` of the element.
       NATURE type STRING,
+      "!   The identified `party` of the element.
       PARTY type STRING,
     end of T_LABEL.
   types:
     "!   Identification of a specific type.
     begin of T_TYPE_LABEL_COMPARISON,
+      "!   A pair of `nature` and `party` objects. The `nature` object identifies the
+      "!    effect of the element on the identified `party`, and the `party` object
+      "!    identifies the affected party.
       LABEL type T_LABEL,
     end of T_TYPE_LABEL_COMPARISON.
   types:
     "!   The locations of each paragraph in the input document.
     begin of T_PARAGRAPHS,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_PARAGRAPHS.
   types:
     "!   Document counts.
     begin of T_DOC_COUNTS,
+      "!   Total number of documents.
       TOTAL type INTEGER,
+      "!   Number of pending documents.
       PENDING type INTEGER,
+      "!   Number of documents successfully processed.
       SUCCESSFUL type INTEGER,
+      "!   Number of documents not successfully processed.
       FAILED type INTEGER,
     end of T_DOC_COUNTS.
   types:
     "!   Identification of a specific type.
     begin of T_TYPE_LABEL,
+      "!   A pair of `nature` and `party` objects. The `nature` object identifies the
+      "!    effect of the element on the identified `party`, and the `party` object
+      "!    identifies the affected party.
       LABEL type T_LABEL,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_TYPE_LABEL.
   types:
     "!   Brief information about the input document.
     begin of T_SHORT_DOC,
+      "!   The title of the input document, if identified.
       TITLE type STRING,
+      "!   The MD5 hash of the input document.
       HASH type STRING,
     end of T_SHORT_DOC.
   types:
     "!   Information defining an element's subject matter.
     begin of T_CATEGORY,
+      "!   The category of the associated element.
       LABEL type STRING,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_CATEGORY.
   types:
     "!   The original labeling from the input document, without the submitted feedback.
     begin of T_ORIGINAL_LABELS_OUT,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   A string identifying the type of modification the feedback entry in the
+      "!    `updated_labels` array. Possible values are `added`, `not_changed`, and
+      "!    `removed`.
       MODIFICATION type STRING,
     end of T_ORIGINAL_LABELS_OUT.
   types:
     "!   The updated labeling from the input document, accounting for the submitted
     "!    feedback.
     begin of T_UPDATED_LABELS_OUT,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   The type of modification the feedback entry in the `updated_labels` array.
+      "!    Possible values are `added`, `not_changed`, and `removed`.
       MODIFICATION type STRING,
     end of T_UPDATED_LABELS_OUT.
   types:
     "!   Pagination details, if required by the length of the output.
     begin of T_PAGINATION,
+      "!   A token identifying the current page of results.
       REFRESH_CURSOR type STRING,
+      "!   A token identifying the next page of results.
       NEXT_CURSOR type STRING,
+      "!   The URL that returns the current page of results.
       REFRESH_URL type STRING,
+      "!   The URL that returns the next page of results.
       NEXT_URL type STRING,
+      "!   Reserved for future use.
       TOTAL type LONG,
     end of T_PAGINATION.
   types:
     "!   Information returned from the **Add Feedback** method.
     begin of T_FEEDBACK_DATA_OUTPUT,
+      "!   A string identifying the user adding the feedback. The only permitted value is
+      "!    `element_classification`.
       FEEDBACK_TYPE type STRING,
+      "!   Brief information about the input document.
       DOCUMENT type T_SHORT_DOC,
+      "!   An optional string identifying the model ID. The only permitted value is
+      "!    `contracts`.
       MODEL_ID type STRING,
+      "!   An optional string identifying the version of the model used.
       MODEL_VERSION type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text to which the feedback applies.
       TEXT type STRING,
+      "!   The original labeling from the input document, without the submitted feedback.
       ORIGINAL_LABELS type T_ORIGINAL_LABELS_OUT,
+      "!   The updated labeling from the input document, accounting for the submitted
+      "!    feedback.
       UPDATED_LABELS type T_UPDATED_LABELS_OUT,
+      "!   Pagination details, if required by the length of the output.
       PAGINATION type T_PAGINATION,
     end of T_FEEDBACK_DATA_OUTPUT.
   types:
     "!   List of document attributes.
     begin of T_ATTRIBUTE,
+      "!   The type of attribute.
       TYPE type STRING,
+      "!   The text associated with the attribute.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_ATTRIBUTE.
   types:
     "!   Information defining an element's subject matter.
     begin of T_CATEGORY_COMPARISON,
+      "!   The category of the associated element.
       LABEL type STRING,
     end of T_CATEGORY_COMPARISON.
   types:
     "!   Element that does not align semantically between two compared documents.
     begin of T_UNALIGNED_ELEMENT,
+      "!   The label assigned to the document by the value of the `file_1_label` or
+      "!    `file_2_label` parameters on the **Compare two documents** method.
       DOCUMENT_LABEL type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text of the element.
       TEXT type STRING,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL_COMPARISON WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY_COMPARISON WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of document attributes.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_UNALIGNED_ELEMENT.
   types:
     "!   The updated labeling from the input document, accounting for the submitted
     "!    feedback.
     begin of T_UPDATED_LABELS_IN,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATED_LABELS_IN.
   types:
@@ -145,14 +212,23 @@ public section.
     "!   A list of `begin` and `end` indexes that indicate the locations of the elements
     "!    in the input document.
     begin of T_ELEMENT_LOCATIONS,
+      "!   An integer that indicates the starting position of the element in the input
+      "!    document.
       BEGIN type INTEGER,
+      "!   An integer that indicates the ending position of the element in the input
+      "!    document.
       END type INTEGER,
     end of T_ELEMENT_LOCATIONS.
   types:
     "!   The leading sentences in a section or subsection of the input document.
     begin of T_LEADING_SENTENCE,
+      "!   The text of the leading sentence.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   An array of `location` objects that lists the locations of detected leading
+      "!    sentences.
       ELEMENT_LOCATIONS type STANDARD TABLE OF T_ELEMENT_LOCATIONS WITH NON-UNIQUE DEFAULT KEY,
     end of T_LEADING_SENTENCE.
   types:
@@ -161,16 +237,31 @@ public section.
     "!    out and can be placed back in order by using the `begin` and `end` values of
     "!    the element and the `level` value of the section.
     begin of T_SECTION_TITLES,
+      "!   The text of the section title, if identified.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   An integer indicating the level at which the section is located in the input
+      "!    document. For example, `1` represents a top-level section, `2` represents a
+      "!    subsection within the level `1` section, and so forth.
       LEVEL type INTEGER,
+      "!   An array of `location` objects that lists the locations of detected section
+      "!    titles.
       ELEMENT_LOCATIONS type STANDARD TABLE OF T_ELEMENT_LOCATIONS WITH NON-UNIQUE DEFAULT KEY,
     end of T_SECTION_TITLES.
   types:
     "!   The structure of the input document.
     begin of T_DOC_STRUCTURE,
+      "!   An array containing one object per section or subsection identified in the input
+      "!    document.
       SECTION_TITLES type STANDARD TABLE OF T_SECTION_TITLES WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array containing one object per section or subsection, in parallel with the
+      "!    `section_titles` array, that details the leading sentences in the corresponding
+      "!    section or subsection.
       LEADING_SENTENCES type STANDARD TABLE OF T_LEADING_SENTENCE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array containing one object per paragraph, in parallel with the
+      "!    `section_titles` and `leading_sentences` arrays.
       PARAGRAPHS type STANDARD TABLE OF T_PARAGRAPHS WITH NON-UNIQUE DEFAULT KEY,
     end of T_DOC_STRUCTURE.
   types:
@@ -179,41 +270,62 @@ public section.
     "!    `column_header_texts`.
       T_COLUMN_HEADER_TEXTS_NORM type TT_String.
   types:
-    "!
+    "!   No documentation available.
     begin of T_ERROR_RESPONSE,
+      "!   The HTTP error status code.
       CODE type INTEGER,
+      "!   A message describing the error.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
     "!   A contact.
     begin of T_CONTACT,
+      "!   A string listing the name of the contact.
       NAME type STRING,
+      "!   A string listing the role of the contact.
       ROLE type STRING,
     end of T_CONTACT.
   types:
     "!   The table's section title, if identified.
     begin of T_SECTION_TITLE,
+      "!   The text of the section title, if identified.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_SECTION_TITLE.
   types:
     "!   Column-level cells, each applicable as a header to other cells in the same
     "!    column as itself, of the current table.
     begin of T_COLUMN_HEADERS,
+      "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
+      "!   The location of the column header cell in the current table as defined by its
+      "!    `begin` and `end` offsets, respectfully, in the input document.
       LOCATION type JSONOBJECT,
+      "!   The textual contents of this cell from the input document without associated
+      "!    markup content.
       TEXT type STRING,
+      "!   If you provide customization input, the normalized version of the cell text
+      "!    according to the customization; otherwise, the same value as `text`.
       TEXT_NORMALIZED type STRING,
+      "!   The `begin` index of this cell's `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `row` location in the current table.
       ROW_INDEX_END type LONG,
+      "!   The `begin` index of this cell's `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_COLUMN_HEADERS.
   types:
     "!   Text that is related to the contents of the table and that precedes or follows
     "!    the current table.
     begin of T_CONTEXTS,
+      "!   The related text.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_CONTEXTS.
   types:
@@ -221,292 +333,533 @@ public section.
     "!    ...`. Empty when no title is identified. When exposed, the `title` is also
     "!    excluded from the `contexts` array of the same table.
     begin of T_TABLE_TITLE,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text of the identified table title or caption.
       TEXT type STRING,
     end of T_TABLE_TITLE.
   types:
     "!   Cells that are not table header, column header, or row header cells.
     begin of T_BODY_CELLS,
+      "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The textual contents of this cell from the input document without associated
+      "!    markup content.
       TEXT type STRING,
+      "!   The `begin` index of this cell's `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `row` location in the current table.
       ROW_INDEX_END type LONG,
+      "!   The `begin` index of this cell's `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `column` location in the current table.
       COLUMN_INDEX_END type LONG,
+      "!   An array that contains the `id` value of a row header that is applicable to this
+      "!    body cell.
       ROW_HEADER_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array that contains the `text` value of a row header that is applicable to
+      "!    this body cell.
       ROW_HEADER_TEXTS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   If you provide customization input, the normalized version of the row header
+      "!    texts according to the customization; otherwise, the same value as
+      "!    `row_header_texts`.
       ROW_HEADER_TEXTS_NORMALIZED type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array that contains the `id` value of a column header that is applicable to
+      "!    the current cell.
       COLUMN_HEADER_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array that contains the `text` value of a column header that is applicable to
+      "!    the current cell.
       COLUMN_HEADER_TEXTS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   If you provide customization input, the normalized version of the column header
+      "!    texts according to the customization; otherwise, the same value as
+      "!    `column_header_texts`.
       COLUMN_HEADER_TEXTS_NORMALIZED type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   No documentation available.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_BODY_CELLS.
   types:
     "!   A key in a key-value pair.
     begin of T_KEY,
+      "!   The unique ID of the key in the table.
       CELL_ID type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text content of the table cell without HTML markup.
       TEXT type STRING,
     end of T_KEY.
   types:
     "!   A value in a key-value pair.
     begin of T_VALUE,
+      "!   The unique ID of the value in the table.
       CELL_ID type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text content of the table cell without HTML markup.
       TEXT type STRING,
     end of T_VALUE.
   types:
     "!   Key-value pairs detected across cell boundaries.
     begin of T_KEY_VALUE_PAIR,
+      "!   A key in a key-value pair.
       KEY type T_KEY,
+      "!   A list of values in a key-value pair.
       VALUE type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_KEY_VALUE_PAIR.
   types:
     "!   The contents of the current table's header.
     begin of T_TABLE_HEADERS,
+      "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
+      "!   The location of the table header cell in the current table as defined by its
+      "!    `begin` and `end` offsets, respectfully, in the input document.
       LOCATION type JSONOBJECT,
+      "!   The textual contents of the cell from the input document without associated
+      "!    markup content.
       TEXT type STRING,
+      "!   The `begin` index of this cell's `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `row` location in the current table.
       ROW_INDEX_END type LONG,
+      "!   The `begin` index of this cell's `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_TABLE_HEADERS.
   types:
     "!   Row-level cells, each applicable as a header to other cells in the same row as
     "!    itself, of the current table.
     begin of T_ROW_HEADERS,
+      "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The textual contents of this cell from the input document without associated
+      "!    markup content.
       TEXT type STRING,
+      "!   If you provide customization input, the normalized version of the cell text
+      "!    according to the customization; otherwise, the same value as `text`.
       TEXT_NORMALIZED type STRING,
+      "!   The `begin` index of this cell's `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `row` location in the current table.
       ROW_INDEX_END type LONG,
+      "!   The `begin` index of this cell's `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
+      "!   The `end` index of this cell's `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_ROW_HEADERS.
   types:
     "!   The contents of the tables extracted from a document.
     begin of T_TABLES,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The textual contents of the current table from the input document without
+      "!    associated markup content.
       TEXT type STRING,
+      "!   The table's section title, if identified.
       SECTION_TITLE type T_SECTION_TITLE,
+      "!   If identified, the title or caption of the current table of the form `Table x.:
+      "!    ...`. Empty when no title is identified. When exposed, the `title` is also
+      "!    excluded from the `contexts` array of the same table.
       TITLE type T_TABLE_TITLE,
+      "!   An array of table-level cells that apply as headers to all the other cells in
+      "!    the current table.
       TABLE_HEADERS type STANDARD TABLE OF T_TABLE_HEADERS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of row-level cells, each applicable as a header to other cells in the
+      "!    same row as itself, of the current table.
       ROW_HEADERS type STANDARD TABLE OF T_ROW_HEADERS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of column-level cells, each applicable as a header to other cells in
+      "!    the same column as itself, of the current table.
       COLUMN_HEADERS type STANDARD TABLE OF T_COLUMN_HEADERS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of cells that are neither table header nor column header nor row header
+      "!    cells, of the current table with corresponding row and column header
+      "!    associations.
       BODY_CELLS type STANDARD TABLE OF T_BODY_CELLS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects that list text that is related to the table contents and
+      "!    that precedes or follows the current table.
       CONTEXTS type STANDARD TABLE OF T_CONTEXTS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of key-value pairs identified in the current table.
       KEY_VALUE_PAIRS type STANDARD TABLE OF T_KEY_VALUE_PAIR WITH NON-UNIQUE DEFAULT KEY,
     end of T_TABLES.
   types:
     "!   Information about the parsed input document.
     begin of T_DOC_INFO,
+      "!   The full text of the parsed document in HTML format.
       HTML type STRING,
+      "!   The title of the parsed document. If the service did not detect a title, the
+      "!    value of this element is `null`.
       TITLE type STRING,
+      "!   The MD5 hash of the input document.
       HASH type STRING,
     end of T_DOC_INFO.
   types:
     "!   The analysis of the document's tables.
     begin of T_TABLE_RETURN,
+      "!   Information about the parsed input document.
       DOCUMENT type T_DOC_INFO,
+      "!   The ID of the model used to extract the table contents. The value for table
+      "!    extraction is `tables`.
       MODEL_ID type STRING,
+      "!   The version of the `tables` model ID.
       MODEL_VERSION type STRING,
+      "!   Definitions of the tables identified in the input document.
       TABLES type STANDARD TABLE OF T_TABLES WITH NON-UNIQUE DEFAULT KEY,
     end of T_TABLE_RETURN.
   types:
     "!   Information about the document and the submitted feedback.
     begin of T_FEEDBACK_RETURN,
+      "!   The unique ID of the feedback object.
       FEEDBACK_ID type STRING,
+      "!   An optional string identifying the person submitting feedback.
       USER_ID type STRING,
+      "!   An optional comment from the person submitting the feedback.
       COMMENT type STRING,
+      "!   Timestamp listing the creation time of the feedback submission.
       CREATED type DATETIME,
+      "!   Information returned from the **Add Feedback** method.
       FEEDBACK_DATA type T_FEEDBACK_DATA_OUTPUT,
     end of T_FEEDBACK_RETURN.
   types:
     "!   The details of the normalized text, if applicable. This element is optional; it
     "!    is returned only if normalized text exists.
     begin of T_INTERPRETATION,
+      "!   The value that was located in the normalized text.
       VALUE type STRING,
+      "!   An integer or float expressing the numeric value of the `value` key.
       NUMERIC_VALUE type NUMBER,
+      "!   A string listing the unit of the value that was found in the normalized
+      "!    text.<br/>
+      "!   <br/>
+      "!   **Note:** The value of `unit` is the [ISO-4217 currency
+      "!    code](https://www.iso.org/iso-4217-currency-codes.html) identified for the
+      "!    currency amount (for example, `USD` or `EUR`). If the service cannot
+      "!    disambiguate a currency symbol (for example, `$` or `£`), the value of `unit`
+      "!    contains the ambiguous symbol as-is.
       UNIT type STRING,
     end of T_INTERPRETATION.
   types:
     "!   A monetary amount identified in the input document.
     begin of T_CONTRACT_AMTS,
+      "!   The confidence level in the identification of the contract amount.
       CONFIDENCE_LEVEL type STRING,
+      "!   The monetary amount.
       TEXT type STRING,
+      "!   The normalized form of the amount, which is listed as a string. This element is
+      "!    optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   The details of the normalized text, if applicable. This element is optional; it
+      "!    is returned only if normalized text exists.
       INTERPRETATION type T_INTERPRETATION,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_AMTS.
   types:
     "!   The contract currencies that are declared in the document.
     begin of T_CONTRACT_CURRENCIES,
+      "!   The confidence level in the identification of the contract currency.
       CONFIDENCE_LEVEL type STRING,
+      "!   The contract currency.
       TEXT type STRING,
+      "!   The normalized form of the contract currency, which is listed as a string in
+      "!    [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) format. This
+      "!    element is optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_CURRENCIES.
   types:
     "!   The document's payment duration or durations.
     begin of T_PAYMENT_TERMS,
+      "!   The confidence level in the identification of the payment term.
       CONFIDENCE_LEVEL type STRING,
+      "!   The payment term (duration).
       TEXT type STRING,
+      "!   The normalized form of the payment term, which is listed as a string. This
+      "!    element is optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   The details of the normalized text, if applicable. This element is optional; it
+      "!    is returned only if normalized text exists.
       INTERPRETATION type T_INTERPRETATION,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_PAYMENT_TERMS.
   types:
     "!   A component part of the document.
     begin of T_ELEMENT,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text of the element.
       TEXT type STRING,
+      "!   Description of the action specified by the element  and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of document attributes.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ELEMENT.
   types:
     "!   Termination dates identified in the input document.
     begin of T_TERMINATION_DATES,
+      "!   The confidence level in the identification of the termination date.
       CONFIDENCE_LEVEL type STRING,
+      "!   The termination date.
       TEXT type STRING,
+      "!   The normalized form of the termination date, which is listed as a string. This
+      "!    element is optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_TERMINATION_DATES.
   types:
     "!   The contract type identified in the input document.
     begin of T_CONTRACT_TYPES,
+      "!   The confidence level in the identification of the contract type.
       CONFIDENCE_LEVEL type STRING,
+      "!   The contract type.
       TEXT type STRING,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_TYPES.
   types:
     "!   An effective date.
     begin of T_EFFECTIVE_DATES,
+      "!   The confidence level in the identification of the effective date.
       CONFIDENCE_LEVEL type STRING,
+      "!   The effective date, listed as a string.
       TEXT type STRING,
+      "!   The normalized form of the effective date, which is listed as a string. This
+      "!    element is optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_EFFECTIVE_DATES.
   types:
     "!   A mention of a party.
     begin of T_MENTION,
+      "!   The name of the party.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_MENTION.
   types:
     "!   A party's address.
     begin of T_ADDRESS,
+      "!   A string listing the address.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_ADDRESS.
   types:
     "!   A party and its corresponding role, including address and contact information if
     "!    identified.
     begin of T_PARTIES,
+      "!   The normalized form of the party's name.
       PARTY type STRING,
+      "!   A string identifying the party's role.
       ROLE type STRING,
+      "!   A string that identifies the importance of the party.
       IMPORTANCE type STRING,
+      "!   A list of the party's address or addresses.
       ADDRESSES type STANDARD TABLE OF T_ADDRESS WITH NON-UNIQUE DEFAULT KEY,
+      "!   A list of the names and roles of contacts identified in the input document.
       CONTACTS type STANDARD TABLE OF T_CONTACT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A list of the party's mentions in the input document.
       MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_PARTIES.
   types:
     "!   Basic information about the input document.
     begin of T_DOCUMENT,
+      "!   Document title, if detected.
       TITLE type STRING,
+      "!   The input document converted into HTML format.
       HTML type STRING,
+      "!   The MD5 hash value of the input document.
       HASH type STRING,
+      "!   The label applied to the input document with the calling method's `file_1_label`
+      "!    or `file_2_label` value. This field is specified only in the output of the
+      "!    **Comparing two documents** method.
       LABEL type STRING,
     end of T_DOCUMENT.
   types:
     "!   The duration or durations of the contract.
     begin of T_CONTRACT_TERMS,
+      "!   The confidence level in the identification of the contract term.
       CONFIDENCE_LEVEL type STRING,
+      "!   The contract term (duration).
       TEXT type STRING,
+      "!   The normalized form of the contract term, which is listed as a string. This
+      "!    element is optional; it is returned only if normalized text exists.
       TEXT_NORMALIZED type STRING,
+      "!   The details of the normalized text, if applicable. This element is optional; it
+      "!    is returned only if normalized text exists.
       INTERPRETATION type T_INTERPRETATION,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_TERMS.
   types:
     "!   The analysis of objects returned by the **Element classification** method.
     begin of T_CLASSIFY_RETURN,
+      "!   Basic information about the input document.
       DOCUMENT type T_DOCUMENT,
+      "!   The analysis model used to classify the input document. For the **Element
+      "!    classification** method, the only valid value is `contracts`.
       MODEL_ID type STRING,
+      "!   The version of the analysis model identified by the value of the `model_id` key.
+      "!
       MODEL_VERSION type STRING,
+      "!   Document elements identified by the service.
       ELEMENTS type STANDARD TABLE OF T_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   The date or dates on which the document becomes effective.
       EFFECTIVE_DATES type STANDARD TABLE OF T_EFFECTIVE_DATES WITH NON-UNIQUE DEFAULT KEY,
+      "!   The monetary amounts that identify the total amount of the contract that needs
+      "!    to be paid from one party to another.
       CONTRACT_AMOUNTS type STANDARD TABLE OF T_CONTRACT_AMTS WITH NON-UNIQUE DEFAULT KEY,
+      "!   The dates on which the document is to be terminated.
       TERMINATION_DATES type STANDARD TABLE OF T_TERMINATION_DATES WITH NON-UNIQUE DEFAULT KEY,
+      "!   The contract type as declared in the document.
       CONTRACT_TYPES type STANDARD TABLE OF T_CONTRACT_TYPES WITH NON-UNIQUE DEFAULT KEY,
+      "!   The durations of the contract.
       CONTRACT_TERMS type STANDARD TABLE OF T_CONTRACT_TERMS WITH NON-UNIQUE DEFAULT KEY,
+      "!   The document's payment durations.
       PAYMENT_TERMS type STANDARD TABLE OF T_PAYMENT_TERMS WITH NON-UNIQUE DEFAULT KEY,
+      "!   The contract currencies as declared in the document.
       CONTRACT_CURRENCIES type STANDARD TABLE OF T_CONTRACT_CURRENCIES WITH NON-UNIQUE DEFAULT KEY,
+      "!   Definition of tables identified in the input document.
       TABLES type STANDARD TABLE OF T_TABLES WITH NON-UNIQUE DEFAULT KEY,
+      "!   The structure of the input document.
       DOCUMENT_STRUCTURE type T_DOC_STRUCTURE,
+      "!   Definitions of the parties identified in the input document.
       PARTIES type STANDARD TABLE OF T_PARTIES WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFY_RETURN.
   types:
     "!   The original labeling from the input document, without the submitted feedback.
     begin of T_ORIGINAL_LABELS_IN,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
     end of T_ORIGINAL_LABELS_IN.
   types:
     "!   Details of semantically aligned elements.
     begin of T_ELEMENT_PAIR,
+      "!   The label of the document (that is, the value of either the `file_1_label` or
+      "!    `file_2_label` parameters) in which the element occurs.
       DOCUMENT_LABEL type STRING,
+      "!   The contents of the element.
       TEXT type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL_COMPARISON WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of functional categories into which the element falls; in other words, the
+      "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY_COMPARISON WITH NON-UNIQUE DEFAULT KEY,
+      "!   List of document attributes.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ELEMENT_PAIR.
   types:
-    "!
+    "!   No documentation available.
     begin of T_ALIGNED_ELEMENT,
+      "!   Identifies two elements that semantically align between the compared documents.
       ELEMENT_PAIR type STANDARD TABLE OF T_ELEMENT_PAIR WITH NON-UNIQUE DEFAULT KEY,
+      "!   Specifies whether the aligned element is identical. Elements are considered
+      "!    identical despite minor differences such as leading punctuation,
+      "!    end-of-sentence punctuation, whitespace, the presence or absence of definite or
+      "!    indefinite articles, and others.
       IDENTICAL_TEXT type BOOLEAN,
+      "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   Indicates that the elements aligned are contractual clauses of significance.
       SIGNIFICANT_ELEMENTS type BOOLEAN,
     end of T_ALIGNED_ELEMENT.
   types:
     "!   The comparison of the two submitted documents.
     begin of T_COMPARE_RETURN,
+      "!   The analysis model used to compare the input documents. For the **Compare two
+      "!    documents** method, the only valid value is `contracts`.
       MODEL_ID type STRING,
+      "!   The version of the analysis model identified by the value of the `model_id` key.
+      "!
       MODEL_VERSION type STRING,
+      "!   Information about the documents being compared.
       DOCUMENTS type STANDARD TABLE OF T_DOCUMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A list of pairs of elements that semantically align between the compared
+      "!    documents.
       ALIGNED_ELEMENTS type STANDARD TABLE OF T_ALIGNED_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A list of elements that do not semantically align between the compared
+      "!    documents.
       UNALIGNED_ELEMENTS type STANDARD TABLE OF T_UNALIGNED_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_COMPARE_RETURN.
   types:
     "!   The HTML converted from an input document.
     begin of T_HTMLRETURN,
+      "!   The number of pages in the input document.
       NUM_PAGES type STRING,
+      "!   The author of the input document, if identified.
       AUTHOR type STRING,
+      "!   The publication date of the input document, if identified.
       PUBLICATION_DATE type STRING,
+      "!   The title of the input document, if identified.
       TITLE type STRING,
+      "!   The HTML version of the input document.
       HTML type STRING,
     end of T_HTMLRETURN.
   types:
     "!   Feedback data for submission.
     begin of T_FEEDBACK_DATA_INPUT,
+      "!   The type of feedback. The only permitted value is `element_classification`.
       FEEDBACK_TYPE type STRING,
+      "!   Brief information about the input document.
       DOCUMENT type T_SHORT_DOC,
+      "!   An optional string identifying the model ID. The only permitted value is
+      "!    `contracts`.
       MODEL_ID type STRING,
+      "!   An optional string identifying the version of the model used.
       MODEL_VERSION type STRING,
+      "!   The numeric location of the identified element in the document, represented with
+      "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
+      "!   The text on which to submit feedback.
       TEXT type STRING,
+      "!   The original labeling from the input document, without the submitted feedback.
       ORIGINAL_LABELS type T_ORIGINAL_LABELS_IN,
+      "!   The updated labeling from the input document, accounting for the submitted
+      "!    feedback.
       UPDATED_LABELS type T_UPDATED_LABELS_IN,
     end of T_FEEDBACK_DATA_INPUT.
   types:
@@ -516,25 +869,42 @@ public section.
   types:
     "!   The batch-request status.
     begin of T_BATCH_STATUS,
+      "!   The method to be run against the documents. Possible values are
+      "!    `html_conversion`, `element_classification`, and `tables`.
       FUNCTION type STRING,
+      "!   The geographical location of the Cloud Object Storage input bucket as listed on
+      "!    the **Endpoint** tab of your COS instance; for example, `us-geo`, `eu-geo`, or
+      "!    `ap-geo`.
       INPUT_BUCKET_LOCATION type STRING,
+      "!   The name of the Cloud Object Storage input bucket.
       INPUT_BUCKET_NAME type STRING,
+      "!   The geographical location of the Cloud Object Storage output bucket as listed on
+      "!    the **Endpoint** tab of your COS instance; for example, `us-geo`, `eu-geo`, or
+      "!    `ap-geo`.
       OUTPUT_BUCKET_LOCATION type STRING,
+      "!   The name of the Cloud Object Storage output bucket.
       OUTPUT_BUCKET_NAME type STRING,
+      "!   The unique identifier for the batch request.
       BATCH_ID type STRING,
+      "!   Document counts.
       DOCUMENT_COUNTS type T_DOC_COUNTS,
+      "!   The status of the batch request.
       STATUS type STRING,
+      "!   The creation time of the batch request.
       CREATED type DATETIME,
+      "!   The time of the most recent update to the batch request.
       UPDATED type DATETIME,
     end of T_BATCH_STATUS.
   types:
     "!   The results of a successful **List Batches** request.
     begin of T_BATCHES,
+      "!   A list of the status of all batch requests.
       BATCHES type STANDARD TABLE OF T_BATCH_STATUS WITH NON-UNIQUE DEFAULT KEY,
     end of T_BATCHES.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT,
+      "!   The document to convert.
       FILE type FILE,
     end of T_INLINE_OBJECT.
   types:
@@ -553,54 +923,82 @@ public section.
   types:
     "!   The status and message of the deletion request.
     begin of T_FEEDBACK_DELETED,
+      "!   HTTP return code.
       STATUS type INTEGER,
+      "!   Status message returned from the service.
       MESSAGE type STRING,
     end of T_FEEDBACK_DELETED.
   types:
     "!   The feedback to be added to an element in the document.
     begin of T_FEEDBACK_INPUT,
+      "!   An optional string identifying the user.
       USER_ID type STRING,
+      "!   An optional comment on or description of the feedback.
       COMMENT type STRING,
+      "!   Feedback data for submission.
       FEEDBACK_DATA type T_FEEDBACK_DATA_INPUT,
     end of T_FEEDBACK_INPUT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT1,
+      "!   The document to classify.
       FILE type FILE,
     end of T_INLINE_OBJECT1.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT2,
+      "!   The document on which to run table extraction.
       FILE type FILE,
     end of T_INLINE_OBJECT2.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT3,
+      "!   The first document to compare.
       FILE_1 type FILE,
+      "!   The second document to compare.
       FILE_2 type FILE,
     end of T_INLINE_OBJECT3.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT4,
+      "!   A JSON file containing the input Cloud Object Storage credentials. At a minimum,
+      "!    the credentials must enable `READ` permissions on the bucket defined by the
+      "!    `input_bucket_name` parameter.
       INPUT_CREDENTIALS_FILE type FILE,
+      "!   The geographical location of the Cloud Object Storage input bucket as listed on
+      "!    the **Endpoint** tab of your Cloud Object Storage instance; for example,
+      "!    `us-geo`, `eu-geo`, or `ap-geo`.
       INPUT_BUCKET_LOCATION type STRING,
+      "!   The name of the Cloud Object Storage input bucket.
       INPUT_BUCKET_NAME type STRING,
+      "!   A JSON file that lists the Cloud Object Storage output credentials. At a
+      "!    minimum, the credentials must enable `READ` and `WRITE` permissions on the
+      "!    bucket defined by the `output_bucket_name` parameter.
       OUTPUT_CREDENTIALS_FILE type FILE,
+      "!   The geographical location of the Cloud Object Storage output bucket as listed on
+      "!    the **Endpoint** tab of your Cloud Object Storage instance; for example,
+      "!    `us-geo`, `eu-geo`, or `ap-geo`.
       OUTPUT_BUCKET_LOCATION type STRING,
+      "!   The name of the Cloud Object Storage output bucket.
       OUTPUT_BUCKET_NAME type STRING,
     end of T_INLINE_OBJECT4.
   types:
     "!   The results of a successful **Get Feedback** request for a single feedback
     "!    entry.
     begin of T_GET_FEEDBACK,
+      "!   A string uniquely identifying the feedback entry.
       FEEDBACK_ID type STRING,
+      "!   A timestamp identifying the creation time of the feedback entry.
       CREATED type DATETIME,
+      "!   A string containing the user's comment about the feedback entry.
       COMMENT type STRING,
+      "!   Information returned from the **Add Feedback** method.
       FEEDBACK_DATA type T_FEEDBACK_DATA_OUTPUT,
     end of T_GET_FEEDBACK.
   types:
     "!   The results of a successful **List Feedback** request for all feedback.
     begin of T_FEEDBACK_LIST,
+      "!   A list of all feedback for the document.
       FEEDBACK type STANDARD TABLE OF T_GET_FEEDBACK WITH NON-UNIQUE DEFAULT KEY,
     end of T_FEEDBACK_LIST.
   types:
@@ -831,11 +1229,11 @@ constants:
 
     "! Convert document to HTML.
     "!
-    "! @parameter I_file |
+    "! @parameter I_FILE |
     "!   The document to convert.
-    "! @parameter I_file_content_type |
+    "! @parameter I_FILE_CONTENT_TYPE |
     "!   The content type of file.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -843,12 +1241,13 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_HTMLRETURN
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CONVERT_TO_HTML
     importing
-      !I_file type FILE
-      !I_file_content_type type STRING optional
-      !I_model type STRING optional
+      !I_FILE type FILE
+      !I_FILE_CONTENT_TYPE type STRING optional
+      !I_MODEL type STRING optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -858,11 +1257,11 @@ constants:
 
     "! Classify the elements of a document.
     "!
-    "! @parameter I_file |
+    "! @parameter I_FILE |
     "!   The document to classify.
-    "! @parameter I_file_content_type |
+    "! @parameter I_FILE_CONTENT_TYPE |
     "!   The content type of file.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -870,12 +1269,13 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFY_RETURN
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CLASSIFY_ELEMENTS
     importing
-      !I_file type FILE
-      !I_file_content_type type STRING optional
-      !I_model type STRING optional
+      !I_FILE type FILE
+      !I_FILE_CONTENT_TYPE type STRING optional
+      !I_MODEL type STRING optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -885,11 +1285,11 @@ constants:
 
     "! Extract a document's tables.
     "!
-    "! @parameter I_file |
+    "! @parameter I_FILE |
     "!   The document on which to run table extraction.
-    "! @parameter I_file_content_type |
+    "! @parameter I_FILE_CONTENT_TYPE |
     "!   The content type of file.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -897,12 +1297,13 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TABLE_RETURN
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods EXTRACT_TABLES
     importing
-      !I_file type FILE
-      !I_file_content_type type STRING optional
-      !I_model type STRING optional
+      !I_FILE type FILE
+      !I_FILE_CONTENT_TYPE type STRING optional
+      !I_MODEL type STRING optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -912,19 +1313,19 @@ constants:
 
     "! Compare two documents.
     "!
-    "! @parameter I_file_1 |
+    "! @parameter I_FILE_1 |
     "!   The first document to compare.
-    "! @parameter I_file_2 |
+    "! @parameter I_FILE_2 |
     "!   The second document to compare.
-    "! @parameter I_file_1_content_type |
+    "! @parameter I_FILE_1_CONTENT_TYPE |
     "!   The content type of file1.
-    "! @parameter I_file_2_content_type |
+    "! @parameter I_FILE_2_CONTENT_TYPE |
     "!   The content type of file2.
-    "! @parameter I_file_1_label |
+    "! @parameter I_FILE_1_LABEL |
     "!   A text label for the first document.
-    "! @parameter I_file_2_label |
+    "! @parameter I_FILE_2_LABEL |
     "!   A text label for the second document.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -932,16 +1333,17 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COMPARE_RETURN
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods COMPARE_DOCUMENTS
     importing
-      !I_file_1 type FILE
-      !I_file_2 type FILE
-      !I_file_1_content_type type STRING optional
-      !I_file_2_content_type type STRING optional
-      !I_file_1_label type STRING default 'file_1'
-      !I_file_2_label type STRING default 'file_2'
-      !I_model type STRING optional
+      !I_FILE_1 type FILE
+      !I_FILE_2 type FILE
+      !I_FILE_1_CONTENT_TYPE type STRING optional
+      !I_FILE_2_CONTENT_TYPE type STRING optional
+      !I_FILE_1_LABEL type STRING default 'file_1'
+      !I_FILE_2_LABEL type STRING default 'file_2'
+      !I_MODEL type STRING optional
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -951,14 +1353,15 @@ constants:
 
     "! Add feedback.
     "!
-    "! @parameter I_feedback_data |
+    "! @parameter I_FEEDBACK_DATA |
     "!   An object that defines the feedback to be submitted.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_FEEDBACK_RETURN
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods ADD_FEEDBACK
     importing
-      !I_feedback_data type T_FEEDBACK_INPUT
+      !I_FEEDBACK_DATA type T_FEEDBACK_INPUT
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -967,84 +1370,85 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! List the feedback in a document.
     "!
-    "! @parameter I_feedback_type |
+    "! @parameter I_FEEDBACK_TYPE |
     "!   An optional string that filters the output to include only feedback with the
     "!    specified feedback type. The only permitted value is `element_classification`.
-    "! @parameter I_before |
+    "! @parameter I_BEFORE |
     "!   An optional string in the format `YYYY-MM-DD` that filters the output to include
     "!    only feedback that was added before the specified date.
-    "! @parameter I_after |
+    "! @parameter I_AFTER |
     "!   An optional string in the format `YYYY-MM-DD` that filters the output to include
     "!    only feedback that was added after the specified date.
-    "! @parameter I_document_title |
+    "! @parameter I_DOCUMENT_TITLE |
     "!   An optional string that filters the output to include only feedback from the
     "!    document with the specified `document_title`.
-    "! @parameter I_model_id |
+    "! @parameter I_MODEL_ID |
     "!   An optional string that filters the output to include only feedback with the
     "!    specified `model_id`. The only permitted value is `contracts`.
-    "! @parameter I_model_version |
+    "! @parameter I_MODEL_VERSION |
     "!   An optional string that filters the output to include only feedback with the
     "!    specified `model_version`.
-    "! @parameter I_category_removed |
+    "! @parameter I_CATEGORY_REMOVED |
     "!   An optional string in the form of a comma-separated list of categories. If it is
     "!    specified, the service filters the output to include only feedback that has at
     "!    least one category from the list removed.
-    "! @parameter I_category_added |
+    "! @parameter I_CATEGORY_ADDED |
     "!   An optional string in the form of a comma-separated list of categories. If this
     "!    is specified, the service filters the output to include only feedback that has
     "!    at least one category from the list added.
-    "! @parameter I_category_not_changed |
+    "! @parameter I_CATEGORY_NOT_CHANGED |
     "!   An optional string in the form of a comma-separated list of categories. If this
     "!    is specified, the service filters the output to include only feedback that has
     "!    at least one category from the list unchanged.
-    "! @parameter I_type_removed |
+    "! @parameter I_TYPE_REMOVED |
     "!   An optional string of comma-separated `nature`:`party` pairs. If this is
     "!    specified, the service filters the output to include only feedback that has at
     "!    least one `nature`:`party` pair from the list removed.
-    "! @parameter I_type_added |
+    "! @parameter I_TYPE_ADDED |
     "!   An optional string of comma-separated `nature`:`party` pairs. If this is
     "!    specified, the service filters the output to include only feedback that has at
     "!    least one `nature`:`party` pair from the list removed.
-    "! @parameter I_type_not_changed |
+    "! @parameter I_TYPE_NOT_CHANGED |
     "!   An optional string of comma-separated `nature`:`party` pairs. If this is
     "!    specified, the service filters the output to include only feedback that has at
     "!    least one `nature`:`party` pair from the list unchanged.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   An optional integer specifying the number of documents that you want the service
     "!    to return.
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   An optional string that returns the set of documents after the previous set. Use
     "!    this parameter with the `page_limit` parameter.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   An optional comma-separated list of fields in the document to sort on. You can
     "!    optionally specify the sort direction by prefixing the value of the field with
     "!    `-` for descending order or `+` for ascending order (the default). Currently
     "!    permitted sorting fields are `created`, `user_id`, and `document_title`.
-    "! @parameter I_include_total |
+    "! @parameter I_INCLUDE_TOTAL |
     "!   An optional boolean value. If specified as `true`, the `pagination` object in
     "!    the output includes a value called `total` that gives the total count of
     "!    feedback created.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_FEEDBACK_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_FEEDBACK
     importing
-      !I_feedback_type type STRING optional
-      !I_before type DATE optional
-      !I_after type DATE optional
-      !I_document_title type STRING optional
-      !I_model_id type STRING optional
-      !I_model_version type STRING optional
-      !I_category_removed type STRING optional
-      !I_category_added type STRING optional
-      !I_category_not_changed type STRING optional
-      !I_type_removed type STRING optional
-      !I_type_added type STRING optional
-      !I_type_not_changed type STRING optional
-      !I_page_limit type INTEGER optional
-      !I_cursor type STRING optional
-      !I_sort type STRING optional
-      !I_include_total type BOOLEAN optional
+      !I_FEEDBACK_TYPE type STRING optional
+      !I_BEFORE type DATE optional
+      !I_AFTER type DATE optional
+      !I_DOCUMENT_TITLE type STRING optional
+      !I_MODEL_ID type STRING optional
+      !I_MODEL_VERSION type STRING optional
+      !I_CATEGORY_REMOVED type STRING optional
+      !I_CATEGORY_ADDED type STRING optional
+      !I_CATEGORY_NOT_CHANGED type STRING optional
+      !I_TYPE_REMOVED type STRING optional
+      !I_TYPE_ADDED type STRING optional
+      !I_TYPE_NOT_CHANGED type STRING optional
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_CURSOR type STRING optional
+      !I_SORT type STRING optional
+      !I_INCLUDE_TOTAL type BOOLEAN optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_FEEDBACK_LIST
@@ -1052,9 +1456,9 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get a specified feedback entry.
     "!
-    "! @parameter I_feedback_id |
+    "! @parameter I_FEEDBACK_ID |
     "!   A string that specifies the feedback entry to be included in the output.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -1062,11 +1466,12 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_GET_FEEDBACK
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_FEEDBACK
     importing
-      !I_feedback_id type STRING
-      !I_model type STRING optional
+      !I_FEEDBACK_ID type STRING
+      !I_MODEL type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_GET_FEEDBACK
@@ -1074,9 +1479,9 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete a specified feedback entry.
     "!
-    "! @parameter I_feedback_id |
+    "! @parameter I_FEEDBACK_ID |
     "!   A string that specifies the feedback entry to be deleted from the document.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -1084,11 +1489,12 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_FEEDBACK_DELETED
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_FEEDBACK
     importing
-      !I_feedback_id type STRING
-      !I_model type STRING optional
+      !I_FEEDBACK_ID type STRING
+      !I_MODEL type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_FEEDBACK_DELETED
@@ -1097,29 +1503,29 @@ constants:
 
     "! Submit a batch-processing request.
     "!
-    "! @parameter I_function |
+    "! @parameter I_FUNCTION |
     "!   The Compare and Comply method to run across the submitted input documents.
-    "! @parameter I_input_credentials_file |
+    "! @parameter I_INPUT_CREDENTIALS_FILE |
     "!   A JSON file containing the input Cloud Object Storage credentials. At a minimum,
     "!    the credentials must enable `READ` permissions on the bucket defined by the
     "!    `input_bucket_name` parameter.
-    "! @parameter I_input_bucket_location |
+    "! @parameter I_INPUT_BUCKET_LOCATION |
     "!   The geographical location of the Cloud Object Storage input bucket as listed on
     "!    the **Endpoint** tab of your Cloud Object Storage instance; for example,
     "!    `us-geo`, `eu-geo`, or `ap-geo`.
-    "! @parameter I_input_bucket_name |
+    "! @parameter I_INPUT_BUCKET_NAME |
     "!   The name of the Cloud Object Storage input bucket.
-    "! @parameter I_output_credentials_file |
+    "! @parameter I_OUTPUT_CREDENTIALS_FILE |
     "!   A JSON file that lists the Cloud Object Storage output credentials. At a
     "!    minimum, the credentials must enable `READ` and `WRITE` permissions on the
     "!    bucket defined by the `output_bucket_name` parameter.
-    "! @parameter I_output_bucket_location |
+    "! @parameter I_OUTPUT_BUCKET_LOCATION |
     "!   The geographical location of the Cloud Object Storage output bucket as listed on
     "!    the **Endpoint** tab of your Cloud Object Storage instance; for example,
     "!    `us-geo`, `eu-geo`, or `ap-geo`.
-    "! @parameter I_output_bucket_name |
+    "! @parameter I_OUTPUT_BUCKET_NAME |
     "!   The name of the Cloud Object Storage output bucket.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -1127,19 +1533,20 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCH_STATUS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_BATCH
     importing
-      !I_function type STRING
-      !I_input_credentials_file type FILE
-      !I_input_bucket_location type STRING
-      !I_input_bucket_name type STRING
-      !I_output_credentials_file type FILE
-      !I_output_bucket_location type STRING
-      !I_output_bucket_name type STRING
-      !I_model type STRING optional
-      !I_input_credentials_file_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
-      !I_output_credentials_file_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_FUNCTION type STRING
+      !I_INPUT_CREDENTIALS_FILE type FILE
+      !I_INPUT_BUCKET_LOCATION type STRING
+      !I_INPUT_BUCKET_NAME type STRING
+      !I_OUTPUT_CREDENTIALS_FILE type FILE
+      !I_OUTPUT_BUCKET_LOCATION type STRING
+      !I_OUTPUT_BUCKET_NAME type STRING
+      !I_MODEL type STRING optional
+      !I_INPUT_CREDENTIALS_FILE_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_OUTPUT_CREDENTIALS_FILE_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -1150,6 +1557,7 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCHES
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_BATCHES
     importing
@@ -1160,14 +1568,15 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get information about a specific batch-processing job.
     "!
-    "! @parameter I_batch_id |
+    "! @parameter I_BATCH_ID |
     "!   The ID of the batch-processing job whose information you want to retrieve.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCH_STATUS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_BATCH
     importing
-      !I_batch_id type STRING
+      !I_BATCH_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_BATCH_STATUS
@@ -1175,11 +1584,11 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update a pending or active batch-processing job.
     "!
-    "! @parameter I_batch_id |
+    "! @parameter I_BATCH_ID |
     "!   The ID of the batch-processing job you want to update.
-    "! @parameter I_action |
+    "! @parameter I_ACTION |
     "!   The action you want to perform on the specified batch-processing job.
-    "! @parameter I_model |
+    "! @parameter I_MODEL |
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
@@ -1187,12 +1596,13 @@ constants:
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCH_STATUS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_BATCH
     importing
-      !I_batch_id type STRING
-      !I_action type STRING
-      !I_model type STRING optional
+      !I_BATCH_ID type STRING
+      !I_ACTION type STRING
+      !I_MODEL type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_BATCH_STATUS
@@ -1235,7 +1645,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -1276,7 +1686,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122838'.
+    e_sdk_version_date = '20200210092814'.
 
   endmethod.
 
@@ -1285,9 +1695,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->CONVERT_TO_HTML
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_file        TYPE FILE
-* | [--->] I_file_content_type        TYPE STRING(optional)
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FILE        TYPE FILE
+* | [--->] I_FILE_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_HTMLRETURN
@@ -1315,8 +1725,8 @@ method CONVERT_TO_HTML.
     data:
       lv_queryparam type string.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -1341,14 +1751,14 @@ method CONVERT_TO_HTML.
 
 
 
-    if not i_file is initial.
+    if not i_FILE is initial.
       lv_extension = get_file_extension( I_file_content_type ).
       lv_value = `form-data; name="file"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
       ls_form_part-content_type = I_file_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_file.
+      ls_form_part-xdata = i_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -1374,9 +1784,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->CLASSIFY_ELEMENTS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_file        TYPE FILE
-* | [--->] I_file_content_type        TYPE STRING(optional)
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FILE        TYPE FILE
+* | [--->] I_FILE_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFY_RETURN
@@ -1404,8 +1814,8 @@ method CLASSIFY_ELEMENTS.
     data:
       lv_queryparam type string.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -1430,14 +1840,14 @@ method CLASSIFY_ELEMENTS.
 
 
 
-    if not i_file is initial.
+    if not i_FILE is initial.
       lv_extension = get_file_extension( I_file_content_type ).
       lv_value = `form-data; name="file"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
       ls_form_part-content_type = I_file_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_file.
+      ls_form_part-xdata = i_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -1463,9 +1873,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->EXTRACT_TABLES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_file        TYPE FILE
-* | [--->] I_file_content_type        TYPE STRING(optional)
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FILE        TYPE FILE
+* | [--->] I_FILE_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_TABLE_RETURN
@@ -1493,8 +1903,8 @@ method EXTRACT_TABLES.
     data:
       lv_queryparam type string.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -1519,14 +1929,14 @@ method EXTRACT_TABLES.
 
 
 
-    if not i_file is initial.
+    if not i_FILE is initial.
       lv_extension = get_file_extension( I_file_content_type ).
       lv_value = `form-data; name="file"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
       ls_form_part-content_type = I_file_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_file.
+      ls_form_part-xdata = i_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -1552,13 +1962,13 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->COMPARE_DOCUMENTS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_file_1        TYPE FILE
-* | [--->] I_file_2        TYPE FILE
-* | [--->] I_file_1_content_type        TYPE STRING(optional)
-* | [--->] I_file_2_content_type        TYPE STRING(optional)
-* | [--->] I_file_1_label        TYPE STRING (default ='file_1')
-* | [--->] I_file_2_label        TYPE STRING (default ='file_2')
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FILE_1        TYPE FILE
+* | [--->] I_FILE_2        TYPE FILE
+* | [--->] I_FILE_1_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_FILE_2_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_FILE_1_LABEL        TYPE STRING (default ='file_1')
+* | [--->] I_FILE_2_LABEL        TYPE STRING (default ='file_2')
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COMPARE_RETURN
@@ -1586,8 +1996,8 @@ method COMPARE_DOCUMENTS.
     data:
       lv_queryparam type string.
 
-    if i_file_1_label is supplied.
-    lv_queryparam = escape( val = i_file_1_label format = cl_abap_format=>e_uri_full ).
+    if i_FILE_1_LABEL is supplied.
+    lv_queryparam = escape( val = i_FILE_1_LABEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `file_1_label`
@@ -1596,8 +2006,8 @@ method COMPARE_DOCUMENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_file_2_label is supplied.
-    lv_queryparam = escape( val = i_file_2_label format = cl_abap_format=>e_uri_full ).
+    if i_FILE_2_LABEL is supplied.
+    lv_queryparam = escape( val = i_FILE_2_LABEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `file_2_label`
@@ -1606,8 +2016,8 @@ method COMPARE_DOCUMENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -1632,25 +2042,25 @@ method COMPARE_DOCUMENTS.
 
 
 
-    if not i_file_1 is initial.
+    if not i_FILE_1 is initial.
       lv_extension = get_file_extension( I_file_1_content_type ).
       lv_value = `form-data; name="file_1"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
       ls_form_part-content_type = I_file_1_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_file_1.
+      ls_form_part-xdata = i_FILE_1.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_file_2 is initial.
+    if not i_FILE_2 is initial.
       lv_extension = get_file_extension( I_file_2_content_type ).
       lv_value = `form-data; name="file_2"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
       ls_form_part-content_type = I_file_2_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_file_2.
+      ls_form_part-xdata = i_FILE_2.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -1676,7 +2086,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->ADD_FEEDBACK
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_feedback_data        TYPE T_FEEDBACK_INPUT
+* | [--->] I_FEEDBACK_DATA        TYPE T_FEEDBACK_INPUT
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_FEEDBACK_RETURN
@@ -1713,20 +2123,20 @@ method ADD_FEEDBACK.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_feedback_data ).
+    lv_datatype = get_datatype( i_FEEDBACK_DATA ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_feedback_data i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_FEEDBACK_DATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'feedback_data' i_value = i_feedback_data ).
+        lv_bodyparam = abap_to_json( i_name = 'feedback_data' i_value = i_FEEDBACK_DATA ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_feedback_data to <lv_text>.
+      assign i_FEEDBACK_DATA to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -1760,22 +2170,22 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->LIST_FEEDBACK
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_feedback_type        TYPE STRING(optional)
-* | [--->] I_before        TYPE DATE(optional)
-* | [--->] I_after        TYPE DATE(optional)
-* | [--->] I_document_title        TYPE STRING(optional)
-* | [--->] I_model_id        TYPE STRING(optional)
-* | [--->] I_model_version        TYPE STRING(optional)
-* | [--->] I_category_removed        TYPE STRING(optional)
-* | [--->] I_category_added        TYPE STRING(optional)
-* | [--->] I_category_not_changed        TYPE STRING(optional)
-* | [--->] I_type_removed        TYPE STRING(optional)
-* | [--->] I_type_added        TYPE STRING(optional)
-* | [--->] I_type_not_changed        TYPE STRING(optional)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_include_total        TYPE BOOLEAN(optional)
+* | [--->] I_FEEDBACK_TYPE        TYPE STRING(optional)
+* | [--->] I_BEFORE        TYPE DATE(optional)
+* | [--->] I_AFTER        TYPE DATE(optional)
+* | [--->] I_DOCUMENT_TITLE        TYPE STRING(optional)
+* | [--->] I_MODEL_ID        TYPE STRING(optional)
+* | [--->] I_MODEL_VERSION        TYPE STRING(optional)
+* | [--->] I_CATEGORY_REMOVED        TYPE STRING(optional)
+* | [--->] I_CATEGORY_ADDED        TYPE STRING(optional)
+* | [--->] I_CATEGORY_NOT_CHANGED        TYPE STRING(optional)
+* | [--->] I_TYPE_REMOVED        TYPE STRING(optional)
+* | [--->] I_TYPE_ADDED        TYPE STRING(optional)
+* | [--->] I_TYPE_NOT_CHANGED        TYPE STRING(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_INCLUDE_TOTAL        TYPE BOOLEAN(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_FEEDBACK_LIST
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1801,8 +2211,8 @@ method LIST_FEEDBACK.
     data:
       lv_queryparam type string.
 
-    if i_feedback_type is supplied.
-    lv_queryparam = escape( val = i_feedback_type format = cl_abap_format=>e_uri_full ).
+    if i_FEEDBACK_TYPE is supplied.
+    lv_queryparam = escape( val = i_FEEDBACK_TYPE format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `feedback_type`
@@ -1811,8 +2221,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_before is supplied.
-    lv_queryparam = i_before.
+    if i_BEFORE is supplied.
+    lv_queryparam = i_BEFORE.
     add_query_parameter(
       exporting
         i_parameter  = `before`
@@ -1821,8 +2231,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_after is supplied.
-    lv_queryparam = i_after.
+    if i_AFTER is supplied.
+    lv_queryparam = i_AFTER.
     add_query_parameter(
       exporting
         i_parameter  = `after`
@@ -1831,8 +2241,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_document_title is supplied.
-    lv_queryparam = escape( val = i_document_title format = cl_abap_format=>e_uri_full ).
+    if i_DOCUMENT_TITLE is supplied.
+    lv_queryparam = escape( val = i_DOCUMENT_TITLE format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `document_title`
@@ -1841,8 +2251,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_model_id is supplied.
-    lv_queryparam = escape( val = i_model_id format = cl_abap_format=>e_uri_full ).
+    if i_MODEL_ID is supplied.
+    lv_queryparam = escape( val = i_MODEL_ID format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model_id`
@@ -1851,8 +2261,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_model_version is supplied.
-    lv_queryparam = escape( val = i_model_version format = cl_abap_format=>e_uri_full ).
+    if i_MODEL_VERSION is supplied.
+    lv_queryparam = escape( val = i_MODEL_VERSION format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model_version`
@@ -1861,8 +2271,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_category_removed is supplied.
-    lv_queryparam = escape( val = i_category_removed format = cl_abap_format=>e_uri_full ).
+    if i_CATEGORY_REMOVED is supplied.
+    lv_queryparam = escape( val = i_CATEGORY_REMOVED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `category_removed`
@@ -1871,8 +2281,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_category_added is supplied.
-    lv_queryparam = escape( val = i_category_added format = cl_abap_format=>e_uri_full ).
+    if i_CATEGORY_ADDED is supplied.
+    lv_queryparam = escape( val = i_CATEGORY_ADDED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `category_added`
@@ -1881,8 +2291,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_category_not_changed is supplied.
-    lv_queryparam = escape( val = i_category_not_changed format = cl_abap_format=>e_uri_full ).
+    if i_CATEGORY_NOT_CHANGED is supplied.
+    lv_queryparam = escape( val = i_CATEGORY_NOT_CHANGED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `category_not_changed`
@@ -1891,8 +2301,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_type_removed is supplied.
-    lv_queryparam = escape( val = i_type_removed format = cl_abap_format=>e_uri_full ).
+    if i_TYPE_REMOVED is supplied.
+    lv_queryparam = escape( val = i_TYPE_REMOVED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `type_removed`
@@ -1901,8 +2311,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_type_added is supplied.
-    lv_queryparam = escape( val = i_type_added format = cl_abap_format=>e_uri_full ).
+    if i_TYPE_ADDED is supplied.
+    lv_queryparam = escape( val = i_TYPE_ADDED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `type_added`
@@ -1911,8 +2321,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_type_not_changed is supplied.
-    lv_queryparam = escape( val = i_type_not_changed format = cl_abap_format=>e_uri_full ).
+    if i_TYPE_NOT_CHANGED is supplied.
+    lv_queryparam = escape( val = i_TYPE_NOT_CHANGED format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `type_not_changed`
@@ -1921,8 +2331,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -1931,8 +2341,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -1941,8 +2351,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -1951,8 +2361,8 @@ method LIST_FEEDBACK.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_total is supplied.
-    lv_queryparam = i_include_total.
+    if i_INCLUDE_TOTAL is supplied.
+    lv_queryparam = i_INCLUDE_TOTAL.
     add_query_parameter(
       exporting
         i_parameter  = `include_total`
@@ -1985,8 +2395,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->GET_FEEDBACK
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_feedback_id        TYPE STRING
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FEEDBACK_ID        TYPE STRING
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_GET_FEEDBACK
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2001,7 +2411,7 @@ method GET_FEEDBACK.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/feedback/{feedback_id}'.
-    replace all occurrences of `{feedback_id}` in ls_request_prop-url-path with i_feedback_id ignoring case.
+    replace all occurrences of `{feedback_id}` in ls_request_prop-url-path with i_FEEDBACK_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2013,8 +2423,8 @@ method GET_FEEDBACK.
     data:
       lv_queryparam type string.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -2046,8 +2456,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->DELETE_FEEDBACK
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_feedback_id        TYPE STRING
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_FEEDBACK_ID        TYPE STRING
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_FEEDBACK_DELETED
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2062,7 +2472,7 @@ method DELETE_FEEDBACK.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/feedback/{feedback_id}'.
-    replace all occurrences of `{feedback_id}` in ls_request_prop-url-path with i_feedback_id ignoring case.
+    replace all occurrences of `{feedback_id}` in ls_request_prop-url-path with i_FEEDBACK_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2074,8 +2484,8 @@ method DELETE_FEEDBACK.
     data:
       lv_queryparam type string.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -2108,16 +2518,16 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->CREATE_BATCH
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_function        TYPE STRING
-* | [--->] I_input_credentials_file        TYPE FILE
-* | [--->] I_input_bucket_location        TYPE STRING
-* | [--->] I_input_bucket_name        TYPE STRING
-* | [--->] I_output_credentials_file        TYPE FILE
-* | [--->] I_output_bucket_location        TYPE STRING
-* | [--->] I_output_bucket_name        TYPE STRING
-* | [--->] I_model        TYPE STRING(optional)
-* | [--->] I_input_credentials_file_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
-* | [--->] I_output_credentials_file_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_FUNCTION        TYPE STRING
+* | [--->] I_INPUT_CREDENTIALS_FILE        TYPE FILE
+* | [--->] I_INPUT_BUCKET_LOCATION        TYPE STRING
+* | [--->] I_INPUT_BUCKET_NAME        TYPE STRING
+* | [--->] I_OUTPUT_CREDENTIALS_FILE        TYPE FILE
+* | [--->] I_OUTPUT_BUCKET_LOCATION        TYPE STRING
+* | [--->] I_OUTPUT_BUCKET_NAME        TYPE STRING
+* | [--->] I_MODEL        TYPE STRING(optional)
+* | [--->] I_INPUT_CREDENTIALS_FILE_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_OUTPUT_CREDENTIALS_FILE_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_BATCH_STATUS
@@ -2145,7 +2555,7 @@ method CREATE_BATCH.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_function format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_FUNCTION format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `function`
@@ -2153,8 +2563,8 @@ method CREATE_BATCH.
       changing
         c_url        = ls_request_prop-url )  ##NO_TEXT.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`
@@ -2177,63 +2587,63 @@ method CREATE_BATCH.
       lv_extension     type string ##NEEDED.
 
 
-    if not i_input_bucket_location is initial.
+    if not i_INPUT_BUCKET_LOCATION is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="input_bucket_location"'  ##NO_TEXT.
-      lv_formdata = i_input_bucket_location.
+      lv_formdata = i_INPUT_BUCKET_LOCATION.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_input_bucket_name is initial.
+    if not i_INPUT_BUCKET_NAME is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="input_bucket_name"'  ##NO_TEXT.
-      lv_formdata = i_input_bucket_name.
+      lv_formdata = i_INPUT_BUCKET_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_output_bucket_location is initial.
+    if not i_OUTPUT_BUCKET_LOCATION is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="output_bucket_location"'  ##NO_TEXT.
-      lv_formdata = i_output_bucket_location.
+      lv_formdata = i_OUTPUT_BUCKET_LOCATION.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_output_bucket_name is initial.
+    if not i_OUTPUT_BUCKET_NAME is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="output_bucket_name"'  ##NO_TEXT.
-      lv_formdata = i_output_bucket_name.
+      lv_formdata = i_OUTPUT_BUCKET_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
 
 
-    if not i_input_credentials_file is initial.
-      lv_extension = get_file_extension( I_input_credentials_file_CT ).
+    if not i_INPUT_CREDENTIALS_FILE is initial.
+      lv_extension = get_file_extension( I_INPUT_CREDENTIALS_FILE_CT ).
       lv_value = `form-data; name="input_credentials_file"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_input_credentials_file_CT.
+      ls_form_part-content_type = I_INPUT_CREDENTIALS_FILE_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_input_credentials_file.
+      ls_form_part-xdata = i_INPUT_CREDENTIALS_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_output_credentials_file is initial.
-      lv_extension = get_file_extension( I_output_credentials_file_CT ).
+    if not i_OUTPUT_CREDENTIALS_FILE is initial.
+      lv_extension = get_file_extension( I_OUTPUT_CREDENTIALS_FILE_CT ).
       lv_value = `form-data; name="output_credentials_file"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_output_credentials_file_CT.
+      ls_form_part-content_type = I_OUTPUT_CREDENTIALS_FILE_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_output_credentials_file.
+      ls_form_part-xdata = i_OUTPUT_CREDENTIALS_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -2304,7 +2714,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->GET_BATCH
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_batch_id        TYPE STRING
+* | [--->] I_BATCH_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_BATCH_STATUS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2319,7 +2729,7 @@ method GET_BATCH.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/batches/{batch_id}'.
-    replace all occurrences of `{batch_id}` in ls_request_prop-url-path with i_batch_id ignoring case.
+    replace all occurrences of `{batch_id}` in ls_request_prop-url-path with i_BATCH_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2352,9 +2762,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->UPDATE_BATCH
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_batch_id        TYPE STRING
-* | [--->] I_action        TYPE STRING
-* | [--->] I_model        TYPE STRING(optional)
+* | [--->] I_BATCH_ID        TYPE STRING
+* | [--->] I_ACTION        TYPE STRING
+* | [--->] I_MODEL        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_BATCH_STATUS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2369,7 +2779,7 @@ method UPDATE_BATCH.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/batches/{batch_id}'.
-    replace all occurrences of `{batch_id}` in ls_request_prop-url-path with i_batch_id ignoring case.
+    replace all occurrences of `{batch_id}` in ls_request_prop-url-path with i_BATCH_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2381,7 +2791,7 @@ method UPDATE_BATCH.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_action format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_ACTION format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `action`
@@ -2389,8 +2799,8 @@ method UPDATE_BATCH.
       changing
         c_url        = ls_request_prop-url )  ##NO_TEXT.
 
-    if i_model is supplied.
-    lv_queryparam = escape( val = i_model format = cl_abap_format=>e_uri_full ).
+    if i_MODEL is supplied.
+    lv_queryparam = escape( val = i_MODEL format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `model`

@@ -5,8 +5,8 @@
   how your written communications are perceived and then to improve the tone of
   your communications. Businesses can use the service to learn the tone of their
   customers' communications and to respond to each customer appropriately, or to
-  understand and improve their customer conversations.
-
+  understand and improve their customer conversations.<br/>
+ <br/>
  **Note:** Request logging is disabled for the Tone Analyzer service. Regardless
   of whether you set the `X-Watson-Learning-Opt-Out` request header, the service
   does not log or retain data from requests and responses. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_document_analysis</span> (structured type)</td><td><span class="abapDocComment">   The results of the analysis for the full input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_model</span> (structured type)</td><td><span class="abapDocComment">   The error response from a failed request.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentence_analysis</span> (structured type)</td><td><span class="abapDocComment">   The results of the analysis for the individual sentences of the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_analysis</span> (structured type)</td><td><span class="abapDocComment">   The tone analysis results for the input from the general-purpose endpoint.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_category</span> (structured type)</td><td><span class="abapDocComment">   The category for a tone from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_chat_input</span> (structured type)</td><td><span class="abapDocComment">   Input for the customer-engagement endpoint.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_chat_score</span> (structured type)</td><td><span class="abapDocComment">   The score for an utterance from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_input</span> (structured type)</td><td><span class="abapDocComment">   Input for the general-purpose endpoint.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_tone_score</span> (structured type)</td><td><span class="abapDocComment">   The score for a tone from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_utterance</span> (structured type)</td><td><span class="abapDocComment">   An utterance for the input of the general-purpose endpoint.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_utterance_analyses</span> (structured type)</td><td><span class="abapDocComment">   The results of the analysis for the utterances of the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_utterance_analysis</span> (structured type)</td><td><span class="abapDocComment">   The results of the analysis for an utterance of the input content.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">tone</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_tone_input</span></td><td>type T_TONE_INPUT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_sentences</span></td><td>type BOOLEAN default C_BOOLEAN_TRUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_tones</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TONE_ANALYSIS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Analyze general tone.
@@ -23,8 +23,8 @@
     default), the service returns results for each sentence.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_tones</span></td><td><span class="abapDocComment">
    **`2017-09-21`:** Deprecated. The service continues to accept the parameter for
-   ** backward-compatibility, but the parameter no longer affects the response.
-   **
+   ** backward-compatibility, but the parameter no longer affects the response. <br/>
+   **<br/>
    ****`2016-05-19`:** A comma-separated list of tones for which the service is to
    ** return its analysis of the input; the indicated tones apply both to the full
    ** document and to individual sentences of the document. You can specify one or
@@ -35,8 +35,8 @@
     variants are treated as their parent language; for example, `en-US` is
     interpreted as `en`. The input content must match the specified language. Do
     not submit content that contains both languages. You can use different
-    languages for **Content-Language** and **Accept-Language**.
-   * **`2017-09-21`:** Accepts `en` or `fr`.
+    languages for **Content-Language** and **Accept-Language**.<br/>
+   * **`2017-09-21`:** Accepts `en` or `fr`.<br/>
    * **`2016-05-19`:** Accepts only `en`.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_accept_language</span></td><td><span class="abapDocComment">
    The desired language of the response. For two-character arguments, regional
@@ -54,8 +54,8 @@
     variants are treated as their parent language; for example, `en-US` is
     interpreted as `en`. The input content must match the specified language. Do
     not submit content that contains both languages. You can use different
-    languages for **Content-Language** and **Accept-Language**.
-   * **`2017-09-21`:** Accepts `en` or `fr`.
+    languages for **Content-Language** and **Accept-Language**.<br/>
+   * **`2017-09-21`:** Accepts `en` or `fr`.<br/>
    * **`2016-05-19`:** Accepts only `en`.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_accept_language</span></td><td><span class="abapDocComment">
    The desired language of the response. For two-character arguments, regional
@@ -64,4 +64,4 @@
     and **Accept-Language**.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_UTTERANCE_ANALYSES
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>
