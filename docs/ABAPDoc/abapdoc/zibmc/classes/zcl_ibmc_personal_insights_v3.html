@@ -4,21 +4,21 @@
   communications. The service uses linguistic analytics to infer individuals'
   intrinsic personality characteristics, including Big Five, Needs, and Values,
   from digital communications such as email, text messages, tweets, and forum
-  posts.
-
+  posts.<br/>
+ <br/>
  The service can automatically infer, from potentially noisy social media,
   portraits of individuals that reflect their personality characteristics. The
   service can infer consumption preferences based on the results of its analysis
-  and, for JSON content that is timestamped, can report temporal behavior.
+  and, for JSON content that is timestamped, can report temporal behavior.<br/>
  * For information about the meaning of the models that the service uses to
   describe personality characteristics, see [Personality
   models](https://cloud.ibm.com/docs/services/personality-insights?topic=personal
- ity-insights-models#models).
+ ity-insights-models#models).<br/>
  * For information about the meaning of the consumption preferences, see
   [Consumption
   preferences](https://cloud.ibm.com/docs/services/personality-insights?topic=per
- sonality-insights-preferences#preferences).
-
+ sonality-insights-preferences#preferences). <br/>
+ <br/>
  **Note:** Request logging is disabled for the Personality Insights service.
   Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header,
   the service does not log or retain data from requests and responses. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_behavior</span> (structured type)</td><td><span class="abapDocComment">   The temporal behavior for the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_cnsmptn_preferences_category</span> (structured type)</td><td><span class="abapDocComment">   The consumption preferences that the service inferred from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_consumption_preferences</span> (structured type)</td><td><span class="abapDocComment">   A consumption preference that the service inferred from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content</span> (structured type)</td><td><span class="abapDocComment">   The full input content that the service is to analyze.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content_item</span> (structured type)</td><td><span class="abapDocComment">   An input content item that the service is to analyze.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_csv_file</span> type STRING</td><td><span class="abapDocComment">   A CSV file that contains the results of the personality profile that the service
@@ -36,8 +36,8 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_content_language</span></td><td><span class="abapDocComment">
    The language of the input text for the request: Arabic, English, Japanese,
     Korean, or Spanish. Regional variants are treated as their parent language; for
-    example, `en-US` is interpreted as `en`.
-
+    example, `en-US` is interpreted as `en`. <br/>
+   <br/>
    The effect of the **Content-Language** parameter depends on the **Content-Type**
     parameter. When **Content-Type** is `text/plain` or `text/html`,
     **Content-Language** is the only way to specify the language. When
@@ -65,7 +65,9 @@
     default, no consumption preferences are returned.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_PROFILE
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile_as_csv</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;text&#x2f;csv&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get profile as csv.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment">
+   Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile_as_csv</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;text&#x2f;csv&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get profile as csv.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_content</span></td><td><span class="abapDocComment">
    A maximum of 20 MB of content to analyze, though the service requires much less
@@ -79,8 +81,8 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_content_language</span></td><td><span class="abapDocComment">
    The language of the input text for the request: Arabic, English, Japanese,
     Korean, or Spanish. Regional variants are treated as their parent language; for
-    example, `en-US` is interpreted as `en`.
-
+    example, `en-US` is interpreted as `en`. <br/>
+   <br/>
    The effect of the **Content-Language** parameter depends on the **Content-Type**
     parameter. When **Content-Type** is `text/plain` or `text/html`,
     **Content-Language** is the only way to specify the language. When
@@ -106,4 +108,7 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_consumption_preferences</span></td><td><span class="abapDocComment">
    Indicates whether consumption preferences are returned with the results. By
     default, no consumption preferences are returned.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 07.10.2019</div></body></html>
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type STRING
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>
