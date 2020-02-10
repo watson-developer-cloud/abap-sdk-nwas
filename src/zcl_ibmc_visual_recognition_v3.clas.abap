@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -28,46 +28,82 @@ public section.
   types:
     "!   Result of a class within a classifier.
     begin of T_CLASS_RESULT,
+      "!   Name of the class. <br/>
+      "!   <br/>
+      "!   Class names are translated in the language defined by the **Accept-Language**
+      "!    request header for the build-in classifier IDs (`default`, `food`, and
+      "!    `explicit`). Class names of custom classifiers are not translated. The response
+      "!    might not be in the specified language when the requested language is not
+      "!    supported or when there is no translation for the class name.
       CLASS type STRING,
+      "!   Confidence score for the property in the range of 0 to 1. A higher score
+      "!    indicates greater likelihood that the class is depicted in the image. The
+      "!    default threshold for returning scores from a classifier is 0.5.
       SCORE type FLOAT,
+      "!   Knowledge graph of the property. For example, `/fruit/pome/apple/eating
+      "!    apple/Granny Smith`. Included only if identified.
       TYPE_HIERARCHY type STRING,
     end of T_CLASS_RESULT.
   types:
     "!   Classifier and score combination.
     begin of T_CLASSIFIER_RESULT,
+      "!   Name of the classifier.
       NAME type STRING,
+      "!   ID of a classifier identified in the image.
       CLASSIFIER_ID type STRING,
+      "!   Classes within the classifier.
       CLASSES type STANDARD TABLE OF T_CLASS_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIER_RESULT.
   types:
     "!   Information about what might have caused a failure, such as an image that is too
     "!    large. Not returned when there is no error.
     begin of T_ERROR_INFO,
+      "!   HTTP status code.
       CODE type INTEGER,
+      "!   Human-readable error description. For example, `File size limit exceeded`.
       DESCRIPTION type STRING,
+      "!   Codified error string. For example, `limit_exceeded`.
       ERROR_ID type STRING,
     end of T_ERROR_INFO.
   types:
     "!   Results for one image.
     begin of T_CLASSIFIED_IMAGE,
+      "!   Source of the image before any redirects. Not returned when the image is
+      "!    uploaded.
       SOURCE_URL type STRING,
+      "!   Fully resolved URL of the image after redirects are followed. Not returned when
+      "!    the image is uploaded.
       RESOLVED_URL type STRING,
+      "!   Relative path of the image file if uploaded directly. Not returned when the
+      "!    image is passed by URL.
       IMAGE type STRING,
+      "!   Information about what might have caused a failure, such as an image that is too
+      "!    large. Not returned when there is no error.
       ERROR type T_ERROR_INFO,
+      "!   The classifiers.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIED_IMAGE.
   types:
     "!   Information about something that went wrong.
     begin of T_WARNING_INFO,
+      "!   Codified warning string, such as `limit_reached`.
       WARNING_ID type STRING,
+      "!   Information about the error.
       DESCRIPTION type STRING,
     end of T_WARNING_INFO.
   types:
     "!   Results for all images.
     begin of T_CLASSIFIED_IMAGES,
+      "!   Number of custom classes identified in the images.
       CUSTOM_CLASSES type INTEGER,
+      "!   Number of images processed for the API call.
       IMAGES_PROCESSED type INTEGER,
+      "!   Classified images.
       IMAGES type STANDARD TABLE OF T_CLASSIFIED_IMAGE WITH NON-UNIQUE DEFAULT KEY,
+      "!   Information about what might cause less than optimal output. For example, a
+      "!    request sent with a corrupt .zip file and a list of image URLs will still
+      "!    complete, but does not return the expected output. Not returned when there is
+      "!    no warning.
       WARNINGS type STANDARD TABLE OF T_WARNING_INFO WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIED_IMAGES.
   types:
@@ -77,6 +113,7 @@ public section.
   types:
     "!   A category within a classifier.
     begin of T_CLASS,
+      "!   The name of the class.
       CLASS type STRING,
     end of T_CLASS.
   types:
@@ -85,43 +122,131 @@ public section.
   types:
     "!   Error information.
     begin of T_ERROR_RESPONSE,
+      "!   HTTP error code.
       CODE type INTEGER,
+      "!   Human-readable error string, like 'Invalid image file'.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT1,
+      "!   The name of the new classifier. Encode special characters in UTF-8.
       NAME type STRING,
+      "!   A .zip file of images that depict the visual subject of a class in the new
+      "!    classifier. You can include more than one positive example file in a call.<br/>
+      "!   <br/>
+      "!   Specify the parameter name by appending `_positive_examples` to the class name.
+      "!    For example, `goldenretriever_positive_examples` creates the class
+      "!    **goldenretriever**. The string cannot contain the following characters: ``$ *
+      "!    - &#123; &#125; \ | / ' " ` [ ]``.<br/>
+      "!   <br/>
+      "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
+      "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
+      "!    100 MB per .zip file.<br/>
+      "!   <br/>
+      "!   Encode special characters in the file name in UTF-8.
       POSITIVE_EXAMPLES type FILE,
+      "!   A .zip file of images that do not depict the visual subject of any of the
+      "!    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+      "!   <br/>
+      "!   Encode special characters in the file name in UTF-8.
       NEGATIVE_EXAMPLES type FILE,
     end of T_INLINE_OBJECT1.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT,
+      "!   An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image
+      "!    size is 10 MB. Include no more than 20 images and limit the .zip file to 100
+      "!    MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII
+      "!    characters. The service assumes UTF-8 encoding if it encounters non-ASCII
+      "!    characters.<br/>
+      "!   <br/>
+      "!   You can also include an image with the **url** parameter.
       IMAGES_FILE type FILE,
+      "!   The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
+      "!    pixel density is 32X32 pixels, but the service tends to perform better with
+      "!    images that are at least 224 x 224 pixels. The maximum image size is 10
+      "!    MB.<br/>
+      "!   <br/>
+      "!   You can also include images with the **images_file** parameter.
       URL type STRING,
+      "!   The minimum score a class must have to be displayed in the response. Set the
+      "!    threshold to `0.0` to return all identified classes.
       THRESHOLD type FLOAT,
+      "!   The categories of classifiers to apply. The **classifier_ids** parameter
+      "!    overrides **owners**, so make sure that **classifier_ids** is empty. <br/>
+      "!   - Use `IBM` to classify against the `default` general classifier. You get the
+      "!    same result if both **classifier_ids** and **owners** parameters are
+      "!    empty.<br/>
+      "!   - Use `me` to classify against all your custom classifiers. However, for better
+      "!    performance use **classifier_ids** to specify the specific custom classifiers
+      "!    to apply.<br/>
+      "!   - Use both `IBM` and `me` to analyze the image against both classifier
+      "!    categories.
       OWNERS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   Which classifiers to apply. Overrides the **owners** parameter. You can specify
+      "!    both custom and built-in classifier IDs. The built-in `default` classifier is
+      "!    used if both **classifier_ids** and **owners** parameters are empty.<br/>
+      "!   <br/>
+      "!   The following built-in classifier IDs require no training:<br/>
+      "!   - `default`: Returns classes from thousands of general tags.<br/>
+      "!   - `food`: Enhances specificity and accuracy for images of food items.<br/>
+      "!   - `explicit`: Evaluates whether the image might be pornographic.
       CLASSIFIER_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_INLINE_OBJECT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_INLINE_OBJECT2,
+      "!   A .zip file of images that depict the visual subject of a class in the
+      "!    classifier. The positive examples create or update classes in the classifier.
+      "!    You can include more than one positive example file in a call.<br/>
+      "!   <br/>
+      "!   Specify the parameter name by appending `_positive_examples` to the class name.
+      "!    For example, `goldenretriever_positive_examples` creates the class
+      "!    `goldenretriever`. The string cannot contain the following characters: ``$ * -
+      "!    &#123; &#125; \ | / ' " ` [ ]``.<br/>
+      "!   <br/>
+      "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
+      "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
+      "!    100 MB per .zip file.<br/>
+      "!   <br/>
+      "!   Encode special characters in the file name in UTF-8.
       POSITIVE_EXAMPLES type FILE,
+      "!   A .zip file of images that do not depict the visual subject of any of the
+      "!    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+      "!   <br/>
+      "!   Encode special characters in the file name in UTF-8.
       NEGATIVE_EXAMPLES type FILE,
     end of T_INLINE_OBJECT2.
   types:
     "!   Information about a classifier.
     begin of T_CLASSIFIER,
+      "!   ID of a classifier identified in the image.
       CLASSIFIER_ID type STRING,
+      "!   Name of the classifier.
       NAME type STRING,
+      "!   Unique ID of the account who owns the classifier. Might not be returned by some
+      "!    requests.
       OWNER type STRING,
+      "!   Training status of classifier.
       STATUS type STRING,
+      "!   Whether the classifier can be downloaded as a Core ML model after the training
+      "!    status is `ready`.
       CORE_ML_ENABLED type BOOLEAN,
+      "!   If classifier training has failed, this field might explain why.
       EXPLANATION type STRING,
+      "!   Date and time in Coordinated Universal Time (UTC) that the classifier was
+      "!    created.
       CREATED type DATETIME,
+      "!   Classes that define a classifier.
       CLASSES type STANDARD TABLE OF T_CLASS WITH NON-UNIQUE DEFAULT KEY,
+      "!   Date and time in Coordinated Universal Time (UTC) that the classifier was
+      "!    updated. Might not be returned by some requests. Identical to `updated` and
+      "!    retained for backward compatibility.
       RETRAINED type DATETIME,
+      "!   Date and time in Coordinated Universal Time (UTC) that the classifier was most
+      "!    recently updated. The field matches either `retrained` or `created`. Might not
+      "!    be returned by some requests.
       UPDATED type DATETIME,
     end of T_CLASSIFIER.
   types:
@@ -139,6 +264,7 @@ public section.
   types:
     "!   Error information.
     begin of T_ERROR_HTML,
+      "!   HTML description of the error.
       ERROR1 type STRING,
     end of T_ERROR_HTML.
   types:
@@ -152,6 +278,7 @@ public section.
   types:
     "!   A container for the list of classifiers.
     begin of T_CLASSIFIERS,
+      "!   List of classifiers.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIERS.
 
@@ -224,61 +351,64 @@ constants:
 
     "! Classify images.
     "!
-    "! @parameter I_images_file |
+    "! @parameter I_IMAGES_FILE |
     "!   An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image
     "!    size is 10 MB. Include no more than 20 images and limit the .zip file to 100
     "!    MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII
     "!    characters. The service assumes UTF-8 encoding if it encounters non-ASCII
-    "!    characters.
-    "!
+    "!    characters.<br/>
+    "!   <br/>
     "!   You can also include an image with the **url** parameter.
-    "! @parameter I_images_filename |
+    "! @parameter I_IMAGES_FILENAME |
     "!   The filename for imagesFile.
-    "! @parameter I_images_file_content_type |
+    "! @parameter I_IMAGES_FILE_CONTENT_TYPE |
     "!   The content type of imagesFile.
-    "! @parameter I_url |
+    "! @parameter I_URL |
     "!   The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
     "!    pixel density is 32X32 pixels, but the service tends to perform better with
-    "!    images that are at least 224 x 224 pixels. The maximum image size is 10 MB.
-    "!
+    "!    images that are at least 224 x 224 pixels. The maximum image size is 10
+    "!    MB.<br/>
+    "!   <br/>
     "!   You can also include images with the **images_file** parameter.
-    "! @parameter I_threshold |
+    "! @parameter I_THRESHOLD |
     "!   The minimum score a class must have to be displayed in the response. Set the
     "!    threshold to `0.0` to return all identified classes.
-    "! @parameter I_owners |
+    "! @parameter I_OWNERS |
     "!   The categories of classifiers to apply. The **classifier_ids** parameter
-    "!    overrides **owners**, so make sure that **classifier_ids** is empty.
+    "!    overrides **owners**, so make sure that **classifier_ids** is empty. <br/>
     "!   - Use `IBM` to classify against the `default` general classifier. You get the
-    "!    same result if both **classifier_ids** and **owners** parameters are empty.
+    "!    same result if both **classifier_ids** and **owners** parameters are
+    "!    empty.<br/>
     "!   - Use `me` to classify against all your custom classifiers. However, for better
     "!    performance use **classifier_ids** to specify the specific custom classifiers
-    "!    to apply.
+    "!    to apply.<br/>
     "!   - Use both `IBM` and `me` to analyze the image against both classifier
     "!    categories.
-    "! @parameter I_classifier_ids |
+    "! @parameter I_CLASSIFIER_IDS |
     "!   Which classifiers to apply. Overrides the **owners** parameter. You can specify
     "!    both custom and built-in classifier IDs. The built-in `default` classifier is
-    "!    used if both **classifier_ids** and **owners** parameters are empty.
-    "!
-    "!   The following built-in classifier IDs require no training:
-    "!   - `default`: Returns classes from thousands of general tags.
-    "!   - `food`: Enhances specificity and accuracy for images of food items.
+    "!    used if both **classifier_ids** and **owners** parameters are empty.<br/>
+    "!   <br/>
+    "!   The following built-in classifier IDs require no training:<br/>
+    "!   - `default`: Returns classes from thousands of general tags.<br/>
+    "!   - `food`: Enhances specificity and accuracy for images of food items.<br/>
     "!   - `explicit`: Evaluates whether the image might be pornographic.
-    "! @parameter I_Accept_Language |
+    "! @parameter I_ACCEPT_LANGUAGE |
     "!   The desired language of parts of the response. See the response for details.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIED_IMAGES
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CLASSIFY
     importing
-      !I_images_file type FILE optional
-      !I_images_filename type STRING optional
-      !I_images_file_content_type type STRING optional
-      !I_url type STRING optional
-      !I_threshold type FLOAT optional
-      !I_owners type TT_STRING optional
-      !I_classifier_ids type TT_STRING optional
-      !I_Accept_Language type STRING default 'en'
+      !I_IMAGES_FILE type FILE optional
+      !I_IMAGES_FILENAME type STRING optional
+      !I_IMAGES_FILE_CONTENT_TYPE type STRING optional
+      !I_URL type STRING optional
+      !I_THRESHOLD type FLOAT optional
+      !I_OWNERS type TT_STRING optional
+      !I_CLASSIFIER_IDS type TT_STRING optional
+      !I_ACCEPT_LANGUAGE type STRING default 'en'
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -288,39 +418,41 @@ constants:
 
     "! Create a classifier.
     "!
-    "! @parameter I_name |
+    "! @parameter I_NAME |
     "!   The name of the new classifier. Encode special characters in UTF-8.
-    "! @parameter I_positive_examples |
+    "! @parameter I_POSITIVE_EXAMPLES |
     "!   A .zip file of images that depict the visual subject of a class in the new
-    "!    classifier. You can include more than one positive example file in a call.
-    "!
+    "!    classifier. You can include more than one positive example file in a call.<br/>
+    "!   <br/>
     "!   Specify the parameter name by appending `_positive_examples` to the class name.
     "!    For example, `goldenretriever_positive_examples` creates the class
-    "!    **goldenretriever**.
-    "!
+    "!    **goldenretriever**. The string cannot contain the following characters: ``$ *
+    "!    - &#123; &#125; \ | / ' " ` [ ]``.<br/>
+    "!   <br/>
     "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
     "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
-    "!    100 MB per .zip file.
-    "!
+    "!    100 MB per .zip file.<br/>
+    "!   <br/>
     "!   Encode special characters in the file name in UTF-8.
-    "! @parameter I_negative_examples |
+    "! @parameter I_NEGATIVE_EXAMPLES |
     "!   A .zip file of images that do not depict the visual subject of any of the
-    "!    classes of the new classifier. Must contain a minimum of 10 images.
-    "!
+    "!    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+    "!   <br/>
     "!   Encode special characters in the file name in UTF-8.
-    "! @parameter I_negative_examples_filename |
+    "! @parameter I_NEGATIVE_EXAMPLES_FILENAME |
     "!   The filename for negativeExamples.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_CLASSIFIER
     importing
-      !I_name type STRING
-      !I_positive_examples type TT_MAP_FILE
-      !I_negative_examples type FILE optional
-      !I_negative_examples_filename type STRING optional
-      !I_positive_examples_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
-      !I_negative_examples_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_NAME type STRING
+      !I_POSITIVE_EXAMPLES type TT_MAP_FILE
+      !I_NEGATIVE_EXAMPLES type FILE optional
+      !I_NEGATIVE_EXAMPLES_FILENAME type STRING optional
+      !I_POSITIVE_EXAMPLES_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_NEGATIVE_EXAMPLES_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -329,15 +461,16 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Retrieve a list of classifiers.
     "!
-    "! @parameter I_verbose |
+    "! @parameter I_VERBOSE |
     "!   Specify `true` to return details about the classifiers. Omit this parameter to
     "!    return a brief list of classifiers.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIERS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_CLASSIFIERS
     importing
-      !I_verbose type BOOLEAN optional
+      !I_VERBOSE type BOOLEAN optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_CLASSIFIERS
@@ -345,14 +478,15 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Retrieve classifier details.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_CLASSIFIER
     importing
-      !I_classifier_id type STRING
+      !I_CLASSIFIER_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_CLASSIFIER
@@ -360,40 +494,42 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update a classifier.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
-    "! @parameter I_positive_examples |
+    "! @parameter I_POSITIVE_EXAMPLES |
     "!   A .zip file of images that depict the visual subject of a class in the
     "!    classifier. The positive examples create or update classes in the classifier.
-    "!    You can include more than one positive example file in a call.
-    "!
+    "!    You can include more than one positive example file in a call.<br/>
+    "!   <br/>
     "!   Specify the parameter name by appending `_positive_examples` to the class name.
     "!    For example, `goldenretriever_positive_examples` creates the class
-    "!    `goldenretriever`.
-    "!
+    "!    `goldenretriever`. The string cannot contain the following characters: ``$ * -
+    "!    &#123; &#125; \ | / ' " ` [ ]``.<br/>
+    "!   <br/>
     "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
     "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
-    "!    100 MB per .zip file.
-    "!
+    "!    100 MB per .zip file.<br/>
+    "!   <br/>
     "!   Encode special characters in the file name in UTF-8.
-    "! @parameter I_negative_examples |
+    "! @parameter I_NEGATIVE_EXAMPLES |
     "!   A .zip file of images that do not depict the visual subject of any of the
-    "!    classes of the new classifier. Must contain a minimum of 10 images.
-    "!
+    "!    classes of the new classifier. Must contain a minimum of 10 images.<br/>
+    "!   <br/>
     "!   Encode special characters in the file name in UTF-8.
-    "! @parameter I_negative_examples_filename |
+    "! @parameter I_NEGATIVE_EXAMPLES_FILENAME |
     "!   The filename for negativeExamples.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_CLASSIFIER
     importing
-      !I_classifier_id type STRING
-      !I_positive_examples type TT_MAP_FILE optional
-      !I_negative_examples type FILE optional
-      !I_negative_examples_filename type STRING optional
-      !I_positive_examples_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
-      !I_negative_examples_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_CLASSIFIER_ID type STRING
+      !I_POSITIVE_EXAMPLES type TT_MAP_FILE optional
+      !I_NEGATIVE_EXAMPLES type FILE optional
+      !I_NEGATIVE_EXAMPLES_FILENAME type STRING optional
+      !I_POSITIVE_EXAMPLES_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
+      !I_NEGATIVE_EXAMPLES_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -402,26 +538,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete a classifier.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_CLASSIFIER
     importing
-      !I_classifier_id type STRING
+      !I_CLASSIFIER_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! Retrieve a Core ML model of a classifier.
     "!
-    "! @parameter I_classifier_id |
+    "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
     "! @parameter E_RESPONSE |
     "!   Service return value of type FILE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_CORE_ML_MODEL
     importing
-      !I_classifier_id type STRING
+      !I_CLASSIFIER_ID type STRING
       !I_accept      type string default 'application/octet-stream'
     exporting
       !E_RESPONSE type FILE
@@ -430,12 +568,13 @@ constants:
 
     "! Delete labeled data.
     "!
-    "! @parameter I_customer_id |
+    "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_USER_DATA
     importing
-      !I_customer_id type STRING
+      !I_CUSTOMER_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
@@ -476,7 +615,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -508,7 +647,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122854'.
+    e_sdk_version_date = '20200210092829'.
 
   endmethod.
 
@@ -517,14 +656,14 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->CLASSIFY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_images_file        TYPE FILE(optional)
-* | [--->] I_images_filename        TYPE STRING(optional)
-* | [--->] I_images_file_content_type        TYPE STRING(optional)
-* | [--->] I_url        TYPE STRING(optional)
-* | [--->] I_threshold        TYPE FLOAT(optional)
-* | [--->] I_owners        TYPE TT_STRING(optional)
-* | [--->] I_classifier_ids        TYPE TT_STRING(optional)
-* | [--->] I_Accept_Language        TYPE STRING (default ='en')
+* | [--->] I_IMAGES_FILE        TYPE FILE(optional)
+* | [--->] I_IMAGES_FILENAME        TYPE STRING(optional)
+* | [--->] I_IMAGES_FILE_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_URL        TYPE STRING(optional)
+* | [--->] I_THRESHOLD        TYPE FLOAT(optional)
+* | [--->] I_OWNERS        TYPE TT_STRING(optional)
+* | [--->] I_CLASSIFIER_IDS        TYPE TT_STRING(optional)
+* | [--->] I_ACCEPT_LANGUAGE        TYPE STRING (default ='en')
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIED_IMAGES
@@ -554,8 +693,8 @@ method CLASSIFY.
     data:
       lv_headerparam type string  ##NEEDED.
 
-    if i_Accept_Language is supplied.
-    lv_headerparam = I_Accept_Language.
+    if i_ACCEPT_LANGUAGE is supplied.
+    lv_headerparam = I_ACCEPT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Accept-Language'
@@ -577,55 +716,55 @@ method CLASSIFY.
       lv_extension     type string ##NEEDED.
 
 
-    if not i_url is initial.
+    if not i_URL is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="url"'  ##NO_TEXT.
-      lv_formdata = i_url.
+      lv_formdata = i_URL.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_threshold is initial.
+    if not i_THRESHOLD is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="threshold"'  ##NO_TEXT.
-      lv_formdata = i_threshold.
+      lv_formdata = i_THRESHOLD.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_owners is initial.
+    if not i_OWNERS is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="owners"'  ##NO_TEXT.
       field-symbols:
-        <l_owners> like line of i_owners.
-      loop at i_owners assigning <l_owners>.
-*        ls_form_part-cdata = <l_owners>.
+        <l_OWNERS> like line of i_OWNERS.
+      loop at i_OWNERS assigning <l_OWNERS>.
+*        ls_form_part-cdata = <l_OWNERS>.
 *        append ls_form_part to lt_form_part.
         if ls_form_part-cdata is initial.
-        ls_form_part-cdata = <l_owners>.
+        ls_form_part-cdata = <l_OWNERS>.
         else.
-          ls_form_part-cdata = ls_form_part-cdata && `,` && <l_owners>.
+          ls_form_part-cdata = ls_form_part-cdata && `,` && <l_OWNERS>.
         endif.
       endloop.
       append ls_form_part to lt_form_part.
     endif.
 
-    if not i_classifier_ids is initial.
+    if not i_CLASSIFIER_IDS is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="classifier_ids"'  ##NO_TEXT.
       field-symbols:
-        <l_classifier_ids> like line of i_classifier_ids.
-      loop at i_classifier_ids assigning <l_classifier_ids>.
-*        ls_form_part-cdata = <l_classifier_ids>.
+        <l_CLASSIFIER_IDS> like line of i_CLASSIFIER_IDS.
+      loop at i_CLASSIFIER_IDS assigning <l_CLASSIFIER_IDS>.
+*        ls_form_part-cdata = <l_CLASSIFIER_IDS>.
 *        append ls_form_part to lt_form_part.
         if ls_form_part-cdata is initial.
-        ls_form_part-cdata = <l_classifier_ids>.
+        ls_form_part-cdata = <l_CLASSIFIER_IDS>.
         else.
-          ls_form_part-cdata = ls_form_part-cdata && `,` && <l_classifier_ids>.
+          ls_form_part-cdata = ls_form_part-cdata && `,` && <l_CLASSIFIER_IDS>.
         endif.
 
       endloop.
@@ -635,7 +774,7 @@ method CLASSIFY.
 
 
 
-    if not i_images_file is initial.
+    if not i_IMAGES_FILE is initial.
       if not I_images_filename is initial.
         lv_value = `form-data; name="images_file"; filename="` && I_images_filename && `"`  ##NO_TEXT.
       else.
@@ -646,7 +785,7 @@ method CLASSIFY.
       clear ls_form_part.
       ls_form_part-content_type = I_images_file_content_type.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_images_file.
+      ls_form_part-xdata = i_IMAGES_FILE.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -672,12 +811,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->CREATE_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_name        TYPE STRING
-* | [--->] I_positive_examples        TYPE TT_MAP_FILE
-* | [--->] I_negative_examples        TYPE FILE(optional)
-* | [--->] I_negative_examples_filename        TYPE STRING(optional)
-* | [--->] I_positive_examples_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
-* | [--->] I_negative_examples_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_NAME        TYPE STRING
+* | [--->] I_POSITIVE_EXAMPLES        TYPE TT_MAP_FILE
+* | [--->] I_NEGATIVE_EXAMPLES        TYPE FILE(optional)
+* | [--->] I_NEGATIVE_EXAMPLES_FILENAME        TYPE STRING(optional)
+* | [--->] I_POSITIVE_EXAMPLES_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_NEGATIVE_EXAMPLES_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIER
@@ -717,47 +856,47 @@ method CREATE_CLASSIFIER.
       lv_extension     type string ##NEEDED.
 
 
-    if not i_name is initial.
+    if not i_NAME is initial.
       clear ls_form_part.
       ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
-      lv_formdata = i_name.
+      lv_formdata = i_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
 
 
-    if not i_positive_examples is initial.
-      lv_extension = get_file_extension( I_positive_examples_CT ).
+    if not i_POSITIVE_EXAMPLES is initial.
+      lv_extension = get_file_extension( I_POSITIVE_EXAMPLES_CT ).
       field-symbols:
-        <lv_map_positive_examples> type line of TT_MAP_FILE.
+        <lv_map_POSITIVE_EXAMPLES> type line of TT_MAP_FILE.
       find regex '(\{.*\})' in '{{classname}}_positive_examples' submatches lv_keypattern.
-      loop at i_positive_examples assigning <lv_map_positive_examples>.
+      loop at i_POSITIVE_EXAMPLES assigning <lv_map_POSITIVE_EXAMPLES>.
         lv_base_name = '{{classname}}_positive_examples'.
-        replace lv_keypattern in lv_base_name with <lv_map_positive_examples>-key.
+        replace lv_keypattern in lv_base_name with <lv_map_POSITIVE_EXAMPLES>-key.
         lv_value = `form-data; name="` && lv_base_name && `"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
         lv_index = lv_index + 1.
         clear ls_form_part.
-        ls_form_part-content_type = I_positive_examples_CT.
+        ls_form_part-content_type = I_POSITIVE_EXAMPLES_CT.
         ls_form_part-content_disposition = lv_value.
-        ls_form_part-xdata = <lv_map_positive_examples>-data.
+        ls_form_part-xdata = <lv_map_POSITIVE_EXAMPLES>-data.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_negative_examples is initial.
+    if not i_NEGATIVE_EXAMPLES is initial.
       if not I_negative_examples_filename is initial.
         lv_value = `form-data; name="negative_examples"; filename="` && I_negative_examples_filename && `"`  ##NO_TEXT.
       else.
-      lv_extension = get_file_extension( I_negative_examples_CT ).
+      lv_extension = get_file_extension( I_NEGATIVE_EXAMPLES_CT ).
       lv_value = `form-data; name="negative_examples"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       endif.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_negative_examples_CT.
+      ls_form_part-content_type = I_NEGATIVE_EXAMPLES_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_negative_examples.
+      ls_form_part-xdata = i_NEGATIVE_EXAMPLES.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -782,7 +921,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->LIST_CLASSIFIERS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_verbose        TYPE BOOLEAN(optional)
+* | [--->] I_VERBOSE        TYPE BOOLEAN(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIERS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -808,8 +947,8 @@ method LIST_CLASSIFIERS.
     data:
       lv_queryparam type string.
 
-    if i_verbose is supplied.
-    lv_queryparam = i_verbose.
+    if i_VERBOSE is supplied.
+    lv_queryparam = i_VERBOSE.
     add_query_parameter(
       exporting
         i_parameter  = `verbose`
@@ -842,7 +981,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->GET_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIER
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -857,7 +996,7 @@ method GET_CLASSIFIER.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v3/classifiers/{classifier_id}'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -890,12 +1029,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->UPDATE_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
-* | [--->] I_positive_examples        TYPE TT_MAP_FILE(optional)
-* | [--->] I_negative_examples        TYPE FILE(optional)
-* | [--->] I_negative_examples_filename        TYPE STRING(optional)
-* | [--->] I_positive_examples_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
-* | [--->] I_negative_examples_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
+* | [--->] I_POSITIVE_EXAMPLES        TYPE TT_MAP_FILE(optional)
+* | [--->] I_NEGATIVE_EXAMPLES        TYPE FILE(optional)
+* | [--->] I_NEGATIVE_EXAMPLES_FILENAME        TYPE STRING(optional)
+* | [--->] I_POSITIVE_EXAMPLES_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
+* | [--->] I_NEGATIVE_EXAMPLES_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_CLASSIFIER
@@ -911,7 +1050,7 @@ method UPDATE_CLASSIFIER.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v3/classifiers/{classifier_id}'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -938,36 +1077,36 @@ method UPDATE_CLASSIFIER.
 
 
 
-    if not i_positive_examples is initial.
-      lv_extension = get_file_extension( I_positive_examples_CT ).
+    if not i_POSITIVE_EXAMPLES is initial.
+      lv_extension = get_file_extension( I_POSITIVE_EXAMPLES_CT ).
       field-symbols:
-        <lv_map_positive_examples> type line of TT_MAP_FILE.
+        <lv_map_POSITIVE_EXAMPLES> type line of TT_MAP_FILE.
       find regex '(\{.*\})' in '{{classname}}_positive_examples' submatches lv_keypattern.
-      loop at i_positive_examples assigning <lv_map_positive_examples>.
+      loop at i_POSITIVE_EXAMPLES assigning <lv_map_POSITIVE_EXAMPLES>.
         lv_base_name = '{{classname}}_positive_examples'.
-        replace lv_keypattern in lv_base_name with <lv_map_positive_examples>-key.
+        replace lv_keypattern in lv_base_name with <lv_map_POSITIVE_EXAMPLES>-key.
         lv_value = `form-data; name="` && lv_base_name && `"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
         lv_index = lv_index + 1.
         clear ls_form_part.
-        ls_form_part-content_type = I_positive_examples_CT.
+        ls_form_part-content_type = I_POSITIVE_EXAMPLES_CT.
         ls_form_part-content_disposition = lv_value.
-        ls_form_part-xdata = <lv_map_positive_examples>-data.
+        ls_form_part-xdata = <lv_map_POSITIVE_EXAMPLES>-data.
         append ls_form_part to lt_form_part.
       endloop.
     endif.
 
-    if not i_negative_examples is initial.
+    if not i_NEGATIVE_EXAMPLES is initial.
       if not I_negative_examples_filename is initial.
         lv_value = `form-data; name="negative_examples"; filename="` && I_negative_examples_filename && `"`  ##NO_TEXT.
       else.
-      lv_extension = get_file_extension( I_negative_examples_CT ).
+      lv_extension = get_file_extension( I_NEGATIVE_EXAMPLES_CT ).
       lv_value = `form-data; name="negative_examples"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       endif.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_negative_examples_CT.
+      ls_form_part-content_type = I_NEGATIVE_EXAMPLES_CT.
       ls_form_part-content_disposition = lv_value.
-      ls_form_part-xdata = i_negative_examples.
+      ls_form_part-xdata = i_NEGATIVE_EXAMPLES.
       append ls_form_part to lt_form_part.
     endif.
 
@@ -992,7 +1131,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->DELETE_CLASSIFIER
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -1006,7 +1145,7 @@ method DELETE_CLASSIFIER.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v3/classifiers/{classifier_id}'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1032,7 +1171,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->GET_CORE_ML_MODEL
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_classifier_id        TYPE STRING
+* | [--->] I_CLASSIFIER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/octet-stream')
 * | [<---] E_RESPONSE                    TYPE        FILE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -1047,7 +1186,7 @@ method GET_CORE_ML_MODEL.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v3/classifiers/{classifier_id}/core_ml_model'.
-    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_classifier_id ignoring case.
+    replace all occurrences of `{classifier_id}` in ls_request_prop-url-path with i_CLASSIFIER_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -1075,7 +1214,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V3->DELETE_USER_DATA
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_customer_id        TYPE STRING
+* | [--->] I_CUSTOMER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -1100,7 +1239,7 @@ method DELETE_USER_DATA.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_customer_id format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_CUSTOMER_ID format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `customer_id`

@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -17,21 +17,21 @@
 "!  communications. The service uses linguistic analytics to infer individuals'
 "!  intrinsic personality characteristics, including Big Five, Needs, and Values,
 "!  from digital communications such as email, text messages, tweets, and forum
-"!  posts.
-"!
+"!  posts.<br/>
+"! <br/>
 "! The service can automatically infer, from potentially noisy social media,
 "!  portraits of individuals that reflect their personality characteristics. The
 "!  service can infer consumption preferences based on the results of its analysis
-"!  and, for JSON content that is timestamped, can report temporal behavior.
+"!  and, for JSON content that is timestamped, can report temporal behavior.<br/>
 "! * For information about the meaning of the models that the service uses to
 "!  describe personality characteristics, see [Personality
 "!  models](https://cloud.ibm.com/docs/services/personality-insights?topic=personal
-"! ity-insights-models#models).
+"! ity-insights-models#models).<br/>
 "! * For information about the meaning of the consumption preferences, see
 "!  [Consumption
 "!  preferences](https://cloud.ibm.com/docs/services/personality-insights?topic=per
-"! sonality-insights-preferences#preferences).
-"!
+"! sonality-insights-preferences#preferences). <br/>
+"! <br/>
 "! **Note:** Request logging is disabled for the Personality Insights service.
 "!  Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header,
 "!  the service does not log or retain data from requests and responses. <br/>
@@ -44,66 +44,182 @@ public section.
   types:
     "!   The characteristics that the service inferred from the input content.
     begin of T_TRAIT,
+      "!   The unique, non-localized identifier of the characteristic to which the results
+      "!    pertain. IDs have the form<br/>
+      "!   * `big5_&#123;characteristic&#125;` for Big Five personality dimensions<br/>
+      "!   * `facet_&#123;characteristic&#125;` for Big Five personality facets<br/>
+      "!   * `need_&#123;characteristic&#125;` for Needs<br/>
+      "!    *`value_&#123;characteristic&#125;` for Values.
       TRAIT_ID type STRING,
+      "!   The user-visible, localized name of the characteristic.
       NAME type STRING,
+      "!   The category of the characteristic: `personality` for Big Five personality
+      "!    characteristics, `needs` for Needs, and `values` for Values.
       CATEGORY type STRING,
+      "!   The normalized percentile score for the characteristic. The range is 0 to 1. For
+      "!    example, if the percentage for Openness is 0.60, the author scored in the 60th
+      "!    percentile; the author is more open than 59 percent of the population and less
+      "!    open than 39 percent of the population.
       PERCENTILE type DOUBLE,
+      "!   The raw score for the characteristic. The range is 0 to 1. A higher score
+      "!    generally indicates a greater likelihood that the author has that
+      "!    characteristic, but raw scores must be considered in aggregate: The range of
+      "!    values in practice might be much smaller than 0 to 1, so an individual score
+      "!    must be considered in the context of the overall scores and their range. <br/>
+      "!   <br/>
+      "!   The raw score is computed based on the input and the service model; it is not
+      "!    normalized or compared with a sample population. The raw score enables
+      "!    comparison of the results against a different sampling population and with a
+      "!    custom normalization approach.
       RAW_SCORE type DOUBLE,
+      "!   **`2017-10-13`**: Indicates whether the characteristic is meaningful for the input
+      "!   ** language. The field is always `true` for all characteristics of English,
+      "!   ** Spanish, and Japanese input. The field is `false` for the subset of
+      "!   ** characteristics of Arabic and Korean input for which the service's models are
+      "!   ** unable to generate meaningful results. **`2016-10-19`**: Not returned.
       SIGNIFICANT type BOOLEAN,
+      "!   For `personality` (Big Five) dimensions, more detailed results for the facets of
+      "!    each dimension as inferred from the input text.
       CHILDREN type STANDARD TABLE OF DATA_REFERENCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAIT.
   types:
     "!   The temporal behavior for the input content.
     begin of T_BEHAVIOR,
+      "!   The unique, non-localized identifier of the characteristic to which the results
+      "!    pertain. IDs have the form `behavior_&#123;value&#125;`.
       TRAIT_ID type STRING,
+      "!   The user-visible, localized name of the characteristic.
       NAME type STRING,
+      "!   The category of the characteristic: `behavior` for temporal data.
       CATEGORY type STRING,
+      "!   For JSON content that is timestamped, the percentage of timestamped input data
+      "!    that occurred during that day of the week or hour of the day. The range is 0 to
+      "!    1.
       PERCENTAGE type DOUBLE,
     end of T_BEHAVIOR.
   types:
     "!   A consumption preference that the service inferred from the input content.
     begin of T_CONSUMPTION_PREFERENCES,
+      "!   The unique, non-localized identifier of the consumption preference to which the
+      "!    results pertain. IDs have the form
+      "!    `consumption_preferences_&#123;preference&#125;`.
       CONSUMPTION_PREFERENCE_ID type STRING,
+      "!   The user-visible, localized name of the consumption preference.
       NAME type STRING,
+      "!   The score for the consumption preference:<br/>
+      "!   * `0.0`: Unlikely<br/>
+      "!   * `0.5`: Neutral<br/>
+      "!   * `1.0`: Likely <br/>
+      "!   <br/>
+      "!   The scores for some preferences are binary and do not allow a neutral value. The
+      "!    score is an indication of preference based on the results inferred from the
+      "!    input text, not a normalized percentile.
       SCORE type DOUBLE,
     end of T_CONSUMPTION_PREFERENCES.
   types:
     "!   A warning message that is associated with the input content.
     begin of T_WARNING,
+      "!   The identifier of the warning message.
       WARNING_ID type STRING,
+      "!   The message associated with the `warning_id`:<br/>
+      "!   * `WORD_COUNT_MESSAGE`: "There were &#123;number&#125; words in the input. We
+      "!    need a minimum of 600, preferably 1,200 or more, to compute statistically
+      "!    significant estimates."<br/>
+      "!   * `JSON_AS_TEXT`: "Request input was processed as text/plain as indicated,
+      "!    however detected a JSON input. Did you mean application/json?"<br/>
+      "!   * `CONTENT_TRUNCATED`: "For maximum accuracy while also optimizing processing
+      "!    time, only the first 250KB of input text (excluding markup) was analyzed.
+      "!    Accuracy levels off at approximately 3,000 words so this did not affect the
+      "!    accuracy of the profile."<br/>
+      "!   * `PARTIAL_TEXT_USED`, "The text provided to compute the profile was trimmed for
+      "!    performance reasons. This action does not affect the accuracy of the output, as
+      "!    not all of the input text was required." Applies only when Arabic input text
+      "!    exceeds a threshold at which additional words do not contribute to the accuracy
+      "!    of the profile.
       MESSAGE type STRING,
     end of T_WARNING.
   types:
     "!   The consumption preferences that the service inferred from the input content.
     begin of T_CNSMPTN_PREFERENCES_CATEGORY,
+      "!   The unique, non-localized identifier of the consumption preferences category to
+      "!    which the results pertain. IDs have the form
+      "!    `consumption_preferences_&#123;category&#125;`.
       CNSMPTN_PREFERENCE_CATEGORY_ID type STRING,
+      "!   The user-visible name of the consumption preferences category.
       NAME type STRING,
+      "!   Detailed results inferred from the input text for the individual preferences of
+      "!    the category.
       CONSUMPTION_PREFERENCES type STANDARD TABLE OF T_CONSUMPTION_PREFERENCES WITH NON-UNIQUE DEFAULT KEY,
     end of T_CNSMPTN_PREFERENCES_CATEGORY.
   types:
     "!   The personality profile that the service generated for the input content.
     begin of T_PROFILE,
+      "!   The language model that was used to process the input.
       PROCESSED_LANGUAGE type STRING,
+      "!   The number of words from the input that were used to produce the profile.
       WORD_COUNT type INTEGER,
+      "!   When guidance is appropriate, a string that provides a message that indicates
+      "!    the number of words found and where that value falls in the range of required
+      "!    or suggested number of words.
       WORD_COUNT_MESSAGE type STRING,
+      "!   A recursive array of `Trait` objects that provides detailed results for the Big
+      "!    Five personality characteristics (dimensions and facets) inferred from the
+      "!    input text.
       PERSONALITY type STANDARD TABLE OF T_TRAIT WITH NON-UNIQUE DEFAULT KEY,
+      "!   Detailed results for the Needs characteristics inferred from the input text.
       NEEDS type STANDARD TABLE OF T_TRAIT WITH NON-UNIQUE DEFAULT KEY,
+      "!   Detailed results for the Values characteristics inferred from the input text.
       VALUES type STANDARD TABLE OF T_TRAIT WITH NON-UNIQUE DEFAULT KEY,
+      "!   For JSON content that is timestamped, detailed results about the social behavior
+      "!    disclosed by the input in terms of temporal characteristics. The results
+      "!    include information about the distribution of the content over the days of the
+      "!    week and the hours of the day.
       BEHAVIOR type STANDARD TABLE OF T_BEHAVIOR WITH NON-UNIQUE DEFAULT KEY,
+      "!   If the **consumption_preferences** parameter is `true`, detailed results for
+      "!    each category of consumption preferences. Each element of the array provides
+      "!    information inferred from the input text for the individual preferences of that
+      "!    category.
       CONSUMPTION_PREFERENCES type STANDARD TABLE OF T_CNSMPTN_PREFERENCES_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of warning messages that are associated with the input text for the
+      "!    request. The array is empty if the input generated no warnings.
       WARNINGS type STANDARD TABLE OF T_WARNING WITH NON-UNIQUE DEFAULT KEY,
     end of T_PROFILE.
   types:
     "!   An input content item that the service is to analyze.
     begin of T_CONTENT_ITEM,
+      "!   The content that is to be analyzed. The service supports up to 20 MB of content
+      "!    for all `ContentItem` objects combined.
       CONTENT type STRING,
+      "!   A unique identifier for this content item.
       ID type STRING,
+      "!   A timestamp that identifies when this content was created. Specify a value in
+      "!    milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required only
+      "!    for results that include temporal behavior data.
       CREATED type LONG,
+      "!   A timestamp that identifies when this content was last updated. Specify a value
+      "!    in milliseconds since the UNIX Epoch (January 1, 1970, at 0:00 UTC). Required
+      "!    only for results that include temporal behavior data.
       UPDATED type LONG,
+      "!   The MIME type of the content. The default is plain text. The tags are stripped
+      "!    from HTML content before it is analyzed; plain text is processed as submitted.
       CONTENTTYPE type STRING,
+      "!   The language identifier (two-letter ISO 639-1 identifier) for the language of
+      "!    the content item. The default is `en` (English). Regional variants are treated
+      "!    as their parent language; for example, `en-US` is interpreted as `en`. A
+      "!    language specified with the **Content-Type** parameter overrides the value of
+      "!    this parameter; any content items that specify a different language are
+      "!    ignored. Omit the **Content-Type** parameter to base the language on the most
+      "!    prevalent specification among the content items; again, content items that
+      "!    specify a different language are ignored. You can specify any combination of
+      "!    languages for the input and response content.
       LANGUAGE type STRING,
+      "!   The unique ID of the parent content item for this item. Used to identify
+      "!    hierarchical relationships between posts/replies, messages/replies, and so on.
       PARENTID type STRING,
+      "!   Indicates whether this content item is a reply to another content item.
       REPLY type BOOLEAN,
+      "!   Indicates whether this content item is a forwarded/copied version of another
+      "!    content item.
       FORWARD type BOOLEAN,
     end of T_CONTENT_ITEM.
   types:
@@ -113,14 +229,21 @@ public section.
   types:
     "!   The error response from a failed request.
     begin of T_ERROR_MODEL,
+      "!   The HTTP status code.
       CODE type INTEGER,
+      "!   A service-specific error code.
       SUB_CODE type STRING,
+      "!   A description of the error.
       ERROR type STRING,
+      "!   A URL to documentation explaining the cause and possibly solutions for the
+      "!    error.
       HELP type STRING,
     end of T_ERROR_MODEL.
   types:
     "!   The full input content that the service is to analyze.
     begin of T_CONTENT,
+      "!   An array of `ContentItem` objects that provides the text that is to be analyzed.
+      "!
       CONTENTITEMS type STANDARD TABLE OF T_CONTENT_ITEM WITH NON-UNIQUE DEFAULT KEY,
     end of T_CONTENT.
 
@@ -191,20 +314,20 @@ constants:
 
     "! Get profile.
     "!
-    "! @parameter I_content |
+    "! @parameter I_CONTENT |
     "!   A maximum of 20 MB of content to analyze, though the service requires much less
     "!    text; for more information, see [Providing sufficient
     "!    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
     "!   ty-insights-input#sufficient). For JSON input, provide an object of type
     "!    `Content`.
-    "! @parameter I_Content_Type |
+    "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. For more information, see **Content types** in the method
     "!    description.
-    "! @parameter I_Content_Language |
+    "! @parameter I_CONTENT_LANGUAGE |
     "!   The language of the input text for the request: Arabic, English, Japanese,
     "!    Korean, or Spanish. Regional variants are treated as their parent language; for
-    "!    example, `en-US` is interpreted as `en`.
-    "!
+    "!    example, `en-US` is interpreted as `en`. <br/>
+    "!   <br/>
     "!   The effect of the **Content-Language** parameter depends on the **Content-Type**
     "!    parameter. When **Content-Type** is `text/plain` or `text/html`,
     "!    **Content-Language** is the only way to specify the language. When
@@ -214,34 +337,35 @@ constants:
     "!    parameter to base the language on the specification of the content items. You
     "!    can specify any combination of languages for **Content-Language** and
     "!    **Accept-Language**.
-    "! @parameter I_Accept_Language |
+    "! @parameter I_ACCEPT_LANGUAGE |
     "!   The desired language of the response. For two-character arguments, regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. You can specify any combination of languages for the input
     "!    and response content.
-    "! @parameter I_raw_scores |
+    "! @parameter I_RAW_SCORES |
     "!   Indicates whether a raw score in addition to a normalized percentile is returned
     "!    for each characteristic; raw scores are not compared with a sample population.
     "!    By default, only normalized percentiles are returned.
-    "! @parameter I_csv_headers |
+    "! @parameter I_CSV_HEADERS |
     "!   Indicates whether column labels are returned with a CSV response. By default, no
     "!    column labels are returned. Applies only when the response type is CSV
     "!    (`text/csv`).
-    "! @parameter I_consumption_preferences |
+    "! @parameter I_CONSUMPTION_PREFERENCES |
     "!   Indicates whether consumption preferences are returned with the results. By
     "!    default, no consumption preferences are returned.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_PROFILE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods PROFILE
     importing
-      !I_content type T_CONTENT
-      !I_Content_Type type STRING default 'text/plain'
-      !I_Content_Language type STRING default 'en'
-      !I_Accept_Language type STRING default 'en'
-      !I_raw_scores type BOOLEAN default c_boolean_false
-      !I_csv_headers type BOOLEAN default c_boolean_false
-      !I_consumption_preferences type BOOLEAN default c_boolean_false
+      !I_CONTENT type T_CONTENT
+      !I_CONTENT_TYPE type STRING default 'text/plain'
+      !I_CONTENT_LANGUAGE type STRING default 'en'
+      !I_ACCEPT_LANGUAGE type STRING default 'en'
+      !I_RAW_SCORES type BOOLEAN default c_boolean_false
+      !I_CSV_HEADERS type BOOLEAN default c_boolean_false
+      !I_CONSUMPTION_PREFERENCES type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_PROFILE
@@ -249,20 +373,20 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get profile as csv.
     "!
-    "! @parameter I_content |
+    "! @parameter I_CONTENT |
     "!   A maximum of 20 MB of content to analyze, though the service requires much less
     "!    text; for more information, see [Providing sufficient
     "!    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
     "!   ty-insights-input#sufficient). For JSON input, provide an object of type
     "!    `Content`.
-    "! @parameter I_Content_Type |
+    "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. For more information, see **Content types** in the method
     "!    description.
-    "! @parameter I_Content_Language |
+    "! @parameter I_CONTENT_LANGUAGE |
     "!   The language of the input text for the request: Arabic, English, Japanese,
     "!    Korean, or Spanish. Regional variants are treated as their parent language; for
-    "!    example, `en-US` is interpreted as `en`.
-    "!
+    "!    example, `en-US` is interpreted as `en`. <br/>
+    "!   <br/>
     "!   The effect of the **Content-Language** parameter depends on the **Content-Type**
     "!    parameter. When **Content-Type** is `text/plain` or `text/html`,
     "!    **Content-Language** is the only way to specify the language. When
@@ -272,33 +396,38 @@ constants:
     "!    parameter to base the language on the specification of the content items. You
     "!    can specify any combination of languages for **Content-Language** and
     "!    **Accept-Language**.
-    "! @parameter I_Accept_Language |
+    "! @parameter I_ACCEPT_LANGUAGE |
     "!   The desired language of the response. For two-character arguments, regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. You can specify any combination of languages for the input
     "!    and response content.
-    "! @parameter I_raw_scores |
+    "! @parameter I_RAW_SCORES |
     "!   Indicates whether a raw score in addition to a normalized percentile is returned
     "!    for each characteristic; raw scores are not compared with a sample population.
     "!    By default, only normalized percentiles are returned.
-    "! @parameter I_csv_headers |
+    "! @parameter I_CSV_HEADERS |
     "!   Indicates whether column labels are returned with a CSV response. By default, no
     "!    column labels are returned. Applies only when the response type is CSV
     "!    (`text/csv`).
-    "! @parameter I_consumption_preferences |
+    "! @parameter I_CONSUMPTION_PREFERENCES |
     "!   Indicates whether consumption preferences are returned with the results. By
     "!    default, no consumption preferences are returned.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type STRING
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods PROFILE_AS_CSV
     importing
-      !I_content type T_CONTENT
-      !I_Content_Type type STRING default 'text/plain'
-      !I_Content_Language type STRING default 'en'
-      !I_Accept_Language type STRING default 'en'
-      !I_raw_scores type BOOLEAN default c_boolean_false
-      !I_csv_headers type BOOLEAN default c_boolean_false
-      !I_consumption_preferences type BOOLEAN default c_boolean_false
+      !I_CONTENT type T_CONTENT
+      !I_CONTENT_TYPE type STRING default 'text/plain'
+      !I_CONTENT_LANGUAGE type STRING default 'en'
+      !I_ACCEPT_LANGUAGE type STRING default 'en'
+      !I_RAW_SCORES type BOOLEAN default c_boolean_false
+      !I_CSV_HEADERS type BOOLEAN default c_boolean_false
+      !I_CONSUMPTION_PREFERENCES type BOOLEAN default c_boolean_false
       !I_accept      type string default 'text/csv'
+    exporting
+      !E_RESPONSE type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
@@ -338,7 +467,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -374,7 +503,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122847'.
+    e_sdk_version_date = '20200210092823'.
 
   endmethod.
 
@@ -383,13 +512,13 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_PERSONAL_INSIGHTS_V3->PROFILE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_content        TYPE T_CONTENT
-* | [--->] I_Content_Type        TYPE STRING (default ='text/plain')
-* | [--->] I_Content_Language        TYPE STRING (default ='en')
-* | [--->] I_Accept_Language        TYPE STRING (default ='en')
-* | [--->] I_raw_scores        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_csv_headers        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_consumption_preferences        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CONTENT        TYPE T_CONTENT
+* | [--->] I_CONTENT_TYPE        TYPE STRING (default ='text/plain')
+* | [--->] I_CONTENT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_ACCEPT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_RAW_SCORES        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CSV_HEADERS        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CONSUMPTION_PREFERENCES        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_PROFILE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -415,8 +544,8 @@ method PROFILE.
     data:
       lv_queryparam type string.
 
-    if i_raw_scores is supplied.
-    lv_queryparam = i_raw_scores.
+    if i_RAW_SCORES is supplied.
+    lv_queryparam = i_RAW_SCORES.
     add_query_parameter(
       exporting
         i_parameter  = `raw_scores`
@@ -426,8 +555,8 @@ method PROFILE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_csv_headers is supplied.
-    lv_queryparam = i_csv_headers.
+    if i_CSV_HEADERS is supplied.
+    lv_queryparam = i_CSV_HEADERS.
     add_query_parameter(
       exporting
         i_parameter  = `csv_headers`
@@ -437,8 +566,8 @@ method PROFILE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_consumption_preferences is supplied.
-    lv_queryparam = i_consumption_preferences.
+    if i_CONSUMPTION_PREFERENCES is supplied.
+    lv_queryparam = i_CONSUMPTION_PREFERENCES.
     add_query_parameter(
       exporting
         i_parameter  = `consumption_preferences`
@@ -452,12 +581,12 @@ method PROFILE.
     data:
       lv_headerparam type string  ##NEEDED.
 
-    if i_Content_Type is supplied.
-    ls_request_prop-header_content_type = I_Content_Type.
+    if i_CONTENT_TYPE is supplied.
+    ls_request_prop-header_content_type = I_CONTENT_TYPE.
     endif.
 
-    if i_Content_Language is supplied.
-    lv_headerparam = I_Content_Language.
+    if i_CONTENT_LANGUAGE is supplied.
+    lv_headerparam = I_CONTENT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Content-Language'
@@ -466,8 +595,8 @@ method PROFILE.
         c_headers    = ls_request_prop-headers )  ##NO_TEXT.
     endif.
 
-    if i_Accept_Language is supplied.
-    lv_headerparam = I_Accept_Language.
+    if i_ACCEPT_LANGUAGE is supplied.
+    lv_headerparam = I_ACCEPT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Accept-Language'
@@ -486,20 +615,20 @@ method PROFILE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_content ).
+    lv_datatype = get_datatype( i_CONTENT ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_content i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_CONTENT i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'content' i_value = i_content ).
+        lv_bodyparam = abap_to_json( i_name = 'content' i_value = i_CONTENT ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_content to <lv_text>.
+      assign i_CONTENT to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -533,14 +662,15 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_PERSONAL_INSIGHTS_V3->PROFILE_AS_CSV
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_content        TYPE T_CONTENT
-* | [--->] I_Content_Type        TYPE STRING (default ='text/plain')
-* | [--->] I_Content_Language        TYPE STRING (default ='en')
-* | [--->] I_Accept_Language        TYPE STRING (default ='en')
-* | [--->] I_raw_scores        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_csv_headers        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_consumption_preferences        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CONTENT        TYPE T_CONTENT
+* | [--->] I_CONTENT_TYPE        TYPE STRING (default ='text/plain')
+* | [--->] I_CONTENT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_ACCEPT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_RAW_SCORES        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CSV_HEADERS        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_CONSUMPTION_PREFERENCES        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='text/csv')
+* | [<---] E_RESPONSE                    TYPE        STRING
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
 method PROFILE_AS_CSV.
@@ -564,8 +694,8 @@ method PROFILE_AS_CSV.
     data:
       lv_queryparam type string.
 
-    if i_raw_scores is supplied.
-    lv_queryparam = i_raw_scores.
+    if i_RAW_SCORES is supplied.
+    lv_queryparam = i_RAW_SCORES.
     add_query_parameter(
       exporting
         i_parameter  = `raw_scores`
@@ -575,8 +705,8 @@ method PROFILE_AS_CSV.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_csv_headers is supplied.
-    lv_queryparam = i_csv_headers.
+    if i_CSV_HEADERS is supplied.
+    lv_queryparam = i_CSV_HEADERS.
     add_query_parameter(
       exporting
         i_parameter  = `csv_headers`
@@ -586,8 +716,8 @@ method PROFILE_AS_CSV.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_consumption_preferences is supplied.
-    lv_queryparam = i_consumption_preferences.
+    if i_CONSUMPTION_PREFERENCES is supplied.
+    lv_queryparam = i_CONSUMPTION_PREFERENCES.
     add_query_parameter(
       exporting
         i_parameter  = `consumption_preferences`
@@ -601,12 +731,12 @@ method PROFILE_AS_CSV.
     data:
       lv_headerparam type string  ##NEEDED.
 
-    if i_Content_Type is supplied.
-    ls_request_prop-header_content_type = I_Content_Type.
+    if i_CONTENT_TYPE is supplied.
+    ls_request_prop-header_content_type = I_CONTENT_TYPE.
     endif.
 
-    if i_Content_Language is supplied.
-    lv_headerparam = I_Content_Language.
+    if i_CONTENT_LANGUAGE is supplied.
+    lv_headerparam = I_CONTENT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Content-Language'
@@ -615,8 +745,8 @@ method PROFILE_AS_CSV.
         c_headers    = ls_request_prop-headers )  ##NO_TEXT.
     endif.
 
-    if i_Accept_Language is supplied.
-    lv_headerparam = I_Accept_Language.
+    if i_ACCEPT_LANGUAGE is supplied.
+    lv_headerparam = I_ACCEPT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Accept-Language'
@@ -635,20 +765,20 @@ method PROFILE_AS_CSV.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_content ).
+    lv_datatype = get_datatype( i_CONTENT ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_content i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_CONTENT i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'content' i_value = i_content ).
+        lv_bodyparam = abap_to_json( i_name = 'content' i_value = i_CONTENT ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_content to <lv_text>.
+      assign i_CONTENT to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -668,6 +798,8 @@ method PROFILE_AS_CSV.
     lo_response = HTTP_POST( i_request_prop = ls_request_prop ).
 
 
+    " retrieve file data
+    e_response = get_response_string( lo_response ).
 
 endmethod.
 

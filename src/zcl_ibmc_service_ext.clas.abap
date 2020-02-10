@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019,2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -44,18 +44,37 @@ public section.
   constants C_TOKEN_GENERATION_NEVER type CHAR value 'N' ##NO_TEXT.
   constants C_TOKEN_GENERATION_ALWAYS type CHAR value 'A' ##NO_TEXT.
   constants C_TOKEN_GENERATION_AUTO type CHAR value SPACE ##NO_TEXT.
+  constants C_IAM_TOKEN_HOST type STRING value 'iam.cloud.ibm.com' ##NO_TEXT.
+  constants C_IAM_TOKEN_PATH type STRING value '/identity/token' ##NO_TEXT.
   data P_INSTANCE_ID type TY_INSTANCE_ID .
   data P_SERVICENAME type TY_SERVICENAME .
 
+  "! Sends a HTTP PUT request.
+  "!
+  "! @parameter I_REQUEST_PROP | Request properties.
+  "! @parameter E_RESPONSE | Response returned by service.
+  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+  "!
   methods GET_BEARER_TOKEN
     returning
       value(E_BEARER_TOKEN) type STRING .
+  "! Returns the SDK built date.
+  "!
+  "! @parameter E_SDK_VERSION_DATE | Built data in format YYYYMMDD.
+  "!
   methods GET_SDK_VERSION_DATE
     returning
       value(E_SDK_VERSION_DATE) type STRING .
+  "! Method for internal use.
+  "!
   methods SET_BEARER_TOKEN
     importing
       !I_BEARER_TOKEN type STRING .
+  "! Retrieves a value of a configuration parameter from table ZIBMC_CONFIG.
+  "!
+  "! @parameter I_DEFUALT | Default value, if configuration parameter is not found.
+  "! @parameter I_PARAM | Configuration parameter name.
+  "!
   methods GET_CONFIG_VALUE
     importing
       !I_DEFAULT type ZIBMC_CONFIG-VALUE optional
@@ -64,9 +83,31 @@ public section.
       value(E_VALUE) type ZIBMC_CONFIG-VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
+  "! Factory method to instantiate a service specific wrapper class.
+  "!
+  "! @parameter I_INSTANCE_ID |
+  "!   Value of field INSTANCE_UID in table ZIBMC_CONFIG.
+  "!   Service credentials are read from table ZIBMC_CONFIG with key SERVICE = Name of service wrapper class without prefix ZCL_IBMC_ and INSTANCE_UID.
+  "! @parameter I_URL | URL of the service.
+  "! @parameter I_HOST | Host of the service. I_URL and I_HOST can be used synonymously.
+  "! @parameter I_USERNAME | User password to authenticate on service.
+  "! @parameter I_PASSWORD | User password to authenticate on service.
+  "! @parameter I_PROXY_HOST | Proxy server, not applicable on SAP Cloud Platform.
+  "! @parameter I_PROXY_PORT | Proxy server port, not applicable on SAP Cloud Platform.
+  "! @parameter I_APIKEY | API key password to authenticate on service.
+  "! @parameter I_AUTH_METHOD | Authentication method. Possible values are "IAM", "ICP4D", "basicAuth", "NONE".
+  "! @parameter I_I_OAUTH_PROP | Credentials to generate token for OAuth authentication.
+  "! @parameter I_TOKEN_GENERATION | Method for access token refresh: <br/>
+  "!   C_TOKEN_GENERATION_NEVER - Access token is not refreshed.
+  "!   C_TOKEN_GENERATION_ALWAYS - Access to token is refreshed for each service call.
+  "!   C_TOKEN_GENERATION_AUTO - Access to token is refreshed just before it expires.
+  "! @parameter I_REQUEST_HEADERS | List of headers sent with every request, format 'Header1=Value1;Header2=Value2'.
+  "! @parameter I_VERSION | Value of query parameter VERSION.
+  "!
   class-methods GET_INSTANCE
     importing
       !I_INSTANCE_ID type TY_INSTANCE_ID optional
+      !I_URL type STRING optional
       !I_HOST type STRING optional
       !I_USERNAME type STRING optional
       !I_PASSWORD type STRING optional
@@ -80,6 +121,20 @@ public section.
       !I_VERSION type STRING optional
     exporting
       value(EO_INSTANCE) type ANY .
+  "! Compresses multiple images from an internal table to a one or more xstrings in ZIP format.
+  "!
+  "! @parameter IT_EXAMPLES | Internal table of images.
+  "! @parameter IV_FIELD_CLASS |
+  "!   Field in IT_EXAMPLES that contains the file class.
+  "!   All records in IT_EXAMPLES with same class will be compress into one ZIP xstring.
+  "! @parameter IV_FIELD_FILENAME | Field in IT_EXAMPLES that contains the filename for the image.
+  "! @parameter IV_FIELD_IMAGE | Field in IT_EXAMPLES that contains the image.
+  "! @parameter IV_IMAGE_FORMAT | Format of the image. Possible values are
+  "!   C_FORMAT_JPG, C_FORMAT_PNG, C_FORMAT_GIF, C_FORMAT_TIF, C_FORMAT_ALL.
+  "! @parameter IV_IMAGE_NAME | Name of the image.
+  "! @parameter ET_ZIPDATA | Internal table containing a compressed ZIP xstring for each image class.
+  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+  "!
   class-methods GET_ZIPDATA
     importing
       !IT_EXAMPLES type ANY TABLE
@@ -95,21 +150,27 @@ public section.
 
   methods GET_ACCESS_TOKEN
     redefinition .
+  methods GET_REQUEST_PROP
+    redefinition .
   methods SET_ACCESS_TOKEN
     redefinition .
-  protected section.
+protected section.
 private section.
 
   data P_OAUTH_PROP type TS_OAUTH_PROP .
   data P_TOKEN_GENERATION type CHAR .
   data P_TOKEN_SAVED type ZIBMC_TOKEN .
 
+  "! Method for internal use.
+  "!
   class-methods ADD_CONFIG_PROP
     importing
       !I_SERVICENAME type TY_SERVICENAME
       !I_INSTANCE_ID type TY_INSTANCE_ID optional
     changing
       !C_REQUEST_PROP type ANY .
+  "! Method for internal use.
+  "!
   class-methods ADD_IMAGE_TO_ZIP
     importing
       !IS_TABLELINE type ANY
@@ -120,6 +181,8 @@ private section.
       !IV_FIELD_FILENAME type FIELDNAME optional
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
+  "! Method for internal use.
+  "!
   class-methods GET_FIELD_DATA
     importing
       !IS_TABLELINE type ANY
@@ -143,16 +206,18 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   method add_config_prop.
 
     data:
-      lt_compname   type tt_string,
-      lv_type       type char,
-      ls_config     type zibmc_config,
-      lt_config     type standard table of zibmc_config,
-      lt_ref        type standard table of ref to data,
-      lr_data       type ref to data,
-      lv_index      type i value 0.
+      lt_compname type tt_string,
+      lv_type     type char,
+      ls_config   type zibmc_config,
+      lt_config   type standard table of zibmc_config,
+      lt_ref      type standard table of ref to data,
+      lr_data     type ref to data,
+      lv_index    type i value 0,
+      ls_url      type ts_url value is initial.
 
     field-symbols:
       <lv_comp_val> type any,
+      <lv_comp_sub> type any,
       <lv_compname> type string,
       <l_struct>    type any.
 
@@ -174,6 +239,12 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
     " quit, if no relevant entry in config table exists
     check sy-subrc = 0.
 
+    " change config parameter "URL" to "HOST"
+    ls_config-param = 'HOST'.
+    modify lt_config from ls_config transporting param where param = 'URL'.
+
+    " perform breadth-first search on c_request_prop to allow setting values on deeper levels,
+    " e.g. HOST -> c_request_prop-url-host
     lr_data = ref #( c_request_prop ).
     append lr_data to lt_ref.
 
@@ -199,13 +270,15 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
             i_field = <lv_comp_val>
           importing
             e_technical_type = lv_type ).
-        if lv_type eq 'u' or lv_type eq 'v'.  " structure
+        if lv_type eq zif_ibmc_service_arch~c_datatype-struct or
+           lv_type eq zif_ibmc_service_arch~c_datatype-struct_deep.
           lr_data = ref #( <lv_comp_val> ).
           append lr_data to lt_ref.
         else.
           if <lv_comp_val> is initial.
             read table lt_config into ls_config with key param = <lv_compname>  ##WARN_OK.
             if sy-subrc = 0.
+              condense ls_config-value.
               <lv_comp_val> = ls_config-value.
             endif.
           endif.
@@ -258,10 +331,8 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
 
   method get_access_token.
     data:
-      lv_service          type zibmc_token-service,
       lo_response         type to_rest_response,
       lv_grand_urlencoded type string,
-*      lv_usr_urlencoded   type string,
       lv_key_urlencoded   type string,
       lv_json             type string,
       lv_seconds          type i,
@@ -287,7 +358,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
     " check if access token has expired
     get time stamp field ls_timestamp.
     if ls_timestamp >= ls_token-expires_ts.
-      clear ls_token-access_token.
+      clear ls_token.
     endif.
 
     " (re)new token unless it is still valid
@@ -318,7 +389,6 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
             ls_token_request_prop-body = `grant_type=` && lv_grand_urlencoded && `&apikey=` && lv_key_urlencoded ##NO_TEXT.
           elseif not p_oauth_prop-password is initial.
             lv_grand_urlencoded = escape( val = 'urn:ibm:params:oauth:grant-type:password' format = cl_abap_format=>e_uri_full ) ##NO_TEXT.
-*            lv_usr_urlencoded = escape( val = p_oauth_prop-username format = cl_abap_format=>e_uri_full ).
             lv_key_urlencoded = escape( val = p_oauth_prop-password format = cl_abap_format=>e_uri_full ).
             ls_token_request_prop-body = `grant_type=` && lv_grand_urlencoded && `&username=` && p_oauth_prop-username && `&password=` &&  p_oauth_prop-password ##NO_TEXT.
           else.
@@ -387,7 +457,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
         ls_token-expires_ts = cl_abap_tstmp=>add( tstmp = lv_timestamp secs = lv_seconds ).
       endif.
 
-      ls_token-service = lv_service.
+      ls_token-service = p_servicename.
       ls_token-instance_uid = p_instance_id.
 
       if p_token_generation eq c_token_generation_auto.
@@ -611,6 +681,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       lv_headerstr    type string,
       ls_header       type ts_header.
 
+    " instantiate object of type of exporting parameter
     get_field_type(
       exporting
         i_field         = eo_instance
@@ -619,6 +690,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
 
     create object eo_instance type (lv_classname)
       exporting
+        i_url      = i_url
         i_host     = i_host
         i_username = i_username
         i_password = i_password
@@ -665,12 +737,16 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       changing
         c_request_prop = lo_instance->p_request_prop_default ).
 
+    normalize_url( changing c_url = lo_instance->p_request_prop_default-url ).
+
     " Merge properties from config table for this service type
     add_config_prop(
       exporting
         i_servicename  = lo_instance->p_servicename
       changing
         c_request_prop = lo_instance->p_request_prop_default ).
+
+    normalize_url( changing c_url = lo_instance->p_request_prop_default-url ).
 
     " Get service default properties
     ls_request_prop = lo_instance->get_request_prop( i_auth_method = i_auth_method ).
@@ -693,11 +769,11 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
     if ls_request_prop-auth_name eq 'IAM' ##NO_TEXT.
       if lo_instance->p_oauth_prop-url-host is initial.
         lo_instance->p_oauth_prop-url-protocol = 'https' ##NO_TEXT.
-        lo_instance->p_oauth_prop-url-host = 'iam.bluemix.net' ##NO_TEXT.
+        lo_instance->p_oauth_prop-url-host = c_iam_token_host.
       endif.
       if lo_instance->p_oauth_prop-url-path_base is initial and lo_instance->p_oauth_prop-url-path is initial.
         " Set path_base (not path), otherwise the default service path_base would be added, which is not correct
-        lo_instance->p_oauth_prop-url-path_base = '/identity/token' ##NO_TEXT.
+        lo_instance->p_oauth_prop-url-path_base = c_iam_token_path.
       endif.
       if lo_instance->p_oauth_prop-password is initial and lo_instance->p_oauth_prop-apikey is initial.
         lo_instance->p_oauth_prop-username = lo_instance->p_request_prop_default-username.
@@ -713,9 +789,41 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+  method get_request_prop.
+    data:
+      lv_auth_method type string.
+
+    e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
+
+    lv_auth_method = i_auth_method.
+    if lv_auth_method eq c_default.
+      lv_auth_method = 'IAM'.
+    endif.
+    if lv_auth_method is initial.
+      e_request_prop-auth_basic      = c_boolean_false.
+      e_request_prop-auth_oauth      = c_boolean_false.
+      e_request_prop-auth_apikey     = c_boolean_false.
+    elseif lv_auth_method eq 'IAM'.
+      e_request_prop-auth_name       = 'IAM'.
+      e_request_prop-auth_type       = 'apiKey'.
+      e_request_prop-auth_headername = 'Authorization'.
+      e_request_prop-auth_header     = c_boolean_true.
+    elseif lv_auth_method eq 'ICP4D'.
+      e_request_prop-auth_name       = 'ICP4D'.
+      e_request_prop-auth_type       = 'apiKey'.
+      e_request_prop-auth_headername = 'Authorization'.
+      e_request_prop-auth_header     = c_boolean_true.
+    elseif lv_auth_method eq 'basicAuth'.
+      e_request_prop-auth_name       = 'basicAuth'.
+      e_request_prop-auth_type       = 'http'.
+      e_request_prop-auth_basic      = c_boolean_true.
+    endif.
+  endmethod.
+
+
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191001'.
+    e_sdk_version_date = ''.
 
   endmethod.
 

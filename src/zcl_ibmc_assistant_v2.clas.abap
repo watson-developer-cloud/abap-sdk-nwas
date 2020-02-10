@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 "! <h1>Watson Assistant v2</h1>
 "! The IBM Watson&trade; Assistant service combines machine learning, natural
 "!  language understanding, and an integrated dialog editor to create conversation
-"!  flows between your apps and your users.
-"!
+"!  flows between your apps and your users.<br/>
+"! <br/>
 "! The Assistant v2 API provides runtime methods your client application can use to
 "!  send user input to an assistant and receive a response. <br/>
 class ZCL_IBMC_ASSISTANT_V2 DEFINITION
@@ -27,342 +27,709 @@ public section.
   types:
     "!   Dialog log message details.
     begin of T_DIALOG_LOG_MESSAGE,
+      "!   The severity of the log message.
       LEVEL type STRING,
+      "!   The text of the log message.
       MESSAGE type STRING,
     end of T_DIALOG_LOG_MESSAGE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_DIALOG_NODES_VISITED,
+      "!   A dialog node that was triggered during processing of the input message.
       DIALOG_NODE type STRING,
+      "!   The title of the dialog node.
       TITLE type STRING,
+      "!   The conditions that trigger the dialog node.
       CONDITIONS type STRING,
     end of T_DIALOG_NODES_VISITED.
   types:
     "!   Additional detailed information about a message response and how it was
     "!    generated.
     begin of T_MESSAGE_OUTPUT_DEBUG,
+      "!   An array of objects containing detailed diagnostic information about the nodes
+      "!    that were triggered during processing of the input message.
       NODES_VISITED type STANDARD TABLE OF T_DIALOG_NODES_VISITED WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of up to 50 messages logged with the request.
       LOG_MESSAGES type STANDARD TABLE OF T_DIALOG_LOG_MESSAGE WITH NON-UNIQUE DEFAULT KEY,
+      "!   Assistant sets this to true when this message response concludes or interrupts a
+      "!    dialog.
       BRANCH_EXITED type BOOLEAN,
+      "!   When `branch_exited` is set to `true` by the Assistant, the
+      "!    `branch_exited_reason` specifies whether the dialog completed by itself or got
+      "!    interrupted.
       BRANCH_EXITED_REASON type STRING,
     end of T_MESSAGE_OUTPUT_DEBUG.
   types:
-    "!
+    "!   No documentation available.
       T_EMPTY_RESPONSE type JSONOBJECT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_SESSION_RESPONSE,
+      "!   The session ID.
       SESSION_ID type STRING,
     end of T_SESSION_RESPONSE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_NUM,
+      "!   A recognized numeric value, represented as an integer or double.
       NUMERIC_VALUE type NUMBER,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
       RANGE_LINK type STRING,
+      "!   The type of numeric value recognized in the user input (`integer` or
+      "!    `rational`).
       SUBTYPE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_NUM.
   types:
     "!   An alternative value for the recognized entity.
     begin of T_RUNTIME_ENTITY_ALTERNATIVE,
+      "!   The entity value that was recognized in the user input.
       VALUE type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!    entity.
       CONFIDENCE type NUMBER,
     end of T_RUNTIME_ENTITY_ALTERNATIVE.
   types:
+    "!   An object describing the role played by a system entity that is specifies the
+    "!    beginning or end of a range recognized in the user input. This property is
+    "!    included only if the new system entities are enabled for the skill.
+    begin of T_RUNTIME_ENTITY_ROLE,
+      "!   The relationship of the entity to the range.
+      TYPE type STRING,
+    end of T_RUNTIME_ENTITY_ROLE.
+  types:
+    "!   No documentation available.
+    begin of T_RT_ENTITY_INTERPRETATION,
+      "!   The calendar used to represent a recognized date (for example, `Gregorian`).
+      CALENDAR_TYPE type STRING,
+      "!   A unique identifier used to associate a recognized time and date. If the user
+      "!    input contains a date and time that are mentioned together (for example, `Today
+      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
+      "!    and `@sys-time` entities).
+      DATETIME_LINK type STRING,
+      "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
+      "!    property is included when a `@sys-date` entity is recognized based on a holiday
+      "!    name in the user input.
+      FESTIVAL type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
+      GRANULARITY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
+      RANGE_LINK type STRING,
+      "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
+      "!    is part of an implied range where only one date or time is specified (for
+      "!    example, `since` or `until`).
+      RANGE_MODIFIER type STRING,
+      "!   A recognized mention of a relative day, represented numerically as an offset
+      "!    from the current date (for example, `-1` for `yesterday` or `10` for `in ten
+      "!    days`).
+      RELATIVE_DAY type NUMBER,
+      "!   A recognized mention of a relative month, represented numerically as an offset
+      "!    from the current month (for example, `1` for `next month` or `-3` for `three
+      "!    months ago`).
+      RELATIVE_MONTH type NUMBER,
+      "!   A recognized mention of a relative week, represented numerically as an offset
+      "!    from the current week (for example, `2` for `in two weeks` or `-1` for `last
+      "!    week).
+      RELATIVE_WEEK type NUMBER,
+      "!   A recognized mention of a relative date range for a weekend, represented
+      "!    numerically as an offset from the current weekend (for example, `0` for `this
+      "!    weekend` or `-1` for `last weekend`).
+      RELATIVE_WEEKEND type NUMBER,
+      "!   A recognized mention of a relative year, represented numerically as an offset
+      "!    from the current year (for example, `1` for `next year` or `-5` for `five years
+      "!    ago`).
+      RELATIVE_YEAR type NUMBER,
+      "!   A recognized mention of a specific date, represented numerically as the date
+      "!    within the month (for example, `30` for `June 30`.).
+      SPECIFIC_DAY type NUMBER,
+      "!   A recognized mention of a specific day of the week as a lowercase string (for
+      "!    example, `monday`).
+      SPECIFIC_DAY_OF_WEEK type STRING,
+      "!   A recognized mention of a specific month, represented numerically (for example,
+      "!    `7` for `July`).
+      SPECIFIC_MONTH type NUMBER,
+      "!   A recognized mention of a specific quarter, represented numerically (for
+      "!    example, `3` for `the third quarter`).
+      SPECIFIC_QUARTER type NUMBER,
+      "!   A recognized mention of a specific year (for example, `2016`).
+      SPECIFIC_YEAR type NUMBER,
+      "!   A recognized numeric value, represented as an integer or double.
+      NUMERIC_VALUE type NUMBER,
+      "!   The type of numeric value recognized in the user input (`integer` or
+      "!    `rational`).
+      SUBTYPE type STRING,
+      "!   A recognized term for a time that was mentioned as a part of the day in the
+      "!    user's input (for example, `morning` or `afternoon`).
+      PART_OF_DAY type STRING,
+      "!   A recognized mention of a relative hour, represented numerically as an offset
+      "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
+      "!    hour ago`).
+      RELATIVE_HOUR type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    minutes from the current time (for example, `5` for `in five minutes` or `-15`
+      "!    for `fifteen minutes ago`).
+      RELATIVE_MINUTE type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    seconds from the current time (for example, `10` for `in ten seconds` or `-30`
+      "!    for `thirty seconds ago`).
+      RELATIVE_SECOND type NUMBER,
+      "!   A recognized specific hour mentioned as part of a time value (for example, `10`
+      "!    for `10:15 AM`.).
+      SPECIFIC_HOUR type NUMBER,
+      "!   A recognized specific minute mentioned as part of a time value (for example,
+      "!    `15` for `10:15 AM`.).
+      SPECIFIC_MINUTE type NUMBER,
+      "!   A recognized specific second mentioned as part of a time value (for example,
+      "!    `30` for `10:15:30 AM`.).
+      SPECIFIC_SECOND type NUMBER,
+      "!   A recognized time zone mentioned as part of a time value (for example, `EST`).
+      TIMEZONE type STRING,
+    end of T_RT_ENTITY_INTERPRETATION.
+  types:
     "!   Optional properties that control how the assistant responds.
     begin of T_MESSAGE_INPUT_OPTIONS,
+      "!   Whether to return additional diagnostic information. Set to `true` to return
+      "!    additional information under the `output.debug` key.
       DEBUG type BOOLEAN,
+      "!   Whether to restart dialog processing at the root of the dialog, regardless of
+      "!    any previously visited nodes. **Note:** This does not affect `turn_count` or
+      "!    any other context variables.
       RESTART type BOOLEAN,
+      "!   Whether to return more than one intent. Set to `true` to return all matching
+      "!    intents.
       ALTERNATE_INTENTS type BOOLEAN,
+      "!   Whether to return session context with the response. If you specify `true`, the
+      "!    response will include the `context` property.
       RETURN_CONTEXT type BOOLEAN,
     end of T_MESSAGE_INPUT_OPTIONS.
   types:
     "!   An intent identified in the user input.
     begin of T_RUNTIME_INTENT,
+      "!   The name of the recognized intent.
       INTENT type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the intent.
       CONFIDENCE type DOUBLE,
     end of T_RUNTIME_INTENT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_CAPTURE_GROUP,
+      "!   A recognized capture group for the entity.
       GROUP type STRING,
+      "!   Zero-based character offsets that indicate where the entity value begins and
+      "!    ends in the input text.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CAPTURE_GROUP.
   types:
     "!   The entity value that was recognized in the user input.
     begin of T_RUNTIME_ENTITY,
+      "!   An entity detected in the input.
       ENTITY type STRING,
+      "!   An array of zero-based character offsets that indicate where the detected entity
+      "!    values begin and end in the input text.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
+      "!   The term in the input text that was recognized as an entity value.
       VALUE type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!    entity.
       CONFIDENCE type NUMBER,
+      "!   Any metadata for the entity.
       METADATA type MAP,
+      "!   The recognized capture groups for the entity, as defined by the entity pattern.
       GROUPS type STANDARD TABLE OF T_CAPTURE_GROUP WITH NON-UNIQUE DEFAULT KEY,
+      "!   An object containing detailed information about the entity recognized in the
+      "!    user input. This property is included only if the new system entities are
+      "!    enabled for the skill.<br/>
+      "!   <br/>
+      "!   For more information about how the new system entities are interpreted, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-syste
+      "!   m-entities).
+      INTERPRETATION type T_RT_ENTITY_INTERPRETATION,
+      "!   An array of possible alternative values that the user might have intended
+      "!    instead of the value returned in the **value** property. This property is
+      "!    returned only for `@sys-time` and `@sys-date` entities when the user's input is
+      "!    ambiguous.<br/>
+      "!   <br/>
+      "!   This property is included only if the new system entities are enabled for the
+      "!    skill.
+      ALTERNATIVES type STANDARD TABLE OF T_RUNTIME_ENTITY_ALTERNATIVE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An object describing the role played by a system entity that is specifies the
+      "!    beginning or end of a range recognized in the user input. This property is
+      "!    included only if the new system entities are enabled for the skill.
+      ROLE type T_RUNTIME_ENTITY_ROLE,
     end of T_RUNTIME_ENTITY.
   types:
     "!   An input object that includes the input text.
     begin of T_MESSAGE_INPUT,
+      "!   The type of user input. Currently, only text input is supported.
       MESSAGE_TYPE type STRING,
+      "!   The text of the user input. This string cannot contain carriage return, newline,
+      "!    or tab characters.
       TEXT type STRING,
+      "!   Optional properties that control how the assistant responds.
       OPTIONS type T_MESSAGE_INPUT_OPTIONS,
+      "!   Intents to use when evaluating the user input. Include intents from the previous
+      "!    response to continue using those intents rather than trying to recognize
+      "!    intents in the new input.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   Entities to use when evaluating the message. Include entities from the previous
+      "!    response to continue using those entities rather than detecting entities in the
+      "!    new input.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
       SUGGESTION_ID type STRING,
     end of T_MESSAGE_INPUT.
   types:
     "!   An object defining the message input to be sent to the assistant if the user
     "!    selects the corresponding option.
     begin of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
     end of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_DIA_NODE_OUTPUT_OPT_ELEMENT,
+      "!   The user-facing label for the option.
       LABEL type STRING,
+      "!   An object defining the message input to be sent to the assistant if the user
+      "!    selects the corresponding option.
       VALUE type T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
     end of T_DIA_NODE_OUTPUT_OPT_ELEMENT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_OPTION,
+      "!   The title or introductory text to show before the response.
       TITLE type STRING,
+      "!   The description to show with the the response.
       DESCRIPTION type STRING,
+      "!   The preferred type of control to display.
       PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_OPTION.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_DATE,
+      "!   The calendar used to represent a recognized date (for example, `Gregorian`).
       CALENDAR_TYPE type STRING,
+      "!   A unique identifier used to associate a time and date. If the user input
+      "!    contains a date and time that are mentioned together (for example, `Today at
+      "!    5`, the same **datetime_link** value is returned for both the `@sys-date` and
+      "!    `@sys-time` entities).
       DATETIME_LINK type STRING,
+      "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
+      "!    property is included when a `@sys-date` entity is recognized based on a holiday
+      "!    name in the user input.
       FESTIVAL type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
       GRANULARITY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
       RANGE_LINK type STRING,
+      "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
+      "!    is part of an implied range where only one date or time is specified (for
+      "!    example, `since` or `until`).
       RANGE_MODIFIER type STRING,
+      "!   A recognized mention of a relative day, represented numerically as an offset
+      "!    from the current date (for example, `-1` for `yesterday` or `10` for `in ten
+      "!    days`).
       RELATIVE_DAY type NUMBER,
+      "!   A recognized mention of a relative month, represented numerically as an offset
+      "!    from the current month (for example, `1` for `next month` or `-3` for `three
+      "!    months ago`).
       RELATIVE_MONTH type NUMBER,
+      "!   A recognized mention of a relative week, represented numerically as an offset
+      "!    from the current week (for example, `2` for `in two weeks` or `-1` for `last
+      "!    week).
       RELATIVE_WEEK type NUMBER,
+      "!   A recognized mention of a relative date range for a weekend, represented
+      "!    numerically as an offset from the current weekend (for example, `0` for `this
+      "!    weekend` or `-1` for `last weekend`).
       RELATIVE_WEEKEND type NUMBER,
+      "!   A recognized mention of a relative year, represented numerically as an offset
+      "!    from the current year (for example, `1` for `next year` or `-5` for `five years
+      "!    ago`).
       RELATIVE_YEAR type NUMBER,
+      "!   A recognized mention of a specific date, represented numerically as the date
+      "!    within the month (for example, `30` for `June 30`.).
       SPECIFIC_DAY type NUMBER,
+      "!   A recognized mention of a specific day of the week as a lowercase string (for
+      "!    example, `monday`).
       SPECIFIC_DAY_OF_WEEK type STRING,
+      "!   A recognized mention of a specific month, represented numerically (for example,
+      "!    `7` for `July`).
       SPECIFIC_MONTH type NUMBER,
+      "!   A recognized mention of a specific quarter, represented numerically (for
+      "!    example, `3` for `the third quarter`).
       SPECIFIC_QUARTER type NUMBER,
+      "!   A recognized mention of a specific year (for example, `2016`).
       SPECIFIC_YEAR type NUMBER,
     end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
   types:
     "!   An object containing segments of text from search results with query-matching
-    "!    text highlighted using HTML <em> tags.
+    "!    text highlighted using HTML &lt;em&gt; tags.
     begin of T_SEARCH_RESULT_HIGHLIGHT,
+      "!   An array of strings containing segments taken from body text in the search
+      "!    results, with query-matching substrings highlighted.
       BODY type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of strings containing segments taken from title text in the search
+      "!    results, with query-matching substrings highlighted.
       TITLE type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of strings containing segments taken from URLs in the search results,
+      "!    with query-matching substrings highlighted.
       URL type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEARCH_RESULT_HIGHLIGHT.
   types:
     "!   An object defining the message input to be sent to the assistant if the user
     "!    selects the corresponding disambiguation option.
     begin of T_DIALOG_SUGGESTION_VALUE,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
     end of T_DIALOG_SUGGESTION_VALUE.
   types:
     "!   An object containing search result metadata from the Discovery service.
     begin of T_SEARCH_RESULT_METADATA,
+      "!   The confidence score for the given result. For more information about how the
+      "!    confidence is calculated, see the Discovery service
+      "!    [documentation](../discovery#query-your-collection).
       CONFIDENCE type DOUBLE,
+      "!   An unbounded measure of the relevance of a particular result, dependent on the
+      "!    query and matching document. A higher score indicates a greater match to the
+      "!    query parameters.
       SCORE type DOUBLE,
     end of T_SEARCH_RESULT_METADATA.
   types:
-    "!
+    "!   No documentation available.
     begin of T_SEARCH_RESULT,
+      "!   The unique identifier of the document in the Discovery service collection.<br/>
+      "!   <br/>
+      "!   This property is included in responses from search skills, which are a beta
+      "!    feature available only to Plus or Premium plan users.
       ID type STRING,
+      "!   An object containing search result metadata from the Discovery service.
       RESULT_METADATA type T_SEARCH_RESULT_METADATA,
+      "!   A description of the search result. This is taken from an abstract, summary, or
+      "!    highlight field in the Discovery service response, as specified in the search
+      "!    skill configuration.
       BODY type STRING,
+      "!   The title of the search result. This is taken from a title or name field in the
+      "!    Discovery service response, as specified in the search skill configuration.
       TITLE type STRING,
+      "!   The URL of the original data object in its native data source.
       URL type STRING,
+      "!   An object containing segments of text from search results with query-matching
+      "!    text highlighted using HTML &lt;em&gt; tags.
       HIGHLIGHT type T_SEARCH_RESULT_HIGHLIGHT,
     end of T_SEARCH_RESULT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_DIALOG_SUGGESTION,
+      "!   The user-facing label for the disambiguation option. This label is taken from
+      "!    the **title** or **user_label** property of the corresponding dialog node,
+      "!    depending on the disambiguation options.
       LABEL type STRING,
+      "!   An object defining the message input to be sent to the assistant if the user
+      "!    selects the corresponding disambiguation option.
       VALUE type T_DIALOG_SUGGESTION_VALUE,
+      "!   The dialog output that will be returned from the Watson Assistant service if the
+      "!    user selects the corresponding option.
       OUTPUT type MAP,
     end of T_DIALOG_SUGGESTION.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_GENERIC,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestion** response type is part of the disambiguation
+      "!    feature, which is only available for Premium users.
       RESPONSE_TYPE type STRING,
+      "!   The text of the response.
       TEXT type STRING,
+      "!   How long to pause, in milliseconds.
       TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause.
       TYPING type BOOLEAN,
+      "!   The URL of the image.
       SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
       TITLE type STRING,
+      "!   The description to show with the the response.
       DESCRIPTION type STRING,
+      "!   The preferred type of control to display.
       PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A message to be sent to the human agent who will be taking over the
+      "!    conversation.
       MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   A label identifying the topic of the conversation, derived from the
+      "!    **user_label** property of the relevant node.
       TOPIC type STRING,
+      "!   An array of objects describing the possible matching dialog nodes from which the
+      "!    user can choose.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestions** property is part of the disambiguation feature,
+      "!    which is only available for Premium users.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   The title or introductory text to show before the response. This text is defined
+      "!    in the search skill configuration.
       HEADER type STRING,
+      "!   An array of objects containing search results.
       RESULTS type STANDARD TABLE OF T_SEARCH_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_GENERIC.
   types:
-    "!   An object describing the role played by a system entity that is specifies the
-    "!    beginning or end of a range recognized in the user input.
-    "!
-    "!   This property is part of the new system entities, which are a beta feature.
-    begin of T_RUNTIME_ENTITY_ROLE,
-      TYPE type STRING,
-    end of T_RUNTIME_ENTITY_ROLE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_ERROR_DETAIL,
+      "!   Description of a specific constraint violation.
       MESSAGE type STRING,
+      "!   The location of the constraint violation.
       PATH type STRING,
     end of T_ERROR_DETAIL.
   types:
-    "!
+    "!   No documentation available.
     begin of T_ERROR_RESPONSE,
+      "!   General description of an error.
       ERROR type STRING,
+      "!   Collection of specific constraint violations associated with the error.
       ERRORS type STANDARD TABLE OF T_ERROR_DETAIL WITH NON-UNIQUE DEFAULT KEY,
+      "!   HTTP status code for the error response.
       CODE type INTEGER,
     end of T_ERROR_RESPONSE.
   types:
-    "!
-    begin of T_RT_ENTITY_INTERPRETATION,
-      CALENDAR_TYPE type STRING,
-      DATETIME_LINK type STRING,
-      FESTIVAL type STRING,
-      GRANULARITY type STRING,
-      RANGE_LINK type STRING,
-      RANGE_MODIFIER type STRING,
-      RELATIVE_DAY type NUMBER,
-      RELATIVE_MONTH type NUMBER,
-      RELATIVE_WEEK type NUMBER,
-      RELATIVE_WEEKEND type NUMBER,
-      RELATIVE_YEAR type NUMBER,
-      SPECIFIC_DAY type NUMBER,
-      SPECIFIC_DAY_OF_WEEK type STRING,
-      SPECIFIC_MONTH type NUMBER,
-      SPECIFIC_QUARTER type NUMBER,
-      SPECIFIC_YEAR type NUMBER,
-      NUMERIC_VALUE type NUMBER,
-      SUBTYPE type STRING,
-      PART_OF_DAY type STRING,
-      RELATIVE_HOUR type NUMBER,
-      RELATIVE_MINUTE type NUMBER,
-      RELATIVE_SECOND type NUMBER,
-      SPECIFIC_HOUR type NUMBER,
-      SPECIFIC_MINUTE type NUMBER,
-      SPECIFIC_SECOND type NUMBER,
-      TIMEZONE type STRING,
-    end of T_RT_ENTITY_INTERPRETATION.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
+      "!   The URL of the image.
       SOURCE type STRING,
+      "!   The title to show before the response.
       TITLE type STRING,
+      "!   The description to show with the the response.
       DESCRIPTION type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_DIALOG_NODE_ACTION,
+      "!   The name of the action.
       NAME type STRING,
+      "!   The type of action to invoke.
       TYPE type STRING,
+      "!   A map of key/value pairs to be provided to the action.
       PARAMETERS type MAP,
+      "!   The location in the dialog context where the result of the action is stored.
       RESULT_VARIABLE type STRING,
+      "!   The name of the context variable that the client application will use to pass in
+      "!    credentials for the action.
       CREDENTIALS type STRING,
     end of T_DIALOG_NODE_ACTION.
   types:
     "!   Built-in system properties that apply to all skills used by the assistant.
     begin of T_MSSG_CONTEXT_GLOBAL_SYSTEM,
+      "!   The user time zone. The assistant uses the time zone to correctly resolve
+      "!    relative time references.
       TIMEZONE type STRING,
+      "!   A string value that identifies the user who is interacting with the assistant.
+      "!    The client must provide a unique identifier for each individual end user who
+      "!    accesses the application. For Plus and Premium plans, this user ID is used to
+      "!    identify unique users for billing purposes. This string cannot contain carriage
+      "!    return, newline, or tab characters.
       USER_ID type STRING,
+      "!   A counter that is automatically incremented with each turn of the conversation.
+      "!    A value of 1 indicates that this is the the first turn of a new conversation,
+      "!    which can affect the behavior of some skills (for example, triggering the start
+      "!    node of a dialog).
       TURN_COUNT type INTEGER,
+      "!   The language code for localization in the user input. The specified locale
+      "!    overrides the default for the assistant, and is used for interpreting entity
+      "!    values in user input such as date values. For example, `04/03/2018` might be
+      "!    interpreted either as April 3 or March 4, depending on the locale.<br/>
+      "!   <br/>
+      "!    This property is included only if the new system entities are enabled for the
+      "!    skill.
+      LOCALE type STRING,
+      "!   The base time for interpreting any relative time mentions in the user input. The
+      "!    specified time overrides the current server time, and is used to calculate
+      "!    times mentioned in relative terms such as `now` or `tomorrow`. This can be
+      "!    useful for simulating past or future times for testing purposes, or when
+      "!    analyzing documents such as news articles.<br/>
+      "!   <br/>
+      "!   This value must be a UTC time value formatted according to ISO 8601 (for
+      "!    example, `2019-06-26T12:00:00Z` for noon on 26 June 2019.<br/>
+      "!   <br/>
+      "!   This property is included only if the new system entities are enabled for the
+      "!    skill.
+      REFERENCE_TIME type STRING,
     end of T_MSSG_CONTEXT_GLOBAL_SYSTEM.
   types:
     "!   Information that is shared by all skills used by the Assistant.
     begin of T_MESSAGE_CONTEXT_GLOBAL,
+      "!   Built-in system properties that apply to all skills used by the assistant.
       SYSTEM type T_MSSG_CONTEXT_GLOBAL_SYSTEM,
     end of T_MESSAGE_CONTEXT_GLOBAL.
   types:
-    "!   Information specific to particular skills used by the Assistant.
-    "!
+    "!   Information specific to particular skills used by the Assistant.<br/>
+    "!   <br/>
     "!   **Note:** Currently, only a single property named `main skill` is supported.
     "!    This object contains variables that apply to the dialog skill used by the
     "!    assistant.
       T_MESSAGE_CONTEXT_SKILLS type MAP.
   types:
-    "!
+    "!   No documentation available.
     begin of T_MESSAGE_CONTEXT,
+      "!   Information that is shared by all skills used by the Assistant.
       GLOBAL type T_MESSAGE_CONTEXT_GLOBAL,
+      "!   Information specific to particular skills used by the Assistant.<br/>
+      "!   <br/>
+      "!   **Note:** Currently, only a single property named `main skill` is supported.
+      "!    This object contains variables that apply to the dialog skill used by the
+      "!    assistant.
       SKILLS type T_MESSAGE_CONTEXT_SKILLS,
     end of T_MESSAGE_CONTEXT.
   types:
     "!   Assistant output to be rendered or processed by the client.
     begin of T_MESSAGE_OUTPUT,
+      "!   Output intended for any channel. It is the responsibility of the client
+      "!    application to implement the supported response types.
       GENERIC type STANDARD TABLE OF T_RUNTIME_RESPONSE_GENERIC WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of intents recognized in the user input, sorted in descending order of
+      "!    confidence.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of entities identified in the user input.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   Additional detailed information about a message response and how it was
+      "!    generated.
       DEBUG type T_MESSAGE_OUTPUT_DEBUG,
+      "!   An object containing any custom properties included in the response. This object
+      "!    includes any arbitrary properties defined in the dialog JSON editor as part of
+      "!    the dialog node output.
       USER_DEFINED type MAP,
     end of T_MESSAGE_OUTPUT.
   types:
     "!   A response from the Watson Assistant service.
     begin of T_MESSAGE_RESPONSE,
+      "!   Assistant output to be rendered or processed by the client.
       OUTPUT type T_MESSAGE_OUTPUT,
+      "!   State information for the conversation. The context is stored by the assistant
+      "!    on a per-session basis. You can use this property to access context
+      "!    variables.<br/>
+      "!   <br/>
+      "!   **Note:** The context is included in message responses only if
+      "!    **return_context**=`true` in the message request.
       CONTEXT type T_MESSAGE_CONTEXT,
     end of T_MESSAGE_RESPONSE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
+      "!   The text of the response.
       TEXT type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_TEXT.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_TIME,
+      "!   A unique identifier used to associate a recognized time and date. If the user
+      "!    input contains a date and time that are mentioned together (for example, `Today
+      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
+      "!    and `@sys-time` entities).
       DATETIME_LINK type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
       GRANULARITY type STRING,
+      "!   A recognized term for a time that was mentioned as a part of the day in the
+      "!    user's input (for example, `morning` or `afternoon`).
       PART_OF_DAY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
       RANGE_LINK type STRING,
+      "!   A recognized mention of a relative hour, represented numerically as an offset
+      "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
+      "!    hour ago`).
       RELATIVE_HOUR type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    minutes from the current time (for example, `5` for `in five minutes` or `-15`
+      "!    for `fifteen minutes ago`).
       RELATIVE_MINUTE type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    seconds from the current time (for example, `10` for `in ten seconds` or `-30`
+      "!    for `thirty seconds ago`).
       RELATIVE_SECOND type NUMBER,
+      "!   A recognized specific hour mentioned as part of a time value (for example, `10`
+      "!    for `10:15 AM`.).
       SPECIFIC_HOUR type NUMBER,
+      "!   A recognized specific minute mentioned as part of a time value (for example,
+      "!    `15` for `10:15 AM`.).
       SPECIFIC_MINUTE type NUMBER,
+      "!   A recognized specific second mentioned as part of a time value (for example,
+      "!    `30` for `10:15:30 AM`.).
       SPECIFIC_SECOND type NUMBER,
+      "!   A recognized time zone mentioned as part of a time value (for example, `EST`).
       TIMEZONE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_TIME.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
+      "!   How long to pause, in milliseconds.
       TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause.
       TYPING type BOOLEAN,
     end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_SEARCH,
+      "!   The title or introductory text to show before the response. This text is defined
+      "!    in the search skill configuration.
       HEADER type STRING,
+      "!   An array of objects containing search results.
       RESULTS type STANDARD TABLE OF T_SEARCH_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_SEARCH.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RT_RESPONSE_TYPE_SUGGESTION,
+      "!   The title or introductory text to show before the response.
       TITLE type STRING,
+      "!   An array of objects describing the possible matching dialog nodes from which the
+      "!    user can choose.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestions** property is part of the disambiguation feature,
+      "!    which is only available for Premium users.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESPONSE_TYPE_SUGGESTION.
   types:
     "!   Contains information specific to a particular skill used by the Assistant.
     begin of T_MESSAGE_CONTEXT_SKILL,
+      "!   Arbitrary variables that can be read and written by a particular skill.
       USER_DEFINED type MAP,
+      "!   For internal use only.
+      SYSTEM type MAP,
     end of T_MESSAGE_CONTEXT_SKILL.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
+      "!   A message to be sent to the human agent who will be taking over the
+      "!    conversation.
       MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   A label identifying the topic of the conversation, derived from the
+      "!    **user_label** property of the relevant node.
       TOPIC type STRING,
     end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
   types:
     "!   A request formatted for the Watson Assistant service.
     begin of T_MESSAGE_REQUEST,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
+      "!   State information for the conversation. The context is stored by the assistant
+      "!    on a per-session basis. You can use this property to set or modify context
+      "!    variables, which can also be accessed by dialog nodes.
       CONTEXT type T_MESSAGE_CONTEXT,
     end of T_MESSAGE_REQUEST.
 
@@ -374,6 +741,8 @@ constants:
     T_SESSION_RESPONSE type string value '|SESSION_ID|',
     T_RT_ENTTY_INTRPRTTN_SYS_NUM type string value '|',
     T_RUNTIME_ENTITY_ALTERNATIVE type string value '|',
+    T_RUNTIME_ENTITY_ROLE type string value '|',
+    T_RT_ENTITY_INTERPRETATION type string value '|',
     T_MESSAGE_INPUT_OPTIONS type string value '|',
     T_RUNTIME_INTENT type string value '|INTENT|CONFIDENCE|',
     T_CAPTURE_GROUP type string value '|GROUP|',
@@ -389,10 +758,8 @@ constants:
     T_SEARCH_RESULT type string value '|ID|RESULT_METADATA|',
     T_DIALOG_SUGGESTION type string value '|LABEL|VALUE|',
     T_RUNTIME_RESPONSE_GENERIC type string value '|RESPONSE_TYPE|',
-    T_RUNTIME_ENTITY_ROLE type string value '|',
     T_ERROR_DETAIL type string value '|MESSAGE|',
     T_ERROR_RESPONSE type string value '|ERROR|CODE|',
-    T_RT_ENTITY_INTERPRETATION type string value '|',
     T_RUNTIME_RESPONSE_TYPE_IMAGE type string value '|',
     T_DIALOG_NODE_ACTION type string value '|NAME|RESULT_VARIABLE|',
     T_MSSG_CONTEXT_GLOBAL_SYSTEM type string value '|',
@@ -425,6 +792,9 @@ constants:
      METADATA type string value 'metadata',
      INNER type string value 'inner',
      GROUPS type string value 'groups',
+     INTERPRETATION type string value 'interpretation',
+     ALTERNATIVES type string value 'alternatives',
+     ROLE type string value 'role',
      CALENDAR_TYPE type string value 'calendar_type',
      DATETIME_LINK type string value 'datetime_link',
      FESTIVAL type string value 'festival',
@@ -460,6 +830,8 @@ constants:
      SUGGESTION_ID type string value 'suggestion_id',
      USER_ID type string value 'user_id',
      TURN_COUNT type string value 'turn_count',
+     LOCALE type string value 'locale',
+     REFERENCE_TIME type string value 'reference_time',
      SYSTEM type string value 'system',
      USER_DEFINED type string value 'user_defined',
      GLOBAL type string value 'global',
@@ -521,20 +893,21 @@ constants:
 
     "! Create a session.
     "!
-    "! @parameter I_assistant_id |
+    "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
     "!    Assistant user interface, open the assistant settings and click **API
     "!    Details**. For information about creating assistants, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-a
-    "!   ssistant-add#assistant-add-task).
-    "!
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
+    "!   add#assistant-add-task).<br/>
+    "!   <br/>
     "!   **Note:** Currently, the v2 API does not support creating assistants.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SESSION_RESPONSE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_SESSION
     importing
-      !I_assistant_id type STRING
+      !I_ASSISTANT_ID type STRING
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_SESSION_RESPONSE
@@ -542,48 +915,50 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete session.
     "!
-    "! @parameter I_assistant_id |
+    "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
     "!    Assistant user interface, open the assistant settings and click **API
     "!    Details**. For information about creating assistants, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-a
-    "!   ssistant-add#assistant-add-task).
-    "!
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
+    "!   add#assistant-add-task).<br/>
+    "!   <br/>
     "!   **Note:** Currently, the v2 API does not support creating assistants.
-    "! @parameter I_session_id |
+    "! @parameter I_SESSION_ID |
     "!   Unique identifier of the session.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_SESSION
     importing
-      !I_assistant_id type STRING
-      !I_session_id type STRING
+      !I_ASSISTANT_ID type STRING
+      !I_SESSION_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! Send user input to assistant.
     "!
-    "! @parameter I_assistant_id |
+    "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
     "!    Assistant user interface, open the assistant settings and click **API
     "!    Details**. For information about creating assistants, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-a
-    "!   ssistant-add#assistant-add-task).
-    "!
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
+    "!   add#assistant-add-task).<br/>
+    "!   <br/>
     "!   **Note:** Currently, the v2 API does not support creating assistants.
-    "! @parameter I_session_id |
+    "! @parameter I_SESSION_ID |
     "!   Unique identifier of the session.
-    "! @parameter I_request |
+    "! @parameter I_REQUEST |
     "!   The message to be sent. This includes the user's input, along with optional
     "!    content such as intents and entities.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_MESSAGE_RESPONSE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods MESSAGE
     importing
-      !I_assistant_id type STRING
-      !I_session_id type STRING
-      !I_request type T_MESSAGE_REQUEST optional
+      !I_ASSISTANT_ID type STRING
+      !I_SESSION_ID type STRING
+      !I_REQUEST type T_MESSAGE_REQUEST optional
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -627,7 +1002,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -668,7 +1043,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122836'.
+    e_sdk_version_date = '20200210092813'.
 
   endmethod.
 
@@ -677,7 +1052,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V2->CREATE_SESSION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_assistant_id        TYPE STRING
+* | [--->] I_ASSISTANT_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SESSION_RESPONSE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -692,7 +1067,7 @@ method CREATE_SESSION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v2/assistants/{assistant_id}/sessions'.
-    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_assistant_id ignoring case.
+    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_ASSISTANT_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -725,8 +1100,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V2->DELETE_SESSION
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_assistant_id        TYPE STRING
-* | [--->] I_session_id        TYPE STRING
+* | [--->] I_ASSISTANT_ID        TYPE STRING
+* | [--->] I_SESSION_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -740,8 +1115,8 @@ method DELETE_SESSION.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v2/assistants/{assistant_id}/sessions/{session_id}'.
-    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_assistant_id ignoring case.
-    replace all occurrences of `{session_id}` in ls_request_prop-url-path with i_session_id ignoring case.
+    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_ASSISTANT_ID ignoring case.
+    replace all occurrences of `{session_id}` in ls_request_prop-url-path with i_SESSION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -767,9 +1142,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V2->MESSAGE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_assistant_id        TYPE STRING
-* | [--->] I_session_id        TYPE STRING
-* | [--->] I_request        TYPE T_MESSAGE_REQUEST(optional)
+* | [--->] I_ASSISTANT_ID        TYPE STRING
+* | [--->] I_SESSION_ID        TYPE STRING
+* | [--->] I_REQUEST        TYPE T_MESSAGE_REQUEST(optional)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_MESSAGE_RESPONSE
@@ -785,8 +1160,8 @@ method MESSAGE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v2/assistants/{assistant_id}/sessions/{session_id}/message'.
-    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_assistant_id ignoring case.
-    replace all occurrences of `{session_id}` in ls_request_prop-url-path with i_session_id ignoring case.
+    replace all occurrences of `{assistant_id}` in ls_request_prop-url-path with i_ASSISTANT_ID ignoring case.
+    replace all occurrences of `{session_id}` in ls_request_prop-url-path with i_SESSION_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -808,21 +1183,21 @@ method MESSAGE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_request is initial.
-    lv_datatype = get_datatype( i_request ).
+    if not i_REQUEST is initial.
+    lv_datatype = get_datatype( i_REQUEST ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_request i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_REQUEST i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'request' i_value = i_request ).
+        lv_bodyparam = abap_to_json( i_name = 'request' i_value = i_REQUEST ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_request to <lv_text>.
+      assign i_REQUEST to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.

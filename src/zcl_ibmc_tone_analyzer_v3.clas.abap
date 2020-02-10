@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@
 "!  how your written communications are perceived and then to improve the tone of
 "!  your communications. Businesses can use the service to learn the tone of their
 "!  customers' communications and to respond to each customer appropriately, or to
-"!  understand and improve their customer conversations.
-"!
+"!  understand and improve their customer conversations.<br/>
+"! <br/>
 "! **Note:** Request logging is disabled for the Tone Analyzer service. Regardless
 "!  of whether you set the `X-Watson-Learning-Opt-Out` request header, the service
 "!  does not log or retain data from requests and responses. <br/>
@@ -32,83 +32,174 @@ public section.
   types:
     "!   The score for a tone from the input content.
     begin of T_TONE_SCORE,
+      "!   The score for the tone.<br/>
+      "!   * **`2017-09-21`:** The score that is returned lies in the range of 0.5 to 1. A
+      "!    score greater than 0.75 indicates a high likelihood that the tone is perceived
+      "!    in the content.<br/>
+      "!   * **`2016-05-19`:** The score that is returned lies in the range of 0 to 1. A
+      "!    score less than 0.5 indicates that the tone is unlikely to be perceived in the
+      "!    content; a score greater than 0.75 indicates a high likelihood that the tone is
+      "!    perceived.
       SCORE type DOUBLE,
+      "!   The unique, non-localized identifier of the tone.<br/>
+      "!   * **`2017-09-21`:** The service can return results for the following tone IDs:
+      "!    `anger`, `fear`, `joy`, and `sadness` (emotional tones); `analytical`,
+      "!    `confident`, and `tentative` (language tones). The service returns results only
+      "!    for tones whose scores meet a minimum threshold of 0.5.<br/>
+      "!   * **`2016-05-19`:** The service can return results for the following tone IDs of
+      "!    the different categories: for the `emotion` category: `anger`, `disgust`,
+      "!    `fear`, `joy`, and `sadness`; for the `language` category: `analytical`,
+      "!    `confident`, and `tentative`; for the `social` category: `openness_big5`,
+      "!    `conscientiousness_big5`, `extraversion_big5`, `agreeableness_big5`, and
+      "!    `emotional_range_big5`. The service returns scores for all tones of a category,
+      "!    regardless of their values.
       TONE_ID type STRING,
+      "!   The user-visible, localized name of the tone.
       TONE_NAME type STRING,
     end of T_TONE_SCORE.
   types:
     "!   The category for a tone from the input content.
     begin of T_TONE_CATEGORY,
+      "!   An array of `ToneScore` objects that provides the results for the tones of the
+      "!    category.
       TONES type STANDARD TABLE OF T_TONE_SCORE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The unique, non-localized identifier of the category for the results. The
+      "!    service can return results for the following category IDs: `emotion_tone`,
+      "!    `language_tone`, and `social_tone`.
       CATEGORY_ID type STRING,
+      "!   The user-visible, localized name of the category.
       CATEGORY_NAME type STRING,
     end of T_TONE_CATEGORY.
   types:
     "!   Input for the general-purpose endpoint.
     begin of T_TONE_INPUT,
+      "!   The input content that the service is to analyze.
       TEXT type STRING,
     end of T_TONE_INPUT.
   types:
     "!   The score for an utterance from the input content.
     begin of T_TONE_CHAT_SCORE,
+      "!   The score for the tone in the range of 0.5 to 1. A score greater than 0.75
+      "!    indicates a high likelihood that the tone is perceived in the utterance.
       SCORE type DOUBLE,
+      "!   The unique, non-localized identifier of the tone for the results. The service
+      "!    returns results only for tones whose scores meet a minimum threshold of 0.5.
       TONE_ID type STRING,
+      "!   The user-visible, localized name of the tone.
       TONE_NAME type STRING,
     end of T_TONE_CHAT_SCORE.
   types:
     "!   An utterance for the input of the general-purpose endpoint.
     begin of T_UTTERANCE,
+      "!   An utterance contributed by a user in the conversation that is to be analyzed.
+      "!    The utterance can contain multiple sentences.
       TEXT type STRING,
+      "!   A string that identifies the user who contributed the utterance specified by the
+      "!    `text` parameter.
       USER type STRING,
     end of T_UTTERANCE.
   types:
     "!   Input for the customer-engagement endpoint.
     begin of T_TONE_CHAT_INPUT,
+      "!   An array of `Utterance` objects that provides the input content that the service
+      "!    is to analyze.
       UTTERANCES type STANDARD TABLE OF T_UTTERANCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TONE_CHAT_INPUT.
   types:
     "!   The results of the analysis for the individual sentences of the input content.
     begin of T_SENTENCE_ANALYSIS,
+      "!   The unique identifier of a sentence of the input content. The first sentence has
+      "!    ID 0, and the ID of each subsequent sentence is incremented by one.
       SENTENCE_ID type INTEGER,
+      "!   The text of the input sentence.
       TEXT type STRING,
+      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the
+      "!   ** analysis for each qualifying tone of the sentence. The array includes results
+      "!   ** for any tone whose score is at least 0.5. The array is empty if no tone has a
+      "!   ** score that meets this threshold. **`2016-05-19`:** Not returned.
       TONES type STANDARD TABLE OF T_TONE_SCORE WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory`
+      "!   ** objects that provides the results of the tone analysis for the sentence. The
+      "!   ** service returns results only for the tones specified with the `tones` parameter
+      "!   ** of the request.
       TONE_CATEGORIES type STANDARD TABLE OF T_TONE_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the first
+      "!   ** character of the sentence in the overall input content.
       INPUT_FROM type INTEGER,
+      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the last character
+      "!   ** of the sentence in the overall input content.
       INPUT_TO type INTEGER,
     end of T_SENTENCE_ANALYSIS.
   types:
     "!   The results of the analysis for an utterance of the input content.
     begin of T_UTTERANCE_ANALYSIS,
+      "!   The unique identifier of the utterance. The first utterance has ID 0, and the ID
+      "!    of each subsequent utterance is incremented by one.
       UTTERANCE_ID type INTEGER,
+      "!   The text of the utterance.
       UTTERANCE_TEXT type STRING,
+      "!   An array of `ToneChatScore` objects that provides results for the most prevalent
+      "!    tones of the utterance. The array includes results for any tone whose score is
+      "!    at least 0.5. The array is empty if no tone has a score that meets this
+      "!    threshold.
       TONES type STANDARD TABLE OF T_TONE_CHAT_SCORE WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** An error message if the utterance contains more than 500
+      "!   ** characters. The service does not analyze the utterance. **`2016-05-19`:** Not
+      "!   ** returned.
       ERROR type STRING,
     end of T_UTTERANCE_ANALYSIS.
   types:
     "!   The results of the analysis for the utterances of the input content.
     begin of T_UTTERANCE_ANALYSES,
+      "!   An array of `UtteranceAnalysis` objects that provides the results for each
+      "!    utterance of the input.
       UTTERANCES_TONE type STANDARD TABLE OF T_UTTERANCE_ANALYSIS WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** A warning message if the content contains more than 50
+      "!   ** utterances. The service analyzes only the first 50 utterances.
+      "!   ** **`2016-05-19`:** Not returned.
       WARNING type STRING,
     end of T_UTTERANCE_ANALYSES.
   types:
     "!   The error response from a failed request.
     begin of T_ERROR_MODEL,
+      "!   The HTTP status code.
       CODE type INTEGER,
+      "!   A service-specific error code.
       SUB_CODE type STRING,
+      "!   A description of the error.
       ERROR type STRING,
+      "!   A URL to documentation explaining the cause and possibly solutions for the
+      "!    error.
       HELP type STRING,
     end of T_ERROR_MODEL.
   types:
     "!   The results of the analysis for the full input content.
     begin of T_DOCUMENT_ANALYSIS,
+      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the
+      "!   ** analysis for each qualifying tone of the document. The array includes results
+      "!   ** for any tone whose score is at least 0.5. The array is empty if no tone has a
+      "!   ** score that meets this threshold. **`2016-05-19`:** Not returned.
       TONES type STANDARD TABLE OF T_TONE_SCORE WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory`
+      "!   ** objects that provides the results of the tone analysis for the full document of
+      "!   ** the input content. The service returns results only for the tones specified
+      "!   ** with the `tones` parameter of the request.
       TONE_CATEGORIES type STANDARD TABLE OF T_TONE_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
+      "!   **`2017-09-21`:** A warning message if the overall content exceeds 128 KB or
+      "!   ** contains more than 1000 sentences. The service analyzes only the first 1000
+      "!   ** sentences for document-level analysis and the first 100 sentences for
+      "!   ** sentence-level analysis. **`2016-05-19`:** Not returned.
       WARNING type STRING,
     end of T_DOCUMENT_ANALYSIS.
   types:
     "!   The tone analysis results for the input from the general-purpose endpoint.
     begin of T_TONE_ANALYSIS,
+      "!   The results of the analysis for the full input content.
       DOCUMENT_TONE type T_DOCUMENT_ANALYSIS,
+      "!   An array of `SentenceAnalysis` objects that provides the results of the analysis
+      "!    for the individual sentences of the input content. The service returns results
+      "!    only for the first 100 sentences of the input. The field is omitted if the
+      "!    `sentences` parameter of the request is set to `false`.
       SENTENCES_TONE type STANDARD TABLE OF T_SENTENCE_ANALYSIS WITH NON-UNIQUE DEFAULT KEY,
     end of T_TONE_ANALYSIS.
 
@@ -170,49 +261,50 @@ constants:
 
     "! Analyze general tone.
     "!
-    "! @parameter I_tone_input |
+    "! @parameter I_TONE_INPUT |
     "!   JSON, plain text, or HTML input that contains the content to be analyzed. For
     "!    JSON input, provide an object of type `ToneInput`.
-    "! @parameter I_Content_Type |
+    "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. A character encoding can be specified by including a
     "!    `charset` parameter. For example, 'text/plain;charset=utf-8'.
-    "! @parameter I_sentences |
+    "! @parameter I_SENTENCES |
     "!   Indicates whether the service is to return an analysis of each individual
     "!    sentence in addition to its analysis of the full document. If `true` (the
     "!    default), the service returns results for each sentence.
-    "! @parameter I_tones |
+    "! @parameter I_TONES |
     "!   **`2017-09-21`:** Deprecated. The service continues to accept the parameter for
-    "!   ** backward-compatibility, but the parameter no longer affects the response.
-    "!   **
+    "!   ** backward-compatibility, but the parameter no longer affects the response. <br/>
+    "!   **<br/>
     "!   ****`2016-05-19`:** A comma-separated list of tones for which the service is to
     "!   ** return its analysis of the input; the indicated tones apply both to the full
     "!   ** document and to individual sentences of the document. You can specify one or
     "!   ** more of the valid values. Omit the parameter to request results for all three
     "!   ** tones.
-    "! @parameter I_Content_Language |
+    "! @parameter I_CONTENT_LANGUAGE |
     "!   The language of the input text for the request: English or French. Regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. The input content must match the specified language. Do
     "!    not submit content that contains both languages. You can use different
-    "!    languages for **Content-Language** and **Accept-Language**.
-    "!   * **`2017-09-21`:** Accepts `en` or `fr`.
+    "!    languages for **Content-Language** and **Accept-Language**.<br/>
+    "!   * **`2017-09-21`:** Accepts `en` or `fr`.<br/>
     "!   * **`2016-05-19`:** Accepts only `en`.
-    "! @parameter I_Accept_Language |
+    "! @parameter I_ACCEPT_LANGUAGE |
     "!   The desired language of the response. For two-character arguments, regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. You can use different languages for **Content-Language**
     "!    and **Accept-Language**.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TONE_ANALYSIS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods TONE
     importing
-      !I_tone_input type T_TONE_INPUT
-      !I_Content_Type type STRING default 'application/json'
-      !I_sentences type BOOLEAN default c_boolean_true
-      !I_tones type TT_STRING optional
-      !I_Content_Language type STRING default 'en'
-      !I_Accept_Language type STRING default 'en'
+      !I_TONE_INPUT type T_TONE_INPUT
+      !I_CONTENT_TYPE type STRING default 'application/json'
+      !I_SENTENCES type BOOLEAN default c_boolean_true
+      !I_TONES type TT_STRING optional
+      !I_CONTENT_LANGUAGE type STRING default 'en'
+      !I_ACCEPT_LANGUAGE type STRING default 'en'
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_TONE_ANALYSIS
@@ -220,29 +312,30 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Analyze customer-engagement tone.
     "!
-    "! @parameter I_utterances |
+    "! @parameter I_UTTERANCES |
     "!   An object that contains the content to be analyzed.
-    "! @parameter I_Content_Language |
+    "! @parameter I_CONTENT_LANGUAGE |
     "!   The language of the input text for the request: English or French. Regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. The input content must match the specified language. Do
     "!    not submit content that contains both languages. You can use different
-    "!    languages for **Content-Language** and **Accept-Language**.
-    "!   * **`2017-09-21`:** Accepts `en` or `fr`.
+    "!    languages for **Content-Language** and **Accept-Language**.<br/>
+    "!   * **`2017-09-21`:** Accepts `en` or `fr`.<br/>
     "!   * **`2016-05-19`:** Accepts only `en`.
-    "! @parameter I_Accept_Language |
+    "! @parameter I_ACCEPT_LANGUAGE |
     "!   The desired language of the response. For two-character arguments, regional
     "!    variants are treated as their parent language; for example, `en-US` is
     "!    interpreted as `en`. You can use different languages for **Content-Language**
     "!    and **Accept-Language**.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_UTTERANCE_ANALYSES
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods TONE_CHAT
     importing
-      !I_utterances type T_TONE_CHAT_INPUT
-      !I_Content_Language type STRING default 'en'
-      !I_Accept_Language type STRING default 'en'
+      !I_UTTERANCES type T_TONE_CHAT_INPUT
+      !I_CONTENT_LANGUAGE type STRING default 'en'
+      !I_ACCEPT_LANGUAGE type STRING default 'en'
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -286,7 +379,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -322,7 +415,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122853'.
+    e_sdk_version_date = '20200210092828'.
 
   endmethod.
 
@@ -331,12 +424,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_TONE_ANALYZER_V3->TONE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_tone_input        TYPE T_TONE_INPUT
-* | [--->] I_Content_Type        TYPE STRING (default ='application/json')
-* | [--->] I_sentences        TYPE BOOLEAN (default =c_boolean_true)
-* | [--->] I_tones        TYPE TT_STRING(optional)
-* | [--->] I_Content_Language        TYPE STRING (default ='en')
-* | [--->] I_Accept_Language        TYPE STRING (default ='en')
+* | [--->] I_TONE_INPUT        TYPE T_TONE_INPUT
+* | [--->] I_CONTENT_TYPE        TYPE STRING (default ='application/json')
+* | [--->] I_SENTENCES        TYPE BOOLEAN (default =c_boolean_true)
+* | [--->] I_TONES        TYPE TT_STRING(optional)
+* | [--->] I_CONTENT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_ACCEPT_LANGUAGE        TYPE STRING (default ='en')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_TONE_ANALYSIS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -362,8 +455,8 @@ method TONE.
     data:
       lv_queryparam type string.
 
-    if i_sentences is supplied.
-    lv_queryparam = i_sentences.
+    if i_SENTENCES is supplied.
+    lv_queryparam = i_SENTENCES.
     add_query_parameter(
       exporting
         i_parameter  = `sentences`
@@ -373,12 +466,12 @@ method TONE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_tones is supplied.
+    if i_TONES is supplied.
     data:
-      lv_item_tones type STRING.
+      lv_item_TONES type STRING.
     clear: lv_queryparam, lv_sep.
-    loop at i_tones into lv_item_tones.
-      lv_queryparam = lv_queryparam && lv_sep && lv_item_tones.
+    loop at i_TONES into lv_item_TONES.
+      lv_queryparam = lv_queryparam && lv_sep && lv_item_TONES.
       lv_sep = ','.
     endloop.
     lv_queryparam = escape( val = lv_queryparam format = cl_abap_format=>e_uri_full ).
@@ -394,12 +487,12 @@ method TONE.
     data:
       lv_headerparam type string  ##NEEDED.
 
-    if i_Content_Type is supplied.
-    ls_request_prop-header_content_type = I_Content_Type.
+    if i_CONTENT_TYPE is supplied.
+    ls_request_prop-header_content_type = I_CONTENT_TYPE.
     endif.
 
-    if i_Content_Language is supplied.
-    lv_headerparam = I_Content_Language.
+    if i_CONTENT_LANGUAGE is supplied.
+    lv_headerparam = I_CONTENT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Content-Language'
@@ -408,8 +501,8 @@ method TONE.
         c_headers    = ls_request_prop-headers )  ##NO_TEXT.
     endif.
 
-    if i_Accept_Language is supplied.
-    lv_headerparam = I_Accept_Language.
+    if i_ACCEPT_LANGUAGE is supplied.
+    lv_headerparam = I_ACCEPT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Accept-Language'
@@ -428,20 +521,20 @@ method TONE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_tone_input ).
+    lv_datatype = get_datatype( i_TONE_INPUT ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_tone_input i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_TONE_INPUT i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'tone_input' i_value = i_tone_input ).
+        lv_bodyparam = abap_to_json( i_name = 'tone_input' i_value = i_TONE_INPUT ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_tone_input to <lv_text>.
+      assign i_TONE_INPUT to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -475,9 +568,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_TONE_ANALYZER_V3->TONE_CHAT
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_utterances        TYPE T_TONE_CHAT_INPUT
-* | [--->] I_Content_Language        TYPE STRING (default ='en')
-* | [--->] I_Accept_Language        TYPE STRING (default ='en')
+* | [--->] I_UTTERANCES        TYPE T_TONE_CHAT_INPUT
+* | [--->] I_CONTENT_LANGUAGE        TYPE STRING (default ='en')
+* | [--->] I_ACCEPT_LANGUAGE        TYPE STRING (default ='en')
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_UTTERANCE_ANALYSES
@@ -507,8 +600,8 @@ method TONE_CHAT.
     data:
       lv_headerparam type string  ##NEEDED.
 
-    if i_Content_Language is supplied.
-    lv_headerparam = I_Content_Language.
+    if i_CONTENT_LANGUAGE is supplied.
+    lv_headerparam = I_CONTENT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Content-Language'
@@ -517,8 +610,8 @@ method TONE_CHAT.
         c_headers    = ls_request_prop-headers )  ##NO_TEXT.
     endif.
 
-    if i_Accept_Language is supplied.
-    lv_headerparam = I_Accept_Language.
+    if i_ACCEPT_LANGUAGE is supplied.
+    lv_headerparam = I_ACCEPT_LANGUAGE.
     add_header_parameter(
       exporting
         i_parameter  = 'Accept-Language'
@@ -537,20 +630,20 @@ method TONE_CHAT.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_utterances ).
+    lv_datatype = get_datatype( i_UTTERANCES ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_utterances i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_UTTERANCES i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'utterances' i_value = i_utterances ).
+        lv_bodyparam = abap_to_json( i_name = 'utterances' i_value = i_UTTERANCES ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_utterances to <lv_text>.
+      assign i_UTTERANCES to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.

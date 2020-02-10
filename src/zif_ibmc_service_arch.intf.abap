@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019,2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -76,6 +76,16 @@ interface ZIF_IBMC_SERVICE_ARCH
     end of ts_request_prop .
   types:
     tt_string type standard table of string with non-unique default key .
+  types:
+    begin of TS_FORM_PART,
+      CONTENT_TYPE        type STRING,
+      CONTENT_DISPOSITION type STRING,
+      CDATA               type STRING,
+      XDATA               type XSTRING,
+    end of TS_FORM_PART .
+  types:
+    TT_FORM_PART type standard table of TS_FORM_PART with non-unique default key .
+
 
   constants C_METHOD_GET type CHAR value 'g' ##NO_TEXT.
   constants C_METHOD_POST type CHAR value 'p' ##NO_TEXT.

@@ -1,4 +1,4 @@
-* Copyright 2019 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 "! <h1>Watson Assistant v1</h1>
 "! The IBM Watson&trade; Assistant service combines machine learning, natural
 "!  language understanding, and an integrated dialog editor to create conversation
-"!  flows between your apps and your users.
-"!
+"!  flows between your apps and your users.<br/>
+"! <br/>
 "! The Assistant v1 API provides authoring methods your application can use to
 "!  create or update a workspace. <br/>
 class ZCL_IBMC_ASSISTANT_V1 DEFINITION
@@ -25,985 +25,1952 @@ class ZCL_IBMC_ASSISTANT_V1 DEFINITION
 
 public section.
   types:
-    "!
-    begin of T_DIA_ND_OTPT_TEXT_VALUES_ELEM,
-      TEXT type STRING,
-    end of T_DIA_ND_OTPT_TEXT_VALUES_ELEM.
+    "!   Workspace settings related to detection of irrelevant input.
+    begin of T_WS_SYSTEM_SETTINGS_OFF_TOPIC,
+      "!   Whether enhanced irrelevance detection is enabled for the workspace.
+      ENABLED type BOOLEAN,
+    end of T_WS_SYSTEM_SETTINGS_OFF_TOPIC.
   types:
-    "!   A mention of a contextual entity.
-    begin of T_MENTION,
-      ENTITY type STRING,
-      LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
-    end of T_MENTION.
+    "!   No documentation available.
+    begin of T_RT_ENTITY_INTERPRETATION,
+      "!   The calendar used to represent a recognized date (for example, `Gregorian`).
+      CALENDAR_TYPE type STRING,
+      "!   A unique identifier used to associate a recognized time and date. If the user
+      "!    input contains a date and time that are mentioned together (for example, `Today
+      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
+      "!    and `@sys-time` entities).
+      DATETIME_LINK type STRING,
+      "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
+      "!    property is included when a `@sys-date` entity is recognized based on a holiday
+      "!    name in the user input.
+      FESTIVAL type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
+      GRANULARITY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
+      RANGE_LINK type STRING,
+      "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
+      "!    is part of an implied range where only one date or time is specified (for
+      "!    example, `since` or `until`).
+      RANGE_MODIFIER type STRING,
+      "!   A recognized mention of a relative day, represented numerically as an offset
+      "!    from the current date (for example, `-1` for `yesterday` or `10` for `in ten
+      "!    days`).
+      RELATIVE_DAY type NUMBER,
+      "!   A recognized mention of a relative month, represented numerically as an offset
+      "!    from the current month (for example, `1` for `next month` or `-3` for `three
+      "!    months ago`).
+      RELATIVE_MONTH type NUMBER,
+      "!   A recognized mention of a relative week, represented numerically as an offset
+      "!    from the current week (for example, `2` for `in two weeks` or `-1` for `last
+      "!    week).
+      RELATIVE_WEEK type NUMBER,
+      "!   A recognized mention of a relative date range for a weekend, represented
+      "!    numerically as an offset from the current weekend (for example, `0` for `this
+      "!    weekend` or `-1` for `last weekend`).
+      RELATIVE_WEEKEND type NUMBER,
+      "!   A recognized mention of a relative year, represented numerically as an offset
+      "!    from the current year (for example, `1` for `next year` or `-5` for `five years
+      "!    ago`).
+      RELATIVE_YEAR type NUMBER,
+      "!   A recognized mention of a specific date, represented numerically as the date
+      "!    within the month (for example, `30` for `June 30`.).
+      SPECIFIC_DAY type NUMBER,
+      "!   A recognized mention of a specific day of the week as a lowercase string (for
+      "!    example, `monday`).
+      SPECIFIC_DAY_OF_WEEK type STRING,
+      "!   A recognized mention of a specific month, represented numerically (for example,
+      "!    `7` for `July`).
+      SPECIFIC_MONTH type NUMBER,
+      "!   A recognized mention of a specific quarter, represented numerically (for
+      "!    example, `3` for `the third quarter`).
+      SPECIFIC_QUARTER type NUMBER,
+      "!   A recognized mention of a specific year (for example, `2016`).
+      SPECIFIC_YEAR type NUMBER,
+      "!   A recognized numeric value, represented as an integer or double.
+      NUMERIC_VALUE type NUMBER,
+      "!   The type of numeric value recognized in the user input (`integer` or
+      "!    `rational`).
+      SUBTYPE type STRING,
+      "!   A recognized term for a time that was mentioned as a part of the day in the
+      "!    user's input (for example, `morning` or `afternoon`).
+      PART_OF_DAY type STRING,
+      "!   A recognized mention of a relative hour, represented numerically as an offset
+      "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
+      "!    hour ago`).
+      RELATIVE_HOUR type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    minutes from the current time (for example, `5` for `in five minutes` or `-15`
+      "!    for `fifteen minutes ago`).
+      RELATIVE_MINUTE type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    seconds from the current time (for example, `10` for `in ten seconds` or `-30`
+      "!    for `thirty seconds ago`).
+      RELATIVE_SECOND type NUMBER,
+      "!   A recognized specific hour mentioned as part of a time value (for example, `10`
+      "!    for `10:15 AM`.).
+      SPECIFIC_HOUR type NUMBER,
+      "!   A recognized specific minute mentioned as part of a time value (for example,
+      "!    `15` for `10:15 AM`.).
+      SPECIFIC_MINUTE type NUMBER,
+      "!   A recognized specific second mentioned as part of a time value (for example,
+      "!    `30` for `10:15:30 AM`.).
+      SPECIFIC_SECOND type NUMBER,
+      "!   A recognized time zone mentioned as part of a time value (for example, `EST`).
+      TIMEZONE type STRING,
+    end of T_RT_ENTITY_INTERPRETATION.
   types:
-    "!
-    begin of T_EXAMPLE,
-      TEXT type STRING,
-      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_EXAMPLE.
-  types:
-    "!
-    begin of T_INTENT,
-      INTENT type STRING,
-      DESCRIPTION type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_INTENT.
-  types:
-    "!
-    begin of T_DIALOG_NODE_ACTION,
+    "!   A key/value pair defining an HTTP header and a value.
+    begin of T_WEBHOOK_HEADER,
+      "!   The name of an HTTP header (for example, `Authorization`).
       NAME type STRING,
+      "!   The value of an HTTP header.
+      VALUE type STRING,
+    end of T_WEBHOOK_HEADER.
+  types:
+    "!   No documentation available.
+    begin of T_DIALOG_NODE_ACTION,
+      "!   The name of the action.
+      NAME type STRING,
+      "!   The type of action to invoke.
       TYPE type STRING,
+      "!   A map of key/value pairs to be provided to the action.
       PARAMETERS type MAP,
+      "!   The location in the dialog context where the result of the action is stored.
       RESULT_VARIABLE type STRING,
+      "!   The name of the context variable that the client application will use to pass in
+      "!    credentials for the action.
       CREDENTIALS type STRING,
     end of T_DIALOG_NODE_ACTION.
   types:
-    "!   Workspace settings related to the disambiguation feature.
-    "!
-    "!   **Note:** This feature is available only to Premium users.
+    "!   Workspace settings related to the disambiguation feature.<br/>
+    "!   <br/>
+    "!   **Note:** This feature is available only to Plus and Premium users.
     begin of T_WS_SYSTM_STTNGS_DSMBGTN,
+      "!   The text of the introductory prompt that accompanies disambiguation options
+      "!    presented to the user.
       PROMPT type STRING,
+      "!   The user-facing label for the option users can select if none of the suggested
+      "!    options is correct. If no value is specified for this property, this option
+      "!    does not appear.
       NONE_OF_THE_ABOVE_PROMPT type STRING,
+      "!   Whether the disambiguation feature is enabled for the workspace.
       ENABLED type BOOLEAN,
+      "!   The sensitivity of the disambiguation feature to intent detection conflicts. Set
+      "!    to **high** if you want the disambiguation feature to be triggered more often.
+      "!    This can be useful for testing or demonstration purposes.
       SENSITIVITY type STRING,
+      "!   Whether the order in which disambiguation suggestions are presented should be
+      "!    randomized (but still influenced by relative confidence).
+      RANDOMIZE type BOOLEAN,
+      "!   The maximum number of disambigation suggestions that can be included in a
+      "!    `suggestion` response.
+      MAX_SUGGESTIONS type INTEGER,
+      "!   For internal use only.
+      SUGGESTION_TEXT_POLICY type STRING,
     end of T_WS_SYSTM_STTNGS_DSMBGTN.
   types:
     "!   Options that modify how specified output is handled.
     begin of T_DIALOG_NODE_OUTPUT_MODIFIERS,
+      "!   Whether values in the output will overwrite output values in an array specified
+      "!    by previously executed dialog nodes. If this option is set to `false`, new
+      "!    values will be appended to previously specified values.
       OVERWRITE type BOOLEAN,
     end of T_DIALOG_NODE_OUTPUT_MODIFIERS.
   types:
     "!   The next step to execute following this dialog node.
     begin of T_DIALOG_NODE_NEXT_STEP,
+      "!   What happens after the dialog node completes. The valid values depend on the
+      "!    node type:<br/>
+      "!   - The following values are valid for any node:<br/>
+      "!     - `get_user_input`<br/>
+      "!     - `skip_user_input`<br/>
+      "!     - `jump_to`<br/>
+      "!   - If the node is of type `event_handler` and its parent node is of type `slot`
+      "!    or `frame`, additional values are also valid:<br/>
+      "!     - if **event_name**=`filled` and the type of the parent node is `slot`:<br/>
+      "!       - `reprompt`<br/>
+      "!       - `skip_all_slots`<br/>
+      "!   - if **event_name**=`nomatch` and the type of the parent node is `slot`:<br/>
+      "!       - `reprompt`<br/>
+      "!       - `skip_slot`<br/>
+      "!       - `skip_all_slots`<br/>
+      "!   - if **event_name**=`generic` and the type of the parent node is `frame`:<br/>
+      "!       - `reprompt`<br/>
+      "!       - `skip_slot`<br/>
+      "!       - `skip_all_slots`<br/>
+      "!        If you specify `jump_to`, then you must also specify a value for the
+      "!    `dialog_node` property.
       BEHAVIOR type STRING,
+      "!   The ID of the dialog node to process next. This parameter is required if
+      "!    **behavior**=`jump_to`.
       DIALOG_NODE type STRING,
+      "!   Which part of the dialog node to process next.
       SELECTOR type STRING,
     end of T_DIALOG_NODE_NEXT_STEP.
   types:
     "!   An input object that includes the input text.
     begin of T_MESSAGE_INPUT,
+      "!   The text of the user input. This string cannot contain carriage return, newline,
+      "!    or tab characters.
       TEXT type STRING,
     end of T_MESSAGE_INPUT.
   types:
     "!   A recognized capture group for a pattern-based entity.
     begin of T_CAPTURE_GROUP,
+      "!   A recognized capture group for the entity.
       GROUP type STRING,
+      "!   Zero-based character offsets that indicate where the entity value begins and
+      "!    ends in the input text.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CAPTURE_GROUP.
   types:
+    "!   An object describing the role played by a system entity that is specifies the
+    "!    beginning or end of a range recognized in the user input. This property is
+    "!    included only if the new system entities are enabled for the workspace.
+    begin of T_RUNTIME_ENTITY_ROLE,
+      "!   The relationship of the entity to the range.
+      TYPE type STRING,
+    end of T_RUNTIME_ENTITY_ROLE.
+  types:
     "!   A term from the request that was identified as an entity.
     begin of T_RUNTIME_ENTITY,
+      "!   An entity detected in the input.
       ENTITY type STRING,
+      "!   An array of zero-based character offsets that indicate where the detected entity
+      "!    values begin and end in the input text.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
+      "!   The entity value that was recognized in the user input.
       VALUE type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!    entity.
       CONFIDENCE type NUMBER,
+      "!   Any metadata for the entity.
       METADATA type MAP,
+      "!   The recognized capture groups for the entity, as defined by the entity pattern.
       GROUPS type STANDARD TABLE OF T_CAPTURE_GROUP WITH NON-UNIQUE DEFAULT KEY,
+      "!   An object containing detailed information about the entity recognized in the
+      "!    user input. This property is included only if the new system entities are
+      "!    enabled for the workspace.<br/>
+      "!   <br/>
+      "!   For more information about how the new system entities are interpreted, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-syste
+      "!   m-entities).
+      INTERPRETATION type T_RT_ENTITY_INTERPRETATION,
+      "!   An object describing the role played by a system entity that is specifies the
+      "!    beginning or end of a range recognized in the user input. This property is
+      "!    included only if the new system entities are enabled for the workspace.
+      ROLE type T_RUNTIME_ENTITY_ROLE,
     end of T_RUNTIME_ENTITY.
   types:
     "!   An intent identified in the user input.
     begin of T_RUNTIME_INTENT,
+      "!   The name of the recognized intent.
       INTENT type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the intent.
       CONFIDENCE type DOUBLE,
     end of T_RUNTIME_INTENT.
   types:
     "!   An object defining the message input to be sent to the Watson Assistant service
     "!    if the user selects the corresponding option.
     begin of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
+      "!   An array of intents to be used while processing the input.<br/>
+      "!   <br/>
+      "!   **Note:** This property is supported for backward compatibility with
+      "!    applications that use the v1 **Get response to user input** method.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of entities to be used while processing the user input.<br/>
+      "!   <br/>
+      "!   **Note:** This property is supported for backward compatibility with
+      "!    applications that use the v1 **Get response to user input** method.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_DIA_NODE_OUTPUT_OPT_ELEMENT,
+      "!   The user-facing label for the option.
       LABEL type STRING,
+      "!   An object defining the message input to be sent to the Watson Assistant service
+      "!    if the user selects the corresponding option.
       VALUE type T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
     end of T_DIA_NODE_OUTPUT_OPT_ELEMENT.
   types:
-    "!
+    "!   No documentation available.
+    begin of T_DIA_ND_OTPT_TEXT_VALUES_ELEM,
+      "!   The text of a response. This string can include newline characters (`\n`),
+      "!    Markdown tagging, or other special characters, if supported by the channel.
+      TEXT type STRING,
+    end of T_DIA_ND_OTPT_TEXT_VALUES_ELEM.
+  types:
+    "!   No documentation available.
     begin of T_DIALOG_NODE_OUTPUT_GENERIC,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.<br/>
+      "!   <br/>
+      "!   **Note:** The **search_skill** response type is available only for Plus and
+      "!    Premium users, and is used only by the v2 runtime API.
       RESPONSE_TYPE type STRING,
+      "!   A list of one or more objects defining text responses. Required when
+      "!    **response_type**=`text`.
       VALUES type STANDARD TABLE OF T_DIA_ND_OTPT_TEXT_VALUES_ELEM WITH NON-UNIQUE DEFAULT KEY,
+      "!   How a response is selected from the list, if more than one response is
+      "!    specified. Valid only when **response_type**=`text`.
       SELECTION_POLICY type STRING,
+      "!   The delimiter to use as a separator between responses when
+      "!    `selection_policy`=`multiline`.
       DELIMITER type STRING,
+      "!   How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid
+      "!    only when **response_type**=`pause`.
       TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause. Ignored if the
+      "!    channel does not support this event. Valid only when **response_type**=`pause`.
+      "!
       TYPING type BOOLEAN,
+      "!   The URL of the image. Required when **response_type**=`image`.
       SOURCE type STRING,
+      "!   An optional title to show before the response. Valid only when
+      "!    **response_type**=`image` or `option`.
       TITLE type STRING,
+      "!   An optional description to show with the response. Valid only when
+      "!    **response_type**=`image` or `option`.
       DESCRIPTION type STRING,
+      "!   The preferred type of control to display, if supported by the channel. Valid
+      "!    only when **response_type**=`option`.
       PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose. You
+      "!    can include up to 20 options. Required when **response_type**=`option`.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An optional message to be sent to the human agent who will be taking over the
+      "!    conversation. Valid only when **reponse_type**=`connect_to_agent`.
       MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   The text of the search query. This can be either a natural-language query or a
+      "!    query that uses the Discovery query language syntax, depending on the value of
+      "!    the **query_type** property. For more information, see the [Discovery service
+      "!    documentation](https://cloud.ibm.com/docs/services/discovery/query-operators.ht
+      "!   ml#query-operators). Required when **response_type**=`search_skill`.
       QUERY type STRING,
+      "!   The type of the search query. Required when **response_type**=`search_skill`.
       QUERY_TYPE type STRING,
+      "!   An optional filter that narrows the set of documents to be searched. For more
+      "!    information, see the [Discovery service documentation]([Discovery service
+      "!    documentation](https://cloud.ibm.com/docs/services/discovery/query-parameters.h
+      "!   tml#filter).
       FILTER type STRING,
+      "!   The version of the Discovery service API to use for the query.
       DISCOVERY_VERSION type STRING,
     end of T_DIALOG_NODE_OUTPUT_GENERIC.
   types:
     "!   The output of the dialog node. For more information about how to specify dialog
     "!    node output, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-d
-    "!   ialog-overview#dialog-overview-responses).
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
+    "!   rview#dialog-overview-responses).
     begin of T_DIALOG_NODE_OUTPUT,
+      "!   An array of objects describing the output defined for the dialog node.
       GENERIC type STANDARD TABLE OF T_DIALOG_NODE_OUTPUT_GENERIC WITH NON-UNIQUE DEFAULT KEY,
+      "!   Options that modify how specified output is handled.
       MODIFIERS type T_DIALOG_NODE_OUTPUT_MODIFIERS,
     end of T_DIALOG_NODE_OUTPUT.
   types:
+    "!   No documentation available.
+    begin of T_DIALOG_NODE,
+      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      DIALOG_NODE type STRING,
+      "!   The description of the dialog node. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The condition that will trigger the dialog node. This string cannot contain
+      "!    carriage return, newline, or tab characters.
+      CONDITIONS type STRING,
+      "!   The ID of the parent dialog node. This property is omitted if the dialog node
+      "!    has no parent.
+      PARENT type STRING,
+      "!   The ID of the previous sibling dialog node. This property is omitted if the
+      "!    dialog node has no previous sibling.
+      PREVIOUS_SIBLING type STRING,
+      "!   The output of the dialog node. For more information about how to specify dialog
+      "!    node output, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
+      "!   rview#dialog-overview-responses).
+      OUTPUT type T_DIALOG_NODE_OUTPUT,
+      "!   The context for the dialog node.
+      CONTEXT type MAP,
+      "!   The metadata for the dialog node.
+      METADATA type MAP,
+      "!   The next step to execute following this dialog node.
+      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
+      "!   The alias used to identify the dialog node. This string must conform to the
+      "!    following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      TITLE type STRING,
+      "!   How the dialog node is processed.
+      TYPE type STRING,
+      "!   How an `event_handler` node is processed.
+      EVENT_NAME type STRING,
+      "!   The location in the dialog context where output is stored.
+      VARIABLE type STRING,
+      "!   An array of objects describing any actions to be invoked by the dialog node.
+      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether this top-level dialog node can be digressed into.
+      DIGRESS_IN type STRING,
+      "!   Whether this dialog node can be returned to after a digression.
+      DIGRESS_OUT type STRING,
+      "!   Whether the user can digress to top-level nodes while filling out slots.
+      DIGRESS_OUT_SLOTS type STRING,
+      "!   A label that can be displayed externally to describe the purpose of the node to
+      "!    users.
+      USER_LABEL type STRING,
+      "!   Whether the dialog node should be excluded from disambiguation suggestions.
+      DISAMBIGUATION_OPT_OUT type BOOLEAN,
+      "!   For internal use only.
+      DISABLED type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_DIALOG_NODE.
+  types:
+    "!   No documentation available.
+    begin of T_VALUE,
+      "!   The text of the entity value. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      VALUE type STRING,
+      "!   Any metadata related to the entity value.
+      METADATA type MAP,
+      "!   Specifies the type of entity value.
+      TYPE type STRING,
+      "!   An array of synonyms for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A synonym must conform
+      "!    to the following resrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of patterns for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A pattern is a regular
+      "!    expression; for more information about how to specify a pattern, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#e
+      "!   ntities-create-dictionary-based).
+      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_VALUE.
+  types:
+    "!   A webhook that can be used by dialog nodes to make programmatic calls to an
+    "!    external function.<br/>
+    "!   <br/>
+    "!   **Note:** Currently, only a single webhook named `main_webhook` is supported.
+    begin of T_WEBHOOK,
+      "!   The URL for the external service or application to which you want to send HTTP
+      "!    POST requests.
+      URL type STRING,
+      "!   The name of the webhook. Currently, `main_webhook` is the only supported value.
+      NAME type STRING,
+      "!   An optional array of HTTP headers to pass with the HTTP request.
+      HEADERS type STANDARD TABLE OF T_WEBHOOK_HEADER WITH NON-UNIQUE DEFAULT KEY,
+    end of T_WEBHOOK.
+  types:
+    "!   Workspace settings related to the behavior of system entities.
+    begin of T_WS_SYSTM_STTNGS_SYSTM_ENTTS,
+      "!   Whether the new system entities are enabled for the workspace.
+      ENABLED type BOOLEAN,
+    end of T_WS_SYSTM_STTNGS_SYSTM_ENTTS.
+  types:
+    "!   A mention of a contextual entity.
+    begin of T_MENTION,
+      "!   The name of the entity.
+      ENTITY type STRING,
+      "!   An array of zero-based character offsets that indicate where the entity mentions
+      "!    begin and end in the input text.
+      LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
+    end of T_MENTION.
+  types:
+    "!   No documentation available.
+    begin of T_EXAMPLE,
+      "!   The text of a user input example. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      TEXT type STRING,
+      "!   An array of contextual entity mentions.
+      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_EXAMPLE.
+  types:
+    "!   No documentation available.
+    begin of T_INTENT,
+      "!   The name of the intent. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, hyphen, and dot
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      INTENT type STRING,
+      "!   The description of the intent. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of user input examples for the intent.
+      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_INTENT.
+  types:
     "!   Workspace settings related to the Watson Assistant user interface.
     begin of T_WS_SYSTEM_SETTINGS_TOOLING,
+      "!   Whether the dialog JSON editor displays text responses within the
+      "!    `output.generic` object.
       STORE_GENERIC_RESPONSES type BOOLEAN,
     end of T_WS_SYSTEM_SETTINGS_TOOLING.
   types:
     "!   Global settings for the workspace.
     begin of T_WORKSPACE_SYSTEM_SETTINGS,
+      "!   Workspace settings related to the Watson Assistant user interface.
       TOOLING type T_WS_SYSTEM_SETTINGS_TOOLING,
+      "!   Workspace settings related to the disambiguation feature.<br/>
+      "!   <br/>
+      "!   **Note:** This feature is available only to Plus and Premium users.
       DISAMBIGUATION type T_WS_SYSTM_STTNGS_DSMBGTN,
+      "!   For internal use only.
       HUMAN_AGENT_ASSIST type MAP,
+      "!   Workspace settings related to the behavior of system entities.
+      SYSTEM_ENTITIES type T_WS_SYSTM_STTNGS_SYSTM_ENTTS,
+      "!   Workspace settings related to detection of irrelevant input.
+      OFF_TOPIC type T_WS_SYSTEM_SETTINGS_OFF_TOPIC,
     end of T_WORKSPACE_SYSTEM_SETTINGS.
   types:
-    "!
-    begin of T_DIALOG_NODE,
-      DIALOG_NODE type STRING,
-      DESCRIPTION type STRING,
-      CONDITIONS type STRING,
-      PARENT type STRING,
-      PREVIOUS_SIBLING type STRING,
-      OUTPUT type T_DIALOG_NODE_OUTPUT,
-      CONTEXT type MAP,
-      METADATA type MAP,
-      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      TITLE type STRING,
-      TYPE type STRING,
-      EVENT_NAME type STRING,
-      VARIABLE type STRING,
-      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
-      DIGRESS_IN type STRING,
-      DIGRESS_OUT type STRING,
-      DIGRESS_OUT_SLOTS type STRING,
-      USER_LABEL type STRING,
-      DISABLED type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_DIALOG_NODE.
-  types:
-    "!
-    begin of T_VALUE,
-      VALUE type STRING,
-      METADATA type MAP,
-      TYPE type STRING,
-      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_VALUE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_COUNTEREXAMPLE,
+      "!   The text of a user input marked as irrelevant input. This string must conform to
+      "!    the following restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
       TEXT type STRING,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_COUNTEREXAMPLE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_ENTITY,
+      "!   The name of the entity. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, and hyphen
+      "!    characters.<br/>
+      "!   - If you specify an entity name beginning with the reserved prefix `sys-`, it
+      "!    must be the name of a system entity that you want to enable. (Any entity
+      "!    content specified with the request is ignored.).
       ENTITY type STRING,
+      "!   The description of the entity. This string cannot contain carriage return,
+      "!    newline, or tab characters.
       DESCRIPTION type STRING,
+      "!   Any metadata related to the entity.
       METADATA type MAP,
+      "!   Whether to use fuzzy matching for the entity.
       FUZZY_MATCH type BOOLEAN,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
+      "!   An array of objects describing the entity values.
       VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ENTITY.
   types:
-    "!
+    "!   No documentation available.
     begin of T_WORKSPACE,
+      "!   The name of the workspace. This string cannot contain carriage return, newline,
+      "!    or tab characters.
       NAME type STRING,
+      "!   The description of the workspace. This string cannot contain carriage return,
+      "!    newline, or tab characters.
       DESCRIPTION type STRING,
+      "!   The language of the workspace.
       LANGUAGE type STRING,
+      "!   Any metadata related to the workspace.
       METADATA type MAP,
+      "!   Whether training data from the workspace (including artifacts such as intents
+      "!    and entities) can be used by IBM for general service improvements. `true`
+      "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
+      "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
+      "!   The workspace ID of the workspace.
       WORKSPACE_ID type STRING,
+      "!   The current status of the workspace.
       STATUS type STRING,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
+      "!   An array of intents.
       INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the entities for the workspace.
       ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the dialog nodes in the workspace.
       DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of counterexamples.
       COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+      "!   No documentation available.
+      WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORKSPACE.
   types:
-    "!
-    begin of T_RT_ENTTY_INTRPRTTN_SYS_NUM,
-      NUMERIC_VALUE type NUMBER,
-      RANGE_LINK type STRING,
-      SUBTYPE type STRING,
-    end of T_RT_ENTTY_INTRPRTTN_SYS_NUM.
-  types:
-    "!
-    begin of T_UPDATE_COUNTEREXAMPLE,
-      TEXT type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_UPDATE_COUNTEREXAMPLE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_SYNONYM,
+      "!   The text of the synonym. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
       SYNONYM type STRING,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_SYNONYM.
   types:
     "!   The pagination data for the returned objects.
     begin of T_PAGINATION,
+      "!   The URL that will return the same page of results.
       REFRESH_URL type STRING,
+      "!   The URL that will return the next page of results.
       NEXT_URL type STRING,
+      "!   Reserved for future use.
       TOTAL type INTEGER,
+      "!   Reserved for future use.
       MATCHED type INTEGER,
+      "!   A token identifying the current page of results.
       REFRESH_CURSOR type STRING,
+      "!   A token identifying the next page of results.
       NEXT_CURSOR type STRING,
     end of T_PAGINATION.
   types:
-    "!
+    "!   No documentation available.
     begin of T_SYNONYM_COLLECTION,
+      "!   An array of synonyms.
       SYNONYMS type STANDARD TABLE OF T_SYNONYM WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
       PAGINATION type T_PAGINATION,
     end of T_SYNONYM_COLLECTION.
   types:
-    "!
+    "!   No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_OPTION,
+      "!   The title or introductory text to show before the response.
       TITLE type STRING,
+      "!   The description to show with the the response.
       DESCRIPTION type STRING,
+      "!   The preferred type of control to display.
       PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_OPTION.
   types:
-    "!   Log message details.
-    begin of T_LOG_MESSAGE,
-      LEVEL type STRING,
-      MSG type STRING,
-    end of T_LOG_MESSAGE.
-  types:
-    "!   An array of objects describing the entities for the workspace.
-    begin of T_ENTITY_COLLECTION,
-      ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_ENTITY_COLLECTION.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT,
+      "!   A list of one or more objects defining text responses. Required when
+      "!    **response_type**=`text`.
       VALUES type STANDARD TABLE OF T_DIA_ND_OTPT_TEXT_VALUES_ELEM WITH NON-UNIQUE DEFAULT KEY,
+      "!   How a response is selected from the list, if more than one response is
+      "!    specified. Valid only when **response_type**=`text`.
       SELECTION_POLICY type STRING,
+      "!   The delimiter to use as a separator between responses when
+      "!    `selection_policy`=`multiline`.
       DELIMITER type STRING,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT.
   types:
-    "!
-    begin of T_INTENT_COLLECTION,
-      INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_INTENT_COLLECTION.
-  types:
-    "!
-    begin of T_DIA_ND_OTPT_RESP_TYPE_PAUSE,
-      TIME type INTEGER,
-      TYPING type BOOLEAN,
-    end of T_DIA_ND_OTPT_RESP_TYPE_PAUSE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_BASE_WORKSPACE,
+      "!   The name of the workspace. This string cannot contain carriage return, newline,
+      "!    or tab characters.
       NAME type STRING,
+      "!   The description of the workspace. This string cannot contain carriage return,
+      "!    newline, or tab characters.
       DESCRIPTION type STRING,
+      "!   The language of the workspace.
       LANGUAGE type STRING,
+      "!   Any metadata related to the workspace.
       METADATA type MAP,
+      "!   Whether training data from the workspace (including artifacts such as intents
+      "!    and entities) can be used by IBM for general service improvements. `true`
+      "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
+      "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
+      "!   The workspace ID of the workspace.
       WORKSPACE_ID type STRING,
+      "!   The current status of the workspace.
       STATUS type STRING,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_BASE_WORKSPACE.
   types:
-    "!
-    begin of T_DIA_SUGGESTION_RESP_GENERIC,
-      RESPONSE_TYPE type STRING,
-      TEXT type STRING,
-      TIME type INTEGER,
-      TYPING type BOOLEAN,
-      SOURCE type STRING,
-      TITLE type STRING,
+    "!   No documentation available.
+    begin of T_BASE_ENTITY,
+      "!   The name of the entity. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, and hyphen
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      ENTITY type STRING,
+      "!   The description of the entity. This string cannot contain carriage return,
+      "!    newline, or tab characters.
       DESCRIPTION type STRING,
-      PREFERENCE type STRING,
-      OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   Any metadata related to the entity.
+      METADATA type MAP,
+      "!   Whether to use fuzzy matching for the entity.
+      FUZZY_MATCH type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_BASE_ENTITY.
+  types:
+    "!   No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
+      "!   The text of the response.
+      TEXT type STRING,
+    end of T_RUNTIME_RESPONSE_TYPE_TEXT.
+  types:
+    "!   No documentation available.
+    begin of T_RT_ENTTY_INTRPRTTN_SYS_TIME,
+      "!   A unique identifier used to associate a recognized time and date. If the user
+      "!    input contains a date and time that are mentioned together (for example, `Today
+      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
+      "!    and `@sys-time` entities).
+      DATETIME_LINK type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
+      GRANULARITY type STRING,
+      "!   A recognized term for a time that was mentioned as a part of the day in the
+      "!    user's input (for example, `morning` or `afternoon`).
+      PART_OF_DAY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
+      RANGE_LINK type STRING,
+      "!   A recognized mention of a relative hour, represented numerically as an offset
+      "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
+      "!    hour ago`).
+      RELATIVE_HOUR type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    minutes from the current time (for example, `5` for `in five minutes` or `-15`
+      "!    for `fifteen minutes ago`).
+      RELATIVE_MINUTE type NUMBER,
+      "!   A recognized mention of a relative time, represented numerically as an offset in
+      "!    seconds from the current time (for example, `10` for `in ten seconds` or `-30`
+      "!    for `thirty seconds ago`).
+      RELATIVE_SECOND type NUMBER,
+      "!   A recognized specific hour mentioned as part of a time value (for example, `10`
+      "!    for `10:15 AM`.).
+      SPECIFIC_HOUR type NUMBER,
+      "!   A recognized specific minute mentioned as part of a time value (for example,
+      "!    `15` for `10:15 AM`.).
+      SPECIFIC_MINUTE type NUMBER,
+      "!   A recognized specific second mentioned as part of a time value (for example,
+      "!    `30` for `10:15:30 AM`.).
+      SPECIFIC_SECOND type NUMBER,
+      "!   A recognized time zone mentioned as part of a time value (for example, `EST`).
+      TIMEZONE type STRING,
+    end of T_RT_ENTTY_INTRPRTTN_SYS_TIME.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_EXAMPLE,
+      "!   The text of the user input example. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      TEXT type STRING,
+      "!   An array of contextual entity mentions.
+      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_UPDATE_EXAMPLE.
+  types:
+    "!   An object describing a contextual entity mention.
+    begin of T_ENTITY_MENTION,
+      "!   The text of the user input example.
+      TEXT type STRING,
+      "!   The name of the intent.
+      INTENT type STRING,
+      "!   An array of zero-based character offsets that indicate where the entity mentions
+      "!    begin and end in the input text.
+      LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
+    end of T_ENTITY_MENTION.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1,
+      "!   The text of the search query. This can be either a natural-language query or a
+      "!    query that uses the Discovery query language syntax, depending on the value of
+      "!    the **query_type** property. For more information, see the [Discovery service
+      "!    documentation](https://cloud.ibm.com/docs/services/discovery/query-operators.ht
+      "!   ml#query-operators). Required when **response_type**=`search_skill`.
+      QUERY type STRING,
+      "!   The type of the search query. Required when **response_type**=`search_skill`.
+      QUERY_TYPE type STRING,
+      "!   An optional filter that narrows the set of documents to be searched. For more
+      "!    information, see the [Discovery service documentation]([Discovery service
+      "!    documentation](https://cloud.ibm.com/docs/services/discovery/query-parameters.h
+      "!   tml#filter).
+      FILTER type STRING,
+      "!   The version of the Discovery service API to use for the query.
+      DISCOVERY_VERSION type STRING,
+    end of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1.
+  types:
+    "!   No documentation available.
+    begin of T_EXAMPLE_COLLECTION,
+      "!   An array of objects describing the examples defined for the intent.
+      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_EXAMPLE_COLLECTION.
+  types:
+    "!   The pagination data for the returned objects.
+    begin of T_LOG_PAGINATION,
+      "!   The URL that will return the next page of results, if any.
+      NEXT_URL type STRING,
+      "!   Reserved for future use.
+      MATCHED type INTEGER,
+      "!   A token identifying the next page of results.
+      NEXT_CURSOR type STRING,
+    end of T_LOG_PAGINATION.
+  types:
+    "!   No documentation available.
+    begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
+      "!   A message to be sent to the human agent who will be taking over the
+      "!    conversation.
       MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   A label identifying the topic of the conversation, derived from the
+      "!    **user_label** property of the relevant node.
       TOPIC type STRING,
+      "!   The ID of the dialog node that the **topic** property is taken from. The
+      "!    **topic** property is populated using the value of the dialog node's
+      "!    **user_label** property.
+      DIALOG_NODE type STRING,
+    end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
+  types:
+    "!   No documentation available.
+    begin of T_CREATE_VALUE,
+      "!   The text of the entity value. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      VALUE type STRING,
+      "!   Any metadata related to the entity value.
+      METADATA type MAP,
+      "!   Specifies the type of entity value.
+      TYPE type STRING,
+      "!   An array of synonyms for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A synonym must conform
+      "!    to the following resrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of patterns for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A pattern is a regular
+      "!    expression; for more information about how to specify a pattern, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#e
+      "!   ntities-create-dictionary-based).
+      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_CREATE_VALUE.
+  types:
+    "!   No documentation available.
+    begin of T_DIALOG_NODE_VISITED_DETAILS,
+      "!   A dialog node that was triggered during processing of the input message.
+      DIALOG_NODE type STRING,
+      "!   The title of the dialog node.
+      TITLE type STRING,
+      "!   The conditions that trigger the dialog node.
+      CONDITIONS type STRING,
+    end of T_DIALOG_NODE_VISITED_DETAILS.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_SUGGESTION_RESP_GENERIC,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestion** response type is part of the disambiguation
+      "!    feature, which is only available for Plus and Premium users. The
+      "!    **search_skill** response type is available only for Plus and Premium users,
+      "!    and is used only by the v2 runtime API.
+      RESPONSE_TYPE type STRING,
+      "!   The text of the response.
+      TEXT type STRING,
+      "!   How long to pause, in milliseconds.
+      TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause.
+      TYPING type BOOLEAN,
+      "!   The URL of the image.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the the response.
+      DESCRIPTION type STRING,
+      "!   The preferred type of control to display.
+      PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose.
+      OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A message to be sent to the human agent who will be taking over the
+      "!    conversation.
+      MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   A label identifying the topic of the conversation, derived from the
+      "!    **user_label** property of the relevant node.
+      TOPIC type STRING,
+      "!   The ID of the dialog node that the **topic** property is taken from. The
+      "!    **topic** property is populated using the value of the dialog node's
+      "!    **user_label** property.
       DIALOG_NODE type STRING,
     end of T_DIA_SUGGESTION_RESP_GENERIC.
-  types:
-    "!
-    begin of T_DIA_ND_OUTPUT_RESP_TYPE_IMG,
-      SOURCE type STRING,
-      TITLE type STRING,
-      DESCRIPTION type STRING,
-    end of T_DIA_ND_OUTPUT_RESP_TYPE_IMG.
-  types:
-    "!
-    begin of T_ERROR_DETAIL,
-      MESSAGE type STRING,
-      PATH type STRING,
-    end of T_ERROR_DETAIL.
-  types:
-    "!
-    begin of T_ERROR_RESPONSE,
-      ERROR type STRING,
-      ERRORS type STANDARD TABLE OF T_ERROR_DETAIL WITH NON-UNIQUE DEFAULT KEY,
-      CODE type INTEGER,
-    end of T_ERROR_RESPONSE.
-  types:
-    "!   Workspace settings related to the behavior of system entities.
-    begin of T_WS_SYSTM_STTNGS_SYSTM_ENTTS,
-      ENABLED type BOOLEAN,
-    end of T_WS_SYSTM_STTNGS_SYSTM_ENTTS.
-  types:
-    "!
-    begin of T_RT_ENTITY_INTERPRETATION,
-      CALENDAR_TYPE type STRING,
-      DATETIME_LINK type STRING,
-      FESTIVAL type STRING,
-      GRANULARITY type STRING,
-      RANGE_LINK type STRING,
-      RANGE_MODIFIER type STRING,
-      RELATIVE_DAY type NUMBER,
-      RELATIVE_MONTH type NUMBER,
-      RELATIVE_WEEK type NUMBER,
-      RELATIVE_WEEKEND type NUMBER,
-      RELATIVE_YEAR type NUMBER,
-      SPECIFIC_DAY type NUMBER,
-      SPECIFIC_DAY_OF_WEEK type STRING,
-      SPECIFIC_MONTH type NUMBER,
-      SPECIFIC_QUARTER type NUMBER,
-      SPECIFIC_YEAR type NUMBER,
-      NUMERIC_VALUE type NUMBER,
-      SUBTYPE type STRING,
-      PART_OF_DAY type STRING,
-      RELATIVE_HOUR type NUMBER,
-      RELATIVE_MINUTE type NUMBER,
-      RELATIVE_SECOND type NUMBER,
-      SPECIFIC_HOUR type NUMBER,
-      SPECIFIC_MINUTE type NUMBER,
-      SPECIFIC_SECOND type NUMBER,
-      TIMEZONE type STRING,
-    end of T_RT_ENTITY_INTERPRETATION.
   types:
     "!   An object defining the message input, intents, and entities to be sent to the
     "!    Watson Assistant service if the user selects the corresponding disambiguation
     "!    option.
     begin of T_DIALOG_SUGGESTION_VALUE,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
+      "!   An array of intents to be sent along with the user input.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of entities to be sent along with the user input.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIALOG_SUGGESTION_VALUE.
-  types:
-    "!
-    begin of T_DIALOG_NODE_VISITED_DETAILS,
-      DIALOG_NODE type STRING,
-      TITLE type STRING,
-      CONDITIONS type STRING,
-    end of T_DIALOG_NODE_VISITED_DETAILS.
   types:
     "!   The dialog output that will be returned from the Watson Assistant service if the
     "!    user selects the corresponding option.
     begin of T_DIALOG_SUGGESTION_OUTPUT,
+      "!   An array of the nodes that were triggered to create the response, in the order
+      "!    in which they were visited. This information is useful for debugging and for
+      "!    tracing the path taken through the node tree.
       NODES_VISITED type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects containing detailed diagnostic information about the nodes
+      "!    that were triggered during processing of the input message. Included only if
+      "!    **nodes_visited_details** is set to `true` in the message request.
       NODES_VISITED_DETAILS type STANDARD TABLE OF T_DIALOG_NODE_VISITED_DETAILS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of responses to the user.
       TEXT type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   Output intended for any channel. It is the responsibility of the client
+      "!    application to implement the supported response types.
       GENERIC type STANDARD TABLE OF T_DIA_SUGGESTION_RESP_GENERIC WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIALOG_SUGGESTION_OUTPUT.
   types:
-    "!
-    begin of T_BASE_ENTITY,
-      ENTITY type STRING,
-      DESCRIPTION type STRING,
-      METADATA type MAP,
-      FUZZY_MATCH type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_BASE_ENTITY.
-  types:
-    "!
-    begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
-      TEXT type STRING,
-    end of T_RUNTIME_RESPONSE_TYPE_TEXT.
-  types:
-    "!   For internal use only.
-      T_SYSTEM_RESPONSE type MAP.
-  types:
-    "!   Metadata related to the message.
-    begin of T_MESSAGE_CONTEXT_METADATA,
-      DEPLOYMENT type STRING,
-      USER_ID type STRING,
-    end of T_MESSAGE_CONTEXT_METADATA.
-  types:
-    "!   State information for the conversation. To maintain state, include the context
-    "!    from the previous response.
-    begin of T_CONTEXT,
-      CONVERSATION_ID type STRING,
-      SYSTEM type T_SYSTEM_RESPONSE,
-      METADATA type T_MESSAGE_CONTEXT_METADATA,
-    end of T_CONTEXT.
-  types:
-    "!
-    begin of T_RT_ENTTY_INTRPRTTN_SYS_TIME,
-      DATETIME_LINK type STRING,
-      GRANULARITY type STRING,
-      PART_OF_DAY type STRING,
-      RANGE_LINK type STRING,
-      RELATIVE_HOUR type NUMBER,
-      RELATIVE_MINUTE type NUMBER,
-      RELATIVE_SECOND type NUMBER,
-      SPECIFIC_HOUR type NUMBER,
-      SPECIFIC_MINUTE type NUMBER,
-      SPECIFIC_SECOND type NUMBER,
-      TIMEZONE type STRING,
-    end of T_RT_ENTTY_INTRPRTTN_SYS_TIME.
-  types:
-    "!
-    begin of T_UPDATE_EXAMPLE,
-      TEXT type STRING,
-      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_UPDATE_EXAMPLE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_DIALOG_SUGGESTION,
+      "!   The user-facing label for the disambiguation option. This label is taken from
+      "!    the **title** or **user_label** property of the corresponding dialog node,
+      "!    depending on the disambiguation options.
       LABEL type STRING,
+      "!   An object defining the message input, intents, and entities to be sent to the
+      "!    Watson Assistant service if the user selects the corresponding disambiguation
+      "!    option.
       VALUE type T_DIALOG_SUGGESTION_VALUE,
+      "!   The dialog output that will be returned from the Watson Assistant service if the
+      "!    user selects the corresponding option.
       OUTPUT type T_DIALOG_SUGGESTION_OUTPUT,
+      "!   The ID of the dialog node that the **label** property is taken from. The
+      "!    **label** property is populated using the value of the dialog node's
+      "!    **user_label** property.
       DIALOG_NODE type STRING,
     end of T_DIALOG_SUGGESTION.
   types:
-    "!
-    begin of T_RUNTIME_RESPONSE_GENERIC,
-      RESPONSE_TYPE type STRING,
-      TEXT type STRING,
-      TIME type INTEGER,
-      TYPING type BOOLEAN,
-      SOURCE type STRING,
-      TITLE type STRING,
+    "!   No documentation available.
+      T_EMPTY_RESPONSE type JSONOBJECT.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_VALUE,
+      "!   The text of the entity value. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      VALUE type STRING,
+      "!   Any metadata related to the entity value.
+      METADATA type MAP,
+      "!   Specifies the type of entity value.
+      TYPE type STRING,
+      "!   An array of synonyms for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A synonym must conform
+      "!    to the following resrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of patterns for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A pattern is a regular
+      "!    expression; for more information about how to specify a pattern, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#e
+      "!   ntities-create-dictionary-based).
+      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_UPDATE_VALUE.
+  types:
+    "!   An alternative value for the recognized entity.
+    begin of T_RUNTIME_ENTITY_ALTERNATIVE,
+      "!   The entity value that was recognized in the user input.
+      VALUE type STRING,
+      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!    entity.
+      CONFIDENCE type NUMBER,
+    end of T_RUNTIME_ENTITY_ALTERNATIVE.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_INTENT,
+      "!   The name of the intent. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, hyphen, and dot
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      INTENT type STRING,
+      "!   The description of the intent. This string cannot contain carriage return,
+      "!    newline, or tab characters.
       DESCRIPTION type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of user input examples for the intent.
+      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_UPDATE_INTENT.
+  types:
+    "!   No documentation available.
+    begin of T_VALUE_COLLECTION,
+      "!   An array of entity values.
+      VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_VALUE_COLLECTION.
+  types:
+    "!   Log message details.
+    begin of T_LOG_MESSAGE,
+      "!   The severity of the log message.
+      LEVEL type STRING,
+      "!   The text of the log message.
+      MSG type STRING,
+    end of T_LOG_MESSAGE.
+  types:
+    "!   No documentation available.
+    begin of T_RUNTIME_RESPONSE_GENERIC,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestion** response type is part of the disambiguation
+      "!    feature, which is only available for Plus and Premium users.
+      RESPONSE_TYPE type STRING,
+      "!   The text of the response.
+      TEXT type STRING,
+      "!   How long to pause, in milliseconds.
+      TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause.
+      TYPING type BOOLEAN,
+      "!   The URL of the image.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the the response.
+      DESCRIPTION type STRING,
+      "!   The preferred type of control to display.
       PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   A message to be sent to the human agent who will be taking over the
+      "!    conversation.
       MESSAGE_TO_HUMAN_AGENT type STRING,
+      "!   A label identifying the topic of the conversation, derived from the
+      "!    **user_label** property of the relevant node.
       TOPIC type STRING,
+      "!   The ID of the dialog node that the **topic** property is taken from. The
+      "!    **topic** property is populated using the value of the dialog node's
+      "!    **user_label** property.
       DIALOG_NODE type STRING,
+      "!   An array of objects describing the possible matching dialog nodes from which the
+      "!    user can choose.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestions** property is part of the disambiguation feature,
+      "!    which is only available for Plus and Premium users.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_GENERIC.
   types:
     "!   An output object that includes the response to the user, the dialog nodes that
     "!    were triggered, and messages from the log.
     begin of T_OUTPUT_DATA,
+      "!   An array of the nodes that were triggered to create the response, in the order
+      "!    in which they were visited. This information is useful for debugging and for
+      "!    tracing the path taken through the node tree.
       NODES_VISITED type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects containing detailed diagnostic information about the nodes
+      "!    that were triggered during processing of the input message. Included only if
+      "!    **nodes_visited_details** is set to `true` in the message request.
       NODES_VISITED_DETAILS type STANDARD TABLE OF T_DIALOG_NODE_VISITED_DETAILS WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of up to 50 messages logged with the request.
       LOG_MESSAGES type STANDARD TABLE OF T_LOG_MESSAGE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of responses to the user.
       TEXT type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   Output intended for any channel. It is the responsibility of the client
+      "!    application to implement the supported response types.
       GENERIC type STANDARD TABLE OF T_RUNTIME_RESPONSE_GENERIC WITH NON-UNIQUE DEFAULT KEY,
     end of T_OUTPUT_DATA.
   types:
-    "!
-    begin of T_BASE_MESSAGE,
-      INPUT type T_MESSAGE_INPUT,
-      INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
-      ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      ALTERNATE_INTENTS type BOOLEAN,
-      CONTEXT type T_CONTEXT,
-      OUTPUT type T_OUTPUT_DATA,
-      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
-    end of T_BASE_MESSAGE.
-  types:
-    "!   An object describing a contextual entity mention.
-    begin of T_ENTITY_MENTION,
-      TEXT type STRING,
-      INTENT type STRING,
-      LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
-    end of T_ENTITY_MENTION.
-  types:
-    "!
-    begin of T_RT_RESPONSE_TYPE_SUGGESTION,
-      TITLE type STRING,
-      SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
-    end of T_RT_RESPONSE_TYPE_SUGGESTION.
-  types:
-    "!
-    begin of T_ENTITY_MENTION_COLLECTION,
-      EXAMPLES type STANDARD TABLE OF T_ENTITY_MENTION WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_ENTITY_MENTION_COLLECTION.
-  types:
-    "!
-    begin of T_UPDATE_SYNONYM,
-      SYNONYM type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_UPDATE_SYNONYM.
-  types:
-    "!
-    begin of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1,
-      QUERY type STRING,
-      QUERY_TYPE type STRING,
-      FILTER type STRING,
-      DISCOVERY_VERSION type STRING,
-    end of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1.
-  types:
-    "!
-    begin of T_EXAMPLE_COLLECTION,
-      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_EXAMPLE_COLLECTION.
-  types:
-    "!   The pagination data for the returned objects.
-    begin of T_LOG_PAGINATION,
-      NEXT_URL type STRING,
-      MATCHED type INTEGER,
-      NEXT_CURSOR type STRING,
-    end of T_LOG_PAGINATION.
-  types:
-    "!
-    begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
-      MESSAGE_TO_HUMAN_AGENT type STRING,
-      TOPIC type STRING,
-      DIALOG_NODE type STRING,
-    end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
-  types:
-    "!
-    begin of T_CREATE_VALUE,
-      VALUE type STRING,
-      METADATA type MAP,
-      TYPE type STRING,
-      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_CREATE_VALUE.
-  types:
-    "!
-    begin of T_BASE_INTENT,
-      INTENT type STRING,
-      DESCRIPTION type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_BASE_INTENT.
-  types:
-    "!
-      T_EMPTY_RESPONSE type JSONOBJECT.
-  types:
-    "!
-    begin of T_UPDATE_VALUE,
-      VALUE type STRING,
-      METADATA type MAP,
-      TYPE type STRING,
-      SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_UPDATE_VALUE.
-  types:
-    "!   An alternative value for the recognized entity.
-    begin of T_RUNTIME_ENTITY_ALTERNATIVE,
-      VALUE type STRING,
-      CONFIDENCE type NUMBER,
-    end of T_RUNTIME_ENTITY_ALTERNATIVE.
-  types:
-    "!
-    begin of T_RT_ENTTY_INTRPRTTN_SYS_DATE,
-      CALENDAR_TYPE type STRING,
-      DATETIME_LINK type STRING,
-      FESTIVAL type STRING,
-      GRANULARITY type STRING,
-      RANGE_LINK type STRING,
-      RANGE_MODIFIER type STRING,
-      RELATIVE_DAY type NUMBER,
-      RELATIVE_MONTH type NUMBER,
-      RELATIVE_WEEK type NUMBER,
-      RELATIVE_WEEKEND type NUMBER,
-      RELATIVE_YEAR type NUMBER,
-      SPECIFIC_DAY type NUMBER,
-      SPECIFIC_DAY_OF_WEEK type STRING,
-      SPECIFIC_MONTH type NUMBER,
-      SPECIFIC_QUARTER type NUMBER,
-      SPECIFIC_YEAR type NUMBER,
-    end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
-  types:
-    "!
-    begin of T_UPDATE_INTENT,
-      INTENT type STRING,
-      DESCRIPTION type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_UPDATE_INTENT.
-  types:
-    "!
-    begin of T_VALUE_COLLECTION,
-      VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_VALUE_COLLECTION.
-  types:
-    "!   An object describing the role played by a system entity that is specifies the
-    "!    beginning or end of a range recognized in the user input.
-    "!
-    "!   This property is part of the new system entities, which are a beta feature.
-    begin of T_RUNTIME_ENTITY_ROLE,
-      TYPE type STRING,
-    end of T_RUNTIME_ENTITY_ROLE.
-  types:
-    "!
-    begin of T_DIA_ND_OUTPUT_RESP_TYPE_OPT,
-      TITLE type STRING,
-      DESCRIPTION type STRING,
-      PREFERENCE type STRING,
-      OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
-    end of T_DIA_ND_OUTPUT_RESP_TYPE_OPT.
-  types:
-    "!
-    begin of T_BASE_COUNTEREXAMPLE,
-      TEXT type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_BASE_COUNTEREXAMPLE.
-  types:
-    "!
-    begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
-      SOURCE type STRING,
-      TITLE type STRING,
-      DESCRIPTION type STRING,
-    end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
-  types:
-    "!
-    begin of T_CREATE_INTENT,
-      INTENT type STRING,
-      DESCRIPTION type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_CREATE_INTENT.
-  types:
-    "!
-    begin of T_CREATE_ENTITY,
-      ENTITY type STRING,
-      DESCRIPTION type STRING,
-      METADATA type MAP,
-      FUZZY_MATCH type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_CREATE_ENTITY.
-  types:
-    "!
-    begin of T_UPDATE_WORKSPACE,
-      NAME type STRING,
-      DESCRIPTION type STRING,
-      LANGUAGE type STRING,
-      METADATA type MAP,
-      LEARNING_OPT_OUT type BOOLEAN,
-      SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      WORKSPACE_ID type STRING,
-      STATUS type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      INTENTS type STANDARD TABLE OF T_CREATE_INTENT WITH NON-UNIQUE DEFAULT KEY,
-      ENTITIES type STANDARD TABLE OF T_CREATE_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
-      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_UPDATE_WORKSPACE.
-  types:
     "!   An array of dialog nodes.
     begin of T_DIALOG_NODE_COLLECTION,
+      "!   An array of objects describing the dialog nodes defined for the workspace.
       DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
       PAGINATION type T_PAGINATION,
     end of T_DIALOG_NODE_COLLECTION.
   types:
-    "!
-    begin of T_BASE_DIALOG_NODE,
-      DIALOG_NODE type STRING,
-      DESCRIPTION type STRING,
-      CONDITIONS type STRING,
-      PARENT type STRING,
-      PREVIOUS_SIBLING type STRING,
-      OUTPUT type T_DIALOG_NODE_OUTPUT,
-      CONTEXT type MAP,
-      METADATA type MAP,
-      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      TITLE type STRING,
-      TYPE type STRING,
-      EVENT_NAME type STRING,
-      VARIABLE type STRING,
-      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
-      DIGRESS_IN type STRING,
-      DIGRESS_OUT type STRING,
-      DIGRESS_OUT_SLOTS type STRING,
-      USER_LABEL type STRING,
-      DISABLED type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_BASE_DIALOG_NODE.
+    "!   For internal use only.
+      T_SYSTEM_RESPONSE type MAP.
+  types:
+    "!   Metadata related to the message.
+    begin of T_MESSAGE_CONTEXT_METADATA,
+      "!   A label identifying the deployment environment, used for filtering log data.
+      "!    This string cannot contain carriage return, newline, or tab characters.
+      DEPLOYMENT type STRING,
+      "!   A string value that identifies the user who is interacting with the workspace.
+      "!    The client must provide a unique identifier for each individual end user who
+      "!    accesses the application. For Plus and Premium plans, this user ID is used to
+      "!    identify unique users for billing purposes. This string cannot contain carriage
+      "!    return, newline, or tab characters.
+      USER_ID type STRING,
+    end of T_MESSAGE_CONTEXT_METADATA.
+  types:
+    "!   State information for the conversation. To maintain state, include the context
+    "!    from the previous response.
+    begin of T_CONTEXT,
+      "!   The unique identifier of the conversation.
+      CONVERSATION_ID type STRING,
+      "!   For internal use only.
+      SYSTEM type T_SYSTEM_RESPONSE,
+      "!   Metadata related to the message.
+      METADATA type T_MESSAGE_CONTEXT_METADATA,
+    end of T_CONTEXT.
   types:
     "!   The response sent by the workspace, including the output text, detected intents
     "!    and entities, and context.
     begin of T_MESSAGE_RESPONSE,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
+      "!   An array of intents recognized in the user input, sorted in descending order of
+      "!    confidence.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of entities identified in the user input.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether to return more than one intent. A value of `true` indicates that all
+      "!    matching intents are returned.
       ALTERNATE_INTENTS type BOOLEAN,
+      "!   State information for the conversation. To maintain state, include the context
+      "!    from the previous response.
       CONTEXT type T_CONTEXT,
+      "!   An output object that includes the response to the user, the dialog nodes that
+      "!    were triggered, and messages from the log.
       OUTPUT type T_OUTPUT_DATA,
+      "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_MESSAGE_RESPONSE.
   types:
-    "!
+    "!   No documentation available.
     begin of T_BASE_VALUE,
+      "!   The text of the entity value. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
       VALUE type STRING,
+      "!   Any metadata related to the entity value.
       METADATA type MAP,
+      "!   Specifies the type of entity value.
       TYPE type STRING,
+      "!   An array of synonyms for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A synonym must conform
+      "!    to the following resrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
       SYNONYMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of patterns for the entity value. A value can specify either synonyms
+      "!    or patterns (depending on the value type), but not both. A pattern is a regular
+      "!    expression; for more information about how to specify a pattern, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#e
+      "!   ntities-create-dictionary-based).
       PATTERNS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_BASE_VALUE.
   types:
+    "!   No documentation available.
+    begin of T_UPDATE_ENTITY,
+      "!   The name of the entity. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, and hyphen
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      ENTITY type STRING,
+      "!   The description of the entity. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   Any metadata related to the entity.
+      METADATA type MAP,
+      "!   Whether to use fuzzy matching for the entity.
+      FUZZY_MATCH type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of objects describing the entity values.
+      VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_UPDATE_ENTITY.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_DIALOG_NODE,
+      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      DIALOG_NODE type STRING,
+      "!   The description of the dialog node. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The condition that will trigger the dialog node. This string cannot contain
+      "!    carriage return, newline, or tab characters.
+      CONDITIONS type STRING,
+      "!   The ID of the parent dialog node. This property is omitted if the dialog node
+      "!    has no parent.
+      PARENT type STRING,
+      "!   The ID of the previous sibling dialog node. This property is omitted if the
+      "!    dialog node has no previous sibling.
+      PREVIOUS_SIBLING type STRING,
+      "!   The output of the dialog node. For more information about how to specify dialog
+      "!    node output, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
+      "!   rview#dialog-overview-responses).
+      OUTPUT type T_DIALOG_NODE_OUTPUT,
+      "!   The context for the dialog node.
+      CONTEXT type MAP,
+      "!   The metadata for the dialog node.
+      METADATA type MAP,
+      "!   The next step to execute following this dialog node.
+      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
+      "!   The alias used to identify the dialog node. This string must conform to the
+      "!    following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      TITLE type STRING,
+      "!   How the dialog node is processed.
+      TYPE type STRING,
+      "!   How an `event_handler` node is processed.
+      EVENT_NAME type STRING,
+      "!   The location in the dialog context where output is stored.
+      VARIABLE type STRING,
+      "!   An array of objects describing any actions to be invoked by the dialog node.
+      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether this top-level dialog node can be digressed into.
+      DIGRESS_IN type STRING,
+      "!   Whether this dialog node can be returned to after a digression.
+      DIGRESS_OUT type STRING,
+      "!   Whether the user can digress to top-level nodes while filling out slots.
+      DIGRESS_OUT_SLOTS type STRING,
+      "!   A label that can be displayed externally to describe the purpose of the node to
+      "!    users.
+      USER_LABEL type STRING,
+      "!   Whether the dialog node should be excluded from disambiguation suggestions.
+      DISAMBIGUATION_OPT_OUT type BOOLEAN,
+      "!   For internal use only.
+      DISABLED type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_UPDATE_DIALOG_NODE.
+  types:
+    "!   No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
+      "!   How long to pause, in milliseconds.
+      TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause.
+      TYPING type BOOLEAN,
+    end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1,
+      "!   An optional message to be sent to the human agent who will be taking over the
+      "!    conversation. Valid only when **reponse_type**=`connect_to_agent`.
+      MESSAGE_TO_HUMAN_AGENT type STRING,
+    end of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1.
+  types:
+    "!   No documentation available.
+    begin of T_ERROR_DETAIL,
+      "!   Description of a specific constraint violation.
+      MESSAGE type STRING,
+      "!   The location of the constraint violation.
+      PATH type STRING,
+    end of T_ERROR_DETAIL.
+  types:
+    "!   No documentation available.
+    begin of T_CREATE_INTENT,
+      "!   The name of the intent. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, hyphen, and dot
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      INTENT type STRING,
+      "!   The description of the intent. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of user input examples for the intent.
+      EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_CREATE_INTENT.
+  types:
+    "!   No documentation available.
+    begin of T_CREATE_ENTITY,
+      "!   The name of the entity. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, and hyphen
+      "!    characters.<br/>
+      "!   - If you specify an entity name beginning with the reserved prefix `sys-`, it
+      "!    must be the name of a system entity that you want to enable. (Any entity
+      "!    content specified with the request is ignored.).
+      ENTITY type STRING,
+      "!   The description of the entity. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   Any metadata related to the entity.
+      METADATA type MAP,
+      "!   Whether to use fuzzy matching for the entity.
+      FUZZY_MATCH type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of objects describing the entity values.
+      VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_CREATE_ENTITY.
+  types:
+    "!   No documentation available.
+    begin of T_CREATE_WORKSPACE,
+      "!   The name of the workspace. This string cannot contain carriage return, newline,
+      "!    or tab characters.
+      NAME type STRING,
+      "!   The description of the workspace. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The language of the workspace.
+      LANGUAGE type STRING,
+      "!   Any metadata related to the workspace.
+      METADATA type MAP,
+      "!   Whether training data from the workspace (including artifacts such as intents
+      "!    and entities) can be used by IBM for general service improvements. `true`
+      "!    indicates that workspace training data is not to be used.
+      LEARNING_OPT_OUT type BOOLEAN,
+      "!   Global settings for the workspace.
+      SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
+      "!   The workspace ID of the workspace.
+      WORKSPACE_ID type STRING,
+      "!   The current status of the workspace.
+      STATUS type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of objects defining the intents for the workspace.
+      INTENTS type STANDARD TABLE OF T_CREATE_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the entities for the workspace.
+      ENTITIES type STANDARD TABLE OF T_CREATE_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the dialog nodes in the workspace.
+      DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects defining input examples that have been marked as irrelevant
+      "!    input.
+      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+      "!   No documentation available.
+      WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
+    end of T_CREATE_WORKSPACE.
+  types:
+    "!   No documentation available.
+    begin of T_COUNTEREXAMPLE_COLLECTION,
+      "!   An array of objects describing the examples marked as irrelevant input.
+      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_COUNTEREXAMPLE_COLLECTION.
+  types:
+    "!   No documentation available.
+    begin of T_BASE_EXAMPLE,
+      "!   The text of the user input example. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      TEXT type STRING,
+      "!   An array of contextual entity mentions.
+      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_BASE_EXAMPLE.
+  types:
+    "!   No documentation available.
+    begin of T_RT_ENTTY_INTRPRTTN_SYS_NUM,
+      "!   A recognized numeric value, represented as an integer or double.
+      NUMERIC_VALUE type NUMBER,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
+      RANGE_LINK type STRING,
+      "!   The type of numeric value recognized in the user input (`integer` or
+      "!    `rational`).
+      SUBTYPE type STRING,
+    end of T_RT_ENTTY_INTRPRTTN_SYS_NUM.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_COUNTEREXAMPLE,
+      "!   The text of a user input marked as irrelevant input. This string must conform to
+      "!    the following restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      TEXT type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_UPDATE_COUNTEREXAMPLE.
+  types:
+    "!   An array of objects describing the entities for the workspace.
+    begin of T_ENTITY_COLLECTION,
+      "!   An array of objects describing the entities defined for the workspace.
+      ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_ENTITY_COLLECTION.
+  types:
+    "!   No documentation available.
+    begin of T_INTENT_COLLECTION,
+      "!   An array of objects describing the intents defined for the workspace.
+      INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_INTENT_COLLECTION.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYPE_PAUSE,
+      "!   How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid
+      "!    only when **response_type**=`pause`.
+      TIME type INTEGER,
+      "!   Whether to send a "user is typing" event during the pause. Ignored if the
+      "!    channel does not support this event. Valid only when **response_type**=`pause`.
+      "!
+      TYPING type BOOLEAN,
+    end of T_DIA_ND_OTPT_RESP_TYPE_PAUSE.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_ND_OUTPUT_RESP_TYPE_IMG,
+      "!   The URL of the image. Required when **response_type**=`image`.
+      SOURCE type STRING,
+      "!   An optional title to show before the response. Valid only when
+      "!    **response_type**=`image` or `option`.
+      TITLE type STRING,
+      "!   An optional description to show with the response. Valid only when
+      "!    **response_type**=`image` or `option`.
+      DESCRIPTION type STRING,
+    end of T_DIA_ND_OUTPUT_RESP_TYPE_IMG.
+  types:
+    "!   No documentation available.
+    begin of T_ERROR_RESPONSE,
+      "!   General description of an error.
+      ERROR type STRING,
+      "!   Collection of specific constraint violations associated with the error.
+      ERRORS type STANDARD TABLE OF T_ERROR_DETAIL WITH NON-UNIQUE DEFAULT KEY,
+      "!   HTTP status code for the error response.
+      CODE type INTEGER,
+    end of T_ERROR_RESPONSE.
+  types:
+    "!   No documentation available.
+    begin of T_BASE_MESSAGE,
+      "!   An input object that includes the input text.
+      INPUT type T_MESSAGE_INPUT,
+      "!   An array of intents recognized in the user input, sorted in descending order of
+      "!    confidence.
+      INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of entities identified in the user input.
+      ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether to return more than one intent. A value of `true` indicates that all
+      "!    matching intents are returned.
+      ALTERNATE_INTENTS type BOOLEAN,
+      "!   State information for the conversation. To maintain state, include the context
+      "!    from the previous response.
+      CONTEXT type T_CONTEXT,
+      "!   An output object that includes the response to the user, the dialog nodes that
+      "!    were triggered, and messages from the log.
+      OUTPUT type T_OUTPUT_DATA,
+      "!   An array of objects describing any actions requested by the dialog node.
+      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+    end of T_BASE_MESSAGE.
+  types:
+    "!   No documentation available.
+    begin of T_RT_RESPONSE_TYPE_SUGGESTION,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   An array of objects describing the possible matching dialog nodes from which the
+      "!    user can choose.<br/>
+      "!   <br/>
+      "!   **Note:** The **suggestions** property is part of the disambiguation feature,
+      "!    which is only available for Plus and Premium users.
+      SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESPONSE_TYPE_SUGGESTION.
+  types:
+    "!   No documentation available.
+    begin of T_ENTITY_MENTION_COLLECTION,
+      "!   An array of objects describing the entity mentions defined for an entity.
+      EXAMPLES type STANDARD TABLE OF T_ENTITY_MENTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
+      PAGINATION type T_PAGINATION,
+    end of T_ENTITY_MENTION_COLLECTION.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_SYNONYM,
+      "!   The text of the synonym. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      SYNONYM type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_UPDATE_SYNONYM.
+  types:
+    "!   No documentation available.
+    begin of T_BASE_INTENT,
+      "!   The name of the intent. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, underscore, hyphen, and dot
+      "!    characters.<br/>
+      "!   - It cannot begin with the reserved prefix `sys-`.
+      INTENT type STRING,
+      "!   The description of the intent. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_BASE_INTENT.
+  types:
+    "!   No documentation available.
+    begin of T_RT_ENTTY_INTRPRTTN_SYS_DATE,
+      "!   The calendar used to represent a recognized date (for example, `Gregorian`).
+      CALENDAR_TYPE type STRING,
+      "!   A unique identifier used to associate a time and date. If the user input
+      "!    contains a date and time that are mentioned together (for example, `Today at
+      "!    5`, the same **datetime_link** value is returned for both the `@sys-date` and
+      "!    `@sys-time` entities).
+      DATETIME_LINK type STRING,
+      "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
+      "!    property is included when a `@sys-date` entity is recognized based on a holiday
+      "!    name in the user input.
+      FESTIVAL type STRING,
+      "!   The precision or duration of a time range specified by a recognized `@sys-time`
+      "!    or `@sys-date` entity.
+      GRANULARITY type STRING,
+      "!   A unique identifier used to associate multiple recognized `@sys-date`,
+      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
+      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
+      "!    25`).
+      RANGE_LINK type STRING,
+      "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
+      "!    is part of an implied range where only one date or time is specified (for
+      "!    example, `since` or `until`).
+      RANGE_MODIFIER type STRING,
+      "!   A recognized mention of a relative day, represented numerically as an offset
+      "!    from the current date (for example, `-1` for `yesterday` or `10` for `in ten
+      "!    days`).
+      RELATIVE_DAY type NUMBER,
+      "!   A recognized mention of a relative month, represented numerically as an offset
+      "!    from the current month (for example, `1` for `next month` or `-3` for `three
+      "!    months ago`).
+      RELATIVE_MONTH type NUMBER,
+      "!   A recognized mention of a relative week, represented numerically as an offset
+      "!    from the current week (for example, `2` for `in two weeks` or `-1` for `last
+      "!    week).
+      RELATIVE_WEEK type NUMBER,
+      "!   A recognized mention of a relative date range for a weekend, represented
+      "!    numerically as an offset from the current weekend (for example, `0` for `this
+      "!    weekend` or `-1` for `last weekend`).
+      RELATIVE_WEEKEND type NUMBER,
+      "!   A recognized mention of a relative year, represented numerically as an offset
+      "!    from the current year (for example, `1` for `next year` or `-5` for `five years
+      "!    ago`).
+      RELATIVE_YEAR type NUMBER,
+      "!   A recognized mention of a specific date, represented numerically as the date
+      "!    within the month (for example, `30` for `June 30`.).
+      SPECIFIC_DAY type NUMBER,
+      "!   A recognized mention of a specific day of the week as a lowercase string (for
+      "!    example, `monday`).
+      SPECIFIC_DAY_OF_WEEK type STRING,
+      "!   A recognized mention of a specific month, represented numerically (for example,
+      "!    `7` for `July`).
+      SPECIFIC_MONTH type NUMBER,
+      "!   A recognized mention of a specific quarter, represented numerically (for
+      "!    example, `3` for `the third quarter`).
+      SPECIFIC_QUARTER type NUMBER,
+      "!   A recognized mention of a specific year (for example, `2016`).
+      SPECIFIC_YEAR type NUMBER,
+    end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
+  types:
+    "!   No documentation available.
+    begin of T_DIA_ND_OUTPUT_RESP_TYPE_OPT,
+      "!   An optional title to show before the response. Valid only when
+      "!    **response_type**=`image` or `option`.
+      TITLE type STRING,
+      "!   An optional description to show with the response. Valid only when
+      "!    **response_type**=`image` or `option`.
+      DESCRIPTION type STRING,
+      "!   The preferred type of control to display, if supported by the channel. Valid
+      "!    only when **response_type**=`option`.
+      PREFERENCE type STRING,
+      "!   An array of objects describing the options from which the user can choose. You
+      "!    can include up to 20 options. Required when **response_type**=`option`.
+      OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OUTPUT_RESP_TYPE_OPT.
+  types:
+    "!   No documentation available.
+    begin of T_BASE_COUNTEREXAMPLE,
+      "!   The text of a user input marked as irrelevant input. This string must conform to
+      "!    the following restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
+      TEXT type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_BASE_COUNTEREXAMPLE.
+  types:
+    "!   No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
+      "!   The URL of the image.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the the response.
+      DESCRIPTION type STRING,
+    end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
+  types:
+    "!   No documentation available.
+    begin of T_UPDATE_WORKSPACE,
+      "!   The name of the workspace. This string cannot contain carriage return, newline,
+      "!    or tab characters.
+      NAME type STRING,
+      "!   The description of the workspace. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The language of the workspace.
+      LANGUAGE type STRING,
+      "!   Any metadata related to the workspace.
+      METADATA type MAP,
+      "!   Whether training data from the workspace (including artifacts such as intents
+      "!    and entities) can be used by IBM for general service improvements. `true`
+      "!    indicates that workspace training data is not to be used.
+      LEARNING_OPT_OUT type BOOLEAN,
+      "!   Global settings for the workspace.
+      SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
+      "!   The workspace ID of the workspace.
+      WORKSPACE_ID type STRING,
+      "!   The current status of the workspace.
+      STATUS type STRING,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+      "!   An array of objects defining the intents for the workspace.
+      INTENTS type STANDARD TABLE OF T_CREATE_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the entities for the workspace.
+      ENTITIES type STANDARD TABLE OF T_CREATE_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects describing the dialog nodes in the workspace.
+      DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects defining input examples that have been marked as irrelevant
+      "!    input.
+      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
+      "!   No documentation available.
+      WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
+    end of T_UPDATE_WORKSPACE.
+  types:
+    "!   No documentation available.
+    begin of T_BASE_DIALOG_NODE,
+      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      DIALOG_NODE type STRING,
+      "!   The description of the dialog node. This string cannot contain carriage return,
+      "!    newline, or tab characters.
+      DESCRIPTION type STRING,
+      "!   The condition that will trigger the dialog node. This string cannot contain
+      "!    carriage return, newline, or tab characters.
+      CONDITIONS type STRING,
+      "!   The ID of the parent dialog node. This property is omitted if the dialog node
+      "!    has no parent.
+      PARENT type STRING,
+      "!   The ID of the previous sibling dialog node. This property is omitted if the
+      "!    dialog node has no previous sibling.
+      PREVIOUS_SIBLING type STRING,
+      "!   The output of the dialog node. For more information about how to specify dialog
+      "!    node output, see the
+      "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
+      "!   rview#dialog-overview-responses).
+      OUTPUT type T_DIALOG_NODE_OUTPUT,
+      "!   The context for the dialog node.
+      CONTEXT type MAP,
+      "!   The metadata for the dialog node.
+      METADATA type MAP,
+      "!   The next step to execute following this dialog node.
+      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
+      "!   The alias used to identify the dialog node. This string must conform to the
+      "!    following restrictions:<br/>
+      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
+      "!    characters.
+      TITLE type STRING,
+      "!   How the dialog node is processed.
+      TYPE type STRING,
+      "!   How an `event_handler` node is processed.
+      EVENT_NAME type STRING,
+      "!   The location in the dialog context where output is stored.
+      VARIABLE type STRING,
+      "!   An array of objects describing any actions to be invoked by the dialog node.
+      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether this top-level dialog node can be digressed into.
+      DIGRESS_IN type STRING,
+      "!   Whether this dialog node can be returned to after a digression.
+      DIGRESS_OUT type STRING,
+      "!   Whether the user can digress to top-level nodes while filling out slots.
+      DIGRESS_OUT_SLOTS type STRING,
+      "!   A label that can be displayed externally to describe the purpose of the node to
+      "!    users.
+      USER_LABEL type STRING,
+      "!   Whether the dialog node should be excluded from disambiguation suggestions.
+      DISAMBIGUATION_OPT_OUT type BOOLEAN,
+      "!   For internal use only.
+      DISABLED type BOOLEAN,
+      "!   The timestamp for creation of the object.
+      CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
+      UPDATED type DATETIME,
+    end of T_BASE_DIALOG_NODE.
+  types:
     "!   A request sent to the workspace, including the user input and context.
     begin of T_MESSAGE_REQUEST,
+      "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
+      "!   Intents to use when evaluating the user input. Include intents from the previous
+      "!    response to continue using those intents rather than trying to recognize
+      "!    intents in the new input.
       INTENTS type STANDARD TABLE OF T_RUNTIME_INTENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   Entities to use when evaluating the message. Include entities from the previous
+      "!    response to continue using those entities rather than detecting entities in the
+      "!    new input.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   Whether to return more than one intent. A value of `true` indicates that all
+      "!    matching intents are returned.
       ALTERNATE_INTENTS type BOOLEAN,
+      "!   State information for the conversation. To maintain state, include the context
+      "!    from the previous response.
       CONTEXT type T_CONTEXT,
+      "!   An output object that includes the response to the user, the dialog nodes that
+      "!    were triggered, and messages from the log.
       OUTPUT type T_OUTPUT_DATA,
+      "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_MESSAGE_REQUEST.
   types:
-    "!
+    "!   No documentation available.
     begin of T_LOG,
+      "!   A request sent to the workspace, including the user input and context.
       REQUEST type T_MESSAGE_REQUEST,
+      "!   The response sent by the workspace, including the output text, detected intents
+      "!    and entities, and context.
       RESPONSE type T_MESSAGE_RESPONSE,
+      "!   A unique identifier for the logged event.
       LOG_ID type STRING,
+      "!   The timestamp for receipt of the message.
       REQUEST_TIMESTAMP type STRING,
+      "!   The timestamp for the system response to the message.
       RESPONSE_TIMESTAMP type STRING,
+      "!   The unique identifier of the workspace where the request was made.
       WORKSPACE_ID type STRING,
+      "!   The language of the workspace where the message request was made.
       LANGUAGE type STRING,
     end of T_LOG.
-  types:
-    "!
-    begin of T_UPDATE_ENTITY,
-      ENTITY type STRING,
-      DESCRIPTION type STRING,
-      METADATA type MAP,
-      FUZZY_MATCH type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_UPDATE_ENTITY.
   types:
     "!   An output object that includes the response to the user, the dialog nodes that
     "!    were triggered, and messages from the log.
     begin of T_BASE_OUTPUT,
+      "!   An array of the nodes that were triggered to create the response, in the order
+      "!    in which they were visited. This information is useful for debugging and for
+      "!    tracing the path taken through the node tree.
       NODES_VISITED type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects containing detailed diagnostic information about the nodes
+      "!    that were triggered during processing of the input message. Included only if
+      "!    **nodes_visited_details** is set to `true` in the message request.
       NODES_VISITED_DETAILS type STANDARD TABLE OF T_DIALOG_NODE_VISITED_DETAILS WITH NON-UNIQUE DEFAULT KEY,
     end of T_BASE_OUTPUT.
   types:
-    "!
-    begin of T_UPDATE_DIALOG_NODE,
-      DIALOG_NODE type STRING,
-      DESCRIPTION type STRING,
-      CONDITIONS type STRING,
-      PARENT type STRING,
-      PREVIOUS_SIBLING type STRING,
-      OUTPUT type T_DIALOG_NODE_OUTPUT,
-      CONTEXT type MAP,
-      METADATA type MAP,
-      NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      TITLE type STRING,
-      TYPE type STRING,
-      EVENT_NAME type STRING,
-      VARIABLE type STRING,
-      ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
-      DIGRESS_IN type STRING,
-      DIGRESS_OUT type STRING,
-      DIGRESS_OUT_SLOTS type STRING,
-      USER_LABEL type STRING,
-      DISABLED type BOOLEAN,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_UPDATE_DIALOG_NODE.
-  types:
-    "!
-    begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
-      TIME type INTEGER,
-      TYPING type BOOLEAN,
-    end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_LOG_COLLECTION,
+      "!   An array of objects describing log events.
       LOGS type STANDARD TABLE OF T_LOG WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
       PAGINATION type T_LOG_PAGINATION,
     end of T_LOG_COLLECTION.
   types:
-    "!
-    begin of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1,
-      MESSAGE_TO_HUMAN_AGENT type STRING,
-    end of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_AUDIT_PROPERTIES,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_AUDIT_PROPERTIES.
   types:
-    "!
-    begin of T_CREATE_WORKSPACE,
-      NAME type STRING,
-      DESCRIPTION type STRING,
-      LANGUAGE type STRING,
-      METADATA type MAP,
-      LEARNING_OPT_OUT type BOOLEAN,
-      SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      WORKSPACE_ID type STRING,
-      STATUS type STRING,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-      INTENTS type STANDARD TABLE OF T_CREATE_INTENT WITH NON-UNIQUE DEFAULT KEY,
-      ENTITIES type STANDARD TABLE OF T_CREATE_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
-      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-    end of T_CREATE_WORKSPACE.
-  types:
-    "!
-    begin of T_COUNTEREXAMPLE_COLLECTION,
-      COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-      PAGINATION type T_PAGINATION,
-    end of T_COUNTEREXAMPLE_COLLECTION.
-  types:
-    "!
+    "!   No documentation available.
     begin of T_WORKSPACE_COLLECTION,
+      "!   An array of objects describing the workspaces associated with the service
+      "!    instance.
       WORKSPACES type STANDARD TABLE OF T_WORKSPACE WITH NON-UNIQUE DEFAULT KEY,
+      "!   The pagination data for the returned objects.
       PAGINATION type T_PAGINATION,
     end of T_WORKSPACE_COLLECTION.
   types:
-    "!
+    "!   No documentation available.
     begin of T_BASE_SYNONYM,
+      "!   The text of the synonym. This string must conform to the following
+      "!    restrictions:<br/>
+      "!   - It cannot contain carriage return, newline, or tab characters.<br/>
+      "!   - It cannot consist of only whitespace characters.
       SYNONYM type STRING,
+      "!   The timestamp for creation of the object.
       CREATED type DATETIME,
+      "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_BASE_SYNONYM.
-  types:
-    "!
-    begin of T_BASE_EXAMPLE,
-      TEXT type STRING,
-      MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
-      CREATED type DATETIME,
-      UPDATED type DATETIME,
-    end of T_BASE_EXAMPLE.
 
 constants:
   begin of C_REQUIRED_FIELDS,
-    T_DIA_ND_OTPT_TEXT_VALUES_ELEM type string value '|',
-    T_MENTION type string value '|ENTITY|LOCATION|',
-    T_EXAMPLE type string value '|TEXT|',
-    T_INTENT type string value '|INTENT|',
+    T_WS_SYSTEM_SETTINGS_OFF_TOPIC type string value '|',
+    T_RT_ENTITY_INTERPRETATION type string value '|',
+    T_WEBHOOK_HEADER type string value '|NAME|VALUE|',
     T_DIALOG_NODE_ACTION type string value '|NAME|RESULT_VARIABLE|',
     T_WS_SYSTM_STTNGS_DSMBGTN type string value '|',
     T_DIALOG_NODE_OUTPUT_MODIFIERS type string value '|',
     T_DIALOG_NODE_NEXT_STEP type string value '|BEHAVIOR|',
     T_MESSAGE_INPUT type string value '|',
     T_CAPTURE_GROUP type string value '|GROUP|',
+    T_RUNTIME_ENTITY_ROLE type string value '|',
     T_RUNTIME_ENTITY type string value '|ENTITY|LOCATION|VALUE|',
     T_RUNTIME_INTENT type string value '|INTENT|CONFIDENCE|',
     T_DIA_ND_OUTPUT_OPT_ELEM_VALUE type string value '|',
     T_DIA_NODE_OUTPUT_OPT_ELEMENT type string value '|LABEL|VALUE|',
+    T_DIA_ND_OTPT_TEXT_VALUES_ELEM type string value '|',
     T_DIALOG_NODE_OUTPUT_GENERIC type string value '|RESPONSE_TYPE|',
     T_DIALOG_NODE_OUTPUT type string value '|',
-    T_WS_SYSTEM_SETTINGS_TOOLING type string value '|',
-    T_WORKSPACE_SYSTEM_SETTINGS type string value '|',
     T_DIALOG_NODE type string value '|DIALOG_NODE|',
     T_VALUE type string value '|VALUE|TYPE|',
+    T_WEBHOOK type string value '|URL|NAME|',
+    T_WS_SYSTM_STTNGS_SYSTM_ENTTS type string value '|',
+    T_MENTION type string value '|ENTITY|LOCATION|',
+    T_EXAMPLE type string value '|TEXT|',
+    T_INTENT type string value '|INTENT|',
+    T_WS_SYSTEM_SETTINGS_TOOLING type string value '|',
+    T_WORKSPACE_SYSTEM_SETTINGS type string value '|',
     T_COUNTEREXAMPLE type string value '|TEXT|',
     T_ENTITY type string value '|ENTITY|',
     T_WORKSPACE type string value '|NAME|LANGUAGE|LEARNING_OPT_OUT|WORKSPACE_ID|',
-    T_RT_ENTTY_INTRPRTTN_SYS_NUM type string value '|',
-    T_UPDATE_COUNTEREXAMPLE type string value '|',
     T_SYNONYM type string value '|SYNONYM|',
     T_PAGINATION type string value '|REFRESH_URL|',
     T_SYNONYM_COLLECTION type string value '|SYNONYMS|PAGINATION|',
     T_RUNTIME_RESPONSE_TYPE_OPTION type string value '|',
-    T_LOG_MESSAGE type string value '|LEVEL|MSG|',
-    T_ENTITY_COLLECTION type string value '|ENTITIES|PAGINATION|',
     T_DIA_ND_OUTPUT_RESP_TYPE_TEXT type string value '|',
-    T_INTENT_COLLECTION type string value '|INTENTS|PAGINATION|',
-    T_DIA_ND_OTPT_RESP_TYPE_PAUSE type string value '|',
     T_BASE_WORKSPACE type string value '|',
-    T_DIA_SUGGESTION_RESP_GENERIC type string value '|RESPONSE_TYPE|',
-    T_DIA_ND_OUTPUT_RESP_TYPE_IMG type string value '|',
-    T_ERROR_DETAIL type string value '|MESSAGE|',
-    T_ERROR_RESPONSE type string value '|ERROR|CODE|',
-    T_WS_SYSTM_STTNGS_SYSTM_ENTTS type string value '|',
-    T_RT_ENTITY_INTERPRETATION type string value '|',
-    T_DIALOG_SUGGESTION_VALUE type string value '|',
-    T_DIALOG_NODE_VISITED_DETAILS type string value '|',
-    T_DIALOG_SUGGESTION_OUTPUT type string value '|TEXT|',
     T_BASE_ENTITY type string value '|',
     T_RUNTIME_RESPONSE_TYPE_TEXT type string value '|',
-    T_MESSAGE_CONTEXT_METADATA type string value '|',
-    T_CONTEXT type string value '|',
     T_RT_ENTTY_INTRPRTTN_SYS_TIME type string value '|',
     T_UPDATE_EXAMPLE type string value '|',
-    T_DIALOG_SUGGESTION type string value '|LABEL|VALUE|',
-    T_RUNTIME_RESPONSE_GENERIC type string value '|RESPONSE_TYPE|',
-    T_OUTPUT_DATA type string value '|LOG_MESSAGES|TEXT|',
-    T_BASE_MESSAGE type string value '|',
     T_ENTITY_MENTION type string value '|TEXT|INTENT|LOCATION|',
-    T_RT_RESPONSE_TYPE_SUGGESTION type string value '|',
-    T_ENTITY_MENTION_COLLECTION type string value '|EXAMPLES|PAGINATION|',
-    T_UPDATE_SYNONYM type string value '|',
     T_DIA_ND_OTPT_RESP_TYP_SRCH_S1 type string value '|',
     T_EXAMPLE_COLLECTION type string value '|EXAMPLES|PAGINATION|',
     T_LOG_PAGINATION type string value '|',
     T_RT_RESP_TYP_CONNECT_TO_AGENT type string value '|',
     T_CREATE_VALUE type string value '|VALUE|',
-    T_BASE_INTENT type string value '|',
+    T_DIALOG_NODE_VISITED_DETAILS type string value '|',
+    T_DIA_SUGGESTION_RESP_GENERIC type string value '|RESPONSE_TYPE|',
+    T_DIALOG_SUGGESTION_VALUE type string value '|',
+    T_DIALOG_SUGGESTION_OUTPUT type string value '|TEXT|',
+    T_DIALOG_SUGGESTION type string value '|LABEL|VALUE|',
     T_UPDATE_VALUE type string value '|',
     T_RUNTIME_ENTITY_ALTERNATIVE type string value '|',
-    T_RT_ENTTY_INTRPRTTN_SYS_DATE type string value '|',
     T_UPDATE_INTENT type string value '|',
     T_VALUE_COLLECTION type string value '|VALUES|PAGINATION|',
-    T_RUNTIME_ENTITY_ROLE type string value '|',
+    T_LOG_MESSAGE type string value '|LEVEL|MSG|',
+    T_RUNTIME_RESPONSE_GENERIC type string value '|RESPONSE_TYPE|',
+    T_OUTPUT_DATA type string value '|LOG_MESSAGES|TEXT|',
+    T_DIALOG_NODE_COLLECTION type string value '|DIALOG_NODES|PAGINATION|',
+    T_MESSAGE_CONTEXT_METADATA type string value '|',
+    T_CONTEXT type string value '|',
+    T_MESSAGE_RESPONSE type string value '|INPUT|INTENTS|ENTITIES|CONTEXT|OUTPUT|',
+    T_BASE_VALUE type string value '|',
+    T_UPDATE_ENTITY type string value '|',
+    T_UPDATE_DIALOG_NODE type string value '|',
+    T_RUNTIME_RESPONSE_TYPE_PAUSE type string value '|',
+    T_DIA_ND_OTPT_RESP_TYP_CNNCT_1 type string value '|',
+    T_ERROR_DETAIL type string value '|MESSAGE|',
+    T_CREATE_INTENT type string value '|INTENT|',
+    T_CREATE_ENTITY type string value '|ENTITY|',
+    T_CREATE_WORKSPACE type string value '|',
+    T_COUNTEREXAMPLE_COLLECTION type string value '|COUNTEREXAMPLES|PAGINATION|',
+    T_BASE_EXAMPLE type string value '|',
+    T_RT_ENTTY_INTRPRTTN_SYS_NUM type string value '|',
+    T_UPDATE_COUNTEREXAMPLE type string value '|',
+    T_ENTITY_COLLECTION type string value '|ENTITIES|PAGINATION|',
+    T_INTENT_COLLECTION type string value '|INTENTS|PAGINATION|',
+    T_DIA_ND_OTPT_RESP_TYPE_PAUSE type string value '|',
+    T_DIA_ND_OUTPUT_RESP_TYPE_IMG type string value '|',
+    T_ERROR_RESPONSE type string value '|ERROR|CODE|',
+    T_BASE_MESSAGE type string value '|',
+    T_RT_RESPONSE_TYPE_SUGGESTION type string value '|',
+    T_ENTITY_MENTION_COLLECTION type string value '|EXAMPLES|PAGINATION|',
+    T_UPDATE_SYNONYM type string value '|',
+    T_BASE_INTENT type string value '|',
+    T_RT_ENTTY_INTRPRTTN_SYS_DATE type string value '|',
     T_DIA_ND_OUTPUT_RESP_TYPE_OPT type string value '|',
     T_BASE_COUNTEREXAMPLE type string value '|',
     T_RUNTIME_RESPONSE_TYPE_IMAGE type string value '|',
-    T_CREATE_INTENT type string value '|INTENT|',
-    T_CREATE_ENTITY type string value '|ENTITY|',
     T_UPDATE_WORKSPACE type string value '|',
-    T_DIALOG_NODE_COLLECTION type string value '|DIALOG_NODES|PAGINATION|',
     T_BASE_DIALOG_NODE type string value '|',
-    T_MESSAGE_RESPONSE type string value '|INPUT|INTENTS|ENTITIES|CONTEXT|OUTPUT|',
-    T_BASE_VALUE type string value '|',
     T_MESSAGE_REQUEST type string value '|',
     T_LOG type string value '|REQUEST|RESPONSE|LOG_ID|REQUEST_TIMESTAMP|RESPONSE_TIMESTAMP|WORKSPACE_ID|LANGUAGE|',
-    T_UPDATE_ENTITY type string value '|',
     T_BASE_OUTPUT type string value '|',
-    T_UPDATE_DIALOG_NODE type string value '|',
-    T_RUNTIME_RESPONSE_TYPE_PAUSE type string value '|',
     T_LOG_COLLECTION type string value '|LOGS|PAGINATION|',
-    T_DIA_ND_OTPT_RESP_TYP_CNNCT_1 type string value '|',
     T_AUDIT_PROPERTIES type string value '|',
-    T_CREATE_WORKSPACE type string value '|',
-    T_COUNTEREXAMPLE_COLLECTION type string value '|COUNTEREXAMPLES|PAGINATION|',
     T_WORKSPACE_COLLECTION type string value '|WORKSPACES|PAGINATION|',
     T_BASE_SYNONYM type string value '|',
-    T_BASE_EXAMPLE type string value '|',
     __DUMMY type string value SPACE,
   end of C_REQUIRED_FIELDS .
 
@@ -1031,6 +1998,7 @@ constants:
      DIGRESS_OUT type string value 'digress_out',
      DIGRESS_OUT_SLOTS type string value 'digress_out_slots',
      USER_LABEL type string value 'user_label',
+     DISAMBIGUATION_OPT_OUT type string value 'disambiguation_opt_out',
      DISABLED type string value 'disabled',
      ENTITY type string value 'entity',
      FUZZY_MATCH type string value 'fuzzy_match',
@@ -1040,6 +2008,10 @@ constants:
      INTENTS type string value 'intents',
      ENTITIES type string value 'entities',
      ALTERNATE_INTENTS type string value 'alternate_intents',
+     NODES_VISITED type string value 'nodes_visited',
+     NODESVISITED type string value 'nodesVisited',
+     NODES_VISITED_DETAILS type string value 'nodes_visited_details',
+     NODESVISITEDDETAILS type string value 'nodesVisitedDetails',
      SYNONYM type string value 'synonym',
      VALUE type string value 'value',
      SYNONYMS type string value 'synonyms',
@@ -1063,12 +2035,15 @@ constants:
      DIALOG_NODES type string value 'dialog_nodes',
      DIALOGNODE type string value 'dialogNode',
      COUNTEREXAMPLE type string value 'counterexample',
+     WEBHOOKS type string value 'webhooks',
      PARAMETERS type string value 'parameters',
      RESULT_VARIABLE type string value 'result_variable',
      CREDENTIALS type string value 'credentials',
+     DIALOGNODES type string value 'dialogNodes',
+     BEHAVIOR type string value 'behavior',
+     SELECTOR type string value 'selector',
      GENERIC type string value 'generic',
      MODIFIERS type string value 'modifiers',
-     OVERWRITE type string value 'overwrite',
      RESPONSE_TYPE type string value 'response_type',
      SELECTION_POLICY type string value 'selection_policy',
      DELIMITER type string value 'delimiter',
@@ -1082,29 +2057,22 @@ constants:
      QUERY_TYPE type string value 'query_type',
      FILTER type string value 'filter',
      DISCOVERY_VERSION type string value 'discovery_version',
-     TOPIC type string value 'topic',
-     SUGGESTIONS type string value 'suggestions',
+     OVERWRITE type string value 'overwrite',
      LABEL type string value 'label',
-     NODES_VISITED type string value 'nodes_visited',
-     NODESVISITED type string value 'nodesVisited',
-     NODES_VISITED_DETAILS type string value 'nodes_visited_details',
-     NODESVISITEDDETAILS type string value 'nodesVisitedDetails',
-     DIALOGNODES type string value 'dialogNodes',
-     BEHAVIOR type string value 'behavior',
-     SELECTOR type string value 'selector',
+     TOPIC type string value 'topic',
      MESSAGE type string value 'message',
      PATH type string value 'path',
      ERROR type string value 'error',
      ERRORS type string value 'errors',
      CODE type string value 'code',
-     LOGS type string value 'logs',
-     LEVEL type string value 'level',
-     MSG type string value 'msg',
      REQUEST type string value 'request',
      RESPONSE type string value 'response',
      LOG_ID type string value 'log_id',
      REQUEST_TIMESTAMP type string value 'request_timestamp',
      RESPONSE_TIMESTAMP type string value 'response_timestamp',
+     LOGS type string value 'logs',
+     LEVEL type string value 'level',
+     MSG type string value 'msg',
      NEXT_URL type string value 'next_url',
      MATCHED type string value 'matched',
      NEXT_CURSOR type string value 'next_cursor',
@@ -1117,6 +2085,8 @@ constants:
      REFRESH_CURSOR type string value 'refresh_cursor',
      CONFIDENCE type string value 'confidence',
      GROUPS type string value 'groups',
+     INTERPRETATION type string value 'interpretation',
+     ROLE type string value 'role',
      CALENDAR_TYPE type string value 'calendar_type',
      DATETIME_LINK type string value 'datetime_link',
      FESTIVAL type string value 'festival',
@@ -1143,15 +2113,23 @@ constants:
      SPECIFIC_MINUTE type string value 'specific_minute',
      SPECIFIC_SECOND type string value 'specific_second',
      TIMEZONE type string value 'timezone',
+     SUGGESTIONS type string value 'suggestions',
+     URL type string value 'url',
+     HEADERS type string value 'headers',
+     WORKSPACES type string value 'workspaces',
      TOOLING type string value 'tooling',
      DISAMBIGUATION type string value 'disambiguation',
      HUMAN_AGENT_ASSIST type string value 'human_agent_assist',
-     ENABLED type string value 'enabled',
-     STORE_GENERIC_RESPONSES type string value 'store_generic_responses',
+     SYSTEM_ENTITIES type string value 'system_entities',
+     OFF_TOPIC type string value 'off_topic',
      PROMPT type string value 'prompt',
      NONE_OF_THE_ABOVE_PROMPT type string value 'none_of_the_above_prompt',
+     ENABLED type string value 'enabled',
      SENSITIVITY type string value 'sensitivity',
-     WORKSPACES type string value 'workspaces',
+     RANDOMIZE type string value 'randomize',
+     MAX_SUGGESTIONS type string value 'max_suggestions',
+     SUGGESTION_TEXT_POLICY type string value 'suggestion_text_policy',
+     STORE_GENERIC_RESPONSES type string value 'store_generic_responses',
   end of C_ABAPNAME_DICTIONARY .
 
 
@@ -1165,22 +2143,23 @@ constants:
 
     "! Get response to user input.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The message to be sent. This includes the user's input, along with optional
     "!    intents, entities, and context from the last response.
-    "! @parameter I_nodes_visited_details |
+    "! @parameter I_NODES_VISITED_DETAILS |
     "!   Whether to include additional diagnostic information about the dialog nodes that
     "!    were visited during processing of the message.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_MESSAGE_RESPONSE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods MESSAGE
     importing
-      !I_workspace_id type STRING
-      !I_body type T_MESSAGE_REQUEST optional
-      !I_nodes_visited_details type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_MESSAGE_REQUEST optional
+      !I_NODES_VISITED_DETAILS type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1190,25 +2169,26 @@ constants:
 
     "! List workspaces.
     "!
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned workspaces will be sorted. To reverse the sort
     "!    order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_WORKSPACE_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_WORKSPACES
     importing
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_WORKSPACE_COLLECTION
@@ -1216,18 +2196,23 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create workspace.
     "!
-    "! @parameter I_body |
-    "!   The content of the new workspace.
-    "!
+    "! @parameter I_BODY |
+    "!   The content of the new workspace.<br/>
+    "!   <br/>
     "!   The maximum size for this data is 50MB. If you need to import a larger
     "!    workspace, consider importing the workspace without intents and entities and
     "!    then adding them separately.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_WORKSPACE
     importing
-      !I_body type T_CREATE_WORKSPACE optional
+      !I_BODY type T_CREATE_WORKSPACE optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1236,29 +2221,30 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get information about a workspace.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   Indicates how the returned workspace data will be sorted. This parameter is
     "!    valid only if **export**=`true`. Specify `sort=stable` to sort all workspace
     "!    objects by unique identifier, in ascending alphabetical order.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_WORKSPACE
     importing
-      !I_workspace_id type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_include_audit type BOOLEAN default c_boolean_false
-      !I_sort type STRING optional
+      !I_WORKSPACE_ID type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
+      !I_SORT type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_WORKSPACE
@@ -1266,32 +2252,38 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update workspace.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
-    "!   Valid data defining the new and updated workspace content.
-    "!
+    "! @parameter I_BODY |
+    "!   Valid data defining the new and updated workspace content.<br/>
+    "!   <br/>
     "!   The maximum size for this data is 50MB. If you need to import a larger amount of
     "!    workspace data, consider importing components such as intents and entities
     "!    using separate operations.
-    "! @parameter I_append |
-    "!   Whether the new data is to be appended to the existing data in the workspace. If
+    "! @parameter I_APPEND |
+    "!   Whether the new data is to be appended to the existing data in the object. If
     "!    **append**=`false`, elements included in the new data completely replace the
     "!    corresponding existing elements, including all subelements. For example, if the
-    "!    new data includes **entities** and **append**=`false`, all existing entities in
-    "!    the workspace are discarded and replaced with the new entities.
-    "!
+    "!    new data for a workspace includes **entities** and **append**=`false`, all
+    "!    existing entities in the workspace are discarded and replaced with the new
+    "!    entities.<br/>
+    "!   <br/>
     "!   If **append**=`true`, existing elements are preserved, and the new elements are
     "!    added. If any elements in the new data collide with existing elements, the
     "!    update request fails.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_WORKSPACE
     importing
-      !I_workspace_id type STRING
-      !I_body type T_UPDATE_WORKSPACE optional
-      !I_append type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_UPDATE_WORKSPACE optional
+      !I_APPEND type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1300,46 +2292,48 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete workspace.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_WORKSPACE
     importing
-      !I_workspace_id type STRING
+      !I_WORKSPACE_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List intents.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned intents will be sorted. To reverse the sort
     "!    order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_INTENT_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_INTENTS
     importing
-      !I_workspace_id type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_INTENT_COLLECTION
@@ -1347,17 +2341,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create intent.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The content of the new intent.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_INTENT
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_INTENT
     importing
-      !I_workspace_id type STRING
-      !I_body type T_CREATE_INTENT
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_CREATE_INTENT
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1366,27 +2365,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get intent.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_INTENT
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_INTENT
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_INTENT
@@ -1394,27 +2394,44 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update intent.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_body |
-    "!   The updated content of the intent.
-    "!
+    "! @parameter I_BODY |
+    "!   The updated content of the intent.<br/>
+    "!   <br/>
     "!   Any elements included in the new data will completely replace the equivalent
     "!    existing elements, including all subelements. (Previously existing subelements
     "!    are not retained unless they are also included in the new data.) For example,
     "!    if you update the user input examples for an intent, the previously existing
     "!    examples are discarded and replaced with the new examples specified in the
     "!    update.
+    "! @parameter I_APPEND |
+    "!   Whether the new data is to be appended to the existing data in the object. If
+    "!    **append**=`false`, elements included in the new data completely replace the
+    "!    corresponding existing elements, including all subelements. For example, if the
+    "!    new data for the intent includes **examples** and **append**=`false`, all
+    "!    existing examples for the intent are discarded and replaced with the new
+    "!    examples.<br/>
+    "!   <br/>
+    "!   If **append**=`true`, existing elements are preserved, and the new elements are
+    "!    added. If any elements in the new data collide with existing elements, the
+    "!    update request fails.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_INTENT
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_INTENT
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_body type T_UPDATE_INTENT
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_BODY type T_UPDATE_INTENT
+      !I_APPEND type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1423,46 +2440,48 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete intent.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_INTENT
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List user input examples.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned examples will be sorted. To reverse the sort
     "!    order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_EXAMPLE_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_EXAMPLES
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_EXAMPLE_COLLECTION
@@ -1470,20 +2489,25 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create user input example.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The content of the new user input example.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_EXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_EXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_body type T_EXAMPLE
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_BODY type T_EXAMPLE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1492,24 +2516,25 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get user input example.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of the user input example.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_EXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_EXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_text type STRING
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_TEXT type STRING
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_EXAMPLE
@@ -1517,23 +2542,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update user input example.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of the user input example.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The new text of the user input example.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_EXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_EXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_text type STRING
-      !I_body type T_UPDATE_EXAMPLE
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_TEXT type STRING
+      !I_BODY type T_UPDATE_EXAMPLE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1542,46 +2572,48 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete user input example.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_intent |
+    "! @parameter I_INTENT |
     "!   The intent name.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of the user input example.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_EXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_intent type STRING
-      !I_text type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_INTENT type STRING
+      !I_TEXT type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List counterexamples.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned counterexamples will be sorted. To reverse the
     "!    sort order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COUNTEREXAMPLE_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_COUNTEREXAMPLES
     importing
-      !I_workspace_id type STRING
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_COUNTEREXAMPLE_COLLECTION
@@ -1589,17 +2621,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create counterexample.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The content of the new counterexample.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COUNTEREXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_COUNTEREXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_body type T_COUNTEREXAMPLE
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_COUNTEREXAMPLE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1608,21 +2645,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get counterexample.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of a user input counterexample (for example, `What are you wearing?`).
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COUNTEREXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_COUNTEREXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_text type STRING
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_TEXT type STRING
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_COUNTEREXAMPLE
@@ -1630,20 +2668,25 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update counterexample.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of a user input counterexample (for example, `What are you wearing?`).
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The text of the counterexample.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COUNTEREXAMPLE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_COUNTEREXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_text type STRING
-      !I_body type T_UPDATE_COUNTEREXAMPLE
+      !I_WORKSPACE_ID type STRING
+      !I_TEXT type STRING
+      !I_BODY type T_UPDATE_COUNTEREXAMPLE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1652,49 +2695,51 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete counterexample.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_text |
+    "! @parameter I_TEXT |
     "!   The text of a user input counterexample (for example, `What are you wearing?`).
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_COUNTEREXAMPLE
     importing
-      !I_workspace_id type STRING
-      !I_text type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_TEXT type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List entities.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned entities will be sorted. To reverse the sort
     "!    order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENTITY_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_ENTITIES
     importing
-      !I_workspace_id type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_ENTITY_COLLECTION
@@ -1702,17 +2747,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create entity.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The content of the new entity.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENTITY
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_ENTITY
     importing
-      !I_workspace_id type STRING
-      !I_body type T_CREATE_ENTITY
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_CREATE_ENTITY
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1721,27 +2771,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get entity.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENTITY
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_ENTITY
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_ENTITY
@@ -1749,25 +2800,42 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update entity.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The updated content of the entity. Any elements included in the new data will
     "!    completely replace the equivalent existing elements, including all subelements.
     "!    (Previously existing subelements are not retained unless they are also included
     "!    in the new data.) For example, if you update the values for an entity, the
     "!    previously existing values are discarded and replaced with the new values
     "!    specified in the update.
+    "! @parameter I_APPEND |
+    "!   Whether the new data is to be appended to the existing data in the entity. If
+    "!    **append**=`false`, elements included in the new data completely replace the
+    "!    corresponding existing elements, including all subelements. For example, if the
+    "!    new data for the entity includes **values** and **append**=`false`, all
+    "!    existing values for the entity are discarded and replaced with the new
+    "!    values.<br/>
+    "!   <br/>
+    "!   If **append**=`true`, existing elements are preserved, and the new elements are
+    "!    added. If any elements in the new data collide with existing elements, the
+    "!    update request fails.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENTITY
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_ENTITY
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_body type T_UPDATE_ENTITY
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_BODY type T_UPDATE_ENTITY
+      !I_APPEND type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1776,42 +2844,44 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete entity.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_ENTITY
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List entity mentions.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENTITY_MENTION_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_MENTIONS
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_ENTITY_MENTION_COLLECTION
@@ -1820,37 +2890,38 @@ constants:
 
     "! List entity values.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned entity values will be sorted. To reverse the
     "!    sort order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_VALUE_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_VALUES
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_VALUE_COLLECTION
@@ -1858,20 +2929,25 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create entity value.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The new entity value.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_VALUE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_VALUE
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_body type T_CREATE_VALUE
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_BODY type T_CREATE_VALUE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1880,30 +2956,31 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get entity value.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_export |
+    "! @parameter I_EXPORT |
     "!   Whether to include all element content in the returned data. If
     "!    **export**=`false`, the returned data includes only information about the
     "!    element itself. If **export**=`true`, all content, including subelements, is
     "!    included.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_VALUE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_VALUE
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_export type BOOLEAN default c_boolean_false
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_EXPORT type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_VALUE
@@ -1911,30 +2988,47 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update entity value.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_body |
-    "!   The updated content of the entity value.
-    "!
+    "! @parameter I_BODY |
+    "!   The updated content of the entity value.<br/>
+    "!   <br/>
     "!   Any elements included in the new data will completely replace the equivalent
     "!    existing elements, including all subelements. (Previously existing subelements
     "!    are not retained unless they are also included in the new data.) For example,
     "!    if you update the synonyms for an entity value, the previously existing
     "!    synonyms are discarded and replaced with the new synonyms specified in the
     "!    update.
+    "! @parameter I_APPEND |
+    "!   Whether the new data is to be appended to the existing data in the entity value.
+    "!    If **append**=`false`, elements included in the new data completely replace the
+    "!    corresponding existing elements, including all subelements. For example, if the
+    "!    new data for the entity value includes **synonyms** and **append**=`false`, all
+    "!    existing synonyms for the entity value are discarded and replaced with the new
+    "!    synonyms.<br/>
+    "!   <br/>
+    "!   If **append**=`true`, existing elements are preserved, and the new elements are
+    "!    added. If any elements in the new data collide with existing elements, the
+    "!    update request fails.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_VALUE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_VALUE
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_body type T_UPDATE_VALUE
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_BODY type T_UPDATE_VALUE
+      !I_APPEND type BOOLEAN default c_boolean_false
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -1943,52 +3037,54 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete entity value.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_VALUE
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List entity value synonyms.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned entity value synonyms will be sorted. To reverse
     "!    the sort order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SYNONYM_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_SYNONYMS
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_SYNONYM_COLLECTION
@@ -1996,23 +3092,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create entity value synonym.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The new synonym.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SYNONYM
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_SYNONYM
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_body type T_SYNONYM
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_BODY type T_SYNONYM
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -2021,27 +3122,28 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get entity value synonym.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_synonym |
+    "! @parameter I_SYNONYM |
     "!   The text of the synonym.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SYNONYM
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_SYNONYM
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_synonym type STRING
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_SYNONYM type STRING
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_SYNONYM
@@ -2049,26 +3151,31 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update entity value synonym.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_synonym |
+    "! @parameter I_SYNONYM |
     "!   The text of the synonym.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   The updated entity value synonym.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SYNONYM
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_SYNONYM
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_synonym type STRING
-      !I_body type T_UPDATE_SYNONYM
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_SYNONYM type STRING
+      !I_BODY type T_UPDATE_SYNONYM
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -2077,49 +3184,51 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete entity value synonym.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_entity |
+    "! @parameter I_ENTITY |
     "!   The name of the entity.
-    "! @parameter I_value |
+    "! @parameter I_VALUE |
     "!   The text of the entity value.
-    "! @parameter I_synonym |
+    "! @parameter I_SYNONYM |
     "!   The text of the synonym.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_SYNONYM
     importing
-      !I_workspace_id type STRING
-      !I_entity type STRING
-      !I_value type STRING
-      !I_synonym type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_ENTITY type STRING
+      !I_VALUE type STRING
+      !I_SYNONYM type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List dialog nodes.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   The attribute by which returned dialog nodes will be sorted. To reverse the sort
     "!    order, prefix the value with a minus sign (`-`).
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DIALOG_NODE_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_DIALOG_NODES
     importing
-      !I_workspace_id type STRING
-      !I_page_limit type INTEGER optional
-      !I_sort type STRING optional
-      !I_cursor type STRING optional
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_SORT type STRING optional
+      !I_CURSOR type STRING optional
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_DIALOG_NODE_COLLECTION
@@ -2127,17 +3236,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Create dialog node.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_body |
+    "! @parameter I_BODY |
     "!   A CreateDialogNode object defining the content of the new dialog node.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DIALOG_NODE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods CREATE_DIALOG_NODE
     importing
-      !I_workspace_id type STRING
-      !I_body type T_DIALOG_NODE
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_DIALOG_NODE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -2146,21 +3260,22 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Get dialog node.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_dialog_node |
+    "! @parameter I_DIALOG_NODE |
     "!   The dialog node ID (for example, `get_order`).
-    "! @parameter I_include_audit |
+    "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DIALOG_NODE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods GET_DIALOG_NODE
     importing
-      !I_workspace_id type STRING
-      !I_dialog_node type STRING
-      !I_include_audit type BOOLEAN default c_boolean_false
+      !I_WORKSPACE_ID type STRING
+      !I_DIALOG_NODE type STRING
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_DIALOG_NODE
@@ -2168,26 +3283,31 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Update dialog node.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_dialog_node |
+    "! @parameter I_DIALOG_NODE |
     "!   The dialog node ID (for example, `get_order`).
-    "! @parameter I_body |
-    "!   The updated content of the dialog node.
-    "!
+    "! @parameter I_BODY |
+    "!   The updated content of the dialog node.<br/>
+    "!   <br/>
     "!   Any elements included in the new data will completely replace the equivalent
     "!    existing elements, including all subelements. (Previously existing subelements
     "!    are not retained unless they are also included in the new data.) For example,
     "!    if you update the actions for a dialog node, the previously existing actions
     "!    are discarded and replaced with the new actions specified in the update.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DIALOG_NODE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods UPDATE_DIALOG_NODE
     importing
-      !I_workspace_id type STRING
-      !I_dialog_node type STRING
-      !I_body type T_UPDATE_DIALOG_NODE
+      !I_WORKSPACE_ID type STRING
+      !I_DIALOG_NODE type STRING
+      !I_BODY type T_UPDATE_DIALOG_NODE
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
@@ -2196,45 +3316,47 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! Delete dialog node.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_dialog_node |
+    "! @parameter I_DIALOG_NODE |
     "!   The dialog node ID (for example, `get_order`).
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_DIALOG_NODE
     importing
-      !I_workspace_id type STRING
-      !I_dialog_node type STRING
+      !I_WORKSPACE_ID type STRING
+      !I_DIALOG_NODE type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! List log events in a workspace.
     "!
-    "! @parameter I_workspace_id |
+    "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
-    "! @parameter I_sort |
+    "! @parameter I_SORT |
     "!   How to sort the returned log events. You can sort by **request_timestamp**. To
     "!    reverse the sort order, prefix the parameter value with a minus sign (`-`).
-    "! @parameter I_filter |
+    "! @parameter I_FILTER |
     "!   A cacheable parameter that limits the results to those matching the specified
     "!    filter. For more information, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-f
-    "!   ilter-reference#filter-reference).
-    "! @parameter I_page_limit |
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-ref
+    "!   erence#filter-reference).
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_LOG_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_LOGS
     importing
-      !I_workspace_id type STRING
-      !I_sort type STRING optional
-      !I_filter type STRING optional
-      !I_page_limit type INTEGER optional
-      !I_cursor type STRING optional
+      !I_WORKSPACE_ID type STRING
+      !I_SORT type STRING optional
+      !I_FILTER type STRING optional
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_CURSOR type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_LOG_COLLECTION
@@ -2242,29 +3364,30 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! List log events in all workspaces.
     "!
-    "! @parameter I_filter |
+    "! @parameter I_FILTER |
     "!   A cacheable parameter that limits the results to those matching the specified
     "!    filter. You must specify a filter query that includes a value for `language`,
-    "!    as well as a value for `workspace_id` or `request.context.metadata.deployment`.
-    "!    For more information, see the
-    "!    [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-f
-    "!   ilter-reference#filter-reference).
-    "! @parameter I_sort |
+    "!    as well as a value for `request.context.system.assistant_id`, `workspace_id`,
+    "!    or `request.context.metadata.deployment`. For more information, see the
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-ref
+    "!   erence#filter-reference).
+    "! @parameter I_SORT |
     "!   How to sort the returned log events. You can sort by **request_timestamp**. To
     "!    reverse the sort order, prefix the parameter value with a minus sign (`-`).
-    "! @parameter I_page_limit |
+    "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
-    "! @parameter I_cursor |
+    "! @parameter I_CURSOR |
     "!   A token identifying the page of results to retrieve.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_LOG_COLLECTION
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods LIST_ALL_LOGS
     importing
-      !I_filter type STRING
-      !I_sort type STRING optional
-      !I_page_limit type INTEGER optional
-      !I_cursor type STRING optional
+      !I_FILTER type STRING
+      !I_SORT type STRING optional
+      !I_PAGE_LIMIT type INTEGER optional
+      !I_CURSOR type STRING optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_LOG_COLLECTION
@@ -2273,12 +3396,13 @@ constants:
 
     "! Delete labeled data.
     "!
-    "! @parameter I_customer_id |
+    "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_USER_DATA
     importing
-      !I_customer_id type STRING
+      !I_CUSTOMER_ID type STRING
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
@@ -2319,7 +3443,7 @@ method GET_REQUEST_PROP.
   data:
     lv_auth_method type string  ##NEEDED.
 
-  e_request_prop = super->get_request_prop( ).
+  e_request_prop = super->get_request_prop( i_auth_method = i_auth_method ).
 
   lv_auth_method = i_auth_method.
   if lv_auth_method eq c_default.
@@ -2360,7 +3484,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20191002122834'.
+    e_sdk_version_date = '20200210092810'.
 
   endmethod.
 
@@ -2369,9 +3493,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->MESSAGE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_MESSAGE_REQUEST(optional)
-* | [--->] I_nodes_visited_details        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_MESSAGE_REQUEST(optional)
+* | [--->] I_NODES_VISITED_DETAILS        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_MESSAGE_RESPONSE
@@ -2387,7 +3511,7 @@ method MESSAGE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/message'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -2400,8 +3524,8 @@ method MESSAGE.
     data:
       lv_queryparam type string.
 
-    if i_nodes_visited_details is supplied.
-    lv_queryparam = i_nodes_visited_details.
+    if i_NODES_VISITED_DETAILS is supplied.
+    lv_queryparam = i_NODES_VISITED_DETAILS.
     add_query_parameter(
       exporting
         i_parameter  = `nodes_visited_details`
@@ -2422,21 +3546,21 @@ method MESSAGE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_body is initial.
-    lv_datatype = get_datatype( i_body ).
+    if not i_BODY is initial.
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -2472,10 +3596,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_WORKSPACES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_WORKSPACE_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2501,8 +3625,8 @@ method LIST_WORKSPACES.
     data:
       lv_queryparam type string.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -2511,8 +3635,8 @@ method LIST_WORKSPACES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -2521,8 +3645,8 @@ method LIST_WORKSPACES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -2531,8 +3655,8 @@ method LIST_WORKSPACES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -2565,7 +3689,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_WORKSPACE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_body        TYPE T_CREATE_WORKSPACE(optional)
+* | [--->] I_BODY        TYPE T_CREATE_WORKSPACE(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
@@ -2589,7 +3714,20 @@ method CREATE_WORKSPACE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -2602,21 +3740,21 @@ method CREATE_WORKSPACE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_body is initial.
-    lv_datatype = get_datatype( i_body ).
+    if not i_BODY is initial.
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -2651,10 +3789,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_WORKSPACE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_sort        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2669,7 +3807,7 @@ method GET_WORKSPACE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2681,8 +3819,8 @@ method GET_WORKSPACE.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -2692,8 +3830,8 @@ method GET_WORKSPACE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -2703,8 +3841,8 @@ method GET_WORKSPACE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -2736,9 +3874,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_WORKSPACE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_WORKSPACE(optional)
-* | [--->] I_append        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_WORKSPACE(optional)
+* | [--->] I_APPEND        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
@@ -2754,7 +3893,7 @@ method UPDATE_WORKSPACE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -2767,11 +3906,22 @@ method UPDATE_WORKSPACE.
     data:
       lv_queryparam type string.
 
-    if i_append is supplied.
-    lv_queryparam = i_append.
+    if i_APPEND is supplied.
+    lv_queryparam = i_APPEND.
     add_query_parameter(
       exporting
         i_parameter  = `append`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
         i_value      = lv_queryparam
         i_is_boolean = c_boolean_true
       changing
@@ -2789,21 +3939,21 @@ method UPDATE_WORKSPACE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_body is initial.
-    lv_datatype = get_datatype( i_body ).
+    if not i_BODY is initial.
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -2838,7 +3988,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_WORKSPACE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -2852,7 +4002,7 @@ method DELETE_WORKSPACE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2878,12 +4028,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_INTENTS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_INTENT_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2898,7 +4048,7 @@ method LIST_INTENTS.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -2910,8 +4060,8 @@ method LIST_INTENTS.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -2921,8 +4071,8 @@ method LIST_INTENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -2931,8 +4081,8 @@ method LIST_INTENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -2941,8 +4091,8 @@ method LIST_INTENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -2951,8 +4101,8 @@ method LIST_INTENTS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -2985,8 +4135,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_INTENT
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_CREATE_INTENT
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_CREATE_INTENT
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_INTENT
@@ -3002,7 +4153,7 @@ method CREATE_INTENT.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3011,7 +4162,20 @@ method CREATE_INTENT.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3024,20 +4188,20 @@ method CREATE_INTENT.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3071,10 +4235,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_INTENT
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_INTENT
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -3089,8 +4253,8 @@ method GET_INTENT.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3102,8 +4266,8 @@ method GET_INTENT.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -3113,8 +4277,8 @@ method GET_INTENT.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -3147,9 +4311,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_INTENT
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_INTENT
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_INTENT
+* | [--->] I_APPEND        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_INTENT
@@ -3165,8 +4331,8 @@ method UPDATE_INTENT.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3175,7 +4341,31 @@ method UPDATE_INTENT.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_APPEND is supplied.
+    lv_queryparam = i_APPEND.
+    add_query_parameter(
+      exporting
+        i_parameter  = `append`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3188,20 +4378,20 @@ method UPDATE_INTENT.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3235,8 +4425,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_INTENT
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -3250,8 +4440,8 @@ method DELETE_INTENT.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3277,12 +4467,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_EXAMPLES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_EXAMPLE_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -3297,8 +4487,8 @@ method LIST_EXAMPLES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}/examples'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3310,8 +4500,8 @@ method LIST_EXAMPLES.
     data:
       lv_queryparam type string.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -3320,8 +4510,8 @@ method LIST_EXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -3330,8 +4520,8 @@ method LIST_EXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -3340,8 +4530,8 @@ method LIST_EXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -3374,9 +4564,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_EXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_body        TYPE T_EXAMPLE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_BODY        TYPE T_EXAMPLE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_EXAMPLE
@@ -3392,8 +4583,8 @@ method CREATE_EXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}/examples'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3402,7 +4593,20 @@ method CREATE_EXAMPLE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3415,20 +4619,20 @@ method CREATE_EXAMPLE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3462,10 +4666,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_EXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_text        TYPE STRING
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_EXAMPLE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -3480,9 +4684,9 @@ method GET_EXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3494,8 +4698,8 @@ method GET_EXAMPLE.
     data:
       lv_queryparam type string.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -3528,10 +4732,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_EXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_text        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_EXAMPLE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_EXAMPLE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_EXAMPLE
@@ -3547,9 +4752,9 @@ method UPDATE_EXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3558,7 +4763,20 @@ method UPDATE_EXAMPLE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3571,20 +4789,20 @@ method UPDATE_EXAMPLE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3618,9 +4836,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_EXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_intent        TYPE STRING
-* | [--->] I_text        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INTENT        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -3634,9 +4852,9 @@ method DELETE_EXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_intent ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{intent}` in ls_request_prop-url-path with i_INTENT ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3662,11 +4880,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_COUNTEREXAMPLES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COUNTEREXAMPLE_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -3681,7 +4899,7 @@ method LIST_COUNTEREXAMPLES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/counterexamples'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3693,8 +4911,8 @@ method LIST_COUNTEREXAMPLES.
     data:
       lv_queryparam type string.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -3703,8 +4921,8 @@ method LIST_COUNTEREXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -3713,8 +4931,8 @@ method LIST_COUNTEREXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -3723,8 +4941,8 @@ method LIST_COUNTEREXAMPLES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -3757,8 +4975,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_COUNTEREXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_COUNTEREXAMPLE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_COUNTEREXAMPLE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COUNTEREXAMPLE
@@ -3774,7 +4993,7 @@ method CREATE_COUNTEREXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/counterexamples'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3783,7 +5002,20 @@ method CREATE_COUNTEREXAMPLE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3796,20 +5028,20 @@ method CREATE_COUNTEREXAMPLE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3843,9 +5075,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_COUNTEREXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_text        TYPE STRING
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COUNTEREXAMPLE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -3860,8 +5092,8 @@ method GET_COUNTEREXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/counterexamples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -3873,8 +5105,8 @@ method GET_COUNTEREXAMPLE.
     data:
       lv_queryparam type string.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -3907,9 +5139,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_COUNTEREXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_text        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_COUNTEREXAMPLE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_COUNTEREXAMPLE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_COUNTEREXAMPLE
@@ -3925,8 +5158,8 @@ method UPDATE_COUNTEREXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/counterexamples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -3935,7 +5168,20 @@ method UPDATE_COUNTEREXAMPLE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -3948,20 +5194,20 @@ method UPDATE_COUNTEREXAMPLE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -3995,8 +5241,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_COUNTEREXAMPLE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_text        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_TEXT        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -4010,8 +5256,8 @@ method DELETE_COUNTEREXAMPLE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/counterexamples/{text}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{text}` in ls_request_prop-url-path with i_text ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{text}` in ls_request_prop-url-path with i_TEXT ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4037,12 +5283,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_ENTITIES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ENTITY_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4057,7 +5303,7 @@ method LIST_ENTITIES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4069,8 +5315,8 @@ method LIST_ENTITIES.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -4080,8 +5326,8 @@ method LIST_ENTITIES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -4090,8 +5336,8 @@ method LIST_ENTITIES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -4100,8 +5346,8 @@ method LIST_ENTITIES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -4110,8 +5356,8 @@ method LIST_ENTITIES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -4144,8 +5390,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_ENTITY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_CREATE_ENTITY
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_CREATE_ENTITY
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ENTITY
@@ -4161,7 +5408,7 @@ method CREATE_ENTITY.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -4170,7 +5417,20 @@ method CREATE_ENTITY.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -4183,20 +5443,20 @@ method CREATE_ENTITY.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -4230,10 +5490,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_ENTITY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ENTITY
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4248,8 +5508,8 @@ method GET_ENTITY.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4261,8 +5521,8 @@ method GET_ENTITY.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -4272,8 +5532,8 @@ method GET_ENTITY.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -4306,9 +5566,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_ENTITY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_ENTITY
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_ENTITY
+* | [--->] I_APPEND        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ENTITY
@@ -4324,8 +5586,8 @@ method UPDATE_ENTITY.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -4334,7 +5596,31 @@ method UPDATE_ENTITY.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_APPEND is supplied.
+    lv_queryparam = i_APPEND.
+    add_query_parameter(
+      exporting
+        i_parameter  = `append`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -4347,20 +5633,20 @@ method UPDATE_ENTITY.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -4394,8 +5680,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_ENTITY
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -4409,8 +5695,8 @@ method DELETE_ENTITY.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4436,10 +5722,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_MENTIONS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_ENTITY_MENTION_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4454,8 +5740,8 @@ method LIST_MENTIONS.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/mentions'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4467,8 +5753,8 @@ method LIST_MENTIONS.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -4478,8 +5764,8 @@ method LIST_MENTIONS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -4513,13 +5799,13 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_VALUES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_VALUE_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4534,8 +5820,8 @@ method LIST_VALUES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4547,8 +5833,8 @@ method LIST_VALUES.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -4558,8 +5844,8 @@ method LIST_VALUES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -4568,8 +5854,8 @@ method LIST_VALUES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -4578,8 +5864,8 @@ method LIST_VALUES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -4588,8 +5874,8 @@ method LIST_VALUES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -4622,9 +5908,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_VALUE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_body        TYPE T_CREATE_VALUE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_BODY        TYPE T_CREATE_VALUE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_VALUE
@@ -4640,8 +5927,8 @@ method CREATE_VALUE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -4650,7 +5937,20 @@ method CREATE_VALUE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -4663,20 +5963,20 @@ method CREATE_VALUE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -4710,11 +6010,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_VALUE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_export        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_VALUE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4729,9 +6029,9 @@ method GET_VALUE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4743,8 +6043,8 @@ method GET_VALUE.
     data:
       lv_queryparam type string.
 
-    if i_export is supplied.
-    lv_queryparam = i_export.
+    if i_EXPORT is supplied.
+    lv_queryparam = i_EXPORT.
     add_query_parameter(
       exporting
         i_parameter  = `export`
@@ -4754,8 +6054,8 @@ method GET_VALUE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -4788,10 +6088,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_VALUE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_VALUE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_VALUE
+* | [--->] I_APPEND        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_VALUE
@@ -4807,9 +6109,9 @@ method UPDATE_VALUE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -4818,7 +6120,31 @@ method UPDATE_VALUE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_APPEND is supplied.
+    lv_queryparam = i_APPEND.
+    add_query_parameter(
+      exporting
+        i_parameter  = `append`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -4831,20 +6157,20 @@ method UPDATE_VALUE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -4878,9 +6204,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_VALUE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -4894,9 +6220,9 @@ method DELETE_VALUE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4922,13 +6248,13 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_SYNONYMS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SYNONYM_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4943,9 +6269,9 @@ method LIST_SYNONYMS.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -4957,8 +6283,8 @@ method LIST_SYNONYMS.
     data:
       lv_queryparam type string.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -4967,8 +6293,8 @@ method LIST_SYNONYMS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -4977,8 +6303,8 @@ method LIST_SYNONYMS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -4987,8 +6313,8 @@ method LIST_SYNONYMS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -5021,10 +6347,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_SYNONYM
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_body        TYPE T_SYNONYM
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_BODY        TYPE T_SYNONYM
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SYNONYM
@@ -5040,9 +6367,9 @@ method CREATE_SYNONYM.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -5051,7 +6378,20 @@ method CREATE_SYNONYM.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -5064,20 +6404,20 @@ method CREATE_SYNONYM.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -5111,11 +6451,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_SYNONYM
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_synonym        TYPE STRING
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_SYNONYM        TYPE STRING
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SYNONYM
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -5130,10 +6470,10 @@ method GET_SYNONYM.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
-    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_synonym ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
+    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_SYNONYM ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5145,8 +6485,8 @@ method GET_SYNONYM.
     data:
       lv_queryparam type string.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -5179,11 +6519,12 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_SYNONYM
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_synonym        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_SYNONYM
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_SYNONYM        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_SYNONYM
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SYNONYM
@@ -5199,10 +6540,10 @@ method UPDATE_SYNONYM.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
-    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_synonym ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
+    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_SYNONYM ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -5211,7 +6552,20 @@ method UPDATE_SYNONYM.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -5224,20 +6578,20 @@ method UPDATE_SYNONYM.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -5271,10 +6625,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_SYNONYM
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_entity        TYPE STRING
-* | [--->] I_value        TYPE STRING
-* | [--->] I_synonym        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_ENTITY        TYPE STRING
+* | [--->] I_VALUE        TYPE STRING
+* | [--->] I_SYNONYM        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -5288,10 +6642,10 @@ method DELETE_SYNONYM.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_entity ignoring case.
-    replace all occurrences of `{value}` in ls_request_prop-url-path with i_value ignoring case.
-    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_synonym ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{entity}` in ls_request_prop-url-path with i_ENTITY ignoring case.
+    replace all occurrences of `{value}` in ls_request_prop-url-path with i_VALUE ignoring case.
+    replace all occurrences of `{synonym}` in ls_request_prop-url-path with i_SYNONYM ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5317,11 +6671,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_DIALOG_NODES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_DIALOG_NODE_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -5336,7 +6690,7 @@ method LIST_DIALOG_NODES.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/dialog_nodes'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5348,8 +6702,8 @@ method LIST_DIALOG_NODES.
     data:
       lv_queryparam type string.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -5358,8 +6712,8 @@ method LIST_DIALOG_NODES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -5368,8 +6722,8 @@ method LIST_DIALOG_NODES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -5378,8 +6732,8 @@ method LIST_DIALOG_NODES.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -5412,8 +6766,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_DIALOG_NODE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_body        TYPE T_DIALOG_NODE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_DIALOG_NODE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_DIALOG_NODE
@@ -5429,7 +6784,7 @@ method CREATE_DIALOG_NODE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/dialog_nodes'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -5438,7 +6793,20 @@ method CREATE_DIALOG_NODE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -5451,20 +6819,20 @@ method CREATE_DIALOG_NODE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -5498,9 +6866,9 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->GET_DIALOG_NODE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_dialog_node        TYPE STRING
-* | [--->] I_include_audit        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_DIALOG_NODE        TYPE STRING
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_DIALOG_NODE
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -5515,8 +6883,8 @@ method GET_DIALOG_NODE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_dialog_node ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_DIALOG_NODE ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5528,8 +6896,8 @@ method GET_DIALOG_NODE.
     data:
       lv_queryparam type string.
 
-    if i_include_audit is supplied.
-    lv_queryparam = i_include_audit.
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
     add_query_parameter(
       exporting
         i_parameter  = `include_audit`
@@ -5562,9 +6930,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_DIALOG_NODE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_dialog_node        TYPE STRING
-* | [--->] I_body        TYPE T_UPDATE_DIALOG_NODE
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_DIALOG_NODE        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_DIALOG_NODE
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_DIALOG_NODE
@@ -5580,8 +6949,8 @@ method UPDATE_DIALOG_NODE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_dialog_node ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_DIALOG_NODE ignoring case.
 
     " standard headers
     ls_request_prop-header_content_type = I_contenttype.
@@ -5590,7 +6959,20 @@ method UPDATE_DIALOG_NODE.
       changing
         c_url =  ls_request_prop-url ).
 
+    " process query parameters
+    data:
+      lv_queryparam type string.
 
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
 
 
 
@@ -5603,20 +6985,20 @@ method UPDATE_DIALOG_NODE.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    lv_datatype = get_datatype( i_body ).
+    lv_datatype = get_datatype( i_BODY ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
        lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
        ls_request_prop-header_content_type cp '*json*'.
       if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
          lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
-        lv_bodyparam = abap_to_json( i_value = i_body i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       else.
-        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_body ).
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
       endif.
       lv_body = lv_body && lv_separator && lv_bodyparam.
     else.
-      assign i_body to <lv_text>.
+      assign i_BODY to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
@@ -5650,8 +7032,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_DIALOG_NODE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_dialog_node        TYPE STRING
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_DIALOG_NODE        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -5665,8 +7047,8 @@ method DELETE_DIALOG_NODE.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
-    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_dialog_node ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+    replace all occurrences of `{dialog_node}` in ls_request_prop-url-path with i_DIALOG_NODE ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5692,11 +7074,11 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_LOGS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_workspace_id        TYPE STRING
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_filter        TYPE STRING(optional)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_FILTER        TYPE STRING(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_LOG_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -5711,7 +7093,7 @@ method LIST_LOGS.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/workspaces/{workspace_id}/logs'.
-    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_workspace_id ignoring case.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
 
     " standard headers
     ls_request_prop-header_accept = I_accept.
@@ -5723,8 +7105,8 @@ method LIST_LOGS.
     data:
       lv_queryparam type string.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -5733,8 +7115,8 @@ method LIST_LOGS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_filter is supplied.
-    lv_queryparam = escape( val = i_filter format = cl_abap_format=>e_uri_full ).
+    if i_FILTER is supplied.
+    lv_queryparam = escape( val = i_FILTER format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `filter`
@@ -5743,8 +7125,8 @@ method LIST_LOGS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -5753,8 +7135,8 @@ method LIST_LOGS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -5786,10 +7168,10 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_ALL_LOGS
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_filter        TYPE STRING
-* | [--->] I_sort        TYPE STRING(optional)
-* | [--->] I_page_limit        TYPE INTEGER(optional)
-* | [--->] I_cursor        TYPE STRING(optional)
+* | [--->] I_FILTER        TYPE STRING
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_CURSOR        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_LOG_COLLECTION
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -5815,7 +7197,7 @@ method LIST_ALL_LOGS.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_filter format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_FILTER format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `filter`
@@ -5823,8 +7205,8 @@ method LIST_ALL_LOGS.
       changing
         c_url        = ls_request_prop-url )  ##NO_TEXT.
 
-    if i_sort is supplied.
-    lv_queryparam = escape( val = i_sort format = cl_abap_format=>e_uri_full ).
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `sort`
@@ -5833,8 +7215,8 @@ method LIST_ALL_LOGS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_page_limit is supplied.
-    lv_queryparam = i_page_limit.
+    if i_PAGE_LIMIT is supplied.
+    lv_queryparam = i_PAGE_LIMIT.
     add_query_parameter(
       exporting
         i_parameter  = `page_limit`
@@ -5843,8 +7225,8 @@ method LIST_ALL_LOGS.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
-    if i_cursor is supplied.
-    lv_queryparam = escape( val = i_cursor format = cl_abap_format=>e_uri_full ).
+    if i_CURSOR is supplied.
+    lv_queryparam = escape( val = i_CURSOR format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `cursor`
@@ -5877,7 +7259,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->DELETE_USER_DATA
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_customer_id        TYPE STRING
+* | [--->] I_CUSTOMER_ID        TYPE STRING
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -5902,7 +7284,7 @@ method DELETE_USER_DATA.
     data:
       lv_queryparam type string.
 
-    lv_queryparam = escape( val = i_customer_id format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = escape( val = i_CUSTOMER_ID format = cl_abap_format=>e_uri_full ).
     add_query_parameter(
       exporting
         i_parameter  = `customer_id`
