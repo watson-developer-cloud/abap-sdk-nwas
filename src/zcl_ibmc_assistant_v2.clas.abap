@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Watson Assistant v2</h1>
+"! <p class="shorttext synchronized" lang="en">Watson Assistant v2</p>
 "! The IBM Watson&trade; Assistant service combines machine learning, natural
 "!  language understanding, and an integrated dialog editor to create conversation
 "!  flows between your apps and your users.<br/>
@@ -25,7 +25,8 @@ class ZCL_IBMC_ASSISTANT_V2 DEFINITION
 
 public section.
   types:
-    "!   Dialog log message details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Dialog log message details.</p>
     begin of T_DIALOG_LOG_MESSAGE,
       "!   The severity of the log message.
       LEVEL type STRING,
@@ -33,7 +34,7 @@ public section.
       MESSAGE type STRING,
     end of T_DIALOG_LOG_MESSAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODES_VISITED,
       "!   A dialog node that was triggered during processing of the input message.
       DIALOG_NODE type STRING,
@@ -43,8 +44,9 @@ public section.
       CONDITIONS type STRING,
     end of T_DIALOG_NODES_VISITED.
   types:
-    "!   Additional detailed information about a message response and how it was
-    "!    generated.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Additional detailed information about a message response and</p>
+    "!     how it was generated.
     begin of T_MESSAGE_OUTPUT_DEBUG,
       "!   An array of objects containing detailed diagnostic information about the nodes
       "!    that were triggered during processing of the input message.
@@ -60,66 +62,68 @@ public section.
       BRANCH_EXITED_REASON type STRING,
     end of T_MESSAGE_OUTPUT_DEBUG.
   types:
-    "!   No documentation available.
+    "! No documentation available.
       T_EMPTY_RESPONSE type JSONOBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SESSION_RESPONSE,
       "!   The session ID.
       SESSION_ID type STRING,
     end of T_SESSION_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_NUM,
       "!   A recognized numeric value, represented as an integer or double.
       NUMERIC_VALUE type NUMBER,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The type of numeric value recognized in the user input (`integer` or
       "!    `rational`).
       SUBTYPE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_NUM.
   types:
-    "!   An alternative value for the recognized entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An alternative value for the recognized entity.</p>
     begin of T_RUNTIME_ENTITY_ALTERNATIVE,
       "!   The entity value that was recognized in the user input.
       VALUE type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!   A decimal percentage that represents Watson&apos;s confidence in the recognized
       "!    entity.
       CONFIDENCE type NUMBER,
     end of T_RUNTIME_ENTITY_ALTERNATIVE.
   types:
-    "!   An object describing the role played by a system entity that is specifies the
-    "!    beginning or end of a range recognized in the user input. This property is
-    "!    included only if the new system entities are enabled for the skill.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object describing the role played by a system entity that</p>
+    "!     is specifies the beginning or end of a range recognized in the user input. This
+    "!     property is included only if the new system entities are enabled for the skill.
     begin of T_RUNTIME_ENTITY_ROLE,
       "!   The relationship of the entity to the range.
       TYPE type STRING,
     end of T_RUNTIME_ENTITY_ROLE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTITY_INTERPRETATION,
       "!   The calendar used to represent a recognized date (for example, `Gregorian`).
       CALENDAR_TYPE type STRING,
       "!   A unique identifier used to associate a recognized time and date. If the user
       "!    input contains a date and time that are mentioned together (for example, `Today
-      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
-      "!    and `@sys-time` entities).
+      "!    at 5`, the same **datetime_link** value is returned for both the
+      "!    `&#64;sys-date` and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
       "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
-      "!    property is included when a `@sys-date` entity is recognized based on a holiday
-      "!    name in the user input.
+      "!    property is included when a `&#64;sys-date` entity is recognized based on a
+      "!    holiday name in the user input.
       FESTIVAL type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
       "!    is part of an implied range where only one date or time is specified (for
@@ -165,7 +169,7 @@ public section.
       "!    `rational`).
       SUBTYPE type STRING,
       "!   A recognized term for a time that was mentioned as a part of the day in the
-      "!    user's input (for example, `morning` or `afternoon`).
+      "!    user&apos;s input (for example, `morning` or `afternoon`).
       PART_OF_DAY type STRING,
       "!   A recognized mention of a relative hour, represented numerically as an offset
       "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
@@ -192,7 +196,8 @@ public section.
       TIMEZONE type STRING,
     end of T_RT_ENTITY_INTERPRETATION.
   types:
-    "!   Optional properties that control how the assistant responds.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Optional properties that control how the assistant responds.</p>
     begin of T_MESSAGE_INPUT_OPTIONS,
       "!   Whether to return additional diagnostic information. Set to `true` to return
       "!    additional information under the `output.debug` key.
@@ -209,15 +214,16 @@ public section.
       RETURN_CONTEXT type BOOLEAN,
     end of T_MESSAGE_INPUT_OPTIONS.
   types:
-    "!   An intent identified in the user input.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An intent identified in the user input.</p>
     begin of T_RUNTIME_INTENT,
       "!   The name of the recognized intent.
       INTENT type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the intent.
+      "!   A decimal percentage that represents Watson&apos;s confidence in the intent.
       CONFIDENCE type DOUBLE,
     end of T_RUNTIME_INTENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CAPTURE_GROUP,
       "!   A recognized capture group for the entity.
       GROUP type STRING,
@@ -226,7 +232,8 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CAPTURE_GROUP.
   types:
-    "!   The entity value that was recognized in the user input.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The entity value that was recognized in the user input.</p>
     begin of T_RUNTIME_ENTITY,
       "!   An entity detected in the input.
       ENTITY type STRING,
@@ -235,7 +242,7 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
       "!   The term in the input text that was recognized as an entity value.
       VALUE type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!   A decimal percentage that represents Watson&apos;s confidence in the recognized
       "!    entity.
       CONFIDENCE type NUMBER,
       "!   Any metadata for the entity.
@@ -252,8 +259,8 @@ public section.
       INTERPRETATION type T_RT_ENTITY_INTERPRETATION,
       "!   An array of possible alternative values that the user might have intended
       "!    instead of the value returned in the **value** property. This property is
-      "!    returned only for `@sys-time` and `@sys-date` entities when the user's input is
-      "!    ambiguous.<br/>
+      "!    returned only for `&#64;sys-time` and `&#64;sys-date` entities when the
+      "!    user&apos;s input is ambiguous.<br/>
       "!   <br/>
       "!   This property is included only if the new system entities are enabled for the
       "!    skill.
@@ -264,7 +271,8 @@ public section.
       ROLE type T_RUNTIME_ENTITY_ROLE,
     end of T_RUNTIME_ENTITY.
   types:
-    "!   An input object that includes the input text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An input object that includes the input text.</p>
     begin of T_MESSAGE_INPUT,
       "!   The type of user input. Currently, only text input is supported.
       MESSAGE_TYPE type STRING,
@@ -285,14 +293,15 @@ public section.
       SUGGESTION_ID type STRING,
     end of T_MESSAGE_INPUT.
   types:
-    "!   An object defining the message input to be sent to the assistant if the user
-    "!    selects the corresponding option.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the message input to be sent to the</p>
+    "!     assistant if the user selects the corresponding option.
     begin of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
     end of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_NODE_OUTPUT_OPT_ELEMENT,
       "!   The user-facing label for the option.
       LABEL type STRING,
@@ -301,7 +310,7 @@ public section.
       VALUE type T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
     end of T_DIA_NODE_OUTPUT_OPT_ELEMENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_OPTION,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
@@ -313,26 +322,26 @@ public section.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_OPTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_DATE,
       "!   The calendar used to represent a recognized date (for example, `Gregorian`).
       CALENDAR_TYPE type STRING,
       "!   A unique identifier used to associate a time and date. If the user input
       "!    contains a date and time that are mentioned together (for example, `Today at
-      "!    5`, the same **datetime_link** value is returned for both the `@sys-date` and
-      "!    `@sys-time` entities).
+      "!    5`, the same **datetime_link** value is returned for both the `&#64;sys-date`
+      "!    and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
       "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
-      "!    property is included when a `@sys-date` entity is recognized based on a holiday
-      "!    name in the user input.
+      "!    property is included when a `&#64;sys-date` entity is recognized based on a
+      "!    holiday name in the user input.
       FESTIVAL type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
       "!    is part of an implied range where only one date or time is specified (for
@@ -374,8 +383,9 @@ public section.
       SPECIFIC_YEAR type NUMBER,
     end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
   types:
-    "!   An object containing segments of text from search results with query-matching
-    "!    text highlighted using HTML &lt;em&gt; tags.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object containing segments of text from search results</p>
+    "!     with query-matching text highlighted using HTML &lt;em&gt; tags.
     begin of T_SEARCH_RESULT_HIGHLIGHT,
       "!   An array of strings containing segments taken from body text in the search
       "!    results, with query-matching substrings highlighted.
@@ -388,14 +398,17 @@ public section.
       URL type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEARCH_RESULT_HIGHLIGHT.
   types:
-    "!   An object defining the message input to be sent to the assistant if the user
-    "!    selects the corresponding disambiguation option.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the message input to be sent to the</p>
+    "!     assistant if the user selects the corresponding disambiguation option.
     begin of T_DIALOG_SUGGESTION_VALUE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
     end of T_DIALOG_SUGGESTION_VALUE.
   types:
-    "!   An object containing search result metadata from the Discovery service.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object containing search result metadata from the</p>
+    "!     Discovery service.
     begin of T_SEARCH_RESULT_METADATA,
       "!   The confidence score for the given result. For more information about how the
       "!    confidence is calculated, see the Discovery service
@@ -407,7 +420,7 @@ public section.
       SCORE type DOUBLE,
     end of T_SEARCH_RESULT_METADATA.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEARCH_RESULT,
       "!   The unique identifier of the document in the Discovery service collection.<br/>
       "!   <br/>
@@ -430,7 +443,7 @@ public section.
       HIGHLIGHT type T_SEARCH_RESULT_HIGHLIGHT,
     end of T_SEARCH_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_SUGGESTION,
       "!   The user-facing label for the disambiguation option. This label is taken from
       "!    the **title** or **user_label** property of the corresponding dialog node,
@@ -444,7 +457,7 @@ public section.
       OUTPUT type MAP,
     end of T_DIALOG_SUGGESTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_GENERIC,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -456,7 +469,7 @@ public section.
       TEXT type STRING,
       "!   How long to pause, in milliseconds.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause.
+      "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
       "!   The URL of the image.
       SOURCE type STRING,
@@ -487,7 +500,7 @@ public section.
       RESULTS type STANDARD TABLE OF T_SEARCH_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_GENERIC.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_DETAIL,
       "!   Description of a specific constraint violation.
       MESSAGE type STRING,
@@ -495,7 +508,7 @@ public section.
       PATH type STRING,
     end of T_ERROR_DETAIL.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   General description of an error.
       ERROR type STRING,
@@ -505,7 +518,7 @@ public section.
       CODE type INTEGER,
     end of T_ERROR_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
       "!   The URL of the image.
       SOURCE type STRING,
@@ -515,7 +528,7 @@ public section.
       DESCRIPTION type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODE_ACTION,
       "!   The name of the action.
       NAME type STRING,
@@ -530,7 +543,9 @@ public section.
       CREDENTIALS type STRING,
     end of T_DIALOG_NODE_ACTION.
   types:
-    "!   Built-in system properties that apply to all skills used by the assistant.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Built-in system properties that apply to all skills used by</p>
+    "!     the assistant.
     begin of T_MSSG_CONTEXT_GLOBAL_SYSTEM,
       "!   The user time zone. The assistant uses the time zone to correctly resolve
       "!    relative time references.
@@ -568,20 +583,24 @@ public section.
       REFERENCE_TIME type STRING,
     end of T_MSSG_CONTEXT_GLOBAL_SYSTEM.
   types:
-    "!   Information that is shared by all skills used by the Assistant.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information that is shared by all skills used by the</p>
+    "!     Assistant.
     begin of T_MESSAGE_CONTEXT_GLOBAL,
       "!   Built-in system properties that apply to all skills used by the assistant.
       SYSTEM type T_MSSG_CONTEXT_GLOBAL_SYSTEM,
     end of T_MESSAGE_CONTEXT_GLOBAL.
   types:
-    "!   Information specific to particular skills used by the Assistant.<br/>
-    "!   <br/>
-    "!   **Note:** Currently, only a single property named `main skill` is supported.
-    "!    This object contains variables that apply to the dialog skill used by the
-    "!    assistant.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information specific to particular skills used by the</p>
+    "!     Assistant.<br/>
+    "!    <br/>
+    "!    **Note:** Currently, only a single property named `main skill` is supported.
+    "!     This object contains variables that apply to the dialog skill used by the
+    "!     assistant.
       T_MESSAGE_CONTEXT_SKILLS type MAP.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_MESSAGE_CONTEXT,
       "!   Information that is shared by all skills used by the Assistant.
       GLOBAL type T_MESSAGE_CONTEXT_GLOBAL,
@@ -593,7 +612,8 @@ public section.
       SKILLS type T_MESSAGE_CONTEXT_SKILLS,
     end of T_MESSAGE_CONTEXT.
   types:
-    "!   Assistant output to be rendered or processed by the client.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Assistant output to be rendered or processed by the client.</p>
     begin of T_MESSAGE_OUTPUT,
       "!   Output intended for any channel. It is the responsibility of the client
       "!    application to implement the supported response types.
@@ -614,7 +634,8 @@ public section.
       USER_DEFINED type MAP,
     end of T_MESSAGE_OUTPUT.
   types:
-    "!   A response from the Watson Assistant service.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A response from the Watson Assistant service.</p>
     begin of T_MESSAGE_RESPONSE,
       "!   Assistant output to be rendered or processed by the client.
       OUTPUT type T_MESSAGE_OUTPUT,
@@ -627,29 +648,29 @@ public section.
       CONTEXT type T_MESSAGE_CONTEXT,
     end of T_MESSAGE_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
       "!   The text of the response.
       TEXT type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_TEXT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_TIME,
       "!   A unique identifier used to associate a recognized time and date. If the user
       "!    input contains a date and time that are mentioned together (for example, `Today
-      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
-      "!    and `@sys-time` entities).
+      "!    at 5`, the same **datetime_link** value is returned for both the
+      "!    `&#64;sys-date` and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
       "!   A recognized term for a time that was mentioned as a part of the day in the
-      "!    user's input (for example, `morning` or `afternoon`).
+      "!    user&apos;s input (for example, `morning` or `afternoon`).
       PART_OF_DAY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   A recognized mention of a relative hour, represented numerically as an offset
       "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
@@ -676,15 +697,15 @@ public section.
       TIMEZONE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_TIME.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
       "!   How long to pause, in milliseconds.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause.
+      "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
     end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_SEARCH,
       "!   The title or introductory text to show before the response. This text is defined
       "!    in the search skill configuration.
@@ -693,7 +714,7 @@ public section.
       RESULTS type STANDARD TABLE OF T_SEARCH_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_SEARCH.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_RESPONSE_TYPE_SUGGESTION,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
@@ -705,7 +726,9 @@ public section.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESPONSE_TYPE_SUGGESTION.
   types:
-    "!   Contains information specific to a particular skill used by the Assistant.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Contains information specific to a particular skill used by</p>
+    "!     the Assistant.
     begin of T_MESSAGE_CONTEXT_SKILL,
       "!   Arbitrary variables that can be read and written by a particular skill.
       USER_DEFINED type MAP,
@@ -713,7 +736,7 @@ public section.
       SYSTEM type MAP,
     end of T_MESSAGE_CONTEXT_SKILL.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
       "!   A message to be sent to the human agent who will be taking over the
       "!    conversation.
@@ -723,7 +746,8 @@ public section.
       TOPIC type STRING,
     end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
   types:
-    "!   A request formatted for the Watson Assistant service.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A request formatted for the Watson Assistant service.</p>
     begin of T_MESSAGE_REQUEST,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -734,6 +758,7 @@ public section.
     end of T_MESSAGE_REQUEST.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_DIALOG_LOG_MESSAGE type string value '|LEVEL|MESSAGE|',
     T_DIALOG_NODES_VISITED type string value '|',
@@ -779,6 +804,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      DEBUG type string value 'debug',
      RESTART type string value 'restart',
@@ -891,7 +917,13 @@ constants:
     redefinition .
 
 
-    "! Create a session.
+    "! <p class="shorttext synchronized" lang="en">Create a session</p>
+    "!   Create a new session. A session is used to send user input to a skill and
+    "!    receive responses. It also maintains the state of the conversation. A session
+    "!    persists until it is deleted, or until it times out because of inactivity. (For
+    "!    more information, see the
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
+    "!   settings).
     "!
     "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
@@ -913,7 +945,11 @@ constants:
       !E_RESPONSE type T_SESSION_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete session.
+    "! <p class="shorttext synchronized" lang="en">Delete session</p>
+    "!   Deletes a session explicitly before it times out. (For more information about
+    "!    the session inactivity timeout, see the
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
+    "!   settings)).
     "!
     "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
@@ -935,7 +971,10 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Send user input to assistant.
+    "! <p class="shorttext synchronized" lang="en">Send user input to assistant</p>
+    "!   Send user input to an assistant and receive a response.<br/>
+    "!   <br/>
+    "!   There is no rate limit for this operation.
     "!
     "! @parameter I_ASSISTANT_ID |
     "!   Unique identifier of the assistant. To find the assistant ID in the Watson
@@ -948,7 +987,7 @@ constants:
     "! @parameter I_SESSION_ID |
     "!   Unique identifier of the session.
     "! @parameter I_REQUEST |
-    "!   The message to be sent. This includes the user's input, along with optional
+    "!   The message to be sent. This includes the user&apos;s input, along with optional
     "!    content such as intents and entities.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_MESSAGE_RESPONSE
@@ -1043,7 +1082,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092813'.
+    e_sdk_version_date = '20200310173422'.
 
   endmethod.
 

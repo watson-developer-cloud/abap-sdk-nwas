@@ -46,33 +46,32 @@ public section.
   constants C_TOKEN_GENERATION_AUTO type CHAR value SPACE ##NO_TEXT.
   constants C_IAM_TOKEN_HOST type STRING value 'iam.cloud.ibm.com' ##NO_TEXT.
   constants C_IAM_TOKEN_PATH type STRING value '/identity/token' ##NO_TEXT.
+  constants C_ICP4D_TOKEN_PATH type STRING value '/v1/preauth/validateAuth' ##NO_TEXT.
   data P_INSTANCE_ID type TY_INSTANCE_ID .
   data P_SERVICENAME type TY_SERVICENAME .
 
-  "! Sends a HTTP PUT request.
+  "! <p class="shorttext synchronized" lang="en">Returns the bearer token, if available.</p>
   "!
-  "! @parameter I_REQUEST_PROP | Request properties.
-  "! @parameter E_RESPONSE | Response returned by service.
-  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+  "! @parameter E_BEARER_TOKEN | Access token.
   "!
   methods GET_BEARER_TOKEN
     returning
       value(E_BEARER_TOKEN) type STRING .
-  "! Returns the SDK built date.
+  "! <p class="shorttext synchronized" lang="en">Returns the SDK built date.</p>
   "!
   "! @parameter E_SDK_VERSION_DATE | Built data in format YYYYMMDD.
   "!
   methods GET_SDK_VERSION_DATE
     returning
       value(E_SDK_VERSION_DATE) type STRING .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   methods SET_BEARER_TOKEN
     importing
       !I_BEARER_TOKEN type STRING .
-  "! Retrieves a value of a configuration parameter from table ZIBMC_CONFIG.
+  "! <p class="shorttext synchronized" lang="en">Retrieves a value of a configuration parameter</p> from table ZIBMC_CONFIG.
   "!
-  "! @parameter I_DEFUALT | Default value, if configuration parameter is not found.
+  "! @parameter I_DEFAULT | Default value, if configuration parameter is not found.
   "! @parameter I_PARAM | Configuration parameter name.
   "!
   methods GET_CONFIG_VALUE
@@ -83,7 +82,7 @@ public section.
       value(E_VALUE) type ZIBMC_CONFIG-VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Factory method to instantiate a service specific wrapper class.
+  "! <p class="shorttext synchronized" lang="en">Factory method to instantiate a service specific wrapper class.</p>
   "!
   "! @parameter I_INSTANCE_ID |
   "!   Value of field INSTANCE_UID in table ZIBMC_CONFIG.
@@ -96,7 +95,7 @@ public section.
   "! @parameter I_PROXY_PORT | Proxy server port, not applicable on SAP Cloud Platform.
   "! @parameter I_APIKEY | API key password to authenticate on service.
   "! @parameter I_AUTH_METHOD | Authentication method. Possible values are "IAM", "ICP4D", "basicAuth", "NONE".
-  "! @parameter I_I_OAUTH_PROP | Credentials to generate token for OAuth authentication.
+  "! @parameter I_OAUTH_PROP | Credentials to generate token for OAuth authentication.
   "! @parameter I_TOKEN_GENERATION | Method for access token refresh: <br/>
   "!   C_TOKEN_GENERATION_NEVER - Access token is not refreshed.
   "!   C_TOKEN_GENERATION_ALWAYS - Access to token is refreshed for each service call.
@@ -112,16 +111,17 @@ public section.
       !I_USERNAME type STRING optional
       !I_PASSWORD type STRING optional
       !I_PROXY_HOST type STRING optional
-      !I_PROXY_SERVICE type STRING optional
+      !I_PROXY_PORT type STRING optional
       !I_APIKEY type STRING optional
       !I_AUTH_METHOD type STRING default C_DEFAULT
       !I_OAUTH_PROP type TS_OAUTH_PROP optional
+      !I_ACCESS_TOKEN type TS_ACCESS_TOKEN optional
       !I_TOKEN_GENERATION type CHAR default C_TOKEN_GENERATION_AUTO
       !I_REQUEST_HEADERS type STRING optional
       !I_VERSION type STRING optional
     exporting
       value(EO_INSTANCE) type ANY .
-  "! Compresses multiple images from an internal table to a one or more xstrings in ZIP format.
+  "! <p class="shorttext synchronized" lang="en">Compresses multiple images from an internal table</p> to a one or more xstrings in ZIP format.
   "!
   "! @parameter IT_EXAMPLES | Internal table of images.
   "! @parameter IV_FIELD_CLASS |
@@ -152,16 +152,13 @@ public section.
     redefinition .
   methods GET_REQUEST_PROP
     redefinition .
-  methods SET_ACCESS_TOKEN
-    redefinition .
 protected section.
 private section.
 
   data P_OAUTH_PROP type TS_OAUTH_PROP .
   data P_TOKEN_GENERATION type CHAR .
-  data P_TOKEN_SAVED type ZIBMC_TOKEN .
 
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods ADD_CONFIG_PROP
     importing
@@ -169,7 +166,7 @@ private section.
       !I_INSTANCE_ID type TY_INSTANCE_ID optional
     changing
       !C_REQUEST_PROP type ANY .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods ADD_IMAGE_TO_ZIP
     importing
@@ -181,7 +178,7 @@ private section.
       !IV_FIELD_FILENAME type FIELDNAME optional
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods GET_FIELD_DATA
     importing
@@ -343,8 +340,10 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
         token type string,
       end of ls_token_classic.
 
-    if not p_token_saved is initial.
-      ls_token = p_token_saved.
+    if not i_request_prop-access_token-access_token is initial.
+      ls_token-access_token = p_request_prop_default-access_token-access_token.
+      ls_token-token_type   = p_request_prop_default-access_token-token_type.
+      ls_token-expires_ts   = p_request_prop_default-access_token-expires_ts.
     else.
 
       select single *
@@ -428,6 +427,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
           ls_token_request_prop-username   = p_oauth_prop-username.
           ls_token_request_prop-password   = p_oauth_prop-password.
           ls_token_request_prop-apikey     = p_oauth_prop-apikey.
+          ls_token_request_prop-url        = p_oauth_prop-url.
           ls_token_request_prop-auth_basic = c_boolean_true.
 
           " execute HTTP GET request
@@ -436,13 +436,39 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
           " receive response json
           lv_json = get_response_string( lo_response ).
 
-          " call json parser
-          parse_json(
-            exporting
-              i_json = lv_json
-            changing
-              c_abap = ls_token_classic ).
-          ls_token-expires_in = 3600.
+          if i_request_prop-auth_name eq 'ICP4D' ##NO_TEXT.
+
+            " parse expected response:
+            "   { "username": "joe", "role": "User", "uid": "1003",
+            "     "accessToken": "eyJhbGc…1AjT_w",
+            "     "messageCode": "success", "message": "success" }
+            data:
+              begin of ls_access_token_icp4d,
+                accesstoken type string,
+              end of ls_access_token_icp4d.
+            parse_json(
+             exporting
+               i_json = lv_json
+             changing
+               c_abap = ls_access_token_icp4d ).
+
+            ls_token-access_token = ls_access_token_icp4d-accesstoken.
+            ls_token-expires_in = 12 * 3600.
+
+          else.
+
+            " call json parser
+            parse_json(
+              exporting
+                i_json = lv_json
+              changing
+                c_abap = ls_token_classic ).
+
+            ls_token-access_token = ls_token_classic-token.
+            ls_token-expires_in = 3600.
+
+          endif.
+
           ls_token-token_type = 'Bearer' ##NO_TEXT.
 
         endif.
@@ -464,8 +490,6 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
         modify zibmc_token from @ls_token.
         commit work.
       endif.
-
-      p_token_saved = ls_token.
 
     endif.
 
@@ -692,6 +716,8 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       exporting
         i_url      = i_url
         i_host     = i_host
+        i_proxy_host = i_proxy_host
+        i_proxy_port = i_proxy_port
         i_username = i_username
         i_password = i_password
         i_apikey   = i_apikey.
@@ -766,14 +792,22 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
     normalize_url(
       changing
         c_url = lo_instance->p_oauth_prop-url ).
-    if ls_request_prop-auth_name eq 'IAM' ##NO_TEXT.
+    if ls_request_prop-auth_name eq 'IAM' or ls_request_prop-auth_name eq 'ICP4D' ##NO_TEXT.
       if lo_instance->p_oauth_prop-url-host is initial.
         lo_instance->p_oauth_prop-url-protocol = 'https' ##NO_TEXT.
-        lo_instance->p_oauth_prop-url-host = c_iam_token_host.
+        if ls_request_prop-auth_name eq 'IAM'.
+          lo_instance->p_oauth_prop-url-host = c_iam_token_host.
+        else.
+          lo_instance->p_oauth_prop-url-host = lo_instance->p_request_prop_default-url-host.
+        endif.
       endif.
       if lo_instance->p_oauth_prop-url-path_base is initial and lo_instance->p_oauth_prop-url-path is initial.
         " Set path_base (not path), otherwise the default service path_base would be added, which is not correct
-        lo_instance->p_oauth_prop-url-path_base = c_iam_token_path.
+        if ls_request_prop-auth_name eq 'IAM'.
+          lo_instance->p_oauth_prop-url-path_base = c_iam_token_path.
+        else.
+          lo_instance->p_oauth_prop-url-path_base = c_icp4d_token_path.
+        endif.
       endif.
       if lo_instance->p_oauth_prop-password is initial and lo_instance->p_oauth_prop-apikey is initial.
         lo_instance->p_oauth_prop-username = lo_instance->p_request_prop_default-username.
@@ -782,7 +816,12 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       endif.
     endif.
 
-    lo_instance->p_token_generation = i_token_generation.
+    if not i_access_token-access_token is initial.
+      lo_instance->p_token_generation =  c_token_generation_never.
+      lo_instance->set_access_token( i_access_token = i_access_token ).
+    else.
+      lo_instance->p_token_generation = i_token_generation.
+    endif.
 
     lo_instance->p_version = i_version.
 
@@ -991,18 +1030,6 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       endif.
 
     endloop.
-
-  endmethod.
-
-
-  method set_access_token.
-
-    super->set_access_token( i_access_token = i_access_token ).
-
-    clear p_token_saved.
-    p_token_saved-access_token = i_access_token-access_token.
-    p_token_saved-token_type   = i_access_token-token_type.
-    p_token_saved-expires_ts   = '99991231235959'  ##LITERAL.   " avoid token being refreshed by sdk
 
   endmethod.
 

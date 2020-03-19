@@ -16,151 +16,175 @@
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>ABAP_TO_JSON</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Generates a JSON string from any ABAP structure</DESCRIPT>
+     <DESCRIPT>Extracts a JSON string from an ABAP structure.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>ADD_HEADER_PARAMETER</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Adds a HTTP header parameter</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>ADD_QUERY_PARAMETER</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Adds a REST query parameter</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>ADJUST_REQUEST_PROP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>CHECK_HTTP_RESPONSE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Throws an exception, if HTTP response indicates an error</DESCRIPT>
+     <DESCRIPT>Throws an exception, if HTTP response indicates an error.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>CONSTRUCTOR</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Class constructor</DESCRIPT>
+     <DESCRIPT>Class constructor.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>DATETIME</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DateTime type, format 2018-10-23T15:18:18.914xxxZ</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_ACCESS_TOKEN</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Reads or generates an authorization token</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_APPNAME</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns the API or service name, resp.</DESCRIPT>
+     <DESCRIPT>Returns the service name.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_COMPONENTS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns the component names of a given structure</DESCRIPT>
+     <DESCRIPT>Returns component names of a given structure.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_DATATYPE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns data type of a variable</DESCRIPT>
+     <DESCRIPT>Returns data type of a given parameter.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_FIELD_TYPE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns the absolute type of a field</DESCRIPT>
+     <DESCRIPT>Returns field type and length of a given parameter.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_FILE_EXTENSION</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns file extension for given mime type</DESCRIPT>
+     <DESCRIPT>Returns the file extension for a mime type</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_FULL_URL</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns complete URL string</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_REQUEST_PROP</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns default request properties</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>GET_REST_CLIENT</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Creates a REST client instance</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>HTTP_DELETE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Performs a http DELETE request</DESCRIPT>
+     <DESCRIPT>Sends a HTTP DELETE request.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>HTTP_GET</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Performs a http GET request</DESCRIPT>
+     <DESCRIPT>Sends a HTTP GET request.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>HTTP_POST</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Performs a http POST request</DESCRIPT>
+     <DESCRIPT>Sends a HTTP POST request.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>HTTP_POST_MULTIPART</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Performs a HTTP POST request with multipart body</DESCRIPT>
+     <DESCRIPT>Sends a HTTP POST request with multipart body.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>HTTP_PUT</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Performs a http PUT request</DESCRIPT>
+     <DESCRIPT>Sends a HTTP PUT request.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>MERGE_STRUCTURE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>MOVE_DATA_REFERENCE_TO_ABAP</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Moves type DATA_REFERENCE to ABAP structure</DESCRIPT>
+     <DESCRIPT>Moves a referenced data structure to an ABAP structure.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>NORMALIZE_URL</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Normalize URL in structure of type TS_URL</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>PARSE_JSON</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Parses a JSON string into an ABAP structure</DESCRIPT>
+     <DESCRIPT>Parses a JSON string into an ABAP structure.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>RAISE_EXCEPTION</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Throws an exception of type ZCX_IBMC_SERVICE_EXCEPTION</DESCRIPT>
+     <DESCRIPT>Raises an exception.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>SET_ACCESS_TOKEN</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Sets an authorization token explicitly</DESCRIPT>
+     <DESCRIPT>Sets an access token explicitly.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>SET_URI_AND_AUTHORIZATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
      <CMPNAME>UNESCAPE_UNICODE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Unescapes unicode codepoints</DESCRIPT>
+     <DESCRIPT>Unescape unicode codepoints to characters in a string</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Visual Recognition</h1>
+"! <p class="shorttext synchronized" lang="en">Visual Recognition</p>
 "! The IBM Watson&trade; Visual Recognition service uses deep learning algorithms
 "!  to identify scenes and objects in images that you upload to the service. You
 "!  can create and train a custom classifier to identify subjects that suit your
@@ -23,10 +23,12 @@ class ZCL_IBMC_VISUAL_RECOGNITION_V3 DEFINITION
 
 public section.
   types:
-    "!   Number of images processed for the API call.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Number of images processed for the API call.</p>
       T_IMAGES_PROCESSED type Integer.
   types:
-    "!   Result of a class within a classifier.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Result of a class within a classifier.</p>
     begin of T_CLASS_RESULT,
       "!   Name of the class. <br/>
       "!   <br/>
@@ -45,7 +47,8 @@ public section.
       TYPE_HIERARCHY type STRING,
     end of T_CLASS_RESULT.
   types:
-    "!   Classifier and score combination.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Classifier and score combination.</p>
     begin of T_CLASSIFIER_RESULT,
       "!   Name of the classifier.
       NAME type STRING,
@@ -55,8 +58,9 @@ public section.
       CLASSES type STANDARD TABLE OF T_CLASS_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIER_RESULT.
   types:
-    "!   Information about what might have caused a failure, such as an image that is too
-    "!    large. Not returned when there is no error.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about what might have caused a failure, such as</p>
+    "!     an image that is too large. Not returned when there is no error.
     begin of T_ERROR_INFO,
       "!   HTTP status code.
       CODE type INTEGER,
@@ -66,7 +70,8 @@ public section.
       ERROR_ID type STRING,
     end of T_ERROR_INFO.
   types:
-    "!   Results for one image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Results for one image.</p>
     begin of T_CLASSIFIED_IMAGE,
       "!   Source of the image before any redirects. Not returned when the image is
       "!    uploaded.
@@ -84,7 +89,8 @@ public section.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIED_IMAGE.
   types:
-    "!   Information about something that went wrong.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about something that went wrong.</p>
     begin of T_WARNING_INFO,
       "!   Codified warning string, such as `limit_reached`.
       WARNING_ID type STRING,
@@ -92,7 +98,8 @@ public section.
       DESCRIPTION type STRING,
     end of T_WARNING_INFO.
   types:
-    "!   Results for all images.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Results for all images.</p>
     begin of T_CLASSIFIED_IMAGES,
       "!   Number of custom classes identified in the images.
       CUSTOM_CLASSES type INTEGER,
@@ -107,28 +114,32 @@ public section.
       WARNINGS type STANDARD TABLE OF T_WARNING_INFO WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIED_IMAGES.
   types:
-    "!   Knowledge graph of the property. For example, `/fruit/pome/apple/eating
-    "!    apple/Granny Smith`. Included only if identified.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Knowledge graph of the property. For example,</p>
+    "!     `/fruit/pome/apple/eating apple/Granny Smith`. Included only if identified.
       T_TYPE_HIERARCHY type String.
   types:
-    "!   A category within a classifier.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A category within a classifier.</p>
     begin of T_CLASS,
       "!   The name of the class.
       CLASS type STRING,
     end of T_CLASS.
   types:
-    "!   Empty object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Empty object.</p>
       T_EMPTY type JSONOBJECT.
   types:
-    "!   Error information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Error information.</p>
     begin of T_ERROR_RESPONSE,
       "!   HTTP error code.
       CODE type INTEGER,
-      "!   Human-readable error string, like 'Invalid image file'.
+      "!   Human-readable error string, like &apos;Invalid image file&apos;.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT1,
       "!   The name of the new classifier. Encode special characters in UTF-8.
       NAME type STRING,
@@ -138,7 +149,7 @@ public section.
       "!   Specify the parameter name by appending `_positive_examples` to the class name.
       "!    For example, `goldenretriever_positive_examples` creates the class
       "!    **goldenretriever**. The string cannot contain the following characters: ``$ *
-      "!    - &#123; &#125; \ | / ' " ` [ ]``.<br/>
+      "!    - &#123; &#125; \ | / &apos; &quot; ` [ ]``.<br/>
       "!   <br/>
       "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
       "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
@@ -153,7 +164,7 @@ public section.
       NEGATIVE_EXAMPLES type FILE,
     end of T_INLINE_OBJECT1.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image
       "!    size is 10 MB. Include no more than 20 images and limit the .zip file to 100
@@ -195,7 +206,7 @@ public section.
       CLASSIFIER_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_INLINE_OBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT2,
       "!   A .zip file of images that depict the visual subject of a class in the
       "!    classifier. The positive examples create or update classes in the classifier.
@@ -204,7 +215,7 @@ public section.
       "!   Specify the parameter name by appending `_positive_examples` to the class name.
       "!    For example, `goldenretriever_positive_examples` creates the class
       "!    `goldenretriever`. The string cannot contain the following characters: ``$ * -
-      "!    &#123; &#125; \ | / ' " ` [ ]``.<br/>
+      "!    &#123; &#125; \ | / &apos; &quot; ` [ ]``.<br/>
       "!   <br/>
       "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
       "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
@@ -219,7 +230,8 @@ public section.
       NEGATIVE_EXAMPLES type FILE,
     end of T_INLINE_OBJECT2.
   types:
-    "!   Information about a classifier.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about a classifier.</p>
     begin of T_CLASSIFIER,
       "!   ID of a classifier identified in the image.
       CLASSIFIER_ID type STRING,
@@ -250,39 +262,47 @@ public section.
       UPDATED type DATETIME,
     end of T_CLASSIFIER.
   types:
-    "!   Number of custom classes identified in the images.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Number of custom classes identified in the images.</p>
       T_CUSTOM_CLASSES_PROCESSED type Integer.
   types:
-    "!   Confidence score for the property in the range of 0 to 1. A higher score
-    "!    indicates greater likelihood that the class is depicted in the image. The
-    "!    default threshold for returning scores from a classifier is 0.5.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Confidence score for the property in the range of 0 to 1. A</p>
+    "!     higher score indicates greater likelihood that the class is depicted in the
+    "!     image. The default threshold for returning scores from a classifier is 0.5.
       T_CONFIDENCE_SCORE type Float.
   types:
-    "!   Relative path of the image file if uploaded directly. Not returned when the
-    "!    image is passed by URL.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Relative path of the image file if uploaded directly. Not</p>
+    "!     returned when the image is passed by URL.
       T_IMAGE_FILE type String.
   types:
-    "!   Error information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Error information.</p>
     begin of T_ERROR_HTML,
       "!   HTML description of the error.
       ERROR1 type STRING,
     end of T_ERROR_HTML.
   types:
-    "!   Source of the image before any redirects. Not returned when the image is
-    "!    uploaded.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Source of the image before any redirects. Not returned when</p>
+    "!     the image is uploaded.
       T_SOURCE_URL type String.
   types:
-    "!   Fully resolved URL of the image after redirects are followed. Not returned when
-    "!    the image is uploaded.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Fully resolved URL of the image after redirects are</p>
+    "!     followed. Not returned when the image is uploaded.
       T_RESOLVED_URL type String.
   types:
-    "!   A container for the list of classifiers.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A container for the list of classifiers.</p>
     begin of T_CLASSIFIERS,
       "!   List of classifiers.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIERS.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_CLASS_RESULT type string value '|CLASS|SCORE|',
     T_CLASSIFIER_RESULT type string value '|NAME|CLASSIFIER_ID|CLASSES|',
@@ -302,6 +322,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      WARNING_ID type string value 'warning_id',
      DESCRIPTION type string value 'description',
@@ -349,7 +370,8 @@ constants:
     redefinition .
 
 
-    "! Classify images.
+    "! <p class="shorttext synchronized" lang="en">Classify images</p>
+    "!   Classify images with built-in or custom classifiers.
     "!
     "! @parameter I_IMAGES_FILE |
     "!   An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image
@@ -416,7 +438,22 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create a classifier.
+    "! <p class="shorttext synchronized" lang="en">Create a classifier</p>
+    "!   Train a new multi-faceted classifier on the uploaded image data. Create your
+    "!    custom classifier with positive or negative example training images. Include at
+    "!    least two sets of examples, either two positive example files or one positive
+    "!    and one negative file. You can upload a maximum of 256 MB per call.<br/>
+    "!   <br/>
+    "!   **Tips when creating:**<br/>
+    "!   <br/>
+    "!   - If you set the **X-Watson-Learning-Opt-Out** header parameter to `true` when
+    "!    you create a classifier, the example training images are not stored. Save your
+    "!    training images locally. For more information, see [Data
+    "!    collection](#data-collection).<br/>
+    "!   <br/>
+    "!   - Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image
+    "!    file names, and classifier and class names). The service assumes UTF-8 encoding
+    "!    if it encounters non-ASCII characters.
     "!
     "! @parameter I_NAME |
     "!   The name of the new classifier. Encode special characters in UTF-8.
@@ -427,7 +464,7 @@ constants:
     "!   Specify the parameter name by appending `_positive_examples` to the class name.
     "!    For example, `goldenretriever_positive_examples` creates the class
     "!    **goldenretriever**. The string cannot contain the following characters: ``$ *
-    "!    - &#123; &#125; \ | / ' " ` [ ]``.<br/>
+    "!    - &#123; &#125; \ | / &apos; &quot; ` [ ]``.<br/>
     "!   <br/>
     "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
     "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
@@ -459,7 +496,7 @@ constants:
       !E_RESPONSE type T_CLASSIFIER
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Retrieve a list of classifiers.
+    "! <p class="shorttext synchronized" lang="en">Retrieve a list of classifiers</p>
     "!
     "! @parameter I_VERBOSE |
     "!   Specify `true` to return details about the classifiers. Omit this parameter to
@@ -476,7 +513,8 @@ constants:
       !E_RESPONSE type T_CLASSIFIERS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Retrieve classifier details.
+    "! <p class="shorttext synchronized" lang="en">Retrieve classifier details</p>
+    "!   Retrieve information about a custom classifier.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
@@ -492,7 +530,28 @@ constants:
       !E_RESPONSE type T_CLASSIFIER
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a classifier.
+    "! <p class="shorttext synchronized" lang="en">Update a classifier</p>
+    "!   Update a custom classifier by adding new positive or negative classes or by
+    "!    adding new images to existing classes. You must supply at least one set of
+    "!    positive or negative examples. For details, see [Updating custom
+    "!    classifiers](https://cloud.ibm.com/docs/visual-recognition?topic=visual-recogni
+    "!   tion-customizing#updating-custom-classifiers).<br/>
+    "!   <br/>
+    "!   Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image
+    "!    file names, and classifier and class names). The service assumes UTF-8 encoding
+    "!    if it encounters non-ASCII characters.<br/>
+    "!   <br/>
+    "!   **Tips about retraining:**<br/>
+    "!   <br/>
+    "!   - You can&apos;t update the classifier if the **X-Watson-Learning-Opt-Out**
+    "!    header parameter was set to `true` when the classifier was created. Training
+    "!    images are not stored in that case. Instead, create another classifier. For
+    "!    more information, see [Data collection](#data-collection).<br/>
+    "!   <br/>
+    "!   - Don&apos;t make retraining calls on a classifier until the status is ready.
+    "!    When you submit retraining requests in parallel, the last request overwrites
+    "!    the previous requests. The `retrained` property shows the last time the
+    "!    classifier retraining finished.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
@@ -504,7 +563,7 @@ constants:
     "!   Specify the parameter name by appending `_positive_examples` to the class name.
     "!    For example, `goldenretriever_positive_examples` creates the class
     "!    `goldenretriever`. The string cannot contain the following characters: ``$ * -
-    "!    &#123; &#125; \ | / ' " ` [ ]``.<br/>
+    "!    &#123; &#125; \ | / &apos; &quot; ` [ ]``.<br/>
     "!   <br/>
     "!   Include at least 10 images in .jpg or .png format. The minimum recommended image
     "!    resolution is 32X32 pixels. The maximum number of images is 10,000 images or
@@ -536,7 +595,7 @@ constants:
       !E_RESPONSE type T_CLASSIFIER
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a classifier.
+    "! <p class="shorttext synchronized" lang="en">Delete a classifier</p>
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
@@ -549,7 +608,10 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Retrieve a Core ML model of a classifier.
+    "! <p class="shorttext synchronized" lang="en">Retrieve a Core ML model of a classifier</p>
+    "!   Download a Core ML model file (.mlmodel) of a custom classifier that returns
+    "!    &lt;tt&gt;&quot;core_ml_enabled&quot;: true&lt;/tt&gt; in the classifier
+    "!    details.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   The ID of the classifier.
@@ -566,7 +628,15 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Delete labeled data.
+    "! <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+    "!   Deletes all data associated with a specified customer ID. The method has no
+    "!    effect if no data is associated with the customer ID. <br/>
+    "!   <br/>
+    "!   You associate a customer ID with data by passing the `X-Watson-Metadata` header
+    "!    with a request that passes data. For more information about personal data and
+    "!    customer IDs, see [Information
+    "!    security](https://cloud.ibm.com/docs/visual-recognition?topic=visual-recognitio
+    "!   n-information-security).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -647,7 +717,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092829'.
+    e_sdk_version_date = '20200310173442'.
 
   endmethod.
 

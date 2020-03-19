@@ -36,7 +36,7 @@ public section.
   types JSONOBJECT type ref to DATA .
   types MAP type ref to DATA .
   types:
-      "! DateTime type, format 2018-10-23T15:18:18.914xxxZ
+    "! <p class="shorttext synchronized" lang="en">DateTime type, format 2018-10-23T15:18:18.914xxxZ</p>
     DATETIME(27) type c .
   types TT_STRING type ZIF_IBMC_SERVICE_ARCH~TT_STRING .
   types:
@@ -94,7 +94,7 @@ public section.
   data P_DEBUG_MODE type CHAR value SPACE ##NO_TEXT.
   data P_VERSION type STRING .
 
-  "! Raises an exception
+  "! <p class="shorttext synchronized" lang="en">Raises an exception.</p>
   "!
   "! @parameter I_MSGNO | Message number.
   "! @parameter I_MSGV1 | Substitution for 1st placeholder in message.
@@ -120,7 +120,7 @@ public section.
       !I_HTTP_STATUS type TS_HTTP_STATUS optional
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Returns field type and length of a given parameter
+  "! <p class="shorttext synchronized" lang="en">Returns field type and length of a given parameter.</p>
   "!
   "! @parameter I_FIELD | Field of type that is supposed to be determined.
   "! @parameter E_TECHNICAL_TYPE | Technical type (= base type) of I_FIELD.
@@ -134,7 +134,7 @@ public section.
       !E_TECHNICAL_TYPE type ZIF_IBMC_SERVICE_ARCH~CHAR
       !E_RELATIVE_TYPE type STRING
       !E_LENGTH type I .
-  "! Returns component names of a given structure
+  "! <p class="shorttext synchronized" lang="en">Returns component names of a given structure.</p>
   "!
   "! @parameter I_STRUCTURE | Structure with components.
   "! @parameter E_COMPONENTS | Internal table of component names.
@@ -144,7 +144,7 @@ public section.
       !I_STRUCTURE type ANY
     exporting
       value(E_COMPONENTS) type ZIF_IBMC_SERVICE_ARCH~TT_STRING .
-  "! Parses a JSON string into an ABAP structure
+  "! <p class="shorttext synchronized" lang="en">Parses a JSON string into an ABAP structure.</p>
   "!
   "! @parameter I_JSON | JSON string.
   "! @parameter I_DICTIONARY | Dictionary for mapping of identifier names.
@@ -159,14 +159,14 @@ public section.
       value(C_ABAP) type ANY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   methods GET_REQUEST_PROP
     importing
       !I_AUTH_METHOD type STRING default C_DEFAULT
     returning
       value(E_REQUEST_PROP) type TS_REQUEST_PROP .
-  "! Returns data type of a given parameter
+  "! <p class="shorttext synchronized" lang="en">Returns data type of a given parameter.</p>
   "!
   "! @parameter I_FIELD | Field of type that is supposed to be determined.
   "! @parameter E_DATATYPE | Technical type (= base type) of I_FIELD.
@@ -176,7 +176,8 @@ public section.
       !I_FIELD type ANY
     returning
       value(E_DATATYPE) type ZIF_IBMC_SERVICE_ARCH~CHAR .
-  "! Unescape unicode codepoints to characters in a string, e.g. '\u0041 b \u0063' -&gt; 'A b c'
+  "! <p class="shorttext synchronized" lang="en">Unescape unicode codepoints to characters in a string</p>,
+  "!  e.g. '\u0041 b \u0063' -&gt; 'A b c'
   "!
   "! @parameter I_IN | String with unicode codepoints.
   "! @parameter E_OUT | Unescaped string.
@@ -186,7 +187,8 @@ public section.
       !I_IN type STRING
     returning
       value(E_OUT) type STRING .
-  "! Returns the file extension for a mime type, e.g. 'text/plain' -&gt; 'txt'
+  "! <p class="shorttext synchronized" lang="en">Returns the file extension for a mime type</p>,
+  "!  e.g. 'text/plain' -&gt; 'txt'
   "!
   "! @parameter I_MIME_TYPE | MIME type.
   "! @parameter E_EXTENSION | File extension (without leading dot).
@@ -196,7 +198,7 @@ public section.
       value(I_MIME_TYPE) type STRING
     returning
       value(E_EXTENSION) type STRING .
-  "! Moves a referenced data structure to an ABAP structure
+  "! <p class="shorttext synchronized" lang="en">Moves a referenced data structure to an ABAP structure.</p>
   "!
   "! @parameter I_DATA_REFERENCE | Reference to data object.
   "! @parameter E_ABAP | ABAP structure to be filled.
@@ -209,7 +211,7 @@ public section.
       value(E_ABAP) type ANY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods ADD_QUERY_PARAMETER
     importing
@@ -218,7 +220,7 @@ public section.
       !I_IS_BOOLEAN type BOOLEAN default C_BOOLEAN_FALSE
     changing
       !C_URL type TS_URL .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods ADD_HEADER_PARAMETER
     importing
@@ -227,26 +229,26 @@ public section.
       !I_IS_BOOLEAN type BOOLEAN default C_BOOLEAN_FALSE
     changing
       !C_HEADERS type ZIF_IBMC_SERVICE_ARCH~TS_REQUEST_PROP-HEADERS .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods GET_FULL_URL
     importing
       !I_URL type TS_URL
     returning
       value(E_URL) type STRING .
-  "! Returns the service name.
+  "! <p class="shorttext synchronized" lang="en">Returns the service name.</p>
   "!
   "! @parameter E_APPNAME | Name of the service.
   "!
   methods GET_APPNAME
     returning
       value(E_APPNAME) type STRING .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   class-methods NORMALIZE_URL
     changing
       !C_URL type TS_URL .
-  "! Extracts a JSON string from an ABAP structure.
+  "! <p class="shorttext synchronized" lang="en">Extracts a JSON string from an ABAP structure.</p>
   "!
   "! @parameter I_NAME | Name of component to be extracted.
   "! @parameter I_VALUE | ABAP structure to be converted to JSON string.
@@ -257,7 +259,6 @@ public section.
   "!   Otherwise it is omitted in JSON string.
   "! @parameter I_LOWER_CASE | If set to C_BOOLEAN_TRUE all keys in JSON string will be lower case.
   "! @parameter E_JSON | JSON string.
-  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
   class-methods ABAP_TO_JSON
     importing
@@ -268,13 +269,19 @@ public section.
       !I_LOWER_CASE type BOOLEAN default C_BOOLEAN_TRUE
     returning
       value(E_JSON) type STRING .
+  "! <p class="shorttext synchronized" lang="en">Throws an exception, if HTTP response indicates an error.</p>
+  "!
+  "! @parameter I_RESPONSE | HTTP response to be checked.
+  "! @parameter I_URL | URL that the request has been sent to.
+  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+  "!
   methods CHECK_HTTP_RESPONSE
     importing
       !I_RESPONSE type TO_REST_RESPONSE optional
       !I_URL type TS_URL optional
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Class constructor.
+  "! <p class="shorttext synchronized" lang="en">Class constructor.</p>
   "!
   "! @parameter I_URL | URL of the service.
   "! @parameter I_HOST | Host of the service. I_URL and I_HOST can be used synonymously.
@@ -299,7 +306,7 @@ public section.
       !I_ACCESS_TOKEN type TS_ACCESS_TOKEN optional
       !I_SSL_ID type ZIF_IBMC_SERVICE_ARCH~TY_SSL_ID optional
       !I_DEBUG_MODE type CHAR default SPACE .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   methods GET_REST_CLIENT
     importing
@@ -308,7 +315,7 @@ public section.
       value(E_CLIENT) type TS_CLIENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Method for internal use.
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
   methods GET_ACCESS_TOKEN
     importing
@@ -317,7 +324,7 @@ public section.
       value(E_ACCESS_TOKEN) type TS_ACCESS_TOKEN
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sends a HTTP DELETE request.
+  "! <p class="shorttext synchronized" lang="en">Sends a HTTP DELETE request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
@@ -330,17 +337,14 @@ public section.
       value(E_RESPONSE) type TO_REST_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sets an access token explicitly.
+  "! <p class="shorttext synchronized" lang="en">Sets an access token explicitly.</p>
   "!
   "! @parameter I_ACCESS_TOKEN | Access token.
-  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
   methods SET_ACCESS_TOKEN
     importing
-      !I_ACCESS_TOKEN type TS_ACCESS_TOKEN
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sends a HTTP GET request.
+      !I_ACCESS_TOKEN type TS_ACCESS_TOKEN .
+  "! <p class="shorttext synchronized" lang="en">Sends a HTTP GET request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
@@ -353,7 +357,7 @@ public section.
       value(E_RESPONSE) type TO_REST_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sends a HTTP POST request.
+  "! <p class="shorttext synchronized" lang="en">Sends a HTTP POST request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
@@ -366,7 +370,7 @@ public section.
       value(E_RESPONSE) type TO_REST_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sends a HTTP POST request with multipart body.
+  "! <p class="shorttext synchronized" lang="en">Sends a HTTP POST request with multipart body.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter IT_FORM_PART | Internal table of form parts in request body.
@@ -381,7 +385,7 @@ public section.
       value(E_RESPONSE) type TO_REST_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! Sends a HTTP PUT request.
+  "! <p class="shorttext synchronized" lang="en">Sends a HTTP PUT request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
@@ -396,14 +400,17 @@ public section.
       ZCX_IBMC_SERVICE_EXCEPTION .
 protected section.
 
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   methods ADJUST_REQUEST_PROP
     changing
       !C_REQUEST_PROP type TS_REQUEST_PROP .
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   class-methods MERGE_STRUCTURE
     importing
       !I_ALTERNATIVE type ANY
     changing
       !C_BASE type ANY .
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   methods SET_URI_AND_AUTHORIZATION
     importing
       !I_CLIENT type TS_CLIENT
@@ -1424,6 +1431,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   method set_access_token.
 
     p_request_prop_default-access_token = i_access_token.
+    if p_request_prop_default-access_token-token_type is initial.
+      p_request_prop_default-access_token-token_type = 'Bearer'.
+    endif.
+    if p_request_prop_default-access_token-expires_ts = 0.
+      p_request_prop_default-access_token-expires_ts   = '99991231235959'  ##LITERAL.   " avoid token being refreshed by sdk
+    endif.
 
   endmethod.
 

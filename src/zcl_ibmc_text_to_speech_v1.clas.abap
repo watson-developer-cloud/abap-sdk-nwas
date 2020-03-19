@@ -11,8 +11,8 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Text to Speech</h1>
-"! The IBM&reg; Text to Speech service provides APIs that use IBM's
+"! <p class="shorttext synchronized" lang="en">Text to Speech</p>
+"! The IBM&reg; Text to Speech service provides APIs that use IBM&apos;s
 "!  speech-synthesis capabilities to synthesize text into natural-sounding speech
 "!  in a variety of languages, dialects, and voices. The service supports at least
 "!  one male or female voice, sometimes both, for each language. The audio is
@@ -38,7 +38,8 @@ class ZCL_IBMC_TEXT_TO_SPEECH_V1 DEFINITION
 
 public section.
   types:
-    "!   Information about a word for the custom voice model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about a word for the custom voice model.</p>
     begin of T_WORD,
       "!   The word for the custom voice model.
       WORD type STRING,
@@ -47,17 +48,18 @@ public section.
       "!    as an IPA or IBM SPR translation. A sounds-like translation consists of one or
       "!    more words that, when combined, sound like the word.
       TRANSLATION type STRING,
-      "!   **Japanese only.** The part of speech for the word. The service uses the value to
-      "!   ** produce the correct intonation for the word. You can create only a single
-      "!   ** entry, with or without a single part of speech, for any word; you cannot create
-      "!   ** multiple entries with different parts of speech for the same word. For more
-      "!   ** information, see [Working with Japanese
-      "!   ** entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speec
-      "!   **h-rules#jaNotes).
+      "!   **Japanese only.** The part of speech for the word. The service uses the value
+      "!    to produce the correct intonation for the word. You can create only a single
+      "!    entry, with or without a single part of speech, for any word; you cannot create
+      "!    multiple entries with different parts of speech for the same word. For more
+      "!    information, see [Working with Japanese
+      "!    entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#j
+      "!   aNotes).
       PART_OF_SPEECH type STRING,
     end of T_WORD.
   types:
-    "!   Information about an existing custom voice model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about an existing custom voice model.</p>
     begin of T_VOICE_MODEL,
       "!   The customization ID (GUID) of the custom voice model. The **Create a custom
       "!    model** method returns only this field. It does not not return the other fields
@@ -89,7 +91,9 @@ public section.
       WORDS type STANDARD TABLE OF T_WORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_VOICE_MODEL.
   types:
-    "!   Additional service features that are supported with the voice.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Additional service features that are supported with the</p>
+    "!     voice.
     begin of T_SUPPORTED_FEATURES,
       "!   If `true`, the voice can be customized; if `false`, the voice cannot be
       "!    customized. (Same as `customizable`.).
@@ -100,7 +104,8 @@ public section.
       VOICE_TRANSFORMATION type BOOLEAN,
     end of T_SUPPORTED_FEATURES.
   types:
-    "!   Information about an available voice model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about an available voice model.</p>
     begin of T_VOICE,
       "!   The URI of the voice.
       URL type STRING,
@@ -124,7 +129,8 @@ public section.
       CUSTOMIZATION type T_VOICE_MODEL,
     end of T_VOICE.
   types:
-    "!   Information about the new custom voice model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the new custom voice model.</p>
     begin of T_CREATE_VOICE_MODEL,
       "!   The name of the new custom voice model.
       NAME type STRING,
@@ -136,7 +142,8 @@ public section.
       DESCRIPTION type STRING,
     end of T_CREATE_VOICE_MODEL.
   types:
-    "!   The error response from a failed request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The error response from a failed request.</p>
     begin of T_ERROR_MODEL,
       "!   Description of the problem.
       ERROR type STRING,
@@ -146,16 +153,17 @@ public section.
       CODE_DESCRIPTION type STRING,
     end of T_ERROR_MODEL.
   types:
-    "!   For the **Add custom words** method, one or more words that are to be added or
-    "!    updated for the custom voice model and the translation for each specified word.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    For the **Add custom words** method, one or more words that</p>
+    "!     are to be added or updated for the custom voice model and the translation for
+    "!     each specified word. <br/>
     "!    <br/>
-    "!   <br/>
-    "!   For the **List custom words** method, the words and their translations from the
-    "!    custom voice model.
+    "!    For the **List custom words** method, the words and their translations from the
+    "!     custom voice model.
     begin of T_WORDS,
       "!   The **Add custom words** method accepts an array of `Word` objects. Each object
       "!    provides a word that is to be added or updated for the custom voice model and
-      "!    the word's translation. <br/>
+      "!    the word&apos;s translation. <br/>
       "!   <br/>
       "!   The **List custom words** method returns an array of `Word` objects. Each object
       "!    shows a word and its translation from the custom voice model. The words are
@@ -164,7 +172,8 @@ public section.
       WORDS type STANDARD TABLE OF T_WORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORDS.
   types:
-    "!   Information about the updated custom voice model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the updated custom voice model.</p>
     begin of T_UPDATE_VOICE_MODEL,
       "!   A new name for the custom voice model.
       NAME type STRING,
@@ -176,16 +185,19 @@ public section.
       WORDS type STANDARD TABLE OF T_WORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATE_VOICE_MODEL.
   types:
-    "!   Information about all available voice models.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about all available voice models.</p>
     begin of T_VOICES,
       "!   A list of available voices.
       VOICES type STANDARD TABLE OF T_VOICE WITH NON-UNIQUE DEFAULT KEY,
     end of T_VOICES.
   types:
-    "!   The empty response from a request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The empty response from a request.</p>
       T_EMPTY_RESPONSE_BODY type JSONOBJECT.
   types:
-    "!   Information about existing custom voice models.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about existing custom voice models.</p>
     begin of T_VOICE_MODELS,
       "!   An array of `VoiceModel` objects that provides information about each available
       "!    custom voice model. The array is empty if the requesting credentials own no
@@ -194,15 +206,18 @@ public section.
       CUSTOMIZATIONS type STANDARD TABLE OF T_VOICE_MODEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_VOICE_MODELS.
   types:
-    "!   The text to synthesize. Specify either plain text or a subset of SSML. SSML is
-    "!    an XML-based markup language that provides text annotation for speech-synthesis
-    "!    applications. Pass a maximum of 5 KB of input text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The text to synthesize. Specify either plain text or a</p>
+    "!     subset of SSML. SSML is an XML-based markup language that provides text
+    "!     annotation for speech-synthesis applications. Pass a maximum of 5 KB of input
+    "!     text.
     begin of T_TEXT,
       "!   The text to synthesize.
       TEXT type STRING,
     end of T_TEXT.
   types:
-    "!   The pronunciation of the specified text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The pronunciation of the specified text.</p>
     begin of T_PRONUNCIATION,
       "!   The pronunciation of the specified text in the requested voice and format. If a
       "!    custom voice model is specified, the pronunciation also reflects that custom
@@ -210,24 +225,26 @@ public section.
       PRONUNCIATION type STRING,
     end of T_PRONUNCIATION.
   types:
-    "!   Information about the translation for the specified text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the translation for the specified text.</p>
     begin of T_TRANSLATION,
       "!   The phonetic or sounds-like translation for the word. A phonetic translation is
       "!    based on the SSML format for representing the phonetic string of a word either
       "!    as an IPA translation or as an IBM SPR translation. A sounds-like is one or
       "!    more words that, when combined, sound like the word.
       TRANSLATION type STRING,
-      "!   **Japanese only.** The part of speech for the word. The service uses the value to
-      "!   ** produce the correct intonation for the word. You can create only a single
-      "!   ** entry, with or without a single part of speech, for any word; you cannot create
-      "!   ** multiple entries with different parts of speech for the same word. For more
-      "!   ** information, see [Working with Japanese
-      "!   ** entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speec
-      "!   **h-rules#jaNotes).
+      "!   **Japanese only.** The part of speech for the word. The service uses the value
+      "!    to produce the correct intonation for the word. You can create only a single
+      "!    entry, with or without a single part of speech, for any word; you cannot create
+      "!    multiple entries with different parts of speech for the same word. For more
+      "!    information, see [Working with Japanese
+      "!    entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#j
+      "!   aNotes).
       PART_OF_SPEECH type STRING,
     end of T_TRANSLATION.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_WORD type string value '|WORD|TRANSLATION|',
     T_VOICE_MODEL type string value '|CUSTOMIZATION_ID|',
@@ -246,6 +263,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      VOICES type string value 'voices',
      URL type string value 'url',
@@ -283,7 +301,14 @@ constants:
     redefinition .
 
 
-    "! List voices.
+    "! <p class="shorttext synchronized" lang="en">List voices</p>
+    "!   Lists all voices available for use with the service. The information includes
+    "!    the name, language, gender, and other details about the voice. To see
+    "!    information about a specific voice, use the **Get a voice** method. <br/>
+    "!   <br/>
+    "!   **See also:** [Listing all available
+    "!    voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#l
+    "!   istVoices).
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_VOICES
@@ -296,7 +321,16 @@ constants:
       !E_RESPONSE type T_VOICES
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get a voice.
+    "! <p class="shorttext synchronized" lang="en">Get a voice</p>
+    "!   Gets information about the specified voice. The information includes the name,
+    "!    language, gender, and other details about the voice. Specify a customization ID
+    "!    to obtain information for a custom voice model that is defined for the language
+    "!    of the specified voice. To list information about all available voices, use the
+    "!    **List voices** method. <br/>
+    "!   <br/>
+    "!   **See also:** [Listing a specific
+    "!    voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#li
+    "!   stVoice).
     "!
     "! @parameter I_VOICE |
     "!   The voice for which information is to be returned.
@@ -319,7 +353,80 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Synthesize audio.
+    "! <p class="shorttext synchronized" lang="en">Synthesize audio</p>
+    "!   Synthesizes text to audio that is spoken in the specified voice. The service
+    "!    bases its understanding of the language for the input text on the specified
+    "!    voice. Use a voice that matches the language of the input text. <br/>
+    "!   <br/>
+    "!   The method accepts a maximum of 5 KB of input text in the body of the request,
+    "!    and 8 KB for the URL and headers. The 5 KB limit includes any SSML tags that
+    "!    you specify. The service returns the synthesized audio stream as an array of
+    "!    bytes. <br/>
+    "!   <br/>
+    "!   **See also:** [The HTTP
+    "!    interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-using
+    "!   HTTP#usingHTTP). <br/>
+    "!   <br/>
+    "!   ### Audio formats (accept types)<br/>
+    "!   <br/>
+    "!    The service can return audio in the following formats (MIME types).<br/>
+    "!   * Where indicated, you can optionally specify the sampling rate (`rate`) of the
+    "!    audio. You must specify a sampling rate for the `audio/l16` and `audio/mulaw`
+    "!    formats. A specified sampling rate must lie in the range of 8 kHz to 192 kHz.
+    "!    Some formats restrict the sampling rate to certain values, as noted.<br/>
+    "!   * For the `audio/l16` format, you can optionally specify the endianness
+    "!    (`endianness`) of the audio: `endianness=big-endian` or
+    "!    `endianness=little-endian`. <br/>
+    "!   <br/>
+    "!   Use the `Accept` header or the `accept` parameter to specify the requested
+    "!    format of the response audio. If you omit an audio format altogether, the
+    "!    service returns the audio in Ogg format with the Opus codec
+    "!    (`audio/ogg;codecs=opus`). The service always returns single-channel
+    "!    audio.<br/>
+    "!   * `audio/basic` - The service returns audio with a sampling rate of 8000
+    "!    Hz.<br/>
+    "!   * `audio/flac` - You can optionally specify the `rate` of the audio. The default
+    "!    sampling rate is 22,050 Hz.<br/>
+    "!   * `audio/l16` - You must specify the `rate` of the audio. You can optionally
+    "!    specify the `endianness` of the audio. The default endianness is
+    "!    `little-endian`.<br/>
+    "!   * `audio/mp3` - You can optionally specify the `rate` of the audio. The default
+    "!    sampling rate is 22,050 Hz.<br/>
+    "!   * `audio/mpeg` - You can optionally specify the `rate` of the audio. The default
+    "!    sampling rate is 22,050 Hz.<br/>
+    "!   * `audio/mulaw` - You must specify the `rate` of the audio.<br/>
+    "!   * `audio/ogg` - The service returns the audio in the `vorbis` codec. You can
+    "!    optionally specify the `rate` of the audio. The default sampling rate is 22,050
+    "!    Hz.<br/>
+    "!   * `audio/ogg;codecs=opus` - You can optionally specify the `rate` of the audio.
+    "!    Only the following values are valid sampling rates: `48000`, `24000`, `16000`,
+    "!    `12000`, or `8000`. If you specify a value other than one of these, the service
+    "!    returns an error. The default sampling rate is 48,000 Hz.<br/>
+    "!   * `audio/ogg;codecs=vorbis` - You can optionally specify the `rate` of the
+    "!    audio. The default sampling rate is 22,050 Hz.<br/>
+    "!   * `audio/wav` - You can optionally specify the `rate` of the audio. The default
+    "!    sampling rate is 22,050 Hz.<br/>
+    "!   * `audio/webm` - The service returns the audio in the `opus` codec. The service
+    "!    returns audio with a sampling rate of 48,000 Hz.<br/>
+    "!   * `audio/webm;codecs=opus` - The service returns audio with a sampling rate of
+    "!    48,000 Hz.<br/>
+    "!   * `audio/webm;codecs=vorbis` - You can optionally specify the `rate` of the
+    "!    audio. The default sampling rate is 22,050 Hz. <br/>
+    "!   <br/>
+    "!   For more information about specifying an audio format, including additional
+    "!    details about some of the formats, see [Audio
+    "!    formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFo
+    "!   rmats#audioFormats). <br/>
+    "!   <br/>
+    "!   ### Warning messages<br/>
+    "!   <br/>
+    "!    If a request includes invalid query parameters, the service returns a
+    "!    `Warnings` response header that provides messages about the invalid parameters.
+    "!    The warning includes a descriptive message and a list of invalid argument
+    "!    strings. For example, a message such as `&quot;Unknown arguments:&quot;` or
+    "!    `&quot;Unknown url query arguments:&quot;` followed by a list of the form
+    "!    `&quot;&#123;invalid_arg_1&#125;, &#123;invalid_arg_2&#125;.&quot;` The request
+    "!    succeeds despite the warnings.
     "!
     "! @parameter I_TEXT |
     "!   No documentation available.
@@ -352,7 +459,19 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Get pronunciation.
+    "! <p class="shorttext synchronized" lang="en">Get pronunciation</p>
+    "!   Gets the phonetic pronunciation for the specified word. You can request the
+    "!    pronunciation for a specific format. You can also request the pronunciation for
+    "!    a specific voice to see the default translation for the language of that voice
+    "!    or for a specific custom voice model to see the translation for that voice
+    "!    model. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. The method does not support
+    "!    the Arabic, Chinese, and Dutch languages. <br/>
+    "!   <br/>
+    "!   **See also:** [Querying a word from a
+    "!    language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-custom
+    "!   Words#cuWordsQueryLanguage).
     "!
     "! @parameter I_TEXT |
     "!   The word for which the pronunciation is requested.
@@ -368,9 +487,9 @@ constants:
     "!    is to be returned. The language of a specified custom model must match the
     "!    language of the specified voice. If the word is not defined in the specified
     "!    custom model, the service returns the default translation for the custom
-    "!    model's language. You must make the request with credentials for the instance
-    "!    of the service that owns the custom model. Omit the parameter to see the
-    "!    translation for the specified voice with no customization.
+    "!    model&apos;s language. You must make the request with credentials for the
+    "!    instance of the service that owns the custom model. Omit the parameter to see
+    "!    the translation for the specified voice with no customization.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_PRONUNCIATION
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -387,7 +506,18 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create a custom model.
+    "! <p class="shorttext synchronized" lang="en">Create a custom model</p>
+    "!   Creates a new empty custom voice model. You must specify a name for the new
+    "!    custom model. You can optionally specify the language and a description for the
+    "!    new model. The model is owned by the instance of the service whose credentials
+    "!    are used to create it. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. The service does not support
+    "!    voice model customization for the Arabic, Chinese, and Dutch languages. <br/>
+    "!   <br/>
+    "!   **See also:** [Creating a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+    "!   els#cuModelsCreate).
     "!
     "! @parameter I_CREATE_VOICE_MODEL |
     "!   A `CreateVoiceModel` object that contains information about the new custom voice
@@ -405,7 +535,19 @@ constants:
       !E_RESPONSE type T_VOICE_MODEL
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List custom models.
+    "! <p class="shorttext synchronized" lang="en">List custom models</p>
+    "!   Lists metadata such as the name and description for all custom voice models that
+    "!    are owned by an instance of the service. Specify a language to list the voice
+    "!    models for that language only. To see the words in addition to the metadata for
+    "!    a specific voice model, use the **List a custom model** method. You must use
+    "!    credentials for the instance of the service that owns a model to list
+    "!    information about it. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Querying all custom
+    "!    models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMo
+    "!   dels#cuModelsQueryAll).
     "!
     "! @parameter I_LANGUAGE |
     "!   The language for which custom voice models that are owned by the requesting
@@ -423,7 +565,41 @@ constants:
       !E_RESPONSE type T_VOICE_MODELS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a custom model.
+    "! <p class="shorttext synchronized" lang="en">Update a custom model</p>
+    "!   Updates information for the specified custom voice model. You can update
+    "!    metadata such as the name and description of the voice model. You can also
+    "!    update the words in the model and their translations. Adding a new translation
+    "!    for a word that already exists in a custom model overwrites the word&apos;s
+    "!    existing translation. A custom model can contain no more than 20,000 entries.
+    "!    You must use credentials for the instance of the service that owns a model to
+    "!    update it. <br/>
+    "!   <br/>
+    "!   You can define sounds-like or phonetic translations for words. A sounds-like
+    "!    translation consists of one or more words that, when combined, sound like the
+    "!    word. Phonetic translations are based on the SSML phoneme format for
+    "!    representing a word. You can specify them in standard International Phonetic
+    "!    Alphabet (IPA) representation<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    "!    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+    "!   <br/>
+    "!     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    "!    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Updating a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+    "!   els#cuModelsUpdate)<br/>
+    "!   * [Adding words to a Japanese custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuJapaneseAdd)<br/>
+    "!   * [Understanding
+    "!    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+    "!   ustomIntro#customIntro)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -441,7 +617,17 @@ constants:
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get a custom model.
+    "! <p class="shorttext synchronized" lang="en">Get a custom model</p>
+    "!   Gets all information about a specified custom voice model. In addition to
+    "!    metadata such as the name and description of the voice model, the output
+    "!    includes the words and their translations as defined in the model. To see just
+    "!    the metadata for a voice model, use the **List custom models** method. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Querying a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+    "!   els#cuModelsQuery).
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -458,7 +644,15 @@ constants:
       !E_RESPONSE type T_VOICE_MODEL
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a custom model.
+    "! <p class="shorttext synchronized" lang="en">Delete a custom model</p>
+    "!   Deletes the specified custom voice model. You must use credentials for the
+    "!    instance of the service that owns a model to delete it. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Deleting a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+    "!   els#cuModelsDelete).
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -471,7 +665,39 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Add custom words.
+    "! <p class="shorttext synchronized" lang="en">Add custom words</p>
+    "!   Adds one or more words and their translations to the specified custom voice
+    "!    model. Adding a new translation for a word that already exists in a custom
+    "!    model overwrites the word&apos;s existing translation. A custom model can
+    "!    contain no more than 20,000 entries. You must use credentials for the instance
+    "!    of the service that owns a model to add words to it. <br/>
+    "!   <br/>
+    "!   You can define sounds-like or phonetic translations for words. A sounds-like
+    "!    translation consists of one or more words that, when combined, sound like the
+    "!    word. Phonetic translations are based on the SSML phoneme format for
+    "!    representing a word. You can specify them in standard International Phonetic
+    "!    Alphabet (IPA) representation<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    "!    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+    "!   <br/>
+    "!     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    "!    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Adding multiple words to a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuWordsAdd)<br/>
+    "!   * [Adding words to a Japanese custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuJapaneseAdd)<br/>
+    "!   * [Understanding
+    "!    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+    "!   ustomIntro#customIntro)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -488,7 +714,17 @@ constants:
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List custom words.
+    "! <p class="shorttext synchronized" lang="en">List custom words</p>
+    "!   Lists all of the words and their translations for the specified custom voice
+    "!    model. The output shows the translations as they are defined in the model. You
+    "!    must use credentials for the instance of the service that owns a model to list
+    "!    its words. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Querying all words from a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuWordsQueryModel).
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -505,7 +741,39 @@ constants:
       !E_RESPONSE type T_WORDS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Add a custom word.
+    "! <p class="shorttext synchronized" lang="en">Add a custom word</p>
+    "!   Adds a single word and its translation to the specified custom voice model.
+    "!    Adding a new translation for a word that already exists in a custom model
+    "!    overwrites the word&apos;s existing translation. A custom model can contain no
+    "!    more than 20,000 entries. You must use credentials for the instance of the
+    "!    service that owns a model to add a word to it. <br/>
+    "!   <br/>
+    "!   You can define sounds-like or phonetic translations for words. A sounds-like
+    "!    translation consists of one or more words that, when combined, sound like the
+    "!    word. Phonetic translations are based on the SSML phoneme format for
+    "!    representing a word. You can specify them in standard International Phonetic
+    "!    Alphabet (IPA) representation<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    "!    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+    "!   <br/>
+    "!     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+    "!   <br/>
+    "!     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    "!    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Adding a single word to a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuWordAdd)<br/>
+    "!   * [Adding words to a Japanese custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuJapaneseAdd)<br/>
+    "!   * [Understanding
+    "!    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+    "!   ustomIntro#customIntro)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -524,7 +792,17 @@ constants:
       !I_contenttype type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get a custom word.
+    "! <p class="shorttext synchronized" lang="en">Get a custom word</p>
+    "!   Gets the translation for a single word from the specified custom model. The
+    "!    output shows the translation as it is defined in the model. You must use
+    "!    credentials for the instance of the service that owns a model to list its
+    "!    words. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Querying a single word from a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuWordQueryModel).
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -544,7 +822,16 @@ constants:
       !E_RESPONSE type T_TRANSLATION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a custom word.
+    "! <p class="shorttext synchronized" lang="en">Delete a custom word</p>
+    "!   Deletes a single word from the specified custom voice model. You must use
+    "!    credentials for the instance of the service that owns a model to delete its
+    "!    words. <br/>
+    "!   <br/>
+    "!   **Note:** This method is currently a beta release. <br/>
+    "!   <br/>
+    "!   **See also:** [Deleting a word from a custom
+    "!    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+    "!   ds#cuWordDelete).
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom voice model. You must make the request
@@ -560,7 +847,20 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Delete labeled data.
+    "! <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+    "!   Deletes all data that is associated with a specified customer ID. The method
+    "!    deletes all data for the customer ID, regardless of the method by which the
+    "!    information was added. The method has no effect if no data is associated with
+    "!    the customer ID. You must issue the request with credentials for the same
+    "!    instance of the service that was used to associate the customer ID with the
+    "!    data. <br/>
+    "!   <br/>
+    "!   You associate a customer ID with data by passing the `X-Watson-Metadata` header
+    "!    with a request that passes the data. <br/>
+    "!   <br/>
+    "!   **See also:** [Information
+    "!    security](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-inform
+    "!   ation-security#information-security).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -649,7 +949,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092827'.
+    e_sdk_version_date = '20200310173439'.
 
   endmethod.
 

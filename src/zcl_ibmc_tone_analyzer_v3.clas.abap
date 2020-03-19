@@ -11,14 +11,14 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Tone Analyzer</h1>
+"! <p class="shorttext synchronized" lang="en">Tone Analyzer</p>
 "! The IBM Watson&trade; Tone Analyzer service uses linguistic analysis to detect
 "!  emotional and language tones in written text. The service can analyze tone at
 "!  both the document and sentence levels. You can use the service to understand
 "!  how your written communications are perceived and then to improve the tone of
 "!  your communications. Businesses can use the service to learn the tone of their
-"!  customers' communications and to respond to each customer appropriately, or to
-"!  understand and improve their customer conversations.<br/>
+"!  customers&apos; communications and to respond to each customer appropriately,
+"!  or to understand and improve their customer conversations.<br/>
 "! <br/>
 "! **Note:** Request logging is disabled for the Tone Analyzer service. Regardless
 "!  of whether you set the `X-Watson-Learning-Opt-Out` request header, the service
@@ -30,7 +30,8 @@ class ZCL_IBMC_TONE_ANALYZER_V3 DEFINITION
 
 public section.
   types:
-    "!   The score for a tone from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The score for a tone from the input content.</p>
     begin of T_TONE_SCORE,
       "!   The score for the tone.<br/>
       "!   * **`2017-09-21`:** The score that is returned lies in the range of 0.5 to 1. A
@@ -58,7 +59,8 @@ public section.
       TONE_NAME type STRING,
     end of T_TONE_SCORE.
   types:
-    "!   The category for a tone from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The category for a tone from the input content.</p>
     begin of T_TONE_CATEGORY,
       "!   An array of `ToneScore` objects that provides the results for the tones of the
       "!    category.
@@ -71,13 +73,15 @@ public section.
       CATEGORY_NAME type STRING,
     end of T_TONE_CATEGORY.
   types:
-    "!   Input for the general-purpose endpoint.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Input for the general-purpose endpoint.</p>
     begin of T_TONE_INPUT,
       "!   The input content that the service is to analyze.
       TEXT type STRING,
     end of T_TONE_INPUT.
   types:
-    "!   The score for an utterance from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The score for an utterance from the input content.</p>
     begin of T_TONE_CHAT_SCORE,
       "!   The score for the tone in the range of 0.5 to 1. A score greater than 0.75
       "!    indicates a high likelihood that the tone is perceived in the utterance.
@@ -89,7 +93,8 @@ public section.
       TONE_NAME type STRING,
     end of T_TONE_CHAT_SCORE.
   types:
-    "!   An utterance for the input of the general-purpose endpoint.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An utterance for the input of the general-purpose endpoint.</p>
     begin of T_UTTERANCE,
       "!   An utterance contributed by a user in the conversation that is to be analyzed.
       "!    The utterance can contain multiple sentences.
@@ -99,39 +104,44 @@ public section.
       USER type STRING,
     end of T_UTTERANCE.
   types:
-    "!   Input for the customer-engagement endpoint.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Input for the customer-engagement endpoint.</p>
     begin of T_TONE_CHAT_INPUT,
       "!   An array of `Utterance` objects that provides the input content that the service
       "!    is to analyze.
       UTTERANCES type STANDARD TABLE OF T_UTTERANCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TONE_CHAT_INPUT.
   types:
-    "!   The results of the analysis for the individual sentences of the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of the analysis for the individual sentences of</p>
+    "!     the input content.
     begin of T_SENTENCE_ANALYSIS,
       "!   The unique identifier of a sentence of the input content. The first sentence has
       "!    ID 0, and the ID of each subsequent sentence is incremented by one.
       SENTENCE_ID type INTEGER,
       "!   The text of the input sentence.
       TEXT type STRING,
-      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the
-      "!   ** analysis for each qualifying tone of the sentence. The array includes results
-      "!   ** for any tone whose score is at least 0.5. The array is empty if no tone has a
-      "!   ** score that meets this threshold. **`2016-05-19`:** Not returned.
+      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of
+      "!    the analysis for each qualifying tone of the sentence. The array includes
+      "!    results for any tone whose score is at least 0.5. The array is empty if no tone
+      "!    has a score that meets this threshold. **`2016-05-19`:** Not returned.
       TONES type STANDARD TABLE OF T_TONE_SCORE WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory`
-      "!   ** objects that provides the results of the tone analysis for the sentence. The
-      "!   ** service returns results only for the tones specified with the `tones` parameter
-      "!   ** of the request.
+      "!    objects that provides the results of the tone analysis for the sentence. The
+      "!    service returns results only for the tones specified with the `tones` parameter
+      "!    of the request.
       TONE_CATEGORIES type STANDARD TABLE OF T_TONE_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the first
-      "!   ** character of the sentence in the overall input content.
+      "!    character of the sentence in the overall input content.
       INPUT_FROM type INTEGER,
-      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the last character
-      "!   ** of the sentence in the overall input content.
+      "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** The offset of the last
+      "!    character of the sentence in the overall input content.
       INPUT_TO type INTEGER,
     end of T_SENTENCE_ANALYSIS.
   types:
-    "!   The results of the analysis for an utterance of the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of the analysis for an utterance of the input</p>
+    "!     content.
     begin of T_UTTERANCE_ANALYSIS,
       "!   The unique identifier of the utterance. The first utterance has ID 0, and the ID
       "!    of each subsequent utterance is incremented by one.
@@ -144,23 +154,26 @@ public section.
       "!    threshold.
       TONES type STANDARD TABLE OF T_TONE_CHAT_SCORE WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** An error message if the utterance contains more than 500
-      "!   ** characters. The service does not analyze the utterance. **`2016-05-19`:** Not
-      "!   ** returned.
+      "!    characters. The service does not analyze the utterance. **`2016-05-19`:** Not
+      "!    returned.
       ERROR type STRING,
     end of T_UTTERANCE_ANALYSIS.
   types:
-    "!   The results of the analysis for the utterances of the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of the analysis for the utterances of the input</p>
+    "!     content.
     begin of T_UTTERANCE_ANALYSES,
       "!   An array of `UtteranceAnalysis` objects that provides the results for each
       "!    utterance of the input.
       UTTERANCES_TONE type STANDARD TABLE OF T_UTTERANCE_ANALYSIS WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** A warning message if the content contains more than 50
-      "!   ** utterances. The service analyzes only the first 50 utterances.
-      "!   ** **`2016-05-19`:** Not returned.
+      "!    utterances. The service analyzes only the first 50 utterances.
+      "!    **`2016-05-19`:** Not returned.
       WARNING type STRING,
     end of T_UTTERANCE_ANALYSES.
   types:
-    "!   The error response from a failed request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The error response from a failed request.</p>
     begin of T_ERROR_MODEL,
       "!   The HTTP status code.
       CODE type INTEGER,
@@ -173,26 +186,29 @@ public section.
       HELP type STRING,
     end of T_ERROR_MODEL.
   types:
-    "!   The results of the analysis for the full input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of the analysis for the full input content.</p>
     begin of T_DOCUMENT_ANALYSIS,
-      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of the
-      "!   ** analysis for each qualifying tone of the document. The array includes results
-      "!   ** for any tone whose score is at least 0.5. The array is empty if no tone has a
-      "!   ** score that meets this threshold. **`2016-05-19`:** Not returned.
+      "!   **`2017-09-21`:** An array of `ToneScore` objects that provides the results of
+      "!    the analysis for each qualifying tone of the document. The array includes
+      "!    results for any tone whose score is at least 0.5. The array is empty if no tone
+      "!    has a score that meets this threshold. **`2016-05-19`:** Not returned.
       TONES type STANDARD TABLE OF T_TONE_SCORE WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** Not returned. **`2016-05-19`:** An array of `ToneCategory`
-      "!   ** objects that provides the results of the tone analysis for the full document of
-      "!   ** the input content. The service returns results only for the tones specified
-      "!   ** with the `tones` parameter of the request.
+      "!    objects that provides the results of the tone analysis for the full document of
+      "!    the input content. The service returns results only for the tones specified
+      "!    with the `tones` parameter of the request.
       TONE_CATEGORIES type STANDARD TABLE OF T_TONE_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
       "!   **`2017-09-21`:** A warning message if the overall content exceeds 128 KB or
-      "!   ** contains more than 1000 sentences. The service analyzes only the first 1000
-      "!   ** sentences for document-level analysis and the first 100 sentences for
-      "!   ** sentence-level analysis. **`2016-05-19`:** Not returned.
+      "!    contains more than 1000 sentences. The service analyzes only the first 1000
+      "!    sentences for document-level analysis and the first 100 sentences for
+      "!    sentence-level analysis. **`2016-05-19`:** Not returned.
       WARNING type STRING,
     end of T_DOCUMENT_ANALYSIS.
   types:
-    "!   The tone analysis results for the input from the general-purpose endpoint.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The tone analysis results for the input from the</p>
+    "!     general-purpose endpoint.
     begin of T_TONE_ANALYSIS,
       "!   The results of the analysis for the full input content.
       DOCUMENT_TONE type T_DOCUMENT_ANALYSIS,
@@ -204,6 +220,7 @@ public section.
     end of T_TONE_ANALYSIS.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_TONE_SCORE type string value '|SCORE|TONE_ID|TONE_NAME|',
     T_TONE_CATEGORY type string value '|TONES|CATEGORY_ID|CATEGORY_NAME|',
@@ -221,6 +238,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      TEXT type string value 'text',
      UTTERANCES type string value 'utterances',
@@ -259,27 +277,48 @@ constants:
     redefinition .
 
 
-    "! Analyze general tone.
+    "! <p class="shorttext synchronized" lang="en">Analyze general tone</p>
+    "!   Use the general-purpose endpoint to analyze the tone of your input content. The
+    "!    service analyzes the content for emotional and language tones. The method
+    "!    always analyzes the tone of the full document; by default, it also analyzes the
+    "!    tone of each individual sentence of the content. <br/>
+    "!   <br/>
+    "!   You can submit no more than 128 KB of total input content and no more than 1000
+    "!    individual sentences in JSON, plain text, or HTML format. The service analyzes
+    "!    the first 1000 sentences for document-level analysis and only the first 100
+    "!    sentences for sentence-level analysis. <br/>
+    "!   <br/>
+    "!   Per the JSON specification, the default character encoding for JSON content is
+    "!    effectively always UTF-8; per the HTTP specification, the default encoding for
+    "!    plain text and HTML is ISO-8859-1 (effectively, the ASCII character set). When
+    "!    specifying a content type of plain text or HTML, include the `charset`
+    "!    parameter to indicate the character encoding of the input text; for example:
+    "!    `Content-Type: text/plain;charset=utf-8`. For `text/html`, the service removes
+    "!    HTML tags and analyzes only the textual content. <br/>
+    "!   <br/>
+    "!   **See also:** [Using the general-purpose
+    "!    endpoint](https://cloud.ibm.com/docs/tone-analyzer?topic=tone-analyzer-utgpe#ut
+    "!   gpe).
     "!
     "! @parameter I_TONE_INPUT |
     "!   JSON, plain text, or HTML input that contains the content to be analyzed. For
     "!    JSON input, provide an object of type `ToneInput`.
     "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. A character encoding can be specified by including a
-    "!    `charset` parameter. For example, 'text/plain;charset=utf-8'.
+    "!    `charset` parameter. For example, &apos;text/plain;charset=utf-8&apos;.
     "! @parameter I_SENTENCES |
     "!   Indicates whether the service is to return an analysis of each individual
     "!    sentence in addition to its analysis of the full document. If `true` (the
     "!    default), the service returns results for each sentence.
     "! @parameter I_TONES |
     "!   **`2017-09-21`:** Deprecated. The service continues to accept the parameter for
-    "!   ** backward-compatibility, but the parameter no longer affects the response. <br/>
-    "!   **<br/>
-    "!   ****`2016-05-19`:** A comma-separated list of tones for which the service is to
-    "!   ** return its analysis of the input; the indicated tones apply both to the full
-    "!   ** document and to individual sentences of the document. You can specify one or
-    "!   ** more of the valid values. Omit the parameter to request results for all three
-    "!   ** tones.
+    "!    backward-compatibility, but the parameter no longer affects the response. <br/>
+    "!   <br/>
+    "!   **`2016-05-19`:** A comma-separated list of tones for which the service is to
+    "!    return its analysis of the input; the indicated tones apply both to the full
+    "!    document and to individual sentences of the document. You can specify one or
+    "!    more of the valid values. Omit the parameter to request results for all three
+    "!    tones.
     "! @parameter I_CONTENT_LANGUAGE |
     "!   The language of the input text for the request: English or French. Regional
     "!    variants are treated as their parent language; for example, `en-US` is
@@ -310,7 +349,23 @@ constants:
       !E_RESPONSE type T_TONE_ANALYSIS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Analyze customer-engagement tone.
+    "! <p class="shorttext synchronized" lang="en">Analyze customer-engagement tone</p>
+    "!   Use the customer-engagement endpoint to analyze the tone of customer service and
+    "!    customer support conversations. For each utterance of a conversation, the
+    "!    method reports the most prevalent subset of the following seven tones: sad,
+    "!    frustrated, satisfied, excited, polite, impolite, and sympathetic. <br/>
+    "!   <br/>
+    "!   If you submit more than 50 utterances, the service returns a warning for the
+    "!    overall content and analyzes only the first 50 utterances. If you submit a
+    "!    single utterance that contains more than 500 characters, the service returns an
+    "!    error for that utterance and does not analyze the utterance. The request fails
+    "!    if all utterances have more than 500 characters. Per the JSON specification,
+    "!    the default character encoding for JSON content is effectively always UTF-8.
+    "!    <br/>
+    "!   <br/>
+    "!   **See also:** [Using the customer-engagement
+    "!    endpoint](https://cloud.ibm.com/docs/tone-analyzer?topic=tone-analyzer-utco#utc
+    "!   o).
     "!
     "! @parameter I_UTTERANCES |
     "!   An object that contains the content to be analyzed.
@@ -415,7 +470,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092828'.
+    e_sdk_version_date = '20200310173440'.
 
   endmethod.
 
