@@ -2,7 +2,7 @@
 
 # ABAP SDK for IBM Watson, using SAP NetWeaver
 
-ABAP client library to use the [IBM Watson APIs][wdc]. This is a Community SDK written by ABAPers for the ABAPers in the Open Source community, to provide easy usage of IBM Watson Developer Services in innovation initiatives combined with any SAP Application which is run on SAP NetWeaver 7.50 and above, such as SAP ECC or SAP S/4HANA. It is the choice and responsibility of application developers how this Community SDK is used.
+ABAP client library to use the [IBM Watson APIs][wdc]. This is a Community SDK written by ABAPers for the ABAPers in the Open Source community, to provide easy usage of IBM Watson Developer Services in innovation initiatives combined with any SAP Application which is run on SAP NetWeaver 7.50 and above, such as SAP Business Suite or SAP S/4HANA on-premises edition. It is the choice and responsibility of application developers how this Community SDK is used.
 
 Additionally, as the ABAP SDK is a community release it is not updated with the same schedule as IBM-supported SDKs. Please see more information in [Questions](#questions).
 
@@ -11,7 +11,7 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 | **abap-sdk-nwas** | [abap-sdk-scp](https://github.com/watson-developer-cloud/abap-sdk-scp) |
 |---|---|
 | for SAP NetWeaver AS ABAP 7.50+ | for SAP Cloud Platform ABAP Environment 2002+ |
-| tested on SAP ECC and SAP S/4HANA |  |
+| tested on SAP Business Suite and SAP S/4HANA on-premises edition |  |
 | `this repository` |  |
 
 ---
@@ -38,8 +38,8 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 </details>
 
 ## ANNOUNCEMENTS
-### Minor version 0.2.0 released
-Version v0.2.0 of the SDK has been released and includes two breaking changes - see what's changed in the [migration guide](MIGRATION-V0.2.0.md).
+### Minor version 0.3.0 released
+Version v0.3.0 of the SDK has been released and includes one breaking change - see what's changed in the [migration guide](MIGRATION-V0.3.0.md).
 
 ## Before you begin
 * You need an [IBM Cloud][ibm_cloud_onboarding] account.
@@ -211,7 +211,7 @@ Using the client library requires two steps:
     exporting
       i_url      = <url>
       i_apikey   = <api key>
-...
+      ...
     importing   
       eo_instance = lo_service_class ).
 ```
@@ -343,8 +343,8 @@ Using the client library requires two steps:
   zcl_ibmc_service_ext=>get_instance(
     exporting
       i_url     = 'https://api.eu-gb.personality-insights.watson.cloud.ibm.com/instances/<uuid>'
-      i_apikey   = lv_apikey
-      i_version  = '2018-05-01'
+      i_apikey  = lv_apikey
+      i_version = '2018-05-01'
     importing
       eo_instance = lo_personality_insights ).
 
@@ -393,7 +393,7 @@ Using the client library requires two steps:
   " get Watson Language Translator service instance
   zcl_ibmc_service_ext=>get_instance(
     exporting
-      i_url      = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/<uudi>'
+      i_url      = 'https://api.us-south.language-translator.watson.cloud.ibm.com/instances/<uuid>'
       i_apikey   = lv_apikey
       i_version  = '2018-05-01'
     importing
