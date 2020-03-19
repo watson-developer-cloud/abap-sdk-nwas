@@ -44,6 +44,7 @@ interface ZIF_IBMC_SERVICE_ARCH
     begin of ts_access_token,
       access_token   type string,
       token_type(32) type c,
+      expires_ts     type timestamp,
     end of ts_access_token .
   types:
     ty_timezone(6) type c .

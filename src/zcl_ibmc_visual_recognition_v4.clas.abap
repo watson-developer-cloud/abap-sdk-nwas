@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Visual Recognition v4</h1>
+"! <p class="shorttext synchronized" lang="en">Visual Recognition v4</p>
 "! Provide images to the IBM Watson&trade; Visual Recognition service for analysis.
 "!  The service detects objects based on a set of images with training data. <br/>
 class ZCL_IBMC_VISUAL_RECOGNITION_V4 DEFINITION
@@ -21,7 +21,8 @@ class ZCL_IBMC_VISUAL_RECOGNITION_V4 DEFINITION
 
 public section.
   types:
-    "!   Defines the location of the bounding box around the object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Defines the location of the bounding box around the object.</p>
     begin of T_LOCATION,
       "!   Y-position of top-left pixel of the bounding box.
       TOP type INTEGER,
@@ -33,7 +34,8 @@ public section.
       HEIGHT type INTEGER,
     end of T_LOCATION.
   types:
-    "!   Training status for the objects in the collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training status for the objects in the collection.</p>
     begin of T_OBJECT_TRAINING_STATUS,
       "!   Whether you can analyze images in the collection with the **objects** feature.
       READY type BOOLEAN,
@@ -49,13 +51,15 @@ public section.
       DESCRIPTION type STRING,
     end of T_OBJECT_TRAINING_STATUS.
   types:
-    "!   Training status information for the collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training status information for the collection.</p>
     begin of T_TRAINING_STATUS,
       "!   Training status for the objects in the collection.
       OBJECTS type T_OBJECT_TRAINING_STATUS,
     end of T_TRAINING_STATUS.
   types:
-    "!   Basic information about an object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Basic information about an object.</p>
     begin of T_OBJECT_METADATA,
       "!   The name of the object.
       OBJECT type STRING,
@@ -63,7 +67,8 @@ public section.
       COUNT type INTEGER,
     end of T_OBJECT_METADATA.
   types:
-    "!   The source type of the image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The source type of the image.</p>
     begin of T_IMAGE_SOURCE,
       "!   The source type of the image.
       TYPE type STRING,
@@ -81,7 +86,8 @@ public section.
       RESOLVED_URL type STRING,
     end of T_IMAGE_SOURCE.
   types:
-    "!   Details about the training data.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about the training data.</p>
     begin of T_TRAINING_DATA_OBJECT,
       "!   The name of the object.
       OBJECT type STRING,
@@ -89,13 +95,15 @@ public section.
       LOCATION type T_LOCATION,
     end of T_TRAINING_DATA_OBJECT.
   types:
-    "!   Training data for all objects.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training data for all objects.</p>
     begin of T_TRAINING_DATA_OBJECTS,
       "!   Training data for specific objects.
       OBJECTS type STANDARD TABLE OF T_TRAINING_DATA_OBJECT WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_DATA_OBJECTS.
   types:
-    "!   Details about a collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about a collection.</p>
     begin of T_COLLECTION,
       "!   The identifier of the collection.
       COLLECTION_ID type STRING,
@@ -115,7 +123,8 @@ public section.
       TRAINING_STATUS type T_TRAINING_STATUS,
     end of T_COLLECTION.
   types:
-    "!   Height and width of an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Height and width of an image.</p>
     begin of T_IMAGE_DIMENSIONS,
       "!   Height in pixels of the image.
       HEIGHT type INTEGER,
@@ -123,7 +132,8 @@ public section.
       WIDTH type INTEGER,
     end of T_IMAGE_DIMENSIONS.
   types:
-    "!   Details about the specific area of the problem.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about the specific area of the problem.</p>
     begin of T_ERROR_TARGET,
       "!   The parameter or property that is the focus of the problem.
       TYPE type STRING,
@@ -131,7 +141,8 @@ public section.
       NAME type STRING,
     end of T_ERROR_TARGET.
   types:
-    "!   Details about an error.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an error.</p>
     begin of T_ERROR,
       "!   Identifier of the problem.
       CODE type STRING,
@@ -143,7 +154,8 @@ public section.
       TARGET type T_ERROR_TARGET,
     end of T_ERROR.
   types:
-    "!   A container for the list of request-level problems.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A container for the list of request-level problems.</p>
     begin of T_ERROR_RESPONSE,
       "!   A container for the problems in the request.
       ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
@@ -151,7 +163,8 @@ public section.
       TRACE type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   Details about an object and its location.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an object and its location.</p>
     begin of T_BASE_OBJECT,
       "!   The name of the object. The name can contain alphanumeric, underscore, hyphen,
       "!    space, and dot characters. It cannot begin with the reserved prefix `sys-`.
@@ -160,7 +173,7 @@ public section.
       LOCATION type T_LOCATION,
     end of T_BASE_OBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   The IDs of the collections to analyze.
       COLLECTION_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
@@ -186,7 +199,8 @@ public section.
       THRESHOLD type FLOAT,
     end of T_INLINE_OBJECT.
   types:
-    "!   Details about an object in the collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an object in the collection.</p>
     begin of T_OBJECT_DETAIL,
       "!   The label for the object.
       OBJECT type STRING,
@@ -197,7 +211,8 @@ public section.
       SCORE type FLOAT,
     end of T_OBJECT_DETAIL.
   types:
-    "!   The objects in a collection that are detected in an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The objects in a collection that are detected in an image.</p>
     begin of T_COLLECTION_OBJECTS,
       "!   The identifier of the collection.
       COLLECTION_ID type STRING,
@@ -205,22 +220,27 @@ public section.
       OBJECTS type STANDARD TABLE OF T_OBJECT_DETAIL WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTION_OBJECTS.
   types:
-    "!   Container for the list of collections that have objects detected in an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Container for the list of collections that have objects</p>
+    "!     detected in an image.
     begin of T_DETECTED_OBJECTS,
       "!   The collections with identified objects.
       COLLECTIONS type STANDARD TABLE OF T_COLLECTION_OBJECTS WITH NON-UNIQUE DEFAULT KEY,
     end of T_DETECTED_OBJECTS.
   types:
-    "!   A file returned in the response.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A file returned in the response.</p>
       T_JPEG_IMAGE type FILE.
   types:
-    "!   A container for the list of collections.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A container for the list of collections.</p>
     begin of T_COLLECTIONS_LIST,
       "!   The collections in this service instance.
       COLLECTIONS type STANDARD TABLE OF T_COLLECTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTIONS_LIST.
   types:
-    "!   Details about the training event.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about the training event.</p>
     begin of T_TRAINING_EVENT,
       "!   Trained object type. Only `objects` is currently supported.
       TYPE type STRING,
@@ -235,7 +255,8 @@ public section.
       IMAGE_COUNT type INTEGER,
     end of T_TRAINING_EVENT.
   types:
-    "!   Details about the training events.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about the training events.</p>
     begin of T_TRAINING_EVENTS,
       "!   The starting day for the returned training events in Coordinated Universal Time
       "!    (UTC). If not specified in the request, it identifies the earliest training
@@ -254,7 +275,8 @@ public section.
       EVENTS type STANDARD TABLE OF T_TRAINING_EVENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_EVENTS.
   types:
-    "!   Details about an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an image.</p>
     begin of T_IMAGE_DETAILS,
       "!   The identifier of the image.
       IMAGE_ID type STRING,
@@ -273,7 +295,8 @@ public section.
       TRAINING_DATA type T_TRAINING_DATA_OBJECTS,
     end of T_IMAGE_DETAILS.
   types:
-    "!   Details about a problem.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about a problem.</p>
     begin of T_WARNING,
       "!   Identifier of the problem.
       CODE type STRING,
@@ -283,7 +306,8 @@ public section.
       MORE_INFO type STRING,
     end of T_WARNING.
   types:
-    "!   List of information about the images.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of information about the images.</p>
     begin of T_IMAGE_DETAILS_LIST,
       "!   The images in the collection.
       IMAGES type STANDARD TABLE OF T_IMAGE_DETAILS WITH NON-UNIQUE DEFAULT KEY,
@@ -294,10 +318,12 @@ public section.
       TRACE type STRING,
     end of T_IMAGE_DETAILS_LIST.
   types:
-    "!   Empty response.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Empty response.</p>
       T_EMPTY type JSONOBJECT.
   types:
-    "!   Basic information about an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Basic information about an image.</p>
     begin of T_IMAGE_SUMMARY,
       "!   The identifier of the image.
       IMAGE_ID type STRING,
@@ -306,13 +332,14 @@ public section.
       UPDATED type DATETIME,
     end of T_IMAGE_SUMMARY.
   types:
-    "!   Container for the training data.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Container for the training data.</p>
     begin of T_BASE_TRAINING_DATA_OBJECTS,
       "!   Training data for specific objects.
       OBJECTS type STANDARD TABLE OF T_TRAINING_DATA_OBJECT WITH NON-UNIQUE DEFAULT KEY,
     end of T_BASE_TRAINING_DATA_OBJECTS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT1,
       "!   An array of image files (.jpg or .png) or .zip files with images.<br/>
       "!   - Include a maximum of 20 images in a request.<br/>
@@ -339,13 +366,15 @@ public section.
       TRAINING_DATA type STRING,
     end of T_INLINE_OBJECT1.
   types:
-    "!   List of images.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of images.</p>
     begin of T_IMAGE_SUMMARY_LIST,
       "!   The images in the collection.
       IMAGES type STANDARD TABLE OF T_IMAGE_SUMMARY WITH NON-UNIQUE DEFAULT KEY,
     end of T_IMAGE_SUMMARY_LIST.
   types:
-    "!   Details about an image.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an image.</p>
     begin of T_IMAGE,
       "!   The source type of the image.
       SOURCE type T_IMAGE_SOURCE,
@@ -357,7 +386,8 @@ public section.
       ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
     end of T_IMAGE.
   types:
-    "!   Results for all images.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Results for all images.</p>
     begin of T_ANALYZE_RESPONSE,
       "!   Analyzed images.
       IMAGES type STANDARD TABLE OF T_IMAGE WITH NON-UNIQUE DEFAULT KEY,
@@ -368,7 +398,8 @@ public section.
       TRACE type STRING,
     end of T_ANALYZE_RESPONSE.
   types:
-    "!   Base details about a collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Base details about a collection.</p>
     begin of T_BASE_COLLECTION,
       "!   The identifier of the collection.
       COLLECTION_ID type STRING,
@@ -389,7 +420,8 @@ public section.
       TRAINING_STATUS type T_TRAINING_STATUS,
     end of T_BASE_COLLECTION.
   types:
-    "!   Basic information about an updated object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Basic information about an updated object.</p>
     begin of T_UPDATE_OBJECT_METADATA,
       "!   The updated name of the object. The name can contain alphanumeric, underscore,
       "!    hyphen, space, and dot characters. It cannot begin with the reserved prefix
@@ -399,7 +431,8 @@ public section.
       COUNT type INTEGER,
     end of T_UPDATE_OBJECT_METADATA.
   types:
-    "!   List of objects.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of objects.</p>
     begin of T_OBJECT_METADATA_LIST,
       "!   Number of unique named objects in the collection.
       OBJECT_COUNT type INTEGER,
@@ -408,6 +441,7 @@ public section.
     end of T_OBJECT_METADATA_LIST.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_LOCATION type string value '|TOP|LEFT|WIDTH|HEIGHT|',
     T_OBJECT_TRAINING_STATUS type string value '|READY|IN_PROGRESS|DATA_CHANGED|LATEST_FAILED|DESCRIPTION|',
@@ -439,12 +473,13 @@ constants:
     T_IMAGE type string value '|SOURCE|DIMENSIONS|OBJECTS|',
     T_ANALYZE_RESPONSE type string value '|IMAGES|',
     T_BASE_COLLECTION type string value '|',
-    T_UPDATE_OBJECT_METADATA type string value '|',
+    T_UPDATE_OBJECT_METADATA type string value '|OBJECT|COUNT|',
     T_OBJECT_METADATA_LIST type string value '|OBJECT_COUNT|',
     __DUMMY type string value SPACE,
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      CODE type string value 'code',
      MESSAGE type string value 'message',
@@ -511,7 +546,14 @@ constants:
     redefinition .
 
 
-    "! Analyze images.
+    "! <p class="shorttext synchronized" lang="en">Analyze images</p>
+    "!   Analyze images by URL, by file, or both against your own collection. Make sure
+    "!    that **training_status.objects.ready** is `true` for the feature before you use
+    "!    a collection to analyze images.<br/>
+    "!   <br/>
+    "!   Encode the image and .zip file names in UTF-8 if they contain non-ASCII
+    "!    characters. The service assumes UTF-8 encoding if it encounters non-ASCII
+    "!    characters.
     "!
     "! @parameter I_COLLECTION_IDS |
     "!   The IDs of the collections to analyze.
@@ -553,7 +595,14 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create a collection.
+    "! <p class="shorttext synchronized" lang="en">Create a collection</p>
+    "!   Create a collection that can be used to store images.<br/>
+    "!   <br/>
+    "!   To create a collection without specifying a name and description, include an
+    "!    empty JSON object in the request body.<br/>
+    "!   <br/>
+    "!   Encode the name and description in UTF-8 if they contain non-ASCII characters.
+    "!    The service assumes UTF-8 encoding if it encounters non-ASCII characters.
     "!
     "! @parameter I_COLLECTION_INFO |
     "!   The new collection.
@@ -570,7 +619,8 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List collections.
+    "! <p class="shorttext synchronized" lang="en">List collections</p>
+    "!   Retrieves a list of collections for the service instance.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COLLECTIONS_LIST
@@ -583,7 +633,8 @@ constants:
       !E_RESPONSE type T_COLLECTIONS_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get collection details.
+    "! <p class="shorttext synchronized" lang="en">Get collection details</p>
+    "!   Get details of one collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -599,7 +650,11 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a collection.
+    "! <p class="shorttext synchronized" lang="en">Update a collection</p>
+    "!   Update the name or description of a collection.<br/>
+    "!   <br/>
+    "!   Encode the name and description in UTF-8 if they contain non-ASCII characters.
+    "!    The service assumes UTF-8 encoding if it encounters non-ASCII characters.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -619,7 +674,8 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a collection.
+    "! <p class="shorttext synchronized" lang="en">Delete a collection</p>
+    "!   Delete a collection from the service instance.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -632,7 +688,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Add images.
+    "! <p class="shorttext synchronized" lang="en">Add images</p>
+    "!   Add images to a collection by URL, by file, or both.<br/>
+    "!   <br/>
+    "!   Encode the image and .zip file names in UTF-8 if they contain non-ASCII
+    "!    characters. The service assumes UTF-8 encoding if it encounters non-ASCII
+    "!    characters.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -675,7 +736,8 @@ constants:
       !E_RESPONSE type T_IMAGE_DETAILS_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List images.
+    "! <p class="shorttext synchronized" lang="en">List images</p>
+    "!   Retrieves a list of images in a collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -691,7 +753,8 @@ constants:
       !E_RESPONSE type T_IMAGE_SUMMARY_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get image details.
+    "! <p class="shorttext synchronized" lang="en">Get image details</p>
+    "!   Get the details of an image in a collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -710,7 +773,8 @@ constants:
       !E_RESPONSE type T_IMAGE_DETAILS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete an image.
+    "! <p class="shorttext synchronized" lang="en">Delete an image</p>
+    "!   Delete one image from a collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -725,7 +789,8 @@ constants:
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get a JPEG file of an image.
+    "! <p class="shorttext synchronized" lang="en">Get a JPEG file of an image</p>
+    "!   Download a JPEG representation of an image.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -750,7 +815,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List object metadata.
+    "! <p class="shorttext synchronized" lang="en">List object metadata</p>
+    "!   Retrieves a list of object names in a collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -766,7 +832,9 @@ constants:
       !E_RESPONSE type T_OBJECT_METADATA_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update an object name.
+    "! <p class="shorttext synchronized" lang="en">Update an object name</p>
+    "!   Update the name of an object. A successful request updates the training data for
+    "!    all images that use the object.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -782,14 +850,15 @@ constants:
     importing
       !I_COLLECTION_ID type STRING
       !I_OBJECT type STRING
-      !I_UPDATEOBJECTMETADATA type T_UPDATE_OBJECT_METADATA optional
+      !I_UPDATEOBJECTMETADATA type T_UPDATE_OBJECT_METADATA
       !I_contenttype type string default 'application/json'
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_UPDATE_OBJECT_METADATA
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get object metadata.
+    "! <p class="shorttext synchronized" lang="en">Get object metadata</p>
+    "!   Get the number of bounding boxes for a single object in a collection.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -808,7 +877,9 @@ constants:
       !E_RESPONSE type T_OBJECT_METADATA
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete an object.
+    "! <p class="shorttext synchronized" lang="en">Delete an object</p>
+    "!   Delete one object from a collection. A successful request deletes the training
+    "!    data from all images that use the object.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -824,7 +895,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Train a collection.
+    "! <p class="shorttext synchronized" lang="en">Train a collection</p>
+    "!   Start training on images in a collection. The collection must have enough
+    "!    training data and untrained data (the **training_status.objects.data_changed**
+    "!    is `true`). If training is in progress, the request queues the next training
+    "!    job.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -840,7 +915,17 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Add training data to an image.
+    "! <p class="shorttext synchronized" lang="en">Add training data to an image</p>
+    "!   Add, update, or delete training data for an image. Encode the object name in
+    "!    UTF-8 if it contains non-ASCII characters. The service assumes UTF-8 encoding
+    "!    if it encounters non-ASCII characters.<br/>
+    "!   <br/>
+    "!   Elements in the request replace the existing elements.<br/>
+    "!   <br/>
+    "!   - To update the training data, provide both the unchanged and the new or changed
+    "!    values.<br/>
+    "!   <br/>
+    "!   - To delete the training data, provide an empty value for the training data.
     "!
     "! @parameter I_COLLECTION_ID |
     "!   The identifier of the collection.
@@ -863,7 +948,9 @@ constants:
       !E_RESPONSE type T_TRAINING_DATA_OBJECTS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get training usage.
+    "! <p class="shorttext synchronized" lang="en">Get training usage</p>
+    "!   Information about the completed training events. You can use this information to
+    "!    determine how close you are to the training limits for the month.
     "!
     "! @parameter I_START_TIME |
     "!   The earliest day to include training events. Specify dates in YYYY-MM-DD format.
@@ -887,7 +974,15 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Delete labeled data.
+    "! <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+    "!   Deletes all data associated with a specified customer ID. The method has no
+    "!    effect if no data is associated with the customer ID. <br/>
+    "!   <br/>
+    "!   You associate a customer ID with data by passing the `X-Watson-Metadata` header
+    "!    with a request that passes data. For more information about personal data and
+    "!    customer IDs, see [Information
+    "!    security](https://cloud.ibm.com/docs/visual-recognition?topic=visual-recognitio
+    "!   n-information-security).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -968,7 +1063,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092831'.
+    e_sdk_version_date = '20200310173444'.
 
   endmethod.
 
@@ -1785,7 +1880,7 @@ endmethod.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_COLLECTION_ID        TYPE STRING
 * | [--->] I_OBJECT        TYPE STRING
-* | [--->] I_UPDATEOBJECTMETADATA        TYPE T_UPDATE_OBJECT_METADATA(optional)
+* | [--->] I_UPDATEOBJECTMETADATA        TYPE T_UPDATE_OBJECT_METADATA
 * | [--->] I_contenttype       TYPE string (default ='application/json')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_UPDATE_OBJECT_METADATA
@@ -1824,7 +1919,6 @@ method UPDATE_OBJECT_METADATA.
     field-symbols:
       <lv_text> type any.
     lv_separator = ''.
-    if not i_UPDATEOBJECTMETADATA is initial.
     lv_datatype = get_datatype( i_UPDATEOBJECTMETADATA ).
 
     if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
@@ -1841,7 +1935,6 @@ method UPDATE_OBJECT_METADATA.
       assign i_UPDATEOBJECTMETADATA to <lv_text>.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
-    endif.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
 	  lv_body = `{` && lv_body && `}`.

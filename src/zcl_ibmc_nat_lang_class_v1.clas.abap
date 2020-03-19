@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Natural Language Classifier</h1>
+"! <p class="shorttext synchronized" lang="en">Natural Language Classifier</p>
 "! IBM Watson&trade; Natural Language Classifier uses machine learning algorithms
 "!  to return the top matching predefined classes for short text input. You create
 "!  and train a classifier to connect predefined classes to example texts so that
@@ -23,7 +23,8 @@ class ZCL_IBMC_NAT_LANG_CLASS_V1 DEFINITION
 
 public section.
   types:
-    "!   Response payload for HTTP errors.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response payload for HTTP errors.</p>
     begin of T_ERROR_RESPONSE,
       "!   HTTP status code.
       CODE type INTEGER,
@@ -33,13 +34,14 @@ public section.
       DESCRIPTION type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   Request payload to classify.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Request payload to classify.</p>
     begin of T_CLASSIFY_INPUT,
       "!   The submitted phrase. The maximum length is 2048 characters.
       TEXT type STRING,
     end of T_CLASSIFY_INPUT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   Metadata in JSON format. The metadata identifies the language of the data, and
       "!    an optional name to identify the classifier. Specify the language with the
@@ -56,7 +58,8 @@ public section.
       TRAINING_DATA type FILE,
     end of T_INLINE_OBJECT.
   types:
-    "!   Class and confidence.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Class and confidence.</p>
     begin of T_CLASSIFIED_CLASS,
       "!   A decimal percentage that represents the confidence that Watson has in this
       "!    class. Higher values represent higher confidences.
@@ -65,7 +68,8 @@ public section.
       CLASS_NAME type STRING,
     end of T_CLASSIFIED_CLASS.
   types:
-    "!   Response from the classifier for a phrase in a collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response from the classifier for a phrase in a collection.</p>
     begin of T_COLLECTION_ITEM,
       "!   The submitted phrase. The maximum length is 2048 characters.
       TEXT type STRING,
@@ -76,7 +80,8 @@ public section.
       CLASSES type STANDARD TABLE OF T_CLASSIFIED_CLASS WITH NON-UNIQUE DEFAULT KEY,
     end of T_COLLECTION_ITEM.
   types:
-    "!   A classifier for natural language phrases.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A classifier for natural language phrases.</p>
     begin of T_CLASSIFIER,
       "!   User-supplied name for the classifier.
       NAME type STRING,
@@ -94,14 +99,16 @@ public section.
       LANGUAGE type STRING,
     end of T_CLASSIFIER.
   types:
-    "!   List of available classifiers.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of available classifiers.</p>
     begin of T_CLASSIFIER_LIST,
       "!   The classifiers available to the user. Returns an empty array if no classifiers
       "!    are available.
       CLASSIFIERS type STANDARD TABLE OF T_CLASSIFIER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFIER_LIST.
   types:
-    "!   Response from the classifier for a phrase.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response from the classifier for a phrase.</p>
     begin of T_CLASSIFICATION,
       "!   Unique identifier for this classifier.
       CLASSIFIER_ID type STRING,
@@ -116,13 +123,15 @@ public section.
       CLASSES type STANDARD TABLE OF T_CLASSIFIED_CLASS WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFICATION.
   types:
-    "!   Request payload to classify.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Request payload to classify.</p>
     begin of T_CLASSIFY_COLLECTION_INPUT,
       "!   The submitted phrases.
       COLLECTION type STANDARD TABLE OF T_CLASSIFY_INPUT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFY_COLLECTION_INPUT.
   types:
-    "!   Response payload for Cloud errors.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response payload for Cloud errors.</p>
     begin of T_ERROR_CLOUD,
       "!   HTTP status code.
       CODE type INTEGER,
@@ -130,10 +139,11 @@ public section.
       ERROR type STRING,
     end of T_ERROR_CLOUD.
   types:
-    "!   No documentation available.
+    "! No documentation available.
       T_EMPTY type JSONOBJECT.
   types:
-    "!   Response from the classifier for multiple phrases.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response from the classifier for multiple phrases.</p>
     begin of T_CLASSIFICATION_COLLECTION,
       "!   Unique identifier for this classifier.
       CLASSIFIER_ID type STRING,
@@ -144,6 +154,7 @@ public section.
     end of T_CLASSIFICATION_COLLECTION.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_ERROR_RESPONSE type string value '|',
     T_CLASSIFY_INPUT type string value '|TEXT|',
@@ -160,6 +171,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      CODE type string value 'code',
      ERROR type string value 'error',
@@ -192,7 +204,9 @@ constants:
     redefinition .
 
 
-    "! Classify a phrase.
+    "! <p class="shorttext synchronized" lang="en">Classify a phrase</p>
+    "!   Returns label information for the input. The status must be `Available` before
+    "!    you can use the classifier to classify text.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to use.
@@ -212,7 +226,11 @@ constants:
       !E_RESPONSE type T_CLASSIFICATION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Classify multiple phrases.
+    "! <p class="shorttext synchronized" lang="en">Classify multiple phrases</p>
+    "!   Returns label information for multiple phrases. The status must be `Available`
+    "!    before you can use the classifier to classify text.<br/>
+    "!   <br/>
+    "!   Note that classifying Japanese texts is a beta feature.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to use.
@@ -233,7 +251,9 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create classifier.
+    "! <p class="shorttext synchronized" lang="en">Create classifier</p>
+    "!   Sends data to create and train a classifier and returns information about the
+    "!    new classifier.
     "!
     "! @parameter I_TRAINING_METADATA |
     "!   Metadata in JSON format. The metadata identifies the language of the data, and
@@ -264,7 +284,8 @@ constants:
       !E_RESPONSE type T_CLASSIFIER
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List classifiers.
+    "! <p class="shorttext synchronized" lang="en">List classifiers</p>
+    "!   Returns an empty array if no classifiers are available.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFIER_LIST
@@ -277,7 +298,8 @@ constants:
       !E_RESPONSE type T_CLASSIFIER_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get information about a classifier.
+    "! <p class="shorttext synchronized" lang="en">Get information about a classifier</p>
+    "!   Returns status and other information about a classifier.
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to query.
@@ -293,7 +315,7 @@ constants:
       !E_RESPONSE type T_CLASSIFIER
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete classifier.
+    "! <p class="shorttext synchronized" lang="en">Delete classifier</p>
     "!
     "! @parameter I_CLASSIFIER_ID |
     "!   Classifier ID to delete.
@@ -378,7 +400,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092820'.
+    e_sdk_version_date = '20200310173431'.
 
   endmethod.
 

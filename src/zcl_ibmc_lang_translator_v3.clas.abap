@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Language Translator</h1>
+"! <p class="shorttext synchronized" lang="en">Language Translator</p>
 "! IBM Watson&trade; Language Translator translates text from one language to
 "!  another. The service offers multiple IBM provided translation models that you
 "!  can customize based on your unique terminology and language. Use Language
@@ -24,11 +24,12 @@ class ZCL_IBMC_LANG_TRANSLATOR_V3 DEFINITION
 
 public section.
   types:
-    "!   A globally unique string that identifies the underlying model that is used for
-    "!    translation.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A globally unique string that identifies the underlying</p>
+    "!     model that is used for translation.
       T_MODEL_ID type String.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_IDENTIFIABLE_LANGUAGE,
       "!   The language code for an identifiable language.
       LANGUAGE type STRING,
@@ -36,19 +37,19 @@ public section.
       NAME type STRING,
     end of T_IDENTIFIABLE_LANGUAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_IDENTIFIABLE_LANGUAGES,
       "!   A list of all languages that the service can identify.
       LANGUAGES type STANDARD TABLE OF T_IDENTIFIABLE_LANGUAGE WITH NON-UNIQUE DEFAULT KEY,
     end of T_IDENTIFIABLE_LANGUAGES.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TRANSLATION,
       "!   Translation output in UTF-8.
       TRANSLATION type STRING,
     end of T_TRANSLATION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TRANSLATION_RESULT,
       "!   An estimate of the number of words in the input text.
       WORD_COUNT type INTEGER,
@@ -58,7 +59,7 @@ public section.
       TRANSLATIONS type STANDARD TABLE OF T_TRANSLATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRANSLATION_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_IDENTIFIED_LANGUAGE,
       "!   The language code for an identified language.
       LANGUAGE type STRING,
@@ -66,25 +67,29 @@ public section.
       CONFIDENCE type DOUBLE,
     end of T_IDENTIFIED_LANGUAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_IDENTIFIED_LANGUAGES,
       "!   A ranking of identified languages with confidence scores.
       LANGUAGES type STANDARD TABLE OF T_IDENTIFIED_LANGUAGE WITH NON-UNIQUE DEFAULT KEY,
     end of T_IDENTIFIED_LANGUAGES.
   types:
-    "!   Translation target language code.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Translation target language code.</p>
       T_TARGET type String.
   types:
-    "!   The status of the translation job associated with a submitted document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The status of the translation job associated with a</p>
+    "!     submitted document.
       T_TRANSLATION_STATUS type String.
   types:
-    "!   Document information, including translation status.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Document information, including translation status.</p>
     begin of T_DOCUMENT_STATUS,
       "!   System generated ID identifying a document being translated using one specific
       "!    translation model.
       DOCUMENT_ID type STRING,
       "!   filename from the submission (if it was missing in the multipart-form,
-      "!    'noname.&lt;ext matching content type&gt;' is used.
+      "!    &apos;noname.&lt;ext matching content type&gt;&apos; is used.
       FILENAME type STRING,
       "!   The status of the translation job associated with a submitted document.
       STATUS type STRING,
@@ -110,7 +115,7 @@ public section.
       CHARACTER_COUNT type INTEGER,
     end of T_DOCUMENT_STATUS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   The http error code.
       CODE type INTEGER,
@@ -118,10 +123,11 @@ public section.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   Translation source language code.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Translation source language code.</p>
       T_SOURCE type String.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT1,
       "!   The model to use for translation. `model_id` or both `source` and `target` are
       "!    required.
@@ -143,7 +149,7 @@ public section.
       FILE type FILE,
     end of T_INLINE_OBJECT1.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   A TMX file with your customizations. The customizations in the file completely
       "!    overwrite the domain translaton data, including high frequency or high
@@ -158,7 +164,8 @@ public section.
       PARALLEL_CORPUS type FILE,
     end of T_INLINE_OBJECT.
   types:
-    "!   Response payload for models.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response payload for models.</p>
     begin of T_TRANSLATION_MODEL,
       "!   A globally unique string that identifies the underlying model that is used for
       "!    translation.
@@ -188,21 +195,25 @@ public section.
       STATUS type STRING,
     end of T_TRANSLATION_MODEL.
   types:
-    "!   The response type for listing existing translation models.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The response type for listing existing translation models.</p>
     begin of T_TRANSLATION_MODELS,
       "!   An array of available models.
       MODELS type STANDARD TABLE OF T_TRANSLATION_MODEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRANSLATION_MODELS.
   types:
-    "!   Model ID of the base model that was used to customize the model. If the model is
-    "!    not a custom model, this will be absent or an empty string.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Model ID of the base model that was used to customize the</p>
+    "!     model. If the model is not a custom model, this will be absent or an empty
+    "!     string.
       T_BASE_MODEL_ID type String.
   types:
-    "!   System generated ID identifying a document being translated using one specific
-    "!    translation model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    System generated ID identifying a document being translated</p>
+    "!     using one specific translation model.
       T_DOCUMENT_ID type String.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TRANSLATE_REQUEST,
       "!   Input text in UTF-8 encoding. Multiple entries will result in multiple
       "!    translations in the response.
@@ -216,19 +227,20 @@ public section.
       TARGET type STRING,
     end of T_TRANSLATE_REQUEST.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DELETE_MODEL_RESULT,
-      "!   "OK" indicates that the model was successfully deleted.
+      "!   &quot;OK&quot; indicates that the model was successfully deleted.
       STATUS type STRING,
     end of T_DELETE_MODEL_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DOCUMENT_LIST,
       "!   An array of all previously submitted documents.
       DOCUMENTS type STANDARD TABLE OF T_DOCUMENT_STATUS WITH NON-UNIQUE DEFAULT KEY,
     end of T_DOCUMENT_LIST.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_IDENTIFIABLE_LANGUAGE type string value '|LANGUAGE|NAME|',
     T_IDENTIFIABLE_LANGUAGES type string value '|LANGUAGES|',
@@ -249,6 +261,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      DOCUMENTS type string value 'documents',
      DOCUMENT_ID type string value 'document_id',
@@ -290,7 +303,8 @@ constants:
     redefinition .
 
 
-    "! Translate.
+    "! <p class="shorttext synchronized" lang="en">Translate</p>
+    "!   Translates the input text from the source language to the target language.
     "!
     "! @parameter I_REQUEST |
     "!   The translate request containing the text, and either a model ID or source and
@@ -309,7 +323,9 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List identifiable languages.
+    "! <p class="shorttext synchronized" lang="en">List identifiable languages</p>
+    "!   Lists the languages that the service can identify. Returns the language code
+    "!    (for example, `en` for English or `es` for Spanish) and name of each language.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_IDENTIFIABLE_LANGUAGES
@@ -322,7 +338,8 @@ constants:
       !E_RESPONSE type T_IDENTIFIABLE_LANGUAGES
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Identify language.
+    "! <p class="shorttext synchronized" lang="en">Identify language</p>
+    "!   Identifies the language of the input text.
     "!
     "! @parameter I_TEXT |
     "!   Input text in UTF-8 format.
@@ -340,15 +357,16 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List models.
+    "! <p class="shorttext synchronized" lang="en">List models</p>
+    "!   Lists available translation models.
     "!
     "! @parameter I_SOURCE |
     "!   Specify a language code to filter results by source language.
     "! @parameter I_TARGET |
     "!   Specify a language code to filter results by target language.
     "! @parameter I_DEFAULT |
-    "!   If the default parameter isn't specified, the service will return all models
-    "!    (default and non-default) for each language pair. To return only default
+    "!   If the default parameter isn&apos;t specified, the service will return all
+    "!    models (default and non-default) for each language pair. To return only default
     "!    models, set this to `true`. To return only non-default models, set this to
     "!    `false`. There is exactly one default model per language pair, the IBM provided
     "!    base model.
@@ -366,7 +384,25 @@ constants:
       !E_RESPONSE type T_TRANSLATION_MODELS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create model.
+    "! <p class="shorttext synchronized" lang="en">Create model</p>
+    "!   Uploads Translation Memory eXchange (TMX) files to customize a translation
+    "!    model.<br/>
+    "!   <br/>
+    "!   You can either customize a model with a forced glossary or with a corpus that
+    "!    contains parallel sentences. To create a model that is customized with a
+    "!    parallel corpus &lt;b&gt;and&lt;/b&gt; a forced glossary, proceed in two steps:
+    "!    customize with a parallel corpus first and then customize the resulting model
+    "!    with a glossary. Depending on the type of customization and the size of the
+    "!    uploaded corpora, training can range from minutes for a glossary to several
+    "!    hours for a large parallel corpus. You can upload a single forced glossary file
+    "!    and this file must be less than &lt;b&gt;10 MB&lt;/b&gt;. You can upload
+    "!    multiple parallel corpora tmx files. The cumulative file size of all uploaded
+    "!    files is limited to &lt;b&gt;250 MB&lt;/b&gt;. To successfully train with a
+    "!    parallel corpus you must have at least &lt;b&gt;5,000 parallel
+    "!    sentences&lt;/b&gt; in your corpus.<br/>
+    "!   <br/>
+    "!   You can have a &lt;b&gt;maximum of 10 custom models per language pair&lt;/b&gt;.
+    "!
     "!
     "! @parameter I_BASE_MODEL_ID |
     "!   The model ID of the model to use as the base for customization. To see available
@@ -406,7 +442,8 @@ constants:
       !E_RESPONSE type T_TRANSLATION_MODEL
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete model.
+    "! <p class="shorttext synchronized" lang="en">Delete model</p>
+    "!   Deletes a custom translation model.
     "!
     "! @parameter I_MODEL_ID |
     "!   Model ID of the model to delete.
@@ -422,7 +459,10 @@ constants:
       !E_RESPONSE type T_DELETE_MODEL_RESULT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get model details.
+    "! <p class="shorttext synchronized" lang="en">Get model details</p>
+    "!   Gets information about a translation model, including training status for custom
+    "!    models. Use this API call to poll the status of your customization request. A
+    "!    successfully completed training will have a status of `available`.
     "!
     "! @parameter I_MODEL_ID |
     "!   Model ID of the model to get.
@@ -439,7 +479,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List documents.
+    "! <p class="shorttext synchronized" lang="en">List documents</p>
+    "!   Lists documents that have been submitted for translation
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DOCUMENT_LIST
@@ -452,7 +493,10 @@ constants:
       !E_RESPONSE type T_DOCUMENT_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Translate document.
+    "! <p class="shorttext synchronized" lang="en">Translate document</p>
+    "!   Submit a document for translation. You can submit the document contents in the
+    "!    `file` parameter, or you can reference a previously submitted document by
+    "!    document ID.
     "!
     "! @parameter I_FILE |
     "!   The contents of the source file to translate.<br/>
@@ -495,7 +539,8 @@ constants:
       !E_RESPONSE type T_DOCUMENT_STATUS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get document status.
+    "! <p class="shorttext synchronized" lang="en">Get document status</p>
+    "!   Gets the translation status of a document
     "!
     "! @parameter I_DOCUMENT_ID |
     "!   The document ID of the document.
@@ -511,7 +556,8 @@ constants:
       !E_RESPONSE type T_DOCUMENT_STATUS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete document.
+    "! <p class="shorttext synchronized" lang="en">Delete document</p>
+    "!   Deletes a document
     "!
     "! @parameter I_DOCUMENT_ID |
     "!   Document ID of the document to delete.
@@ -522,7 +568,8 @@ constants:
       !I_DOCUMENT_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get translated document.
+    "! <p class="shorttext synchronized" lang="en">Get translated document</p>
+    "!   Gets the translated document associated with the given document ID
     "!
     "! @parameter I_DOCUMENT_ID |
     "!   The document ID of the document that was submitted for translation.
@@ -539,7 +586,7 @@ constants:
     "!    application/vnd.oasis.opendocument.text, application/pdf, application/rtf,
     "!    text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A
     "!    character encoding can be specified by including a `charset` parameter. For
-    "!    example, 'text/html;charset=utf-8'.
+    "!    example, &apos;text/html;charset=utf-8&apos;.
     "! @parameter E_RESPONSE |
     "!   Service return value of type FILE
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -625,7 +672,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092819'.
+    e_sdk_version_date = '20200310173429'.
 
   endmethod.
 
