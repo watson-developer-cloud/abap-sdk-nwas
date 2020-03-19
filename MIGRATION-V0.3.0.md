@@ -1,6 +1,16 @@
-# Upgrading to ABAP SDK version 0.2.0
+# Upgrading to ABAP SDK version 0.3.0
 
 ## Breaking changes
+
+### Breaking changes by service
+#### Factory Method
+- Parameter `I_PROXY_SERVICE` of method `ZCL_IBMC_SERVICE_EXT=>GET_INSTANCE` is renamed to `I_PROXY_PORT`.
+
+#### Visual Recognition V4
+- Parameter `I_UPDATEOBJECTMETADATA` of method `UPDATE_OBJECT_METADATA` is required (previously this was optional).
+
+##
+## Special instructions when directly upgrading from versions earlier than 0.2.0
 
 ### Table conversion necessary after pull
 
