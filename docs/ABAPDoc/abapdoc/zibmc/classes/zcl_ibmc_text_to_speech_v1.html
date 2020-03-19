@@ -1,5 +1,5 @@
-<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_TEXT_TO_SPEECH_V1</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_TEXT_TO_SPEECH_V1</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <h1>Text to Speech</h1>
- The IBM&reg; Text to Speech service provides APIs that use IBM's
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_TEXT_TO_SPEECH_V1</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_TEXT_TO_SPEECH_V1</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Text to Speech</p>
+ The IBM&reg; Text to Speech service provides APIs that use IBM&apos;s
   speech-synthesis capabilities to synthesize text into natural-sounding speech
   in a variety of languages, dialects, and voices. The service supports at least
   one male or female voice, sometimes both, for each language. The audio is
@@ -17,14 +17,62 @@
   word. A phonetic translation is based on the SSML phoneme format for
   representing a word. You can specify a phonetic translation in standard
   International Phonetic Alphabet (IPA) representation or in the proprietary IBM
-  Symbolic Phonetic Representation (SPR). <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_create_voice_model</span> (structured type)</td><td><span class="abapDocComment">   Information about the new custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty_response_body</span> type JSONOBJECT</td><td><span class="abapDocComment">   The empty response from a request.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_model</span> (structured type)</td><td><span class="abapDocComment">   The error response from a failed request.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_pronunciation</span> (structured type)</td><td><span class="abapDocComment">   The pronunciation of the specified text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_supported_features</span> (structured type)</td><td><span class="abapDocComment">   Additional service features that are supported with the voice.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_text</span> (structured type)</td><td><span class="abapDocComment">   The text to synthesize. Specify either plain text or a subset of SSML. SSML is
-    an XML-based markup language that provides text annotation for speech-synthesis
-    applications. Pass a maximum of 5 KB of input text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation</span> (structured type)</td><td><span class="abapDocComment">   Information about the translation for the specified text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_voice_model</span> (structured type)</td><td><span class="abapDocComment">   Information about the updated custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice</span> (structured type)</td><td><span class="abapDocComment">   Information about an available voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voices</span> (structured type)</td><td><span class="abapDocComment">   Information about all available voice models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_model</span> (structured type)</td><td><span class="abapDocComment">   Information about an existing custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_models</span> (structured type)</td><td><span class="abapDocComment">   Information about existing custom voice models.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_word</span> (structured type)</td><td><span class="abapDocComment">   Information about a word for the custom voice model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_words</span> (structured type)</td><td><span class="abapDocComment">   For the **Add custom words** method, one or more words that are to be added or
-    updated for the custom voice model and the translation for each specified word.
+  Symbolic Phonetic Representation (SPR). <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_create_voice_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about the new custom voice model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty_response_body</span> type JSONOBJECT</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The empty response from a request.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The error response from a failed request.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_pronunciation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The pronunciation of the specified text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_supported_features</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Additional service features that are supported with the</p>
+     voice.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_text</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The text to synthesize. Specify either plain text or a</p>
+     subset of SSML. SSML is an XML-based markup language that provides text
+     annotation for speech-synthesis applications. Pass a maximum of 5 KB of input
+     text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about the translation for the specified text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_update_voice_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about the updated custom voice model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about an available voice model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voices</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about all available voice models.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about an existing custom voice model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_voice_models</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about existing custom voice models.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_word</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a word for the custom voice model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_words</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    For the **Add custom words** method, one or more words that</p>
+     are to be added or updated for the custom voice model and the translation for
+     each specified word. <br/>
     <br/>
+    For the **List custom words** method, the words and their translations from the
+     custom voice model.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">add_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_translation</span></td><td>type T_TRANSLATION</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Add a custom word</p>
+   Adds a single word and its translation to the specified custom voice model.
+    Adding a new translation for a word that already exists in a custom model
+    overwrites the word&apos;s existing translation. A custom model can contain no
+    more than 20,000 entries. You must use credentials for the instance of the
+    service that owns a model to add a word to it. <br/>
    <br/>
-   For the **List custom words** method, the words and their translations from the
-    custom voice model.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">add_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_translation</span></td><td>type T_TRANSLATION</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Add a custom word.
+   You can define sounds-like or phonetic translations for words. A sounds-like
+    translation consists of one or more words that, when combined, sound like the
+    word. Phonetic translations are based on the SSML phoneme format for
+    representing a word. You can specify them in standard International Phonetic
+    Alphabet (IPA) representation<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+   <br/>
+     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Adding a single word to a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuWordAdd)<br/>
+   * [Adding words to a Japanese custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuJapaneseAdd)<br/>
+   * [Understanding
+    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+   ustomIntro#customIntro)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
@@ -33,37 +81,128 @@
    The word that is to be added or updated for the custom voice model.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_translation</span></td><td><span class="abapDocComment">
    The translation for the word that is to be added or updated.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">add_words</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_custom_words</span></td><td>type T_WORDS</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Add custom words.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">add_words</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_custom_words</span></td><td>type T_WORDS</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Add custom words</p>
+   Adds one or more words and their translations to the specified custom voice
+    model. Adding a new translation for a word that already exists in a custom
+    model overwrites the word&apos;s existing translation. A custom model can
+    contain no more than 20,000 entries. You must use credentials for the instance
+    of the service that owns a model to add words to it. <br/>
+   <br/>
+   You can define sounds-like or phonetic translations for words. A sounds-like
+    translation consists of one or more words that, when combined, sound like the
+    word. Phonetic translations are based on the SSML phoneme format for
+    representing a word. You can specify them in standard International Phonetic
+    Alphabet (IPA) representation<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+   <br/>
+     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Adding multiple words to a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuWordsAdd)<br/>
+   * [Adding words to a Japanese custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuJapaneseAdd)<br/>
+   * [Understanding
+    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+   ustomIntro#customIntro)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_custom_words</span></td><td><span class="abapDocComment">
    No documentation available.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_create_voice_model</span></td><td>type T_CREATE_VOICE_MODEL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Create a custom model.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_create_voice_model</span></td><td>type T_CREATE_VOICE_MODEL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a custom model</p>
+   Creates a new empty custom voice model. You must specify a name for the new
+    custom model. You can optionally specify the language and a description for the
+    new model. The model is owned by the instance of the service whose credentials
+    are used to create it. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. The service does not support
+    voice model customization for the Arabic, Chinese, and Dutch languages. <br/>
+   <br/>
+   **See also:** [Creating a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+   els#cuModelsCreate).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_create_voice_model</span></td><td><span class="abapDocComment">
    A `CreateVoiceModel` object that contains information about the new custom voice
     model.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_VOICE_MODEL
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customer_id</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete labeled data.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customer_id</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+   Deletes all data that is associated with a specified customer ID. The method
+    deletes all data for the customer ID, regardless of the method by which the
+    information was added. The method has no effect if no data is associated with
+    the customer ID. You must issue the request with credentials for the same
+    instance of the service that was used to associate the customer ID with the
+    data. <br/>
+   <br/>
+   You associate a customer ID with data by passing the `X-Watson-Metadata` header
+    with a request that passes the data. <br/>
+   <br/>
+   **See also:** [Information
+    security](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-inform
+   ation-security#information-security).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customer_id</span></td><td><span class="abapDocComment">
    The customer ID for which all data is to be deleted.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete a custom model.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a custom model</p>
+   Deletes the specified custom voice model. You must use credentials for the
+    instance of the service that owns a model to delete it. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Deleting a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+   els#cuModelsDelete).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Delete a custom word.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a custom word</p>
+   Deletes a single word from the specified custom voice model. You must use
+    credentials for the instance of the service that owns a model to delete its
+    words. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Deleting a word from a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuWordDelete).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_word</span></td><td><span class="abapDocComment">
    The word that is to be deleted from the custom voice model.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_pronunciation</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING default &#x27;en-US_MichaelVoice&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_format</span></td><td>type STRING default &#x27;ipa&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_PRONUNCIATION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get pronunciation.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_pronunciation</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING default &#x27;en-US_MichaelVoice&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_format</span></td><td>type STRING default &#x27;ipa&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_PRONUNCIATION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get pronunciation</p>
+   Gets the phonetic pronunciation for the specified word. You can request the
+    pronunciation for a specific format. You can also request the pronunciation for
+    a specific voice to see the default translation for the language of that voice
+    or for a specific custom voice model to see the translation for that voice
+    model. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. The method does not support
+    the Arabic, Chinese, and Dutch languages. <br/>
+   <br/>
+   **See also:** [Querying a word from a
+    language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-custom
+   Words#cuWordsQueryLanguage).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
    The word for which the pronunciation is requested.
@@ -79,12 +218,22 @@
     is to be returned. The language of a specified custom model must match the
     language of the specified voice. If the word is not defined in the specified
     custom model, the service returns the default translation for the custom
-    model's language. You must make the request with credentials for the instance
-    of the service that owns the custom model. Omit the parameter to see the
-    translation for the specified voice with no customization.
+    model&apos;s language. You must make the request with credentials for the
+    instance of the service that owns the custom model. Omit the parameter to see
+    the translation for the specified voice with no customization.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_PRONUNCIATION
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_voice</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get a voice.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_voice</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a voice</p>
+   Gets information about the specified voice. The information includes the name,
+    language, gender, and other details about the voice. Specify a customization ID
+    to obtain information for a custom voice model that is defined for the language
+    of the specified voice. To list information about all available voices, use the
+    **List voices** method. <br/>
+   <br/>
+   **See also:** [Listing a specific
+    voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#li
+   stVoice).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_voice</span></td><td><span class="abapDocComment">
    The voice for which information is to be returned.
@@ -95,14 +244,36 @@
     the specified voice with no customization.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_VOICE
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get a custom model.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a custom model</p>
+   Gets all information about a specified custom voice model. In addition to
+    metadata such as the name and description of the voice model, the output
+    includes the words and their translations as defined in the model. To see just
+    the metadata for a voice model, use the **List custom models** method. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Querying a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+   els#cuModelsQuery).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_VOICE_MODEL
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get a custom word.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_word</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_word</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a custom word</p>
+   Gets the translation for a single word from the specified custom model. The
+    output shows the translation as it is defined in the model. You must use
+    credentials for the instance of the service that owns a model to list its
+    words. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Querying a single word from a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuWordQueryModel).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
@@ -111,11 +282,32 @@
    The word that is to be queried from the custom voice model.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_TRANSLATION
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_voices</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List voices.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_voices</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List voices</p>
+   Lists all voices available for use with the service. The information includes
+    the name, language, gender, and other details about the voice. To see
+    information about a specific voice, use the **Get a voice** method. <br/>
+   <br/>
+   **See also:** [Listing all available
+    voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#l
+   istVoices).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_VOICES
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_voice_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_language</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODELS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List custom models.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_voice_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_language</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_VOICE_MODELS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List custom models</p>
+   Lists metadata such as the name and description for all custom voice models that
+    are owned by an instance of the service. Specify a language to list the voice
+    models for that language only. To see the words in addition to the metadata for
+    a specific voice model, use the **List a custom model** method. You must use
+    credentials for the instance of the service that owns a model to list
+    information about it. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Querying all custom
+    models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMo
+   dels#cuModelsQueryAll).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_language</span></td><td><span class="abapDocComment">
    The language for which custom voice models that are owned by the requesting
@@ -123,14 +315,99 @@
     models that are owned by the requester.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_VOICE_MODELS
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_words</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORDS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> List custom words.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_words</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_WORDS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List custom words</p>
+   Lists all of the words and their translations for the specified custom voice
+    model. The output shows the translations as they are defined in the model. You
+    must use credentials for the instance of the service that owns a model to list
+    its words. <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:** [Querying all words from a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuWordsQueryModel).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
     with credentials for the instance of the service that owns the custom model.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_WORDS
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">synthesize</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type T_TEXT</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;audio&#x2f;ogg&#x3b;codecs&#x3d;opus&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING default &#x27;en-US_MichaelVoice&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type FILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Synthesize audio.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">synthesize</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_text</span></td><td>type T_TEXT</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;audio&#x2f;ogg&#x3b;codecs&#x3d;opus&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_voice</span></td><td>type STRING default &#x27;en-US_MichaelVoice&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type FILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Synthesize audio</p>
+   Synthesizes text to audio that is spoken in the specified voice. The service
+    bases its understanding of the language for the input text on the specified
+    voice. Use a voice that matches the language of the input text. <br/>
+   <br/>
+   The method accepts a maximum of 5 KB of input text in the body of the request,
+    and 8 KB for the URL and headers. The 5 KB limit includes any SSML tags that
+    you specify. The service returns the synthesized audio stream as an array of
+    bytes. <br/>
+   <br/>
+   **See also:** [The HTTP
+    interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-using
+   HTTP#usingHTTP). <br/>
+   <br/>
+   ### Audio formats (accept types)<br/>
+   <br/>
+    The service can return audio in the following formats (MIME types).<br/>
+   * Where indicated, you can optionally specify the sampling rate (`rate`) of the
+    audio. You must specify a sampling rate for the `audio/l16` and `audio/mulaw`
+    formats. A specified sampling rate must lie in the range of 8 kHz to 192 kHz.
+    Some formats restrict the sampling rate to certain values, as noted.<br/>
+   * For the `audio/l16` format, you can optionally specify the endianness
+    (`endianness`) of the audio: `endianness=big-endian` or
+    `endianness=little-endian`. <br/>
+   <br/>
+   Use the `Accept` header or the `accept` parameter to specify the requested
+    format of the response audio. If you omit an audio format altogether, the
+    service returns the audio in Ogg format with the Opus codec
+    (`audio/ogg;codecs=opus`). The service always returns single-channel
+    audio.<br/>
+   * `audio/basic` - The service returns audio with a sampling rate of 8000
+    Hz.<br/>
+   * `audio/flac` - You can optionally specify the `rate` of the audio. The default
+    sampling rate is 22,050 Hz.<br/>
+   * `audio/l16` - You must specify the `rate` of the audio. You can optionally
+    specify the `endianness` of the audio. The default endianness is
+    `little-endian`.<br/>
+   * `audio/mp3` - You can optionally specify the `rate` of the audio. The default
+    sampling rate is 22,050 Hz.<br/>
+   * `audio/mpeg` - You can optionally specify the `rate` of the audio. The default
+    sampling rate is 22,050 Hz.<br/>
+   * `audio/mulaw` - You must specify the `rate` of the audio.<br/>
+   * `audio/ogg` - The service returns the audio in the `vorbis` codec. You can
+    optionally specify the `rate` of the audio. The default sampling rate is 22,050
+    Hz.<br/>
+   * `audio/ogg;codecs=opus` - You can optionally specify the `rate` of the audio.
+    Only the following values are valid sampling rates: `48000`, `24000`, `16000`,
+    `12000`, or `8000`. If you specify a value other than one of these, the service
+    returns an error. The default sampling rate is 48,000 Hz.<br/>
+   * `audio/ogg;codecs=vorbis` - You can optionally specify the `rate` of the
+    audio. The default sampling rate is 22,050 Hz.<br/>
+   * `audio/wav` - You can optionally specify the `rate` of the audio. The default
+    sampling rate is 22,050 Hz.<br/>
+   * `audio/webm` - The service returns the audio in the `opus` codec. The service
+    returns audio with a sampling rate of 48,000 Hz.<br/>
+   * `audio/webm;codecs=opus` - The service returns audio with a sampling rate of
+    48,000 Hz.<br/>
+   * `audio/webm;codecs=vorbis` - You can optionally specify the `rate` of the
+    audio. The default sampling rate is 22,050 Hz. <br/>
+   <br/>
+   For more information about specifying an audio format, including additional
+    details about some of the formats, see [Audio
+    formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFo
+   rmats#audioFormats). <br/>
+   <br/>
+   ### Warning messages<br/>
+   <br/>
+    If a request includes invalid query parameters, the service returns a
+    `Warnings` response header that provides messages about the invalid parameters.
+    The warning includes a descriptive message and a list of invalid argument
+    strings. For example, a message such as `&quot;Unknown arguments:&quot;` or
+    `&quot;Unknown url query arguments:&quot;` followed by a list of the form
+    `&quot;&#123;invalid_arg_1&#125;, &#123;invalid_arg_2&#125;.&quot;` The request
+    succeeds despite the warnings.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_text</span></td><td><span class="abapDocComment">
    No documentation available.
@@ -149,7 +426,42 @@
     to use the specified voice with no customization.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type FILE
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_update_voice_model</span></td><td>type T_UPDATE_VOICE_MODEL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Update a custom model.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">update_voice_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_update_voice_model</span></td><td>type T_UPDATE_VOICE_MODEL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a custom model</p>
+   Updates information for the specified custom voice model. You can update
+    metadata such as the name and description of the voice model. You can also
+    update the words in the model and their translations. Adding a new translation
+    for a word that already exists in a custom model overwrites the word&apos;s
+    existing translation. A custom model can contain no more than 20,000 entries.
+    You must use credentials for the instance of the service that owns a model to
+    update it. <br/>
+   <br/>
+   You can define sounds-like or phonetic translations for words. A sounds-like
+    translation consists of one or more words that, when combined, sound like the
+    word. Phonetic translations are based on the SSML phoneme format for
+    representing a word. You can specify them in standard International Phonetic
+    Alphabet (IPA) representation<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ipa&quot;
+    ph=&quot;t&#601;m&#712;&#593;to&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt;<br/>
+   <br/>
+     or in the proprietary IBM Symbolic Phonetic Representation (SPR)<br/>
+   <br/>
+     &lt;code&gt;&lt;phoneme alphabet=&quot;ibm&quot;
+    ph=&quot;1gAstroEntxrYFXs&quot;&gt;&lt;/phoneme&gt;&lt;/code&gt; <br/>
+   <br/>
+   **Note:** This method is currently a beta release. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Updating a custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customMod
+   els#cuModelsUpdate)<br/>
+   * [Adding words to a Japanese custom
+    model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWor
+   ds#cuJapaneseAdd)<br/>
+   * [Understanding
+    customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-c
+   ustomIntro#customIntro)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom voice model. You must make the request
@@ -157,4 +469,5 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_update_voice_model</span></td><td><span class="abapDocComment">
    An `UpdateVoiceModel` object that contains information that is to be updated for
     the custom voice model.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
