@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Natural Language Understanding</h1>
+"! <p class="shorttext synchronized" lang="en">Natural Language Understanding</p>
 "! Analyze various features of text content at scale. Provide text, raw HTML, or a
 "!  public URL and IBM Watson Natural Language Understanding will give you results
 "!  for the features you request. The service cleans HTML content before analysis
@@ -29,7 +29,7 @@ class ZCL_IBMC_NAT_LANG_UNDRSTND_V1 DEFINITION
 
 public section.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_ENTITY,
       "!   Entity type.
       TYPE type STRING,
@@ -37,13 +37,14 @@ public section.
       TEXT type STRING,
     end of T_SEMANTIC_ROLES_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_KEYWORD,
       "!   The keyword text.
       TEXT type STRING,
     end of T_SEMANTIC_ROLES_KEYWORD.
   types:
-    "!   The extracted subject from the sentence.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The extracted subject from the sentence.</p>
     begin of T_SMNTC_ROLES_RESULT_SUBJECT,
       "!   Text that corresponds to the subject role.
       TEXT type STRING,
@@ -53,7 +54,8 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_SMNTC_ROLES_RESULT_SUBJECT.
   types:
-    "!   The extracted object from the sentence.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The extracted object from the sentence.</p>
     begin of T_SEMANTIC_ROLES_RESULT_OBJECT,
       "!   Object text.
       TEXT type STRING,
@@ -61,7 +63,7 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEMANTIC_ROLES_RESULT_OBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_VERB,
       "!   The keyword text.
       TEXT type STRING,
@@ -69,7 +71,8 @@ public section.
       TENSE type STRING,
     end of T_SEMANTIC_ROLES_VERB.
   types:
-    "!   The extracted action from the sentence.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The extracted action from the sentence.</p>
     begin of T_SEMANTIC_ROLES_RESULT_ACTION,
       "!   Analyzed text that corresponds to the action.
       TEXT type STRING,
@@ -79,7 +82,9 @@ public section.
       VERB type T_SEMANTIC_ROLES_VERB,
     end of T_SEMANTIC_ROLES_RESULT_ACTION.
   types:
-    "!   The object containing the actions and the objects the actions act upon.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The object containing the actions and the objects the</p>
+    "!     actions act upon.
     begin of T_SEMANTIC_ROLES_RESULT,
       "!   Sentence from the source that contains the subject, action, and object.
       SENTENCE type STRING,
@@ -91,9 +96,10 @@ public section.
       OBJECT type T_SEMANTIC_ROLES_RESULT_OBJECT,
     end of T_SEMANTIC_ROLES_RESULT.
   types:
-    "!   Parses sentences into subject, action, and object form.<br/>
-    "!   <br/>
-    "!   Supported languages: English, German, Japanese, Korean, Spanish.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Parses sentences into subject, action, and object form.</p><br/>
+    "!    <br/>
+    "!    Supported languages: English, German, Japanese, Korean, Spanish.
     begin of T_SEMANTIC_ROLES_OPTIONS,
       "!   Maximum number of semantic_roles results to return.
       LIMIT type INTEGER,
@@ -103,7 +109,8 @@ public section.
       ENTITIES type BOOLEAN,
     end of T_SEMANTIC_ROLES_OPTIONS.
   types:
-    "!   Metadata associated with this custom model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
     begin of T_MODEL_METADATA,
       "!   An optional name for the model.
       NAME type STRING,
@@ -122,7 +129,8 @@ public section.
       VERSION_DESCRIPTION type STRING,
     end of T_MODEL_METADATA.
   types:
-    "!   An entity that corresponds with an argument in a relation.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An entity that corresponds with an argument in a relation.</p>
     begin of T_RELATION_ENTITY,
       "!   Text that corresponds to the entity.
       TEXT type STRING,
@@ -130,7 +138,7 @@ public section.
       TYPE type STRING,
     end of T_RELATION_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RELATION_ARGUMENT,
       "!   An array of extracted entities.
       ENTITIES type STANDARD TABLE OF T_RELATION_ENTITY WITH NON-UNIQUE DEFAULT KEY,
@@ -141,7 +149,8 @@ public section.
       TEXT type STRING,
     end of T_RELATION_ARGUMENT.
   types:
-    "!   The relations between entities found in the content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The relations between entities found in the content.</p>
     begin of T_RELATIONS_RESULT,
       "!   Confidence score for the relation. Higher values indicate greater confidence.
       SCORE type DOUBLE,
@@ -153,7 +162,7 @@ public section.
       ARGUMENTS type STANDARD TABLE OF T_RELATION_ARGUMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RELATIONS_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_MODEL,
       "!   When the status is `available`, the model is ready to use.
       STATUS type STRING,
@@ -175,13 +184,13 @@ public section.
       CREATED type DATETIME,
     end of T_MODEL.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_FEATURE_SENTIMENT_RESULTS,
       "!   Sentiment score from -1 (negative) to 1 (positive).
       SCORE type DOUBLE,
     end of T_FEATURE_SENTIMENT_RESULTS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_EMOTION_SCORES,
       "!   Anger score from 0 to 1. A higher score means that the text is more likely to
       "!    convey anger.
@@ -200,19 +209,23 @@ public section.
       SADNESS type DOUBLE,
     end of T_EMOTION_SCORES.
   types:
-    "!   The author of the analyzed content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The author of the analyzed content.</p>
     begin of T_AUTHOR,
       "!   Name of the author.
       NAME type STRING,
     end of T_AUTHOR.
   types:
-    "!   RSS or ATOM feed found on the webpage.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    RSS or ATOM feed found on the webpage.</p>
     begin of T_FEED,
       "!   URL of the RSS or ATOM feed.
       LINK type STRING,
     end of T_FEED.
   types:
-    "!   Webpage metadata, such as the author and the title of the page.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Webpage metadata, such as the author and the title of the</p>
+    "!     page.
     begin of T_FEATURES_RESULTS_METADATA,
       "!   The authors of the document.
       AUTHORS type STANDARD TABLE OF T_AUTHOR WITH NON-UNIQUE DEFAULT KEY,
@@ -226,7 +239,7 @@ public section.
       FEEDS type STANDARD TABLE OF T_FEED WITH NON-UNIQUE DEFAULT KEY,
     end of T_FEATURES_RESULTS_METADATA.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ENTITY_MENTION,
       "!   Entity mention text.
       TEXT type STRING,
@@ -240,7 +253,8 @@ public section.
       CONFIDENCE type DOUBLE,
     end of T_ENTITY_MENTION.
   types:
-    "!   Disambiguation information for the entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Disambiguation information for the entity.</p>
     begin of T_DISAMBIGUATION_RESULT,
       "!   Common entity name.
       NAME type STRING,
@@ -250,8 +264,9 @@ public section.
       SUBTYPE type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_DISAMBIGUATION_RESULT.
   types:
-    "!   The important people, places, geopolitical entities and other types of entities
-    "!    in your content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The important people, places, geopolitical entities and</p>
+    "!     other types of entities in your content.
     begin of T_ENTITIES_RESULT,
       "!   Entity type.
       TYPE type STRING,
@@ -276,7 +291,8 @@ public section.
       DISAMBIGUATION type T_DISAMBIGUATION_RESULT,
     end of T_ENTITIES_RESULT.
   types:
-    "!   Emotion results for a specified target.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Emotion results for a specified target.</p>
     begin of T_TARGETED_EMOTION_RESULTS,
       "!   Targeted text.
       TEXT type STRING,
@@ -284,7 +300,9 @@ public section.
       EMOTION type T_EMOTION_SCORES,
     end of T_TARGETED_EMOTION_RESULTS.
   types:
-    "!   The important keywords in the content, organized by relevance.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The important keywords in the content, organized by</p>
+    "!     relevance.
     begin of T_KEYWORDS_RESULT,
       "!   Number of times the keyword appears in the analyzed text.
       COUNT type INTEGER,
@@ -299,7 +317,7 @@ public section.
       SENTIMENT type T_FEATURE_SENTIMENT_RESULTS,
     end of T_KEYWORDS_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TARGETED_SENTIMENT_RESULTS,
       "!   Targeted text.
       TEXT type STRING,
@@ -307,19 +325,21 @@ public section.
       SCORE type DOUBLE,
     end of T_TARGETED_SENTIMENT_RESULTS.
   types:
-    "!   Relevant text that contributed to the categorization.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Relevant text that contributed to the categorization.</p>
     begin of T_CATEGORIES_RELEVANT_TEXT,
       "!   Text from the analyzed source that supports the categorization.
       TEXT type STRING,
     end of T_CATEGORIES_RELEVANT_TEXT.
   types:
-    "!   Emotion results for the document as a whole.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Emotion results for the document as a whole.</p>
     begin of T_DOCUMENT_EMOTION_RESULTS,
       "!   Emotion results for the document as a whole.
       EMOTION type T_EMOTION_SCORES,
     end of T_DOCUMENT_EMOTION_RESULTS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DOCUMENT_SENTIMENT_RESULTS,
       "!   Indicates whether the sentiment is positive, neutral, or negative.
       LABEL type STRING,
@@ -327,7 +347,8 @@ public section.
       SCORE type DOUBLE,
     end of T_DOCUMENT_SENTIMENT_RESULTS.
   types:
-    "!   The sentiment of the content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The sentiment of the content.</p>
     begin of T_SENTIMENT_RESULT,
       "!   The document level sentiment.
       DOCUMENT type T_DOCUMENT_SENTIMENT_RESULTS,
@@ -335,7 +356,7 @@ public section.
       TARGETS type STANDARD TABLE OF T_TARGETED_SENTIMENT_RESULTS WITH NON-UNIQUE DEFAULT KEY,
     end of T_SENTIMENT_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TOKEN_RESULT,
       "!   The token as it appears in the analyzed text.
       TEXT type STRING,
@@ -349,7 +370,7 @@ public section.
       LEMMA type STRING,
     end of T_TOKEN_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SENTENCE_RESULT,
       "!   The sentence.
       TEXT type STRING,
@@ -358,7 +379,8 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_SENTENCE_RESULT.
   types:
-    "!   Tokens and sentences returned from syntax analysis.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Tokens and sentences returned from syntax analysis.</p>
     begin of T_SYNTAX_RESULT,
       "!   No documentation available.
       TOKENS type STANDARD TABLE OF T_TOKEN_RESULT WITH NON-UNIQUE DEFAULT KEY,
@@ -366,7 +388,9 @@ public section.
       SENTENCES type STANDARD TABLE OF T_SENTENCE_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_SYNTAX_RESULT.
   types:
-    "!   The general concepts referenced or alluded to in the analyzed text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The general concepts referenced or alluded to in the</p>
+    "!     analyzed text.
     begin of T_CONCEPTS_RESULT,
       "!   Name of the concept.
       TEXT type STRING,
@@ -376,7 +400,9 @@ public section.
       DBPEDIA_RESOURCE type STRING,
     end of T_CONCEPTS_RESULT.
   types:
-    "!   Information that helps to explain what contributed to the categories result.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information that helps to explain what contributed to the</p>
+    "!     categories result.
     begin of T_CTGRS_RESULT_EXPLANATION,
       "!   An array of relevant text from the source that contributed to the
       "!    categorization. The sorted array begins with the phrase that contributed most
@@ -385,7 +411,8 @@ public section.
       RELEVANT_TEXT type STANDARD TABLE OF T_CATEGORIES_RELEVANT_TEXT WITH NON-UNIQUE DEFAULT KEY,
     end of T_CTGRS_RESULT_EXPLANATION.
   types:
-    "!   A categorization of the analyzed text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A categorization of the analyzed text.</p>
     begin of T_CATEGORIES_RESULT,
       "!   The path to the category through the 5-level taxonomy hierarchy. For the
       "!    complete list of categories, see the [Categories
@@ -400,9 +427,10 @@ public section.
       EXPLANATION type T_CTGRS_RESULT_EXPLANATION,
     end of T_CATEGORIES_RESULT.
   types:
-    "!   The detected anger, disgust, fear, joy, or sadness that is conveyed by the
-    "!    content. Emotion information can be returned for detected entities, keywords,
-    "!    or user-specified target phrases found in the text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The detected anger, disgust, fear, joy, or sadness that is</p>
+    "!     conveyed by the content. Emotion information can be returned for detected
+    "!     entities, keywords, or user-specified target phrases found in the text.
     begin of T_EMOTION_RESULT,
       "!   Emotion results for the document as a whole.
       DOCUMENT type T_DOCUMENT_EMOTION_RESULTS,
@@ -410,7 +438,8 @@ public section.
       TARGETS type STANDARD TABLE OF T_TARGETED_EMOTION_RESULTS WITH NON-UNIQUE DEFAULT KEY,
     end of T_EMOTION_RESULT.
   types:
-    "!   Analysis results for each requested feature.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Analysis results for each requested feature.</p>
     begin of T_FEATURES_RESULTS,
       "!   The general concepts referenced or alluded to in the analyzed text.
       CONCEPTS type STANDARD TABLE OF T_CONCEPTS_RESULT WITH NON-UNIQUE DEFAULT KEY,
@@ -434,8 +463,9 @@ public section.
       SYNTAX type T_SYNTAX_RESULT,
     end of T_FEATURES_RESULTS.
   types:
-    "!   The authors, publication date, title, prominent page image, and RSS/ATOM feeds
-    "!    of the webpage. Supports URL and HTML input types.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The authors, publication date, title, prominent page image,</p>
+    "!     and RSS/ATOM feeds of the webpage. Supports URL and HTML input types.
     begin of T_METADATA_RESULT,
       "!   The authors of the document.
       AUTHORS type STANDARD TABLE OF T_AUTHOR WITH NON-UNIQUE DEFAULT KEY,
@@ -449,7 +479,7 @@ public section.
       FEEDS type STANDARD TABLE OF T_FEED WITH NON-UNIQUE DEFAULT KEY,
     end of T_METADATA_RESULT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   The HTTP error status code.
       CODE type INTEGER,
@@ -457,12 +487,13 @@ public section.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or
-    "!    by the context around target phrases specified in the targets parameter. You
-    "!    can analyze emotion for detected entities with `entities.emotion` and for
-    "!    keywords with `keywords.emotion`.<br/>
-    "!   <br/>
-    "!   Supported languages: English.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Detects anger, disgust, fear, joy, or sadness that is</p>
+    "!     conveyed in the content or by the context around target phrases specified in
+    "!     the targets parameter. You can analyze emotion for detected entities with
+    "!     `entities.emotion` and for keywords with `keywords.emotion`.<br/>
+    "!    <br/>
+    "!    Supported languages: English.
     begin of T_EMOTION_OPTIONS,
       "!   Set this to `false` to hide document-level emotion results.
       DOCUMENT type BOOLEAN,
@@ -471,7 +502,8 @@ public section.
       TARGETS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_EMOTION_OPTIONS.
   types:
-    "!   Usage information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Usage information.</p>
     begin of T_USAGE,
       "!   Number of features used in the API call.
       FEATURES type INTEGER,
@@ -481,12 +513,14 @@ public section.
       TEXT_UNITS type INTEGER,
     end of T_USAGE.
   types:
-    "!   Analyzes the general sentiment of your content or the sentiment toward specific
-    "!    target phrases. You can analyze sentiment for detected entities with
-    "!    `entities.sentiment` and for keywords with `keywords.sentiment`.<br/>
-    "!   <br/>
-    "!    Supported languages: Arabic, English, French, German, Italian, Japanese,
-    "!    Korean, Portuguese, Russian, Spanish.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Analyzes the general sentiment of your content or the</p>
+    "!     sentiment toward specific target phrases. You can analyze sentiment for
+    "!     detected entities with `entities.sentiment` and for keywords with
+    "!     `keywords.sentiment`.<br/>
+    "!    <br/>
+    "!     Supported languages: Arabic, English, French, German, Italian, Japanese,
+    "!     Korean, Portuguese, Russian, Spanish.
     begin of T_SENTIMENT_OPTIONS,
       "!   Set this to `false` to hide document-level sentiment results.
       DOCUMENT type BOOLEAN,
@@ -495,7 +529,7 @@ public section.
       TARGETS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_SENTIMENT_OPTIONS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_ACTION,
       "!   Analyzed text that corresponds to the action.
       TEXT type STRING,
@@ -505,7 +539,8 @@ public section.
       VERB type T_SEMANTIC_ROLES_VERB,
     end of T_SEMANTIC_ROLES_ACTION.
   types:
-    "!   Tokenization options.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Tokenization options.</p>
     begin of T_SYNTAX_OPTIONS_TOKENS,
       "!   Set this to `true` to return the lemma for each token.
       LEMMA type BOOLEAN,
@@ -513,10 +548,11 @@ public section.
       PART_OF_SPEECH type BOOLEAN,
     end of T_SYNTAX_OPTIONS_TOKENS.
   types:
-    "!   Returns important keywords in the content.<br/>
-    "!   <br/>
-    "!   Supported languages: English, French, German, Italian, Japanese, Korean,
-    "!    Portuguese, Russian, Spanish, Swedish.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns important keywords in the content.</p><br/>
+    "!    <br/>
+    "!    Supported languages: English, French, German, Italian, Japanese, Korean,
+    "!     Portuguese, Russian, Spanish, Swedish.
     begin of T_KEYWORDS_OPTIONS,
       "!   Maximum number of keywords to return.
       LIMIT type INTEGER,
@@ -526,15 +562,16 @@ public section.
       EMOTION type BOOLEAN,
     end of T_KEYWORDS_OPTIONS.
   types:
-    "!   Recognizes when two entities are related and identifies the type of relation.
-    "!    For example, an `awardedTo` relation might connect the entities "Nobel Prize"
-    "!    and "Albert Einstein". See [Relation
-    "!    types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-    "!   =natural-language-understanding-relations).<br/>
-    "!   <br/>
-    "!   Supported languages: Arabic, English, German, Japanese, Korean, Spanish.
-    "!    Chinese, Dutch, French, Italian, and Portuguese custom models are also
-    "!    supported.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Recognizes when two entities are related and identifies the</p>
+    "!     type of relation. For example, an `awardedTo` relation might connect the
+    "!     entities &quot;Nobel Prize&quot; and &quot;Albert Einstein&quot;. See [Relation
+    "!     types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
+    "!    =natural-language-understanding-relations).<br/>
+    "!    <br/>
+    "!    Supported languages: Arabic, English, German, Japanese, Korean, Spanish.
+    "!     Chinese, Dutch, French, Italian, and Portuguese custom models are also
+    "!     supported.
     begin of T_RELATIONS_OPTIONS,
       "!   Enter a [custom
       "!    model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
@@ -542,14 +579,15 @@ public section.
       MODEL type STRING,
     end of T_RELATIONS_OPTIONS.
   types:
-    "!   Identifies people, cities, organizations, and other entities in the content. See
-    "!    [Entity types and
-    "!    subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-    "!   pic=natural-language-understanding-entity-types).<br/>
-    "!   <br/>
-    "!   Supported languages: English, French, German, Italian, Japanese, Korean,
-    "!    Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported
-    "!    only through custom models.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Identifies people, cities, organizations, and other entities</p>
+    "!     in the content. See [Entity types and
+    "!     subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?to
+    "!    pic=natural-language-understanding-entity-types).<br/>
+    "!    <br/>
+    "!    Supported languages: English, French, German, Italian, Japanese, Korean,
+    "!     Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported
+    "!     only through custom models.
     begin of T_ENTITIES_OPTIONS,
       "!   Maximum number of entities to return.
       LIMIT type INTEGER,
@@ -566,23 +604,26 @@ public section.
       EMOTION type BOOLEAN,
     end of T_ENTITIES_OPTIONS.
   types:
-    "!   Returns high-level concepts in the content. For example, a research paper about
-    "!    deep learning might return the concept, "Artificial Intelligence" although the
-    "!    term is not mentioned.<br/>
-    "!   <br/>
-    "!   Supported languages: English, French, German, Italian, Japanese, Korean,
-    "!    Portuguese, Spanish.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns high-level concepts in the content. For example, a</p>
+    "!     research paper about deep learning might return the concept, &quot;Artificial
+    "!     Intelligence&quot; although the term is not mentioned.<br/>
+    "!    <br/>
+    "!    Supported languages: English, French, German, Italian, Japanese, Korean,
+    "!     Portuguese, Spanish.
     begin of T_CONCEPTS_OPTIONS,
       "!   Maximum number of concepts to return.
       LIMIT type INTEGER,
     end of T_CONCEPTS_OPTIONS.
   types:
-    "!   Returns information from the document, including author name, title, RSS/ATOM
-    "!    feeds, prominent page image, and publication date. Supports URL and HTML input
-    "!    types only.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns information from the document, including author</p>
+    "!     name, title, RSS/ATOM feeds, prominent page image, and publication date.
+    "!     Supports URL and HTML input types only.
       T_METADATA_OPTIONS type JSONOBJECT.
   types:
-    "!   Returns tokens and sentences from the input text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns tokens and sentences from the input text.</p>
     begin of T_SYNTAX_OPTIONS,
       "!   Tokenization options.
       TOKENS type T_SYNTAX_OPTIONS_TOKENS,
@@ -590,11 +631,12 @@ public section.
       SENTENCES type BOOLEAN,
     end of T_SYNTAX_OPTIONS.
   types:
-    "!   Returns a five-level taxonomy of the content. The top three categories are
-    "!    returned. <br/>
-    "!   <br/>
-    "!   Supported languages: Arabic, English, French, German, Italian, Japanese, Korean,
-    "!    Portuguese, Spanish.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns a five-level taxonomy of the content. The top three</p>
+    "!     categories are returned. <br/>
+    "!    <br/>
+    "!    Supported languages: Arabic, English, French, German, Italian, Japanese, Korean,
+    "!     Portuguese, Spanish.
     begin of T_CATEGORIES_OPTIONS,
       "!   Set this to `true` to return explanations for each categorization. **This is
       "!    available only for English categories.**.
@@ -614,11 +656,12 @@ public section.
       MODEL type STRING,
     end of T_CATEGORIES_OPTIONS.
   types:
-    "!   Analysis features and options.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Analysis features and options.</p>
     begin of T_FEATURES,
       "!   Returns high-level concepts in the content. For example, a research paper about
-      "!    deep learning might return the concept, "Artificial Intelligence" although the
-      "!    term is not mentioned.<br/>
+      "!    deep learning might return the concept, &quot;Artificial Intelligence&quot;
+      "!    although the term is not mentioned.<br/>
       "!   <br/>
       "!   Supported languages: English, French, German, Italian, Japanese, Korean,
       "!    Portuguese, Spanish.
@@ -649,8 +692,8 @@ public section.
       "!    types only.
       METADATA type T_METADATA_OPTIONS,
       "!   Recognizes when two entities are related and identifies the type of relation.
-      "!    For example, an `awardedTo` relation might connect the entities "Nobel Prize"
-      "!    and "Albert Einstein". See [Relation
+      "!    For example, an `awardedTo` relation might connect the entities &quot;Nobel
+      "!    Prize&quot; and &quot;Albert Einstein&quot;. See [Relation
       "!    types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
       "!   =natural-language-understanding-relations).<br/>
       "!   <br/>
@@ -679,7 +722,9 @@ public section.
       SYNTAX type T_SYNTAX_OPTIONS,
     end of T_FEATURES.
   types:
-    "!   Webpage metadata, such as the author and the title of the page.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Webpage metadata, such as the author and the title of the</p>
+    "!     page.
     begin of T_ANALYSIS_RESULTS_METADATA,
       "!   The authors of the document.
       AUTHORS type STANDARD TABLE OF T_AUTHOR WITH NON-UNIQUE DEFAULT KEY,
@@ -693,7 +738,8 @@ public section.
       FEEDS type STANDARD TABLE OF T_FEED WITH NON-UNIQUE DEFAULT KEY,
     end of T_ANALYSIS_RESULTS_METADATA.
   types:
-    "!   API usage information for the request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    API usage information for the request.</p>
     begin of T_ANALYSIS_RESULTS_USAGE,
       "!   Number of features used in the API call.
       FEATURES type INTEGER,
@@ -703,7 +749,8 @@ public section.
       TEXT_UNITS type INTEGER,
     end of T_ANALYSIS_RESULTS_USAGE.
   types:
-    "!   Results of the analysis, organized by feature.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Results of the analysis, organized by feature.</p>
     begin of T_ANALYSIS_RESULTS,
       "!   Language used to analyze the text.
       LANGUAGE type STRING,
@@ -735,7 +782,7 @@ public section.
       SYNTAX type T_SYNTAX_RESULT,
     end of T_ANALYSIS_RESULTS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_SUBJECT,
       "!   Text that corresponds to the subject role.
       TEXT type STRING,
@@ -745,13 +792,14 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEMANTIC_ROLES_SUBJECT.
   types:
-    "!   Custom models that are available for entities and relations.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Custom models that are available for entities and relations.</p>
     begin of T_LIST_MODELS_RESULTS,
       "!   An array of available models.
       MODELS type STANDARD TABLE OF T_MODEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_LIST_MODELS_RESULTS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SEMANTIC_ROLES_OBJECT,
       "!   Object text.
       TEXT type STRING,
@@ -759,7 +807,8 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEMANTIC_ROLES_OBJECT.
   types:
-    "!   An object containing request parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object containing request parameters.</p>
     begin of T_PARAMETERS,
       "!   The plain text to analyze. One of the `text`, `html`, or `url` parameters is
       "!    required.
@@ -798,10 +847,12 @@ public section.
       LIMIT_TEXT_CHARACTERS type INTEGER,
     end of T_PARAMETERS.
   types:
-    "!   Link to the corresponding DBpedia resource.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Link to the corresponding DBpedia resource.</p>
       T_DBPEDIA_RESOURCE type String.
   types:
-    "!   Metadata associated with this custom model.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
     begin of T_MODEL_FILE_AND_METADATA,
       "!   An optional name for the model.
       NAME type STRING,
@@ -822,13 +873,15 @@ public section.
       FILE type FILE,
     end of T_MODEL_FILE_AND_METADATA.
   types:
-    "!   Delete model results.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Delete model results.</p>
     begin of T_DELETE_MODEL_RESULTS,
       "!   model_id of the deleted model.
       DELETED type STRING,
     end of T_DELETE_MODEL_RESULTS.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_SEMANTIC_ROLES_ENTITY type string value '|',
     T_SEMANTIC_ROLES_KEYWORD type string value '|',
@@ -893,6 +946,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      TEXT type string value 'text',
      HTML type string value 'html',
@@ -987,7 +1041,23 @@ constants:
     redefinition .
 
 
-    "! Analyze text.
+    "! <p class="shorttext synchronized" lang="en">Analyze text</p>
+    "!   Analyzes text, HTML, or a public webpage for the following features:<br/>
+    "!   - Categories<br/>
+    "!   - Concepts<br/>
+    "!   - Emotion<br/>
+    "!   - Entities<br/>
+    "!   - Keywords<br/>
+    "!   - Metadata<br/>
+    "!   - Relations<br/>
+    "!   - Semantic roles<br/>
+    "!   - Sentiment<br/>
+    "!   - Syntax (Experimental).<br/>
+    "!   <br/>
+    "!   If a language for the input text is not specified with the `language` parameter,
+    "!    the service [automatically detects the
+    "!    language](https://cloud.ibm.com/docs/services/natural-language-understanding?to
+    "!   pic=natural-language-understanding-detectable-languages).
     "!
     "! @parameter I_PARAMETERS |
     "!   An object containing request parameters. The `features` object and one of the
@@ -1006,7 +1076,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List models.
+    "! <p class="shorttext synchronized" lang="en">List models</p>
+    "!   Lists Watson Knowledge Studio [custom entities and relations
+    "!    models](https://cloud.ibm.com/docs/services/natural-language-understanding?topi
+    "!   c=natural-language-understanding-customizing) that are deployed to your Natural
+    "!    Language Understanding service.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_LIST_MODELS_RESULTS
@@ -1019,7 +1093,8 @@ constants:
       !E_RESPONSE type T_LIST_MODELS_RESULTS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete model.
+    "! <p class="shorttext synchronized" lang="en">Delete model</p>
+    "!   Deletes a custom model
     "!
     "! @parameter I_MODEL_ID |
     "!   Model ID of the model to delete.
@@ -1113,7 +1188,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092822'.
+    e_sdk_version_date = '20200310173433'.
 
   endmethod.
 

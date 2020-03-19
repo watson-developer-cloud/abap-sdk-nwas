@@ -25,9 +25,8 @@ public section.
   "! @parameter I_ITAB | Internal table to be converted.
   "! @parameter I_DICTIONARY | Dictionary to be used for mapping ABAP identifiers to JSON keys.
   "! @parameter I_LOWER_CASE | If set to C_BOOLEAN_TRUE all keys in JSON string will be lower case.
-  "! @parameter I_EXCLUDE_FIELDS | Internal table of table fields in I_ITAB that should not occur in result.
+  "! @parameter IT_EXCLUDED_FIELDS | Internal table of table fields in I_ITAB that should not occur in result.
   "! @parameter E_JSON | JSON string.
-  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
   class-methods ITAB_TO_TABLESCHEMA
     importing
@@ -43,7 +42,6 @@ public section.
   "! @parameter I_JSON | JSON string.
   "! @parameter I_TABLESCHEMA_KEY | Key in JSON string that holds the table schema.
   "! @parameter E_ITAB | Internal table containing converted data.
-  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
   class-methods TABLESCHEMA_TO_ITAB
     importing
@@ -96,7 +94,7 @@ public section.
   "! Converts a timestamp to datetime format, i.e. YYYYMMDDHHMMSS -&gt; yyyy-mm-ddThh:mm:ssZ
   "!
   "! @parameter I_TIMESTAMP | Timestamp.
-  "! @parameter E_DATATIMEP | Datetime format.
+  "! @parameter E_DATETIME | Datetime format.
   "!
   class-methods CONVERT_TIMESTAMP_TO_DATETIME
     importing

@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Compare and Comply</h1>
+"! <p class="shorttext synchronized" lang="en">Compare and Comply</p>
 "! IBM Watson&trade; Compare and Comply analyzes governing documents to provide
 "!  details about critical aspects of the documents. <br/>
 class ZCL_IBMC_COMPARE_COMPLY_V1 DEFINITION
@@ -21,18 +21,20 @@ class ZCL_IBMC_COMPARE_COMPLY_V1 DEFINITION
 
 public section.
   types:
-    "!   The numeric location of the identified element in the document, represented with
-    "!    two integers labeled `begin` and `end`.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The numeric location of the identified element in the</p>
+    "!     document, represented with two integers labeled `begin` and `end`.
     begin of T_LOCATION,
-      "!   The element's `begin` index.
+      "!   The element&apos;s `begin` index.
       BEGIN type LONG,
-      "!   The element's `end` index.
+      "!   The element&apos;s `end` index.
       END type LONG,
     end of T_LOCATION.
   types:
-    "!   A pair of `nature` and `party` objects. The `nature` object identifies the
-    "!    effect of the element on the identified `party`, and the `party` object
-    "!    identifies the affected party.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A pair of `nature` and `party` objects. The `nature` object</p>
+    "!     identifies the effect of the element on the identified `party`, and the `party`
+    "!     object identifies the affected party.
     begin of T_LABEL,
       "!   The identified `nature` of the element.
       NATURE type STRING,
@@ -40,7 +42,8 @@ public section.
       PARTY type STRING,
     end of T_LABEL.
   types:
-    "!   Identification of a specific type.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Identification of a specific type.</p>
     begin of T_TYPE_LABEL_COMPARISON,
       "!   A pair of `nature` and `party` objects. The `nature` object identifies the
       "!    effect of the element on the identified `party`, and the `party` object
@@ -48,14 +51,16 @@ public section.
       LABEL type T_LABEL,
     end of T_TYPE_LABEL_COMPARISON.
   types:
-    "!   The locations of each paragraph in the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The locations of each paragraph in the input document.</p>
     begin of T_PARAGRAPHS,
       "!   The numeric location of the identified element in the document, represented with
       "!    two integers labeled `begin` and `end`.
       LOCATION type T_LOCATION,
     end of T_PARAGRAPHS.
   types:
-    "!   Document counts.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Document counts.</p>
     begin of T_DOC_COUNTS,
       "!   Total number of documents.
       TOTAL type INTEGER,
@@ -67,7 +72,8 @@ public section.
       FAILED type INTEGER,
     end of T_DOC_COUNTS.
   types:
-    "!   Identification of a specific type.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Identification of a specific type.</p>
     begin of T_TYPE_LABEL,
       "!   A pair of `nature` and `party` objects. The `nature` object identifies the
       "!    effect of the element on the identified `party`, and the `party` object
@@ -77,7 +83,8 @@ public section.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_TYPE_LABEL.
   types:
-    "!   Brief information about the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Brief information about the input document.</p>
     begin of T_SHORT_DOC,
       "!   The title of the input document, if identified.
       TITLE type STRING,
@@ -85,7 +92,8 @@ public section.
       HASH type STRING,
     end of T_SHORT_DOC.
   types:
-    "!   Information defining an element's subject matter.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information defining an element&apos;s subject matter.</p>
     begin of T_CATEGORY,
       "!   The category of the associated element.
       LABEL type STRING,
@@ -93,7 +101,9 @@ public section.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_CATEGORY.
   types:
-    "!   The original labeling from the input document, without the submitted feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The original labeling from the input document, without the</p>
+    "!     submitted feedback.
     begin of T_ORIGINAL_LABELS_OUT,
       "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
@@ -106,8 +116,9 @@ public section.
       MODIFICATION type STRING,
     end of T_ORIGINAL_LABELS_OUT.
   types:
-    "!   The updated labeling from the input document, accounting for the submitted
-    "!    feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The updated labeling from the input document, accounting for</p>
+    "!     the submitted feedback.
     begin of T_UPDATED_LABELS_OUT,
       "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
@@ -119,7 +130,8 @@ public section.
       MODIFICATION type STRING,
     end of T_UPDATED_LABELS_OUT.
   types:
-    "!   Pagination details, if required by the length of the output.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Pagination details, if required by the length of the output.</p>
     begin of T_PAGINATION,
       "!   A token identifying the current page of results.
       REFRESH_CURSOR type STRING,
@@ -133,7 +145,8 @@ public section.
       TOTAL type LONG,
     end of T_PAGINATION.
   types:
-    "!   Information returned from the **Add Feedback** method.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information returned from the **Add Feedback** method.</p>
     begin of T_FEEDBACK_DATA_OUTPUT,
       "!   A string identifying the user adding the feedback. The only permitted value is
       "!    `element_classification`.
@@ -159,7 +172,8 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_FEEDBACK_DATA_OUTPUT.
   types:
-    "!   List of document attributes.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of document attributes.</p>
     begin of T_ATTRIBUTE,
       "!   The type of attribute.
       TYPE type STRING,
@@ -170,13 +184,16 @@ public section.
       LOCATION type T_LOCATION,
     end of T_ATTRIBUTE.
   types:
-    "!   Information defining an element's subject matter.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information defining an element&apos;s subject matter.</p>
     begin of T_CATEGORY_COMPARISON,
       "!   The category of the associated element.
       LABEL type STRING,
     end of T_CATEGORY_COMPARISON.
   types:
-    "!   Element that does not align semantically between two compared documents.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Element that does not align semantically between two</p>
+    "!     compared documents.
     begin of T_UNALIGNED_ELEMENT,
       "!   The label assigned to the document by the value of the `file_1_label` or
       "!    `file_2_label` parameters on the **Compare two documents** method.
@@ -195,8 +212,9 @@ public section.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_UNALIGNED_ELEMENT.
   types:
-    "!   The updated labeling from the input document, accounting for the submitted
-    "!    feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The updated labeling from the input document, accounting for</p>
+    "!     the submitted feedback.
     begin of T_UPDATED_LABELS_IN,
       "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
@@ -205,12 +223,14 @@ public section.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATED_LABELS_IN.
   types:
-    "!   An array that contains the `text` value of a row header that is applicable to
-    "!    this body cell.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array that contains the `text` value of a row header that</p>
+    "!     is applicable to this body cell.
       T_ROW_HEADER_TEXTS type TT_String.
   types:
-    "!   A list of `begin` and `end` indexes that indicate the locations of the elements
-    "!    in the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of `begin` and `end` indexes that indicate the</p>
+    "!     locations of the elements in the input document.
     begin of T_ELEMENT_LOCATIONS,
       "!   An integer that indicates the starting position of the element in the input
       "!    document.
@@ -220,7 +240,9 @@ public section.
       END type INTEGER,
     end of T_ELEMENT_LOCATIONS.
   types:
-    "!   The leading sentences in a section or subsection of the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The leading sentences in a section or subsection of the</p>
+    "!     input document.
     begin of T_LEADING_SENTENCE,
       "!   The text of the leading sentence.
       TEXT type STRING,
@@ -232,10 +254,11 @@ public section.
       ELEMENT_LOCATIONS type STANDARD TABLE OF T_ELEMENT_LOCATIONS WITH NON-UNIQUE DEFAULT KEY,
     end of T_LEADING_SENTENCE.
   types:
-    "!   An array containing one object per section or subsection detected in the input
-    "!    document. Sections and subsections are not nested; instead, they are flattened
-    "!    out and can be placed back in order by using the `begin` and `end` values of
-    "!    the element and the `level` value of the section.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array containing one object per section or subsection</p>
+    "!     detected in the input document. Sections and subsections are not nested;
+    "!     instead, they are flattened out and can be placed back in order by using the
+    "!     `begin` and `end` values of the element and the `level` value of the section.
     begin of T_SECTION_TITLES,
       "!   The text of the section title, if identified.
       TEXT type STRING,
@@ -251,7 +274,8 @@ public section.
       ELEMENT_LOCATIONS type STANDARD TABLE OF T_ELEMENT_LOCATIONS WITH NON-UNIQUE DEFAULT KEY,
     end of T_SECTION_TITLES.
   types:
-    "!   The structure of the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The structure of the input document.</p>
     begin of T_DOC_STRUCTURE,
       "!   An array containing one object per section or subsection identified in the input
       "!    document.
@@ -265,12 +289,13 @@ public section.
       PARAGRAPHS type STANDARD TABLE OF T_PARAGRAPHS WITH NON-UNIQUE DEFAULT KEY,
     end of T_DOC_STRUCTURE.
   types:
-    "!   If you provide customization input, the normalized version of the column header
-    "!    texts according to the customization; otherwise, the same value as
-    "!    `column_header_texts`.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    If you provide customization input, the normalized version</p>
+    "!     of the column header texts according to the customization; otherwise, the same
+    "!     value as `column_header_texts`.
       T_COLUMN_HEADER_TEXTS_NORM type TT_String.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   The HTTP error status code.
       CODE type INTEGER,
@@ -278,7 +303,8 @@ public section.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   A contact.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A contact.</p>
     begin of T_CONTACT,
       "!   A string listing the name of the contact.
       NAME type STRING,
@@ -286,7 +312,8 @@ public section.
       ROLE type STRING,
     end of T_CONTACT.
   types:
-    "!   The table's section title, if identified.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The table&apos;s section title, if identified.</p>
     begin of T_SECTION_TITLE,
       "!   The text of the section title, if identified.
       TEXT type STRING,
@@ -295,8 +322,9 @@ public section.
       LOCATION type T_LOCATION,
     end of T_SECTION_TITLE.
   types:
-    "!   Column-level cells, each applicable as a header to other cells in the same
-    "!    column as itself, of the current table.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Column-level cells, each applicable as a header to other</p>
+    "!     cells in the same column as itself, of the current table.
     begin of T_COLUMN_HEADERS,
       "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
@@ -309,18 +337,19 @@ public section.
       "!   If you provide customization input, the normalized version of the cell text
       "!    according to the customization; otherwise, the same value as `text`.
       TEXT_NORMALIZED type STRING,
-      "!   The `begin` index of this cell's `row` location in the current table.
+      "!   The `begin` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `row` location in the current table.
+      "!   The `end` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_END type LONG,
-      "!   The `begin` index of this cell's `column` location in the current table.
+      "!   The `begin` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `column` location in the current table.
+      "!   The `end` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_COLUMN_HEADERS.
   types:
-    "!   Text that is related to the contents of the table and that precedes or follows
-    "!    the current table.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Text that is related to the contents of the table and that</p>
+    "!     precedes or follows the current table.
     begin of T_CONTEXTS,
       "!   The related text.
       TEXT type STRING,
@@ -329,9 +358,10 @@ public section.
       LOCATION type T_LOCATION,
     end of T_CONTEXTS.
   types:
-    "!   If identified, the title or caption of the current table of the form `Table x.:
-    "!    ...`. Empty when no title is identified. When exposed, the `title` is also
-    "!    excluded from the `contexts` array of the same table.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    If identified, the title or caption of the current table of</p>
+    "!     the form `Table x.: ...`. Empty when no title is identified. When exposed, the
+    "!     `title` is also excluded from the `contexts` array of the same table.
     begin of T_TABLE_TITLE,
       "!   The numeric location of the identified element in the document, represented with
       "!    two integers labeled `begin` and `end`.
@@ -340,7 +370,9 @@ public section.
       TEXT type STRING,
     end of T_TABLE_TITLE.
   types:
-    "!   Cells that are not table header, column header, or row header cells.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Cells that are not table header, column header, or row</p>
+    "!     header cells.
     begin of T_BODY_CELLS,
       "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
@@ -350,13 +382,13 @@ public section.
       "!   The textual contents of this cell from the input document without associated
       "!    markup content.
       TEXT type STRING,
-      "!   The `begin` index of this cell's `row` location in the current table.
+      "!   The `begin` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `row` location in the current table.
+      "!   The `end` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_END type LONG,
-      "!   The `begin` index of this cell's `column` location in the current table.
+      "!   The `begin` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `column` location in the current table.
+      "!   The `end` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_END type LONG,
       "!   An array that contains the `id` value of a row header that is applicable to this
       "!    body cell.
@@ -382,7 +414,8 @@ public section.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_BODY_CELLS.
   types:
-    "!   A key in a key-value pair.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A key in a key-value pair.</p>
     begin of T_KEY,
       "!   The unique ID of the key in the table.
       CELL_ID type STRING,
@@ -393,7 +426,8 @@ public section.
       TEXT type STRING,
     end of T_KEY.
   types:
-    "!   A value in a key-value pair.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A value in a key-value pair.</p>
     begin of T_VALUE,
       "!   The unique ID of the value in the table.
       CELL_ID type STRING,
@@ -404,7 +438,8 @@ public section.
       TEXT type STRING,
     end of T_VALUE.
   types:
-    "!   Key-value pairs detected across cell boundaries.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Key-value pairs detected across cell boundaries.</p>
     begin of T_KEY_VALUE_PAIR,
       "!   A key in a key-value pair.
       KEY type T_KEY,
@@ -412,7 +447,8 @@ public section.
       VALUE type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_KEY_VALUE_PAIR.
   types:
-    "!   The contents of the current table's header.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The contents of the current table&apos;s header.</p>
     begin of T_TABLE_HEADERS,
       "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
@@ -422,18 +458,19 @@ public section.
       "!   The textual contents of the cell from the input document without associated
       "!    markup content.
       TEXT type STRING,
-      "!   The `begin` index of this cell's `row` location in the current table.
+      "!   The `begin` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `row` location in the current table.
+      "!   The `end` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_END type LONG,
-      "!   The `begin` index of this cell's `column` location in the current table.
+      "!   The `begin` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `column` location in the current table.
+      "!   The `end` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_TABLE_HEADERS.
   types:
-    "!   Row-level cells, each applicable as a header to other cells in the same row as
-    "!    itself, of the current table.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Row-level cells, each applicable as a header to other cells</p>
+    "!     in the same row as itself, of the current table.
     begin of T_ROW_HEADERS,
       "!   The unique ID of the cell in the current table.
       CELL_ID type STRING,
@@ -446,17 +483,18 @@ public section.
       "!   If you provide customization input, the normalized version of the cell text
       "!    according to the customization; otherwise, the same value as `text`.
       TEXT_NORMALIZED type STRING,
-      "!   The `begin` index of this cell's `row` location in the current table.
+      "!   The `begin` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `row` location in the current table.
+      "!   The `end` index of this cell&apos;s `row` location in the current table.
       ROW_INDEX_END type LONG,
-      "!   The `begin` index of this cell's `column` location in the current table.
+      "!   The `begin` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_BEGIN type LONG,
-      "!   The `end` index of this cell's `column` location in the current table.
+      "!   The `end` index of this cell&apos;s `column` location in the current table.
       COLUMN_INDEX_END type LONG,
     end of T_ROW_HEADERS.
   types:
-    "!   The contents of the tables extracted from a document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The contents of the tables extracted from a document.</p>
     begin of T_TABLES,
       "!   The numeric location of the identified element in the document, represented with
       "!    two integers labeled `begin` and `end`.
@@ -464,7 +502,7 @@ public section.
       "!   The textual contents of the current table from the input document without
       "!    associated markup content.
       TEXT type STRING,
-      "!   The table's section title, if identified.
+      "!   The table&apos;s section title, if identified.
       SECTION_TITLE type T_SECTION_TITLE,
       "!   If identified, the title or caption of the current table of the form `Table x.:
       "!    ...`. Empty when no title is identified. When exposed, the `title` is also
@@ -490,7 +528,8 @@ public section.
       KEY_VALUE_PAIRS type STANDARD TABLE OF T_KEY_VALUE_PAIR WITH NON-UNIQUE DEFAULT KEY,
     end of T_TABLES.
   types:
-    "!   Information about the parsed input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the parsed input document.</p>
     begin of T_DOC_INFO,
       "!   The full text of the parsed document in HTML format.
       HTML type STRING,
@@ -501,7 +540,8 @@ public section.
       HASH type STRING,
     end of T_DOC_INFO.
   types:
-    "!   The analysis of the document's tables.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The analysis of the document&apos;s tables.</p>
     begin of T_TABLE_RETURN,
       "!   Information about the parsed input document.
       DOCUMENT type T_DOC_INFO,
@@ -514,7 +554,8 @@ public section.
       TABLES type STANDARD TABLE OF T_TABLES WITH NON-UNIQUE DEFAULT KEY,
     end of T_TABLE_RETURN.
   types:
-    "!   Information about the document and the submitted feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the document and the submitted feedback.</p>
     begin of T_FEEDBACK_RETURN,
       "!   The unique ID of the feedback object.
       FEEDBACK_ID type STRING,
@@ -528,8 +569,9 @@ public section.
       FEEDBACK_DATA type T_FEEDBACK_DATA_OUTPUT,
     end of T_FEEDBACK_RETURN.
   types:
-    "!   The details of the normalized text, if applicable. This element is optional; it
-    "!    is returned only if normalized text exists.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The details of the normalized text, if applicable. This</p>
+    "!     element is optional; it is returned only if normalized text exists.
     begin of T_INTERPRETATION,
       "!   The value that was located in the normalized text.
       VALUE type STRING,
@@ -546,7 +588,8 @@ public section.
       UNIT type STRING,
     end of T_INTERPRETATION.
   types:
-    "!   A monetary amount identified in the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A monetary amount identified in the input document.</p>
     begin of T_CONTRACT_AMTS,
       "!   The confidence level in the identification of the contract amount.
       CONFIDENCE_LEVEL type STRING,
@@ -565,7 +608,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_AMTS.
   types:
-    "!   The contract currencies that are declared in the document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The contract currencies that are declared in the document.</p>
     begin of T_CONTRACT_CURRENCIES,
       "!   The confidence level in the identification of the contract currency.
       CONFIDENCE_LEVEL type STRING,
@@ -582,7 +626,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_CURRENCIES.
   types:
-    "!   The document's payment duration or durations.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The document&apos;s payment duration or durations.</p>
     begin of T_PAYMENT_TERMS,
       "!   The confidence level in the identification of the payment term.
       CONFIDENCE_LEVEL type STRING,
@@ -601,7 +646,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_PAYMENT_TERMS.
   types:
-    "!   A component part of the document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A component part of the document.</p>
     begin of T_ELEMENT,
       "!   The numeric location of the identified element in the document, represented with
       "!    two integers labeled `begin` and `end`.
@@ -617,7 +663,8 @@ public section.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ELEMENT.
   types:
-    "!   Termination dates identified in the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Termination dates identified in the input document.</p>
     begin of T_TERMINATION_DATES,
       "!   The confidence level in the identification of the termination date.
       CONFIDENCE_LEVEL type STRING,
@@ -633,7 +680,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_TERMINATION_DATES.
   types:
-    "!   The contract type identified in the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The contract type identified in the input document.</p>
     begin of T_CONTRACT_TYPES,
       "!   The confidence level in the identification of the contract type.
       CONFIDENCE_LEVEL type STRING,
@@ -646,7 +694,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_TYPES.
   types:
-    "!   An effective date.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An effective date.</p>
     begin of T_EFFECTIVE_DATES,
       "!   The confidence level in the identification of the effective date.
       CONFIDENCE_LEVEL type STRING,
@@ -662,7 +711,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_EFFECTIVE_DATES.
   types:
-    "!   A mention of a party.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A mention of a party.</p>
     begin of T_MENTION,
       "!   The name of the party.
       TEXT type STRING,
@@ -671,7 +721,8 @@ public section.
       LOCATION type T_LOCATION,
     end of T_MENTION.
   types:
-    "!   A party's address.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A party&apos;s address.</p>
     begin of T_ADDRESS,
       "!   A string listing the address.
       TEXT type STRING,
@@ -680,24 +731,26 @@ public section.
       LOCATION type T_LOCATION,
     end of T_ADDRESS.
   types:
-    "!   A party and its corresponding role, including address and contact information if
-    "!    identified.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A party and its corresponding role, including address and</p>
+    "!     contact information if identified.
     begin of T_PARTIES,
-      "!   The normalized form of the party's name.
+      "!   The normalized form of the party&apos;s name.
       PARTY type STRING,
-      "!   A string identifying the party's role.
+      "!   A string identifying the party&apos;s role.
       ROLE type STRING,
       "!   A string that identifies the importance of the party.
       IMPORTANCE type STRING,
-      "!   A list of the party's address or addresses.
+      "!   A list of the party&apos;s address or addresses.
       ADDRESSES type STANDARD TABLE OF T_ADDRESS WITH NON-UNIQUE DEFAULT KEY,
       "!   A list of the names and roles of contacts identified in the input document.
       CONTACTS type STANDARD TABLE OF T_CONTACT WITH NON-UNIQUE DEFAULT KEY,
-      "!   A list of the party's mentions in the input document.
+      "!   A list of the party&apos;s mentions in the input document.
       MENTIONS type STANDARD TABLE OF T_MENTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_PARTIES.
   types:
-    "!   Basic information about the input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Basic information about the input document.</p>
     begin of T_DOCUMENT,
       "!   Document title, if detected.
       TITLE type STRING,
@@ -705,13 +758,14 @@ public section.
       HTML type STRING,
       "!   The MD5 hash value of the input document.
       HASH type STRING,
-      "!   The label applied to the input document with the calling method's `file_1_label`
-      "!    or `file_2_label` value. This field is specified only in the output of the
-      "!    **Comparing two documents** method.
+      "!   The label applied to the input document with the calling method&apos;s
+      "!    `file_1_label` or `file_2_label` value. This field is specified only in the
+      "!    output of the **Comparing two documents** method.
       LABEL type STRING,
     end of T_DOCUMENT.
   types:
-    "!   The duration or durations of the contract.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The duration or durations of the contract.</p>
     begin of T_CONTRACT_TERMS,
       "!   The confidence level in the identification of the contract term.
       CONFIDENCE_LEVEL type STRING,
@@ -730,7 +784,9 @@ public section.
       LOCATION type T_LOCATION,
     end of T_CONTRACT_TERMS.
   types:
-    "!   The analysis of objects returned by the **Element classification** method.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The analysis of objects returned by the **Element</p>
+    "!     classification** method.
     begin of T_CLASSIFY_RETURN,
       "!   Basic information about the input document.
       DOCUMENT type T_DOCUMENT,
@@ -753,7 +809,7 @@ public section.
       CONTRACT_TYPES type STANDARD TABLE OF T_CONTRACT_TYPES WITH NON-UNIQUE DEFAULT KEY,
       "!   The durations of the contract.
       CONTRACT_TERMS type STANDARD TABLE OF T_CONTRACT_TERMS WITH NON-UNIQUE DEFAULT KEY,
-      "!   The document's payment durations.
+      "!   The document&apos;s payment durations.
       PAYMENT_TERMS type STANDARD TABLE OF T_PAYMENT_TERMS WITH NON-UNIQUE DEFAULT KEY,
       "!   The contract currencies as declared in the document.
       CONTRACT_CURRENCIES type STANDARD TABLE OF T_CONTRACT_CURRENCIES WITH NON-UNIQUE DEFAULT KEY,
@@ -765,7 +821,9 @@ public section.
       PARTIES type STANDARD TABLE OF T_PARTIES WITH NON-UNIQUE DEFAULT KEY,
     end of T_CLASSIFY_RETURN.
   types:
-    "!   The original labeling from the input document, without the submitted feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The original labeling from the input document, without the</p>
+    "!     submitted feedback.
     begin of T_ORIGINAL_LABELS_IN,
       "!   Description of the action specified by the element and whom it affects.
       TYPES type STANDARD TABLE OF T_TYPE_LABEL WITH NON-UNIQUE DEFAULT KEY,
@@ -774,7 +832,8 @@ public section.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
     end of T_ORIGINAL_LABELS_IN.
   types:
-    "!   Details of semantically aligned elements.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details of semantically aligned elements.</p>
     begin of T_ELEMENT_PAIR,
       "!   The label of the document (that is, the value of either the `file_1_label` or
       "!    `file_2_label` parameters) in which the element occurs.
@@ -793,7 +852,7 @@ public section.
       ATTRIBUTES type STANDARD TABLE OF T_ATTRIBUTE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ELEMENT_PAIR.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ALIGNED_ELEMENT,
       "!   Identifies two elements that semantically align between the compared documents.
       ELEMENT_PAIR type STANDARD TABLE OF T_ELEMENT_PAIR WITH NON-UNIQUE DEFAULT KEY,
@@ -808,7 +867,8 @@ public section.
       SIGNIFICANT_ELEMENTS type BOOLEAN,
     end of T_ALIGNED_ELEMENT.
   types:
-    "!   The comparison of the two submitted documents.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The comparison of the two submitted documents.</p>
     begin of T_COMPARE_RETURN,
       "!   The analysis model used to compare the input documents. For the **Compare two
       "!    documents** method, the only valid value is `contracts`.
@@ -826,7 +886,8 @@ public section.
       UNALIGNED_ELEMENTS type STANDARD TABLE OF T_UNALIGNED_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_COMPARE_RETURN.
   types:
-    "!   The HTML converted from an input document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The HTML converted from an input document.</p>
     begin of T_HTMLRETURN,
       "!   The number of pages in the input document.
       NUM_PAGES type STRING,
@@ -840,7 +901,8 @@ public section.
       HTML type STRING,
     end of T_HTMLRETURN.
   types:
-    "!   Feedback data for submission.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Feedback data for submission.</p>
     begin of T_FEEDBACK_DATA_INPUT,
       "!   The type of feedback. The only permitted value is `element_classification`.
       FEEDBACK_TYPE type STRING,
@@ -863,11 +925,13 @@ public section.
       UPDATED_LABELS type T_UPDATED_LABELS_IN,
     end of T_FEEDBACK_DATA_INPUT.
   types:
-    "!   An array that contains the `id` value of a row header that is applicable to this
-    "!    body cell.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array that contains the `id` value of a row header that</p>
+    "!     is applicable to this body cell.
       T_ROW_HEADER_IDS type TT_String.
   types:
-    "!   The batch-request status.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The batch-request status.</p>
     begin of T_BATCH_STATUS,
       "!   The method to be run against the documents. Possible values are
       "!    `html_conversion`, `element_classification`, and `tables`.
@@ -896,32 +960,37 @@ public section.
       UPDATED type DATETIME,
     end of T_BATCH_STATUS.
   types:
-    "!   The results of a successful **List Batches** request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of a successful **List Batches** request.</p>
     begin of T_BATCHES,
       "!   A list of the status of all batch requests.
       BATCHES type STANDARD TABLE OF T_BATCH_STATUS WITH NON-UNIQUE DEFAULT KEY,
     end of T_BATCHES.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   The document to convert.
       FILE type FILE,
     end of T_INLINE_OBJECT.
   types:
-    "!   An array that contains the `id` value of a column header that is applicable to
-    "!    the current cell.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array that contains the `id` value of a column header</p>
+    "!     that is applicable to the current cell.
       T_COLUMN_HEADER_IDS type TT_String.
   types:
-    "!   If you provide customization input, the normalized version of the row header
-    "!    texts according to the customization; otherwise, the same value as
-    "!    `row_header_texts`.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    If you provide customization input, the normalized version</p>
+    "!     of the row header texts according to the customization; otherwise, the same
+    "!     value as `row_header_texts`.
       T_ROW_HEADER_TEXTS_NORMALIZED type TT_String.
   types:
-    "!   An array that contains the `text` value of a column header that is applicable to
-    "!    the current cell.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array that contains the `text` value of a column header</p>
+    "!     that is applicable to the current cell.
       T_COLUMN_HEADER_TEXTS type TT_String.
   types:
-    "!   The status and message of the deletion request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The status and message of the deletion request.</p>
     begin of T_FEEDBACK_DELETED,
       "!   HTTP return code.
       STATUS type INTEGER,
@@ -929,7 +998,8 @@ public section.
       MESSAGE type STRING,
     end of T_FEEDBACK_DELETED.
   types:
-    "!   The feedback to be added to an element in the document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The feedback to be added to an element in the document.</p>
     begin of T_FEEDBACK_INPUT,
       "!   An optional string identifying the user.
       USER_ID type STRING,
@@ -939,19 +1009,19 @@ public section.
       FEEDBACK_DATA type T_FEEDBACK_DATA_INPUT,
     end of T_FEEDBACK_INPUT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT1,
       "!   The document to classify.
       FILE type FILE,
     end of T_INLINE_OBJECT1.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT2,
       "!   The document on which to run table extraction.
       FILE type FILE,
     end of T_INLINE_OBJECT2.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT3,
       "!   The first document to compare.
       FILE_1 type FILE,
@@ -959,7 +1029,7 @@ public section.
       FILE_2 type FILE,
     end of T_INLINE_OBJECT3.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT4,
       "!   A JSON file containing the input Cloud Object Storage credentials. At a minimum,
       "!    the credentials must enable `READ` permissions on the bucket defined by the
@@ -983,29 +1053,34 @@ public section.
       OUTPUT_BUCKET_NAME type STRING,
     end of T_INLINE_OBJECT4.
   types:
-    "!   The results of a successful **Get Feedback** request for a single feedback
-    "!    entry.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of a successful **Get Feedback** request for a</p>
+    "!     single feedback entry.
     begin of T_GET_FEEDBACK,
       "!   A string uniquely identifying the feedback entry.
       FEEDBACK_ID type STRING,
       "!   A timestamp identifying the creation time of the feedback entry.
       CREATED type DATETIME,
-      "!   A string containing the user's comment about the feedback entry.
+      "!   A string containing the user&apos;s comment about the feedback entry.
       COMMENT type STRING,
       "!   Information returned from the **Add Feedback** method.
       FEEDBACK_DATA type T_FEEDBACK_DATA_OUTPUT,
     end of T_GET_FEEDBACK.
   types:
-    "!   The results of a successful **List Feedback** request for all feedback.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The results of a successful **List Feedback** request for</p>
+    "!     all feedback.
     begin of T_FEEDBACK_LIST,
       "!   A list of all feedback for the document.
       FEEDBACK type STANDARD TABLE OF T_GET_FEEDBACK WITH NON-UNIQUE DEFAULT KEY,
     end of T_FEEDBACK_LIST.
   types:
-    "!   A list of values in a key-value pair.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of values in a key-value pair.</p>
       T_VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_LOCATION type string value '|BEGIN|END|',
     T_LABEL type string value '|NATURE|PARTY|',
@@ -1078,6 +1153,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      NUM_PAGES type string value 'num_pages',
      AUTHOR type string value 'author',
@@ -1227,7 +1303,8 @@ constants:
     redefinition .
 
 
-    "! Convert document to HTML.
+    "! <p class="shorttext synchronized" lang="en">Convert document to HTML</p>
+    "!   Converts a document to HTML.
     "!
     "! @parameter I_FILE |
     "!   The document to convert.
@@ -1237,8 +1314,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_HTMLRETURN
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1255,7 +1332,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Classify the elements of a document.
+    "! <p class="shorttext synchronized" lang="en">Classify the elements of a document</p>
+    "!   Analyzes the structural and semantic elements of a document.
     "!
     "! @parameter I_FILE |
     "!   The document to classify.
@@ -1265,8 +1343,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_CLASSIFY_RETURN
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1283,7 +1361,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Extract a document's tables.
+    "! <p class="shorttext synchronized" lang="en">Extract a document's tables</p>
+    "!   Analyzes the tables in a document.
     "!
     "! @parameter I_FILE |
     "!   The document on which to run table extraction.
@@ -1293,8 +1372,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TABLE_RETURN
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1311,7 +1390,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Compare two documents.
+    "! <p class="shorttext synchronized" lang="en">Compare two documents</p>
+    "!   Compares two input documents. Documents must be in the same format.
     "!
     "! @parameter I_FILE_1 |
     "!   The first document to compare.
@@ -1329,8 +1409,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_COMPARE_RETURN
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1351,7 +1431,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Add feedback.
+    "! <p class="shorttext synchronized" lang="en">Add feedback</p>
+    "!   Adds feedback in the form of _labels_ from a subject-matter expert (SME) to a
+    "!    governing document. <br/>
+    "!   **Important:** Feedback is not immediately incorporated into the training model,
+    "!    nor is it guaranteed to be incorporated at a later date. Instead, submitted
+    "!    feedback is used to suggest future updates to the training model.
     "!
     "! @parameter I_FEEDBACK_DATA |
     "!   An object that defines the feedback to be submitted.
@@ -1368,7 +1453,8 @@ constants:
       !E_RESPONSE type T_FEEDBACK_RETURN
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List the feedback in a document.
+    "! <p class="shorttext synchronized" lang="en">List the feedback in a document</p>
+    "!   Lists the feedback in a document.
     "!
     "! @parameter I_FEEDBACK_TYPE |
     "!   An optional string that filters the output to include only feedback with the
@@ -1454,7 +1540,8 @@ constants:
       !E_RESPONSE type T_FEEDBACK_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get a specified feedback entry.
+    "! <p class="shorttext synchronized" lang="en">Get a specified feedback entry</p>
+    "!   Gets a feedback entry with a specified `feedback_id`.
     "!
     "! @parameter I_FEEDBACK_ID |
     "!   A string that specifies the feedback entry to be included in the output.
@@ -1462,8 +1549,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_GET_FEEDBACK
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1477,7 +1564,8 @@ constants:
       !E_RESPONSE type T_GET_FEEDBACK
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a specified feedback entry.
+    "! <p class="shorttext synchronized" lang="en">Delete a specified feedback entry</p>
+    "!   Deletes a feedback entry with a specified `feedback_id`.
     "!
     "! @parameter I_FEEDBACK_ID |
     "!   A string that specifies the feedback entry to be deleted from the document.
@@ -1485,8 +1573,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_FEEDBACK_DELETED
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1501,7 +1589,16 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Submit a batch-processing request.
+    "! <p class="shorttext synchronized" lang="en">Submit a batch-processing request</p>
+    "!   Run Compare and Comply methods over a collection of input documents.<br/>
+    "!   <br/>
+    "!   **Important:** Batch processing requires the use of the [IBM Cloud Object
+    "!    Storage
+    "!    service](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-o
+    "!   bject-storage-about#about-ibm-cloud-object-storage). The use of IBM Cloud Object
+    "!    Storage with Compare and Comply is discussed at [Using batch
+    "!    processing](https://cloud.ibm.com/docs/services/compare-comply?topic=compare-co
+    "!   mply-batching#before-you-batch).
     "!
     "! @parameter I_FUNCTION |
     "!   The Compare and Comply method to run across the submitted input documents.
@@ -1529,8 +1626,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCH_STATUS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1553,7 +1650,8 @@ constants:
       !E_RESPONSE type T_BATCH_STATUS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List submitted batch-processing jobs.
+    "! <p class="shorttext synchronized" lang="en">List submitted batch-processing jobs</p>
+    "!   Lists batch-processing jobs submitted by users.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCHES
@@ -1566,7 +1664,8 @@ constants:
       !E_RESPONSE type T_BATCHES
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get information about a specific batch-processing job.
+    "! <p class="shorttext synchronized" lang="en">Get information about a specific batch-processing job</p>
+    "!   Gets information about a batch-processing job with a specified ID.
     "!
     "! @parameter I_BATCH_ID |
     "!   The ID of the batch-processing job whose information you want to retrieve.
@@ -1582,7 +1681,9 @@ constants:
       !E_RESPONSE type T_BATCH_STATUS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a pending or active batch-processing job.
+    "! <p class="shorttext synchronized" lang="en">Update a pending or active batch-processing job</p>
+    "!   Updates a pending or active batch-processing job. You can rescan the input
+    "!    bucket to check for new documents or cancel a job.
     "!
     "! @parameter I_BATCH_ID |
     "!   The ID of the batch-processing job you want to update.
@@ -1592,8 +1693,8 @@ constants:
     "!   The analysis model to be used by the service. For the **Element classification**
     "!    and **Compare two documents** methods, the default is `contracts`. For the
     "!    **Extract tables** method, the default is `tables`. These defaults apply to the
-    "!    standalone methods as well as to the methods' use in batch-processing requests.
-    "!
+    "!    standalone methods as well as to the methods&apos; use in batch-processing
+    "!    requests.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_BATCH_STATUS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1686,7 +1787,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092814'.
+    e_sdk_version_date = '20200310173424'.
 
   endmethod.
 

@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_PERSONAL_INSIGHTS_V3</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_PERSONAL_INSIGHTS_V3</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <h1>Personality Insights</h1>
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_PERSONAL_INSIGHTS_V3</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_PERSONAL_INSIGHTS_V3</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Personality Insights</p>
  The IBM Watson&trade; Personality Insights service enables applications to
   derive insights from social media, enterprise data, or other digital
-  communications. The service uses linguistic analytics to infer individuals'
-  intrinsic personality characteristics, including Big Five, Needs, and Values,
-  from digital communications such as email, text messages, tweets, and forum
-  posts.<br/>
+  communications. The service uses linguistic analytics to infer
+  individuals&apos; intrinsic personality characteristics, including Big Five,
+  Needs, and Values, from digital communications such as email, text messages,
+  tweets, and forum posts.<br/>
  <br/>
  The service can automatically infer, from potentially noisy social media,
   portraits of individuals that reflect their personality characteristics. The
@@ -12,24 +12,83 @@
   and, for JSON content that is timestamped, can report temporal behavior.<br/>
  * For information about the meaning of the models that the service uses to
   describe personality characteristics, see [Personality
-  models](https://cloud.ibm.com/docs/services/personality-insights?topic=personal
- ity-insights-models#models).<br/>
+  models](https://cloud.ibm.com/docs/personality-insights?topic=personality-insig
+ hts-models#models).<br/>
  * For information about the meaning of the consumption preferences, see
   [Consumption
-  preferences](https://cloud.ibm.com/docs/services/personality-insights?topic=per
- sonality-insights-preferences#preferences). <br/>
+  preferences](https://cloud.ibm.com/docs/personality-insights?topic=personality-
+ insights-preferences#preferences). <br/>
  <br/>
  **Note:** Request logging is disabled for the Personality Insights service.
   Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header,
-  the service does not log or retain data from requests and responses. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_behavior</span> (structured type)</td><td><span class="abapDocComment">   The temporal behavior for the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_cnsmptn_preferences_category</span> (structured type)</td><td><span class="abapDocComment">   The consumption preferences that the service inferred from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_consumption_preferences</span> (structured type)</td><td><span class="abapDocComment">   A consumption preference that the service inferred from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content</span> (structured type)</td><td><span class="abapDocComment">   The full input content that the service is to analyze.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content_item</span> (structured type)</td><td><span class="abapDocComment">   An input content item that the service is to analyze.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_csv_file</span> type STRING</td><td><span class="abapDocComment">   A CSV file that contains the results of the personality profile that the service
-    generated for the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_model</span> (structured type)</td><td><span class="abapDocComment">   The error response from a failed request.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_profile</span> (structured type)</td><td><span class="abapDocComment">   The personality profile that the service generated for the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_trait</span> (structured type)</td><td><span class="abapDocComment">   The characteristics that the service inferred from the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_warning</span> (structured type)</td><td><span class="abapDocComment">   A warning message that is associated with the input content.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td>&#160;</td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td>&#160;</td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_PROFILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get profile.
+  the service does not log or retain data from requests and responses. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_behavior</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The temporal behavior for the input content.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_cnsmptn_preferences_category</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The consumption preferences that the service inferred from</p>
+     the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_consumption_preferences</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A consumption preference that the service inferred from the</p>
+     input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The full input content that the service is to analyze.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_content_item</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An input content item that the service is to analyze.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_csv_file</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A CSV file that contains the results of the personality</p>
+     profile that the service generated for the input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The error response from a failed request.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_profile</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The personality profile that the service generated for the</p>
+     input content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_trait</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The characteristics that the service inferred from the input</p>
+     content.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_warning</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A warning message that is associated with the input content.</p></span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_PROFILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get profile</p>
+   Generates a personality profile for the author of the input text. The service
+    accepts a maximum of 20 MB of input content, but it requires much less text to
+    produce an accurate profile. The service can analyze text in Arabic, English,
+    Japanese, Korean, or Spanish. It can return its results in a variety of
+    languages. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Requesting a
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-input#input)<br/>
+   * [Providing sufficient
+    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+   ts-input#sufficient) <br/>
+   <br/>
+   ### Content types<br/>
+   <br/>
+    You can provide input content as plain text (`text/plain`), HTML (`text/html`),
+    or JSON (`application/json`) by specifying the **Content-Type** parameter. The
+    default is `text/plain`.<br/>
+   * Per the JSON specification, the default character encoding for JSON content is
+    effectively always UTF-8.<br/>
+   * Per the HTTP specification, the default encoding for plain text and HTML is
+    ISO-8859-1 (effectively, the ASCII character set). <br/>
+   <br/>
+   When specifying a content type of plain text or HTML, include the `charset`
+    parameter to indicate the character encoding of the input text; for example,
+    `Content-Type: text/plain;charset=utf-8`. <br/>
+   <br/>
+   **See also:** [Specifying request and response
+    formats](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-input#formats) <br/>
+   <br/>
+   ### Accept types<br/>
+   <br/>
+    You must request a response as JSON (`application/json`) or comma-separated
+    values (`text/csv`) by specifying the **Accept** parameter. CSV output includes
+    a fixed number of columns. Set the **csv_headers** parameter to `true` to
+    request optional column headers for CSV output. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Understanding a JSON
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-output#output)<br/>
+   * [Understanding a CSV
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-outputCSV#outputCSV)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_content</span></td><td><span class="abapDocComment">
    A maximum of 20 MB of content to analyze, though the service requires much less
     text; for more information, see [Providing sufficient
-    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
-   ty-insights-input#sufficient). For JSON input, provide an object of type
-    `Content`.
+    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+   ts-input#sufficient). For JSON input, provide an object of type `Content`.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_content_type</span></td><td><span class="abapDocComment">
    The type of the input. For more information, see **Content types** in the method
     description.
@@ -65,16 +124,60 @@
     default, no consumption preferences are returned.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_PROFILE
- </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment">
-   Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile_as_csv</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;text&#x2f;csv&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> Get profile as csv.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">profile_as_csv</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_content</span></td><td>type T_CONTENT</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;text&#x2f;plain&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept_language</span></td><td>type STRING default &#x27;en&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_raw_scores</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_csv_headers</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_consumption_preferences</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;text&#x2f;csv&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get profile as csv</p>
+   Generates a personality profile for the author of the input text. The service
+    accepts a maximum of 20 MB of input content, but it requires much less text to
+    produce an accurate profile. The service can analyze text in Arabic, English,
+    Japanese, Korean, or Spanish. It can return its results in a variety of
+    languages. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Requesting a
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-input#input)<br/>
+   * [Providing sufficient
+    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+   ts-input#sufficient) <br/>
+   <br/>
+   ### Content types<br/>
+   <br/>
+    You can provide input content as plain text (`text/plain`), HTML (`text/html`),
+    or JSON (`application/json`) by specifying the **Content-Type** parameter. The
+    default is `text/plain`.<br/>
+   * Per the JSON specification, the default character encoding for JSON content is
+    effectively always UTF-8.<br/>
+   * Per the HTTP specification, the default encoding for plain text and HTML is
+    ISO-8859-1 (effectively, the ASCII character set). <br/>
+   <br/>
+   When specifying a content type of plain text or HTML, include the `charset`
+    parameter to indicate the character encoding of the input text; for example,
+    `Content-Type: text/plain;charset=utf-8`. <br/>
+   <br/>
+   **See also:** [Specifying request and response
+    formats](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-input#formats) <br/>
+   <br/>
+   ### Accept types<br/>
+   <br/>
+    You must request a response as JSON (`application/json`) or comma-separated
+    values (`text/csv`) by specifying the **Accept** parameter. CSV output includes
+    a fixed number of columns. Set the **csv_headers** parameter to `true` to
+    request optional column headers for CSV output. <br/>
+   <br/>
+   **See also:**<br/>
+   * [Understanding a JSON
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-output#output)<br/>
+   * [Understanding a CSV
+    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+   ghts-outputCSV#outputCSV)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_content</span></td><td><span class="abapDocComment">
    A maximum of 20 MB of content to analyze, though the service requires much less
     text; for more information, see [Providing sufficient
-    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
-   ty-insights-input#sufficient). For JSON input, provide an object of type
-    `Content`.
+    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+   ts-input#sufficient). For JSON input, provide an object of type `Content`.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_content_type</span></td><td><span class="abapDocComment">
    The type of the input. For more information, see **Content types** in the method
     description.
@@ -111,4 +214,4 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type STRING
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 10.02.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>

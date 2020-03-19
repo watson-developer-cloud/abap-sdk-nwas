@@ -14,9 +14,15 @@
    <DESCRIPTIONS>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
+     <CMPNAME>ADD_CONFIG_PROP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>ADD_IMAGE_TO_ZIP</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Adds an image to zip data</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
@@ -70,49 +76,43 @@
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_BEARER_TOKEN</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Returns the bearer token, if available</DESCRIPT>
+     <DESCRIPT>Returns the bearer token, if available.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_CONFIG_VALUE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Reads an individual value form table ZIBMC_CONFIG</DESCRIPT>
+     <DESCRIPT>Retrieves a value of a configuration parameter</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_FIELD_DATA</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Determines fields containing image name and image data</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_INSTANCE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Creates an IBM Cloud service class instance</DESCRIPT>
+     <DESCRIPT>Factory method to instantiate a service specific wrapper cla</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_SDK_VERSION_DATE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>returns the build date of the method</DESCRIPT>
+     <DESCRIPT>Returns the SDK built date.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>GET_ZIPDATA</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Creates or Updates a classifier</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
-     <CMPNAME>P_TOKEN_SAVED</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>IAM tokens</DESCRIPT>
+     <DESCRIPT>Compresses multiple images from an internal table</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_EXT</CLSNAME>
      <CMPNAME>SET_BEARER_TOKEN</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Sets the bearer token</DESCRIPT>
+     <DESCRIPT>Method for internal use.</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

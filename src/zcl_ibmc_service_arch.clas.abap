@@ -11,125 +11,229 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-class ZCL_IBMC_SERVICE_ARCH definition
+class zcl_ibmc_service_arch definition
   public
   create public .
 
-public section.
+  public section.
 
-  interfaces ZIF_IBMC_SERVICE_ARCH .
+    interfaces zif_ibmc_service_arch .
 
-  types TO_HTTP_CLIENT type ref to IF_HTTP_CLIENT .
-  types TO_REST_CLIENT type ref to CL_REST_HTTP_CLIENT .
-  types TO_HTTP_ENTITY type ref to IF_HTTP_ENTITY .
-  types TO_REST_ENTITY type ref to IF_REST_ENTITY .
-  types TO_REST_REQUEST type ref to IF_REST_ENTITY .
-  types TO_REST_RESPONSE type ref to IF_REST_ENTITY .
-  types TO_FORM_PART type ref to IF_HTTP_ENTITY .
-  types:
-    begin of ts_client,
+    types to_http_client type ref to if_http_client .
+    types to_rest_client type ref to cl_rest_http_client .
+    types to_http_entity type ref to if_http_entity .
+    types to_rest_entity type ref to if_rest_entity .
+    types to_rest_request type ref to if_rest_entity .
+    types to_rest_response type ref to if_rest_entity .
+    types to_form_part type ref to if_http_entity .
+    types:
+      begin of ts_client,
         http type to_http_client,
         rest type to_rest_client,
       end of ts_client .
-  types TS_HTTP_STATUS type ZIF_IBMC_SERVICE_ARCH~TS_HTTP_STATUS .
-  types TS_HEADER type ZIF_IBMC_SERVICE_ARCH~TS_HEADER .
-  types TT_HEADER type ZIF_IBMC_SERVICE_ARCH~TT_HEADER .
-  types TS_URL type ZIF_IBMC_SERVICE_ARCH~TS_URL .
-  types TS_ACCESS_TOKEN type ZIF_IBMC_SERVICE_ARCH~TS_ACCESS_TOKEN .
-  types TS_REQUEST_PROP type ZIF_IBMC_SERVICE_ARCH~TS_REQUEST_PROP .
+    types ts_http_status type zif_ibmc_service_arch~ts_http_status .
+    types ts_header type zif_ibmc_service_arch~ts_header .
+    types tt_header type zif_ibmc_service_arch~tt_header .
+    types ts_url type zif_ibmc_service_arch~ts_url .
+    types ts_access_token type zif_ibmc_service_arch~ts_access_token .
+    types ts_request_prop type zif_ibmc_service_arch~ts_request_prop .
 
-  class-methods GET_TIMEZONE
-    returning
-      value(E_TIMEZONE) type ZIF_IBMC_SERVICE_ARCH~TY_TIMEZONE .
-  class-methods GET_PROGNAME
-    returning
-      value(E_PROGNAME) type STRING .
-  class-methods BASE64_DECODE
-    importing
-      !I_BASE64 type STRING
-    returning
-      value(E_BINARY) type XSTRING
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-  class-methods CREATE_CLIENT_BY_URL
-    importing
-      !I_URL type STRING
-      !I_REQUEST_PROP type TS_REQUEST_PROP
-    exporting
-      !E_CLIENT type TS_CLIENT
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-  methods ADD_FORM_PART
-    importing
-      !I_CLIENT type TS_CLIENT
-      !IT_FORM_PART type ZIF_IBMC_SERVICE_ARCH=>TT_FORM_PART
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-  class-methods GET_DEFAULT_PROXY
-    importing
-      !I_URL type TS_URL optional
-    exporting
-      !E_PROXY_HOST type STRING
-      !E_PROXY_PORT type STRING .
-  class-methods SET_AUTHENTICATION_BASIC
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_USERNAME type STRING
-      !I_PASSWORD type STRING .
-  class-methods SET_REQUEST_HEADER
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_NAME type STRING
-      !I_VALUE type STRING .
-  class-methods SET_REQUEST_URI
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_URI type STRING .
-  class-methods EXECUTE
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_METHOD type ZIF_IBMC_SERVICE_ARCH~CHAR default ZIF_IBMC_SERVICE_ARCH~C_METHOD_GET
-    returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-  class-methods GET_RESPONSE_STRING
-    importing
-      !I_RESPONSE type TO_REST_RESPONSE
-    returning
-      value(E_DATA) type STRING .
-  class-methods SET_REQUEST_BODY_CDATA
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_DATA type STRING .
-  class-methods SET_REQUEST_BODY_XDATA
-    importing
-      !I_CLIENT type TS_CLIENT
-      !I_DATA type XSTRING .
-  class-methods GET_RESPONSE_BINARY
-    importing
-      !I_RESPONSE type TO_REST_RESPONSE
-    returning
-      value(E_DATA) type XSTRING .
-  class-methods GET_REST_REQUEST
-    importing
-      !I_CLIENT type TS_CLIENT
-    returning
-      value(E_REST_REQUEST) type TO_REST_REQUEST .
-  class-methods GET_HTTP_STATUS
-    importing
-      !I_REST_RESPONSE type TO_REST_RESPONSE
-    returning
-      value(E_STATUS) type TS_HTTP_STATUS .
-  class-methods CONVERT_STRING_TO_UTF8
-    importing
-      !I_STRING type STRING
-    returning
-      value(E_UTF8) type XSTRING
-    raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
-protected section.
-private section.
+    "! <p class="shorttext synchronized" lang="en">Returns a HTTP response header.</p>
+    "!
+    "! @parameter I_RESPONSE | HTTP/REST response
+    "! @parameter I_HEADER_FIELD | Header field name
+    "! @parameter E_VALUE | Header field value
+    "!
+    class-methods get_response_header
+      importing
+        !i_response     type to_rest_response
+        !i_header_field type string
+      returning
+        value(e_value)  type string .
+    "! <p class="shorttext synchronized" lang="en">Returns the user's time zone.</p>
+    "!
+    "! @parameter E_TIMEZONE | user's time zone
+    "!
+    class-methods get_timezone
+      returning
+        value(e_timezone) type zif_ibmc_service_arch~ty_timezone .
+    "! <p class="shorttext synchronized" lang="en">Returns an ABAP module identifier.</p>
+    "!
+    "! @parameter E_PROGNAME | ABAP module identifier
+    "!
+    class-methods get_progname
+      returning
+        value(e_progname) type string .
+    "! <p class="shorttext synchronized" lang="en">Decodes base64 encoded data to binary.</p>
+    "!
+    "! @parameter I_BASE64 | Base64-encoded binary
+    "! @parameter E_BINARY | Binary data
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+    class-methods base64_decode
+      importing
+        !i_base64       type string
+      returning
+        value(e_binary) type xstring
+      raising
+        zcx_ibmc_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Returns a HTTP/REST client based on an URL.</p>
+    "!
+    "! @parameter I_URL | URL
+    "! @parameter I_REQUEST_PROP | Request parameters
+    "! @parameter E_CLIENT | HTTP/REST client
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+    class-methods create_client_by_url
+      importing
+        !i_url          type string
+        !i_request_prop type ts_request_prop
+      exporting
+        !e_client       type ts_client
+      raising
+        zcx_ibmc_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Generates a multi-part request body.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter IT_FORM_PART | Table of form parts
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+    methods add_form_part
+      importing
+        !i_client     type ts_client
+        !it_form_part type zif_ibmc_service_arch=>tt_form_part
+      raising
+        zcx_ibmc_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Returns the default proxy host and port.</p>
+    "!
+    "! @parameter I_URL | target URL
+    "! @parameter E_PROXY_HOST | Proxy host
+    "! @parameter E_PROXY_PORT | Proxy port
+    "!
+    class-methods get_default_proxy
+      importing
+        !i_url        type ts_url optional
+      exporting
+        !e_proxy_host type string
+        !e_proxy_port type string .
+    "! <p class="shorttext synchronized" lang="en">Sets request header for basic authentication.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_USERNAME | User name
+    "! @parameter I_PASSWORD | Password
+    "!
+    class-methods set_authentication_basic
+      importing
+        !i_client   type ts_client
+        !i_username type string
+        !i_password type string .
+    "! <p class="shorttext synchronized" lang="en">Sets a HTTP header.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_NAME | Header field name
+    "! @parameter I_VALUE | Header field value
+    "!
+    class-methods set_request_header
+      importing
+        !i_client type ts_client
+        !i_name   type string
+        !i_value  type string .
+    "! <p class="shorttext synchronized" lang="en">Sets the URI for a HTTP request.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_URI | URI
+    "!
+    class-methods set_request_uri
+      importing
+        !i_client type ts_client
+        !i_uri    type string .
+    "! <p class="shorttext synchronized" lang="en">Executes a HTTP request.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_METHOD | HTTP method (GET,POST,PUT,DELETE)
+    "! @parameter E_RESPONSE | Response of the request
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+    class-methods execute
+      importing
+        !i_client         type ts_client
+        !i_method         type zif_ibmc_service_arch~char default zif_ibmc_service_arch~c_method_get
+      returning
+        value(e_response) type to_rest_response
+      raising
+        zcx_ibmc_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Reads character data from a HTTP response.</p>
+    "!
+    "! @parameter I_RESPONSE | HTTP response
+    "! @parameter E_DATA | Character data
+    "!
+    class-methods get_response_string
+      importing
+        !i_response   type to_rest_response
+      returning
+        value(e_data) type string .
+    "! <p class="shorttext synchronized" lang="en">Set character data for the body of a HTTP request.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_DATA | Character data
+    "!
+    class-methods set_request_body_cdata
+      importing
+        !i_client type ts_client
+        !i_data   type string .
+    "! <p class="shorttext synchronized" lang="en">Set binary data for the body of a HTTP request.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter I_DATA | Binary data
+    "!
+    class-methods set_request_body_xdata
+      importing
+        !i_client type ts_client
+        !i_data   type xstring .
+    "! <p class="shorttext synchronized" lang="en">Reads binary data from a HTTP response.</p>
+    "!
+    "! @parameter I_RESPONSE | HTTP response
+    "! @parameter E_DATA | Binary data
+    "!
+    class-methods get_response_binary
+      importing
+        !i_response   type to_rest_response
+      returning
+        value(e_data) type xstring .
+    "! <p class="shorttext synchronized" lang="en">Returns a request object from a HTTP client object.</p>
+    "!
+    "! @parameter I_CLIENT | HTTP/REST client
+    "! @parameter E_REST_REQUEST | REST request object
+    "!
+    class-methods get_rest_request
+      importing
+        !i_client             type ts_client
+      returning
+        value(e_rest_request) type to_rest_request .
+    "! <p class="shorttext synchronized" lang="en">Returns the status of a REST response.</p>
+    "!
+    "! @parameter I_REST_RESPONSE | HTTP/REST response
+    "! @parameter E_STATUS | HTTP status
+    "!
+    class-methods get_http_status
+      importing
+        !i_rest_response type to_rest_response
+      returning
+        value(e_status)  type ts_http_status .
+    "! <p class="shorttext synchronized" lang="en">Converts STRING data to UTF8 encoded XSTRING.</p>
+    "!
+    "! @parameter I_STRING | STRING data
+    "! @parameter E_UTF8 | UTF8-encoded data
+    "!
+    class-methods convert_string_to_utf8
+      importing
+        !i_string     type string
+      returning
+        value(e_utf8) type xstring
+      raising
+        zcx_ibmc_service_exception .
+  protected section.
+  private section.
 ENDCLASS.
 
 
@@ -357,6 +461,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   method get_response_binary.
 
     e_data = i_response->get_binary_data( ).
+
+  endmethod.
+
+
+  method get_response_header.
+
+    e_value = i_response->get_header_field( iv_name = i_header_field ).
 
   endmethod.
 

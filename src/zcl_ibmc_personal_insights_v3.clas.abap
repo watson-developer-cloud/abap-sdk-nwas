@@ -11,13 +11,13 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Personality Insights</h1>
+"! <p class="shorttext synchronized" lang="en">Personality Insights</p>
 "! The IBM Watson&trade; Personality Insights service enables applications to
 "!  derive insights from social media, enterprise data, or other digital
-"!  communications. The service uses linguistic analytics to infer individuals'
-"!  intrinsic personality characteristics, including Big Five, Needs, and Values,
-"!  from digital communications such as email, text messages, tweets, and forum
-"!  posts.<br/>
+"!  communications. The service uses linguistic analytics to infer
+"!  individuals&apos; intrinsic personality characteristics, including Big Five,
+"!  Needs, and Values, from digital communications such as email, text messages,
+"!  tweets, and forum posts.<br/>
 "! <br/>
 "! The service can automatically infer, from potentially noisy social media,
 "!  portraits of individuals that reflect their personality characteristics. The
@@ -25,12 +25,12 @@
 "!  and, for JSON content that is timestamped, can report temporal behavior.<br/>
 "! * For information about the meaning of the models that the service uses to
 "!  describe personality characteristics, see [Personality
-"!  models](https://cloud.ibm.com/docs/services/personality-insights?topic=personal
-"! ity-insights-models#models).<br/>
+"!  models](https://cloud.ibm.com/docs/personality-insights?topic=personality-insig
+"! hts-models#models).<br/>
 "! * For information about the meaning of the consumption preferences, see
 "!  [Consumption
-"!  preferences](https://cloud.ibm.com/docs/services/personality-insights?topic=per
-"! sonality-insights-preferences#preferences). <br/>
+"!  preferences](https://cloud.ibm.com/docs/personality-insights?topic=personality-
+"! insights-preferences#preferences). <br/>
 "! <br/>
 "! **Note:** Request logging is disabled for the Personality Insights service.
 "!  Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header,
@@ -42,7 +42,9 @@ class ZCL_IBMC_PERSONAL_INSIGHTS_V3 DEFINITION
 
 public section.
   types:
-    "!   The characteristics that the service inferred from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The characteristics that the service inferred from the input</p>
+    "!     content.
     begin of T_TRAIT,
       "!   The unique, non-localized identifier of the characteristic to which the results
       "!    pertain. IDs have the form<br/>
@@ -72,18 +74,19 @@ public section.
       "!    comparison of the results against a different sampling population and with a
       "!    custom normalization approach.
       RAW_SCORE type DOUBLE,
-      "!   **`2017-10-13`**: Indicates whether the characteristic is meaningful for the input
-      "!   ** language. The field is always `true` for all characteristics of English,
-      "!   ** Spanish, and Japanese input. The field is `false` for the subset of
-      "!   ** characteristics of Arabic and Korean input for which the service's models are
-      "!   ** unable to generate meaningful results. **`2016-10-19`**: Not returned.
+      "!   **`2017-10-13`**: Indicates whether the characteristic is meaningful for the
+      "!    input language. The field is always `true` for all characteristics of English,
+      "!    Spanish, and Japanese input. The field is `false` for the subset of
+      "!    characteristics of Arabic and Korean input for which the service&apos;s models
+      "!    are unable to generate meaningful results. **`2016-10-19`**: Not returned.
       SIGNIFICANT type BOOLEAN,
       "!   For `personality` (Big Five) dimensions, more detailed results for the facets of
       "!    each dimension as inferred from the input text.
       CHILDREN type STANDARD TABLE OF DATA_REFERENCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAIT.
   types:
-    "!   The temporal behavior for the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The temporal behavior for the input content.</p>
     begin of T_BEHAVIOR,
       "!   The unique, non-localized identifier of the characteristic to which the results
       "!    pertain. IDs have the form `behavior_&#123;value&#125;`.
@@ -98,7 +101,9 @@ public section.
       PERCENTAGE type DOUBLE,
     end of T_BEHAVIOR.
   types:
-    "!   A consumption preference that the service inferred from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A consumption preference that the service inferred from the</p>
+    "!     input content.
     begin of T_CONSUMPTION_PREFERENCES,
       "!   The unique, non-localized identifier of the consumption preference to which the
       "!    results pertain. IDs have the form
@@ -117,29 +122,32 @@ public section.
       SCORE type DOUBLE,
     end of T_CONSUMPTION_PREFERENCES.
   types:
-    "!   A warning message that is associated with the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A warning message that is associated with the input content.</p>
     begin of T_WARNING,
       "!   The identifier of the warning message.
       WARNING_ID type STRING,
       "!   The message associated with the `warning_id`:<br/>
-      "!   * `WORD_COUNT_MESSAGE`: "There were &#123;number&#125; words in the input. We
-      "!    need a minimum of 600, preferably 1,200 or more, to compute statistically
-      "!    significant estimates."<br/>
-      "!   * `JSON_AS_TEXT`: "Request input was processed as text/plain as indicated,
-      "!    however detected a JSON input. Did you mean application/json?"<br/>
-      "!   * `CONTENT_TRUNCATED`: "For maximum accuracy while also optimizing processing
-      "!    time, only the first 250KB of input text (excluding markup) was analyzed.
-      "!    Accuracy levels off at approximately 3,000 words so this did not affect the
-      "!    accuracy of the profile."<br/>
-      "!   * `PARTIAL_TEXT_USED`, "The text provided to compute the profile was trimmed for
-      "!    performance reasons. This action does not affect the accuracy of the output, as
-      "!    not all of the input text was required." Applies only when Arabic input text
-      "!    exceeds a threshold at which additional words do not contribute to the accuracy
-      "!    of the profile.
+      "!   * `WORD_COUNT_MESSAGE`: &quot;There were &#123;number&#125; words in the input.
+      "!    We need a minimum of 600, preferably 1,200 or more, to compute statistically
+      "!    significant estimates.&quot;<br/>
+      "!   * `JSON_AS_TEXT`: &quot;Request input was processed as text/plain as indicated,
+      "!    however detected a JSON input. Did you mean application/json?&quot;<br/>
+      "!   * `CONTENT_TRUNCATED`: &quot;For maximum accuracy while also optimizing
+      "!    processing time, only the first 250KB of input text (excluding markup) was
+      "!    analyzed. Accuracy levels off at approximately 3,000 words so this did not
+      "!    affect the accuracy of the profile.&quot;<br/>
+      "!   * `PARTIAL_TEXT_USED`, &quot;The text provided to compute the profile was
+      "!    trimmed for performance reasons. This action does not affect the accuracy of
+      "!    the output, as not all of the input text was required.&quot; Applies only when
+      "!    Arabic input text exceeds a threshold at which additional words do not
+      "!    contribute to the accuracy of the profile.
       MESSAGE type STRING,
     end of T_WARNING.
   types:
-    "!   The consumption preferences that the service inferred from the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The consumption preferences that the service inferred from</p>
+    "!     the input content.
     begin of T_CNSMPTN_PREFERENCES_CATEGORY,
       "!   The unique, non-localized identifier of the consumption preferences category to
       "!    which the results pertain. IDs have the form
@@ -152,7 +160,9 @@ public section.
       CONSUMPTION_PREFERENCES type STANDARD TABLE OF T_CONSUMPTION_PREFERENCES WITH NON-UNIQUE DEFAULT KEY,
     end of T_CNSMPTN_PREFERENCES_CATEGORY.
   types:
-    "!   The personality profile that the service generated for the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The personality profile that the service generated for the</p>
+    "!     input content.
     begin of T_PROFILE,
       "!   The language model that was used to process the input.
       PROCESSED_LANGUAGE type STRING,
@@ -185,7 +195,8 @@ public section.
       WARNINGS type STANDARD TABLE OF T_WARNING WITH NON-UNIQUE DEFAULT KEY,
     end of T_PROFILE.
   types:
-    "!   An input content item that the service is to analyze.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An input content item that the service is to analyze.</p>
     begin of T_CONTENT_ITEM,
       "!   The content that is to be analyzed. The service supports up to 20 MB of content
       "!    for all `ContentItem` objects combined.
@@ -223,11 +234,13 @@ public section.
       FORWARD type BOOLEAN,
     end of T_CONTENT_ITEM.
   types:
-    "!   A CSV file that contains the results of the personality profile that the service
-    "!    generated for the input content.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A CSV file that contains the results of the personality</p>
+    "!     profile that the service generated for the input content.
       T_CSV_FILE type String.
   types:
-    "!   The error response from a failed request.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The error response from a failed request.</p>
     begin of T_ERROR_MODEL,
       "!   The HTTP status code.
       CODE type INTEGER,
@@ -240,7 +253,8 @@ public section.
       HELP type STRING,
     end of T_ERROR_MODEL.
   types:
-    "!   The full input content that the service is to analyze.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The full input content that the service is to analyze.</p>
     begin of T_CONTENT,
       "!   An array of `ContentItem` objects that provides the text that is to be analyzed.
       "!
@@ -248,6 +262,7 @@ public section.
     end of T_CONTENT.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_TRAIT type string value '|TRAIT_ID|NAME|CATEGORY|PERCENTILE|',
     T_BEHAVIOR type string value '|TRAIT_ID|NAME|CATEGORY|PERCENTAGE|',
@@ -262,6 +277,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      PROCESSED_LANGUAGE type string value 'processed_language',
      WORD_COUNT type string value 'word_count',
@@ -312,14 +328,59 @@ constants:
     redefinition .
 
 
-    "! Get profile.
+    "! <p class="shorttext synchronized" lang="en">Get profile</p>
+    "!   Generates a personality profile for the author of the input text. The service
+    "!    accepts a maximum of 20 MB of input content, but it requires much less text to
+    "!    produce an accurate profile. The service can analyze text in Arabic, English,
+    "!    Japanese, Korean, or Spanish. It can return its results in a variety of
+    "!    languages. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Requesting a
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-input#input)<br/>
+    "!   * [Providing sufficient
+    "!    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+    "!   ts-input#sufficient) <br/>
+    "!   <br/>
+    "!   ### Content types<br/>
+    "!   <br/>
+    "!    You can provide input content as plain text (`text/plain`), HTML (`text/html`),
+    "!    or JSON (`application/json`) by specifying the **Content-Type** parameter. The
+    "!    default is `text/plain`.<br/>
+    "!   * Per the JSON specification, the default character encoding for JSON content is
+    "!    effectively always UTF-8.<br/>
+    "!   * Per the HTTP specification, the default encoding for plain text and HTML is
+    "!    ISO-8859-1 (effectively, the ASCII character set). <br/>
+    "!   <br/>
+    "!   When specifying a content type of plain text or HTML, include the `charset`
+    "!    parameter to indicate the character encoding of the input text; for example,
+    "!    `Content-Type: text/plain;charset=utf-8`. <br/>
+    "!   <br/>
+    "!   **See also:** [Specifying request and response
+    "!    formats](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-input#formats) <br/>
+    "!   <br/>
+    "!   ### Accept types<br/>
+    "!   <br/>
+    "!    You must request a response as JSON (`application/json`) or comma-separated
+    "!    values (`text/csv`) by specifying the **Accept** parameter. CSV output includes
+    "!    a fixed number of columns. Set the **csv_headers** parameter to `true` to
+    "!    request optional column headers for CSV output. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Understanding a JSON
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-output#output)<br/>
+    "!   * [Understanding a CSV
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-outputCSV#outputCSV)
     "!
     "! @parameter I_CONTENT |
     "!   A maximum of 20 MB of content to analyze, though the service requires much less
     "!    text; for more information, see [Providing sufficient
-    "!    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
-    "!   ty-insights-input#sufficient). For JSON input, provide an object of type
-    "!    `Content`.
+    "!    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+    "!   ts-input#sufficient). For JSON input, provide an object of type `Content`.
     "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. For more information, see **Content types** in the method
     "!    description.
@@ -371,14 +432,59 @@ constants:
       !E_RESPONSE type T_PROFILE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get profile as csv.
+    "! <p class="shorttext synchronized" lang="en">Get profile as csv</p>
+    "!   Generates a personality profile for the author of the input text. The service
+    "!    accepts a maximum of 20 MB of input content, but it requires much less text to
+    "!    produce an accurate profile. The service can analyze text in Arabic, English,
+    "!    Japanese, Korean, or Spanish. It can return its results in a variety of
+    "!    languages. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Requesting a
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-input#input)<br/>
+    "!   * [Providing sufficient
+    "!    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+    "!   ts-input#sufficient) <br/>
+    "!   <br/>
+    "!   ### Content types<br/>
+    "!   <br/>
+    "!    You can provide input content as plain text (`text/plain`), HTML (`text/html`),
+    "!    or JSON (`application/json`) by specifying the **Content-Type** parameter. The
+    "!    default is `text/plain`.<br/>
+    "!   * Per the JSON specification, the default character encoding for JSON content is
+    "!    effectively always UTF-8.<br/>
+    "!   * Per the HTTP specification, the default encoding for plain text and HTML is
+    "!    ISO-8859-1 (effectively, the ASCII character set). <br/>
+    "!   <br/>
+    "!   When specifying a content type of plain text or HTML, include the `charset`
+    "!    parameter to indicate the character encoding of the input text; for example,
+    "!    `Content-Type: text/plain;charset=utf-8`. <br/>
+    "!   <br/>
+    "!   **See also:** [Specifying request and response
+    "!    formats](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-input#formats) <br/>
+    "!   <br/>
+    "!   ### Accept types<br/>
+    "!   <br/>
+    "!    You must request a response as JSON (`application/json`) or comma-separated
+    "!    values (`text/csv`) by specifying the **Accept** parameter. CSV output includes
+    "!    a fixed number of columns. Set the **csv_headers** parameter to `true` to
+    "!    request optional column headers for CSV output. <br/>
+    "!   <br/>
+    "!   **See also:**<br/>
+    "!   * [Understanding a JSON
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-output#output)<br/>
+    "!   * [Understanding a CSV
+    "!    profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insi
+    "!   ghts-outputCSV#outputCSV)
     "!
     "! @parameter I_CONTENT |
     "!   A maximum of 20 MB of content to analyze, though the service requires much less
     "!    text; for more information, see [Providing sufficient
-    "!    input](https://cloud.ibm.com/docs/services/personality-insights?topic=personali
-    "!   ty-insights-input#sufficient). For JSON input, provide an object of type
-    "!    `Content`.
+    "!    input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insigh
+    "!   ts-input#sufficient). For JSON input, provide an object of type `Content`.
     "! @parameter I_CONTENT_TYPE |
     "!   The type of the input. For more information, see **Content types** in the method
     "!    description.
@@ -503,7 +609,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092823'.
+    e_sdk_version_date = '20200310173434'.
 
   endmethod.
 

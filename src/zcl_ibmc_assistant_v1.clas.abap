@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Watson Assistant v1</h1>
+"! <p class="shorttext synchronized" lang="en">Watson Assistant v1</p>
 "! The IBM Watson&trade; Assistant service combines machine learning, natural
 "!  language understanding, and an integrated dialog editor to create conversation
 "!  flows between your apps and your users.<br/>
@@ -25,32 +25,33 @@ class ZCL_IBMC_ASSISTANT_V1 DEFINITION
 
 public section.
   types:
-    "!   Workspace settings related to detection of irrelevant input.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Workspace settings related to detection of irrelevant input.</p>
     begin of T_WS_SYSTEM_SETTINGS_OFF_TOPIC,
       "!   Whether enhanced irrelevance detection is enabled for the workspace.
       ENABLED type BOOLEAN,
     end of T_WS_SYSTEM_SETTINGS_OFF_TOPIC.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTITY_INTERPRETATION,
       "!   The calendar used to represent a recognized date (for example, `Gregorian`).
       CALENDAR_TYPE type STRING,
       "!   A unique identifier used to associate a recognized time and date. If the user
       "!    input contains a date and time that are mentioned together (for example, `Today
-      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
-      "!    and `@sys-time` entities).
+      "!    at 5`, the same **datetime_link** value is returned for both the
+      "!    `&#64;sys-date` and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
       "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
-      "!    property is included when a `@sys-date` entity is recognized based on a holiday
-      "!    name in the user input.
+      "!    property is included when a `&#64;sys-date` entity is recognized based on a
+      "!    holiday name in the user input.
       FESTIVAL type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
       "!    is part of an implied range where only one date or time is specified (for
@@ -96,7 +97,7 @@ public section.
       "!    `rational`).
       SUBTYPE type STRING,
       "!   A recognized term for a time that was mentioned as a part of the day in the
-      "!    user's input (for example, `morning` or `afternoon`).
+      "!    user&apos;s input (for example, `morning` or `afternoon`).
       PART_OF_DAY type STRING,
       "!   A recognized mention of a relative hour, represented numerically as an offset
       "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
@@ -123,7 +124,8 @@ public section.
       TIMEZONE type STRING,
     end of T_RT_ENTITY_INTERPRETATION.
   types:
-    "!   A key/value pair defining an HTTP header and a value.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A key/value pair defining an HTTP header and a value.</p>
     begin of T_WEBHOOK_HEADER,
       "!   The name of an HTTP header (for example, `Authorization`).
       NAME type STRING,
@@ -131,7 +133,7 @@ public section.
       VALUE type STRING,
     end of T_WEBHOOK_HEADER.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODE_ACTION,
       "!   The name of the action.
       NAME type STRING,
@@ -146,9 +148,11 @@ public section.
       CREDENTIALS type STRING,
     end of T_DIALOG_NODE_ACTION.
   types:
-    "!   Workspace settings related to the disambiguation feature.<br/>
-    "!   <br/>
-    "!   **Note:** This feature is available only to Plus and Premium users.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Workspace settings related to the disambiguation</p>
+    "!     feature.<br/>
+    "!    <br/>
+    "!    **Note:** This feature is available only to Plus and Premium users.
     begin of T_WS_SYSTM_STTNGS_DSMBGTN,
       "!   The text of the introductory prompt that accompanies disambiguation options
       "!    presented to the user.
@@ -173,7 +177,8 @@ public section.
       SUGGESTION_TEXT_POLICY type STRING,
     end of T_WS_SYSTM_STTNGS_DSMBGTN.
   types:
-    "!   Options that modify how specified output is handled.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Options that modify how specified output is handled.</p>
     begin of T_DIALOG_NODE_OUTPUT_MODIFIERS,
       "!   Whether values in the output will overwrite output values in an array specified
       "!    by previously executed dialog nodes. If this option is set to `false`, new
@@ -181,7 +186,8 @@ public section.
       OVERWRITE type BOOLEAN,
     end of T_DIALOG_NODE_OUTPUT_MODIFIERS.
   types:
-    "!   The next step to execute following this dialog node.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The next step to execute following this dialog node.</p>
     begin of T_DIALOG_NODE_NEXT_STEP,
       "!   What happens after the dialog node completes. The valid values depend on the
       "!    node type:<br/>
@@ -212,14 +218,16 @@ public section.
       SELECTOR type STRING,
     end of T_DIALOG_NODE_NEXT_STEP.
   types:
-    "!   An input object that includes the input text.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An input object that includes the input text.</p>
     begin of T_MESSAGE_INPUT,
       "!   The text of the user input. This string cannot contain carriage return, newline,
       "!    or tab characters.
       TEXT type STRING,
     end of T_MESSAGE_INPUT.
   types:
-    "!   A recognized capture group for a pattern-based entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A recognized capture group for a pattern-based entity.</p>
     begin of T_CAPTURE_GROUP,
       "!   A recognized capture group for the entity.
       GROUP type STRING,
@@ -228,15 +236,18 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_CAPTURE_GROUP.
   types:
-    "!   An object describing the role played by a system entity that is specifies the
-    "!    beginning or end of a range recognized in the user input. This property is
-    "!    included only if the new system entities are enabled for the workspace.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object describing the role played by a system entity that</p>
+    "!     is specifies the beginning or end of a range recognized in the user input. This
+    "!     property is included only if the new system entities are enabled for the
+    "!     workspace.
     begin of T_RUNTIME_ENTITY_ROLE,
       "!   The relationship of the entity to the range.
       TYPE type STRING,
     end of T_RUNTIME_ENTITY_ROLE.
   types:
-    "!   A term from the request that was identified as an entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A term from the request that was identified as an entity.</p>
     begin of T_RUNTIME_ENTITY,
       "!   An entity detected in the input.
       ENTITY type STRING,
@@ -245,7 +256,7 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
       "!   The entity value that was recognized in the user input.
       VALUE type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!   A decimal percentage that represents Watson&apos;s confidence in the recognized
       "!    entity.
       CONFIDENCE type NUMBER,
       "!   Any metadata for the entity.
@@ -266,16 +277,18 @@ public section.
       ROLE type T_RUNTIME_ENTITY_ROLE,
     end of T_RUNTIME_ENTITY.
   types:
-    "!   An intent identified in the user input.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An intent identified in the user input.</p>
     begin of T_RUNTIME_INTENT,
       "!   The name of the recognized intent.
       INTENT type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the intent.
+      "!   A decimal percentage that represents Watson&apos;s confidence in the intent.
       CONFIDENCE type DOUBLE,
     end of T_RUNTIME_INTENT.
   types:
-    "!   An object defining the message input to be sent to the Watson Assistant service
-    "!    if the user selects the corresponding option.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the message input to be sent to the</p>
+    "!     Watson Assistant service if the user selects the corresponding option.
     begin of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -291,7 +304,7 @@ public section.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OUTPUT_OPT_ELEM_VALUE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_NODE_OUTPUT_OPT_ELEMENT,
       "!   The user-facing label for the option.
       LABEL type STRING,
@@ -300,14 +313,14 @@ public section.
       VALUE type T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
     end of T_DIA_NODE_OUTPUT_OPT_ELEMENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_TEXT_VALUES_ELEM,
       "!   The text of a response. This string can include newline characters (`\n`),
       "!    Markdown tagging, or other special characters, if supported by the channel.
       TEXT type STRING,
     end of T_DIA_ND_OTPT_TEXT_VALUES_ELEM.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODE_OUTPUT_GENERIC,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -327,9 +340,9 @@ public section.
       "!   How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid
       "!    only when **response_type**=`pause`.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause. Ignored if the
-      "!    channel does not support this event. Valid only when **response_type**=`pause`.
-      "!
+      "!   Whether to send a &quot;user is typing&quot; event during the pause. Ignored if
+      "!    the channel does not support this event. Valid only when
+      "!    **response_type**=`pause`.
       TYPING type BOOLEAN,
       "!   The URL of the image. Required when **response_type**=`image`.
       SOURCE type STRING,
@@ -365,10 +378,11 @@ public section.
       DISCOVERY_VERSION type STRING,
     end of T_DIALOG_NODE_OUTPUT_GENERIC.
   types:
-    "!   The output of the dialog node. For more information about how to specify dialog
-    "!    node output, see the
-    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
-    "!   rview#dialog-overview-responses).
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The output of the dialog node. For more information about</p>
+    "!     how to specify dialog node output, see the
+    "!     [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-ove
+    "!    rview#dialog-overview-responses).
     begin of T_DIALOG_NODE_OUTPUT,
       "!   An array of objects describing the output defined for the dialog node.
       GENERIC type STANDARD TABLE OF T_DIALOG_NODE_OUTPUT_GENERIC WITH NON-UNIQUE DEFAULT KEY,
@@ -376,7 +390,7 @@ public section.
       MODIFIERS type T_DIALOG_NODE_OUTPUT_MODIFIERS,
     end of T_DIALOG_NODE_OUTPUT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODE,
       "!   The dialog node ID. This string must conform to the following restrictions:<br/>
       "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
@@ -437,7 +451,7 @@ public section.
       UPDATED type DATETIME,
     end of T_DIALOG_NODE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_VALUE,
       "!   The text of the entity value. This string must conform to the following
       "!    restrictions:<br/>
@@ -466,10 +480,11 @@ public section.
       UPDATED type DATETIME,
     end of T_VALUE.
   types:
-    "!   A webhook that can be used by dialog nodes to make programmatic calls to an
-    "!    external function.<br/>
-    "!   <br/>
-    "!   **Note:** Currently, only a single webhook named `main_webhook` is supported.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A webhook that can be used by dialog nodes to make</p>
+    "!     programmatic calls to an external function.<br/>
+    "!    <br/>
+    "!    **Note:** Currently, only a single webhook named `main_webhook` is supported.
     begin of T_WEBHOOK,
       "!   The URL for the external service or application to which you want to send HTTP
       "!    POST requests.
@@ -480,13 +495,16 @@ public section.
       HEADERS type STANDARD TABLE OF T_WEBHOOK_HEADER WITH NON-UNIQUE DEFAULT KEY,
     end of T_WEBHOOK.
   types:
-    "!   Workspace settings related to the behavior of system entities.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Workspace settings related to the behavior of system</p>
+    "!     entities.
     begin of T_WS_SYSTM_STTNGS_SYSTM_ENTTS,
       "!   Whether the new system entities are enabled for the workspace.
       ENABLED type BOOLEAN,
     end of T_WS_SYSTM_STTNGS_SYSTM_ENTTS.
   types:
-    "!   A mention of a contextual entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A mention of a contextual entity.</p>
     begin of T_MENTION,
       "!   The name of the entity.
       ENTITY type STRING,
@@ -495,7 +513,7 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_MENTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_EXAMPLE,
       "!   The text of a user input example. This string must conform to the following
       "!    restrictions:<br/>
@@ -510,7 +528,7 @@ public section.
       UPDATED type DATETIME,
     end of T_EXAMPLE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INTENT,
       "!   The name of the intent. This string must conform to the following
       "!    restrictions:<br/>
@@ -529,14 +547,17 @@ public section.
       EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_INTENT.
   types:
-    "!   Workspace settings related to the Watson Assistant user interface.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Workspace settings related to the Watson Assistant user</p>
+    "!     interface.
     begin of T_WS_SYSTEM_SETTINGS_TOOLING,
       "!   Whether the dialog JSON editor displays text responses within the
       "!    `output.generic` object.
       STORE_GENERIC_RESPONSES type BOOLEAN,
     end of T_WS_SYSTEM_SETTINGS_TOOLING.
   types:
-    "!   Global settings for the workspace.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Global settings for the workspace.</p>
     begin of T_WORKSPACE_SYSTEM_SETTINGS,
       "!   Workspace settings related to the Watson Assistant user interface.
       TOOLING type T_WS_SYSTEM_SETTINGS_TOOLING,
@@ -552,7 +573,7 @@ public section.
       OFF_TOPIC type T_WS_SYSTEM_SETTINGS_OFF_TOPIC,
     end of T_WORKSPACE_SYSTEM_SETTINGS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_COUNTEREXAMPLE,
       "!   The text of a user input marked as irrelevant input. This string must conform to
       "!    the following restrictions:<br/>
@@ -565,7 +586,7 @@ public section.
       UPDATED type DATETIME,
     end of T_COUNTEREXAMPLE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ENTITY,
       "!   The name of the entity. This string must conform to the following
       "!    restrictions:<br/>
@@ -590,7 +611,7 @@ public section.
       VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_WORKSPACE,
       "!   The name of the workspace. This string cannot contain carriage return, newline,
       "!    or tab characters.
@@ -628,7 +649,7 @@ public section.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORKSPACE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SYNONYM,
       "!   The text of the synonym. This string must conform to the following
       "!    restrictions:<br/>
@@ -641,7 +662,8 @@ public section.
       UPDATED type DATETIME,
     end of T_SYNONYM.
   types:
-    "!   The pagination data for the returned objects.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The pagination data for the returned objects.</p>
     begin of T_PAGINATION,
       "!   The URL that will return the same page of results.
       REFRESH_URL type STRING,
@@ -657,7 +679,7 @@ public section.
       NEXT_CURSOR type STRING,
     end of T_PAGINATION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_SYNONYM_COLLECTION,
       "!   An array of synonyms.
       SYNONYMS type STANDARD TABLE OF T_SYNONYM WITH NON-UNIQUE DEFAULT KEY,
@@ -665,7 +687,7 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_SYNONYM_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_OPTION,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
@@ -677,7 +699,7 @@ public section.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_OPTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT,
       "!   A list of one or more objects defining text responses. Required when
       "!    **response_type**=`text`.
@@ -690,7 +712,7 @@ public section.
       DELIMITER type STRING,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_WORKSPACE,
       "!   The name of the workspace. This string cannot contain carriage return, newline,
       "!    or tab characters.
@@ -718,7 +740,7 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_WORKSPACE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_ENTITY,
       "!   The name of the entity. This string must conform to the following
       "!    restrictions:<br/>
@@ -739,29 +761,29 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
       "!   The text of the response.
       TEXT type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_TEXT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_TIME,
       "!   A unique identifier used to associate a recognized time and date. If the user
       "!    input contains a date and time that are mentioned together (for example, `Today
-      "!    at 5`, the same **datetime_link** value is returned for both the `@sys-date`
-      "!    and `@sys-time` entities).
+      "!    at 5`, the same **datetime_link** value is returned for both the
+      "!    `&#64;sys-date` and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
       "!   A recognized term for a time that was mentioned as a part of the day in the
-      "!    user's input (for example, `morning` or `afternoon`).
+      "!    user&apos;s input (for example, `morning` or `afternoon`).
       PART_OF_DAY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   A recognized mention of a relative hour, represented numerically as an offset
       "!    from the current hour (for example, `3` for `in three hours` or `-1` for `an
@@ -788,7 +810,7 @@ public section.
       TIMEZONE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_TIME.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_EXAMPLE,
       "!   The text of the user input example. This string must conform to the following
       "!    restrictions:<br/>
@@ -803,7 +825,8 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_EXAMPLE.
   types:
-    "!   An object describing a contextual entity mention.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object describing a contextual entity mention.</p>
     begin of T_ENTITY_MENTION,
       "!   The text of the user input example.
       TEXT type STRING,
@@ -814,7 +837,7 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_ENTITY_MENTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1,
       "!   The text of the search query. This can be either a natural-language query or a
       "!    query that uses the Discovery query language syntax, depending on the value of
@@ -833,7 +856,7 @@ public section.
       DISCOVERY_VERSION type STRING,
     end of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_EXAMPLE_COLLECTION,
       "!   An array of objects describing the examples defined for the intent.
       EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
@@ -841,7 +864,8 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_EXAMPLE_COLLECTION.
   types:
-    "!   The pagination data for the returned objects.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The pagination data for the returned objects.</p>
     begin of T_LOG_PAGINATION,
       "!   The URL that will return the next page of results, if any.
       NEXT_URL type STRING,
@@ -851,7 +875,7 @@ public section.
       NEXT_CURSOR type STRING,
     end of T_LOG_PAGINATION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
       "!   A message to be sent to the human agent who will be taking over the
       "!    conversation.
@@ -860,12 +884,12 @@ public section.
       "!    **user_label** property of the relevant node.
       TOPIC type STRING,
       "!   The ID of the dialog node that the **topic** property is taken from. The
-      "!    **topic** property is populated using the value of the dialog node's
+      "!    **topic** property is populated using the value of the dialog node&apos;s
       "!    **user_label** property.
       DIALOG_NODE type STRING,
     end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CREATE_VALUE,
       "!   The text of the entity value. This string must conform to the following
       "!    restrictions:<br/>
@@ -894,7 +918,7 @@ public section.
       UPDATED type DATETIME,
     end of T_CREATE_VALUE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_NODE_VISITED_DETAILS,
       "!   A dialog node that was triggered during processing of the input message.
       DIALOG_NODE type STRING,
@@ -904,7 +928,7 @@ public section.
       CONDITIONS type STRING,
     end of T_DIALOG_NODE_VISITED_DETAILS.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_SUGGESTION_RESP_GENERIC,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -918,7 +942,7 @@ public section.
       TEXT type STRING,
       "!   How long to pause, in milliseconds.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause.
+      "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
       "!   The URL of the image.
       SOURCE type STRING,
@@ -937,14 +961,15 @@ public section.
       "!    **user_label** property of the relevant node.
       TOPIC type STRING,
       "!   The ID of the dialog node that the **topic** property is taken from. The
-      "!    **topic** property is populated using the value of the dialog node's
+      "!    **topic** property is populated using the value of the dialog node&apos;s
       "!    **user_label** property.
       DIALOG_NODE type STRING,
     end of T_DIA_SUGGESTION_RESP_GENERIC.
   types:
-    "!   An object defining the message input, intents, and entities to be sent to the
-    "!    Watson Assistant service if the user selects the corresponding disambiguation
-    "!    option.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the message input, intents, and entities</p>
+    "!     to be sent to the Watson Assistant service if the user selects the
+    "!     corresponding disambiguation option.
     begin of T_DIALOG_SUGGESTION_VALUE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -954,8 +979,9 @@ public section.
       ENTITIES type STANDARD TABLE OF T_RUNTIME_ENTITY WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIALOG_SUGGESTION_VALUE.
   types:
-    "!   The dialog output that will be returned from the Watson Assistant service if the
-    "!    user selects the corresponding option.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The dialog output that will be returned from the Watson</p>
+    "!     Assistant service if the user selects the corresponding option.
     begin of T_DIALOG_SUGGESTION_OUTPUT,
       "!   An array of the nodes that were triggered to create the response, in the order
       "!    in which they were visited. This information is useful for debugging and for
@@ -972,7 +998,7 @@ public section.
       GENERIC type STANDARD TABLE OF T_DIA_SUGGESTION_RESP_GENERIC WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIALOG_SUGGESTION_OUTPUT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIALOG_SUGGESTION,
       "!   The user-facing label for the disambiguation option. This label is taken from
       "!    the **title** or **user_label** property of the corresponding dialog node,
@@ -986,15 +1012,15 @@ public section.
       "!    user selects the corresponding option.
       OUTPUT type T_DIALOG_SUGGESTION_OUTPUT,
       "!   The ID of the dialog node that the **label** property is taken from. The
-      "!    **label** property is populated using the value of the dialog node's
+      "!    **label** property is populated using the value of the dialog node&apos;s
       "!    **user_label** property.
       DIALOG_NODE type STRING,
     end of T_DIALOG_SUGGESTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
       T_EMPTY_RESPONSE type JSONOBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_VALUE,
       "!   The text of the entity value. This string must conform to the following
       "!    restrictions:<br/>
@@ -1023,16 +1049,17 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_VALUE.
   types:
-    "!   An alternative value for the recognized entity.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An alternative value for the recognized entity.</p>
     begin of T_RUNTIME_ENTITY_ALTERNATIVE,
       "!   The entity value that was recognized in the user input.
       VALUE type STRING,
-      "!   A decimal percentage that represents Watson's confidence in the recognized
+      "!   A decimal percentage that represents Watson&apos;s confidence in the recognized
       "!    entity.
       CONFIDENCE type NUMBER,
     end of T_RUNTIME_ENTITY_ALTERNATIVE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_INTENT,
       "!   The name of the intent. This string must conform to the following
       "!    restrictions:<br/>
@@ -1051,7 +1078,7 @@ public section.
       EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATE_INTENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_VALUE_COLLECTION,
       "!   An array of entity values.
       VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
@@ -1059,7 +1086,8 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_VALUE_COLLECTION.
   types:
-    "!   Log message details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Log message details.</p>
     begin of T_LOG_MESSAGE,
       "!   The severity of the log message.
       LEVEL type STRING,
@@ -1067,7 +1095,7 @@ public section.
       MSG type STRING,
     end of T_LOG_MESSAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_GENERIC,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -1079,7 +1107,7 @@ public section.
       TEXT type STRING,
       "!   How long to pause, in milliseconds.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause.
+      "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
       "!   The URL of the image.
       SOURCE type STRING,
@@ -1098,7 +1126,7 @@ public section.
       "!    **user_label** property of the relevant node.
       TOPIC type STRING,
       "!   The ID of the dialog node that the **topic** property is taken from. The
-      "!    **topic** property is populated using the value of the dialog node's
+      "!    **topic** property is populated using the value of the dialog node&apos;s
       "!    **user_label** property.
       DIALOG_NODE type STRING,
       "!   An array of objects describing the possible matching dialog nodes from which the
@@ -1109,8 +1137,9 @@ public section.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_GENERIC.
   types:
-    "!   An output object that includes the response to the user, the dialog nodes that
-    "!    were triggered, and messages from the log.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An output object that includes the response to the user, the</p>
+    "!     dialog nodes that were triggered, and messages from the log.
     begin of T_OUTPUT_DATA,
       "!   An array of the nodes that were triggered to create the response, in the order
       "!    in which they were visited. This information is useful for debugging and for
@@ -1129,7 +1158,8 @@ public section.
       GENERIC type STANDARD TABLE OF T_RUNTIME_RESPONSE_GENERIC WITH NON-UNIQUE DEFAULT KEY,
     end of T_OUTPUT_DATA.
   types:
-    "!   An array of dialog nodes.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array of dialog nodes.</p>
     begin of T_DIALOG_NODE_COLLECTION,
       "!   An array of objects describing the dialog nodes defined for the workspace.
       DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
@@ -1137,10 +1167,12 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_DIALOG_NODE_COLLECTION.
   types:
-    "!   For internal use only.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    For internal use only.</p>
       T_SYSTEM_RESPONSE type MAP.
   types:
-    "!   Metadata related to the message.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata related to the message.</p>
     begin of T_MESSAGE_CONTEXT_METADATA,
       "!   A label identifying the deployment environment, used for filtering log data.
       "!    This string cannot contain carriage return, newline, or tab characters.
@@ -1153,8 +1185,9 @@ public section.
       USER_ID type STRING,
     end of T_MESSAGE_CONTEXT_METADATA.
   types:
-    "!   State information for the conversation. To maintain state, include the context
-    "!    from the previous response.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    State information for the conversation. To maintain state,</p>
+    "!     include the context from the previous response.
     begin of T_CONTEXT,
       "!   The unique identifier of the conversation.
       CONVERSATION_ID type STRING,
@@ -1164,8 +1197,9 @@ public section.
       METADATA type T_MESSAGE_CONTEXT_METADATA,
     end of T_CONTEXT.
   types:
-    "!   The response sent by the workspace, including the output text, detected intents
-    "!    and entities, and context.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The response sent by the workspace, including the output</p>
+    "!     text, detected intents and entities, and context.
     begin of T_MESSAGE_RESPONSE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -1187,7 +1221,7 @@ public section.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_MESSAGE_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_VALUE,
       "!   The text of the entity value. This string must conform to the following
       "!    restrictions:<br/>
@@ -1216,7 +1250,7 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_VALUE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_ENTITY,
       "!   The name of the entity. This string must conform to the following
       "!    restrictions:<br/>
@@ -1239,7 +1273,7 @@ public section.
       VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATE_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_DIALOG_NODE,
       "!   The dialog node ID. This string must conform to the following restrictions:<br/>
       "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
@@ -1300,22 +1334,22 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_DIALOG_NODE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
       "!   How long to pause, in milliseconds.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause.
+      "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
     end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1,
       "!   An optional message to be sent to the human agent who will be taking over the
       "!    conversation. Valid only when **reponse_type**=`connect_to_agent`.
       MESSAGE_TO_HUMAN_AGENT type STRING,
     end of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_DETAIL,
       "!   Description of a specific constraint violation.
       MESSAGE type STRING,
@@ -1323,7 +1357,7 @@ public section.
       PATH type STRING,
     end of T_ERROR_DETAIL.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CREATE_INTENT,
       "!   The name of the intent. This string must conform to the following
       "!    restrictions:<br/>
@@ -1342,7 +1376,7 @@ public section.
       EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_CREATE_INTENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CREATE_ENTITY,
       "!   The name of the entity. This string must conform to the following
       "!    restrictions:<br/>
@@ -1367,7 +1401,7 @@ public section.
       VALUES type STANDARD TABLE OF T_CREATE_VALUE WITH NON-UNIQUE DEFAULT KEY,
     end of T_CREATE_ENTITY.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CREATE_WORKSPACE,
       "!   The name of the workspace. This string cannot contain carriage return, newline,
       "!    or tab characters.
@@ -1406,7 +1440,7 @@ public section.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
     end of T_CREATE_WORKSPACE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_COUNTEREXAMPLE_COLLECTION,
       "!   An array of objects describing the examples marked as irrelevant input.
       COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
@@ -1414,7 +1448,7 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_COUNTEREXAMPLE_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_EXAMPLE,
       "!   The text of the user input example. This string must conform to the following
       "!    restrictions:<br/>
@@ -1429,21 +1463,21 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_EXAMPLE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_NUM,
       "!   A recognized numeric value, represented as an integer or double.
       NUMERIC_VALUE type NUMBER,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The type of numeric value recognized in the user input (`integer` or
       "!    `rational`).
       SUBTYPE type STRING,
     end of T_RT_ENTTY_INTRPRTTN_SYS_NUM.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_COUNTEREXAMPLE,
       "!   The text of a user input marked as irrelevant input. This string must conform to
       "!    the following restrictions:<br/>
@@ -1456,7 +1490,9 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_COUNTEREXAMPLE.
   types:
-    "!   An array of objects describing the entities for the workspace.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array of objects describing the entities for the</p>
+    "!     workspace.
     begin of T_ENTITY_COLLECTION,
       "!   An array of objects describing the entities defined for the workspace.
       ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
@@ -1464,7 +1500,7 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_ENTITY_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INTENT_COLLECTION,
       "!   An array of objects describing the intents defined for the workspace.
       INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
@@ -1472,18 +1508,18 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_INTENT_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYPE_PAUSE,
       "!   How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid
       "!    only when **response_type**=`pause`.
       TIME type INTEGER,
-      "!   Whether to send a "user is typing" event during the pause. Ignored if the
-      "!    channel does not support this event. Valid only when **response_type**=`pause`.
-      "!
+      "!   Whether to send a &quot;user is typing&quot; event during the pause. Ignored if
+      "!    the channel does not support this event. Valid only when
+      "!    **response_type**=`pause`.
       TYPING type BOOLEAN,
     end of T_DIA_ND_OTPT_RESP_TYPE_PAUSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_IMG,
       "!   The URL of the image. Required when **response_type**=`image`.
       SOURCE type STRING,
@@ -1495,7 +1531,7 @@ public section.
       DESCRIPTION type STRING,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_IMG.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   General description of an error.
       ERROR type STRING,
@@ -1505,7 +1541,7 @@ public section.
       CODE type INTEGER,
     end of T_ERROR_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_MESSAGE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -1527,7 +1563,7 @@ public section.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_BASE_MESSAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_RESPONSE_TYPE_SUGGESTION,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
@@ -1539,7 +1575,7 @@ public section.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESPONSE_TYPE_SUGGESTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_ENTITY_MENTION_COLLECTION,
       "!   An array of objects describing the entity mentions defined for an entity.
       EXAMPLES type STANDARD TABLE OF T_ENTITY_MENTION WITH NON-UNIQUE DEFAULT KEY,
@@ -1547,7 +1583,7 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_ENTITY_MENTION_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_SYNONYM,
       "!   The text of the synonym. This string must conform to the following
       "!    restrictions:<br/>
@@ -1560,7 +1596,7 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_SYNONYM.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_INTENT,
       "!   The name of the intent. This string must conform to the following
       "!    restrictions:<br/>
@@ -1577,26 +1613,26 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_INTENT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RT_ENTTY_INTRPRTTN_SYS_DATE,
       "!   The calendar used to represent a recognized date (for example, `Gregorian`).
       CALENDAR_TYPE type STRING,
       "!   A unique identifier used to associate a time and date. If the user input
       "!    contains a date and time that are mentioned together (for example, `Today at
-      "!    5`, the same **datetime_link** value is returned for both the `@sys-date` and
-      "!    `@sys-time` entities).
+      "!    5`, the same **datetime_link** value is returned for both the `&#64;sys-date`
+      "!    and `&#64;sys-time` entities).
       DATETIME_LINK type STRING,
       "!   A locale-specific holiday name (such as `thanksgiving` or `christmas`). This
-      "!    property is included when a `@sys-date` entity is recognized based on a holiday
-      "!    name in the user input.
+      "!    property is included when a `&#64;sys-date` entity is recognized based on a
+      "!    holiday name in the user input.
       FESTIVAL type STRING,
-      "!   The precision or duration of a time range specified by a recognized `@sys-time`
-      "!    or `@sys-date` entity.
+      "!   The precision or duration of a time range specified by a recognized
+      "!    `&#64;sys-time` or `&#64;sys-date` entity.
       GRANULARITY type STRING,
-      "!   A unique identifier used to associate multiple recognized `@sys-date`,
-      "!    `@sys-time`, or `@sys-number` entities that are recognized as a range of values
-      "!    in the user's input (for example, `from July 4 until July 14` or `from 20 to
-      "!    25`).
+      "!   A unique identifier used to associate multiple recognized `&#64;sys-date`,
+      "!    `&#64;sys-time`, or `&#64;sys-number` entities that are recognized as a range
+      "!    of values in the user&apos;s input (for example, `from July 4 until July 14` or
+      "!    `from 20 to 25`).
       RANGE_LINK type STRING,
       "!   The word in the user input that indicates that a `sys-date` or `sys-time` entity
       "!    is part of an implied range where only one date or time is specified (for
@@ -1638,7 +1674,7 @@ public section.
       SPECIFIC_YEAR type NUMBER,
     end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_OPT,
       "!   An optional title to show before the response. Valid only when
       "!    **response_type**=`image` or `option`.
@@ -1654,7 +1690,7 @@ public section.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_OPT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_COUNTEREXAMPLE,
       "!   The text of a user input marked as irrelevant input. This string must conform to
       "!    the following restrictions:<br/>
@@ -1667,7 +1703,7 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_COUNTEREXAMPLE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
       "!   The URL of the image.
       SOURCE type STRING,
@@ -1677,7 +1713,7 @@ public section.
       DESCRIPTION type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_UPDATE_WORKSPACE,
       "!   The name of the workspace. This string cannot contain carriage return, newline,
       "!    or tab characters.
@@ -1716,7 +1752,7 @@ public section.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
     end of T_UPDATE_WORKSPACE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_DIALOG_NODE,
       "!   The dialog node ID. This string must conform to the following restrictions:<br/>
       "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
@@ -1777,7 +1813,9 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_DIALOG_NODE.
   types:
-    "!   A request sent to the workspace, including the user input and context.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A request sent to the workspace, including the user input</p>
+    "!     and context.
     begin of T_MESSAGE_REQUEST,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -1802,7 +1840,7 @@ public section.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_MESSAGE_REQUEST.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_LOG,
       "!   A request sent to the workspace, including the user input and context.
       REQUEST type T_MESSAGE_REQUEST,
@@ -1821,8 +1859,9 @@ public section.
       LANGUAGE type STRING,
     end of T_LOG.
   types:
-    "!   An output object that includes the response to the user, the dialog nodes that
-    "!    were triggered, and messages from the log.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An output object that includes the response to the user, the</p>
+    "!     dialog nodes that were triggered, and messages from the log.
     begin of T_BASE_OUTPUT,
       "!   An array of the nodes that were triggered to create the response, in the order
       "!    in which they were visited. This information is useful for debugging and for
@@ -1834,7 +1873,7 @@ public section.
       NODES_VISITED_DETAILS type STANDARD TABLE OF T_DIALOG_NODE_VISITED_DETAILS WITH NON-UNIQUE DEFAULT KEY,
     end of T_BASE_OUTPUT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_LOG_COLLECTION,
       "!   An array of objects describing log events.
       LOGS type STANDARD TABLE OF T_LOG WITH NON-UNIQUE DEFAULT KEY,
@@ -1842,7 +1881,7 @@ public section.
       PAGINATION type T_LOG_PAGINATION,
     end of T_LOG_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_AUDIT_PROPERTIES,
       "!   The timestamp for creation of the object.
       CREATED type DATETIME,
@@ -1850,7 +1889,7 @@ public section.
       UPDATED type DATETIME,
     end of T_AUDIT_PROPERTIES.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_WORKSPACE_COLLECTION,
       "!   An array of objects describing the workspaces associated with the service
       "!    instance.
@@ -1859,7 +1898,7 @@ public section.
       PAGINATION type T_PAGINATION,
     end of T_WORKSPACE_COLLECTION.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_BASE_SYNONYM,
       "!   The text of the synonym. This string must conform to the following
       "!    restrictions:<br/>
@@ -1873,6 +1912,7 @@ public section.
     end of T_BASE_SYNONYM.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_WS_SYSTEM_SETTINGS_OFF_TOPIC type string value '|',
     T_RT_ENTITY_INTERPRETATION type string value '|',
@@ -1975,6 +2015,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      CREATED type string value 'created',
      UPDATED type string value 'updated',
@@ -2141,12 +2182,22 @@ constants:
     redefinition .
 
 
-    "! Get response to user input.
+    "! <p class="shorttext synchronized" lang="en">Get response to user input</p>
+    "!   Send user input to a workspace and receive a response.<br/>
+    "!   <br/>
+    "!   **Important:** This method has been superseded by the new v2 runtime API. The v2
+    "!    API offers significant advantages, including ease of deployment, automatic
+    "!    state management, versioning, and search capabilities. For more information,
+    "!    see the
+    "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-api-overvi
+    "!   ew).<br/>
+    "!   <br/>
+    "!   There is no rate limit for this operation.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
     "! @parameter I_BODY |
-    "!   The message to be sent. This includes the user's input, along with optional
+    "!   The message to be sent. This includes the user&apos;s input, along with optional
     "!    intents, entities, and context from the last response.
     "! @parameter I_NODES_VISITED_DETAILS |
     "!   Whether to include additional diagnostic information about the dialog nodes that
@@ -2167,7 +2218,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List workspaces.
+    "! <p class="shorttext synchronized" lang="en">List workspaces</p>
+    "!   List the workspaces associated with a Watson Assistant service instance.<br/>
+    "!   <br/>
+    "!   This operation is limited to 500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_PAGE_LIMIT |
     "!   The number of records to return in each page of results.
@@ -2194,7 +2249,12 @@ constants:
       !E_RESPONSE type T_WORKSPACE_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create workspace.
+    "! <p class="shorttext synchronized" lang="en">Create workspace</p>
+    "!   Create a workspace based on component objects. You must provide workspace
+    "!    components defining the content of the new workspace.<br/>
+    "!   <br/>
+    "!   This operation is limited to 30 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_BODY |
     "!   The content of the new workspace.<br/>
@@ -2219,7 +2279,13 @@ constants:
       !E_RESPONSE type T_WORKSPACE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get information about a workspace.
+    "! <p class="shorttext synchronized" lang="en">Get information about a workspace</p>
+    "!   Get information about a workspace, optionally including all workspace
+    "!    content.<br/>
+    "!   <br/>
+    "!   With **export**=`false`, this operation is limited to 6000 requests per 5
+    "!    minutes. With **export**=`true`, the limit is 20 requests per 30 minutes. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2250,7 +2316,12 @@ constants:
       !E_RESPONSE type T_WORKSPACE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update workspace.
+    "! <p class="shorttext synchronized" lang="en">Update workspace</p>
+    "!   Update an existing workspace with new or modified data. You must provide
+    "!    component objects defining the content of the updated workspace.<br/>
+    "!   <br/>
+    "!   This operation is limited to 30 request per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2290,7 +2361,11 @@ constants:
       !E_RESPONSE type T_WORKSPACE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete workspace.
+    "! <p class="shorttext synchronized" lang="en">Delete workspace</p>
+    "!   Delete a workspace from the service instance.<br/>
+    "!   <br/>
+    "!   This operation is limited to 30 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2303,7 +2378,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List intents.
+    "! <p class="shorttext synchronized" lang="en">List intents</p>
+    "!   List the intents for a workspace.<br/>
+    "!   <br/>
+    "!   With **export**=`false`, this operation is limited to 2000 requests per 30
+    "!    minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2339,7 +2419,14 @@ constants:
       !E_RESPONSE type T_INTENT_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create intent.
+    "! <p class="shorttext synchronized" lang="en">Create intent</p>
+    "!   Create a new intent.<br/>
+    "!   <br/>
+    "!   If you want to create multiple intents with a single API call, consider using
+    "!    the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2363,7 +2450,12 @@ constants:
       !E_RESPONSE type T_INTENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get intent.
+    "! <p class="shorttext synchronized" lang="en">Get intent</p>
+    "!   Get information about an intent, optionally including all intent content.<br/>
+    "!   <br/>
+    "!   With **export**=`false`, this operation is limited to 6000 requests per 5
+    "!    minutes. With **export**=`true`, the limit is 400 requests per 30 minutes. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2392,7 +2484,15 @@ constants:
       !E_RESPONSE type T_INTENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update intent.
+    "! <p class="shorttext synchronized" lang="en">Update intent</p>
+    "!   Update an existing intent with new or modified data. You must provide component
+    "!    objects defining the content of the updated intent.<br/>
+    "!   <br/>
+    "!   If you want to update multiple intents with a single API call, consider using
+    "!    the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2438,7 +2538,11 @@ constants:
       !E_RESPONSE type T_INTENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete intent.
+    "! <p class="shorttext synchronized" lang="en">Delete intent</p>
+    "!   Delete an intent from a workspace.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2454,7 +2558,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List user input examples.
+    "! <p class="shorttext synchronized" lang="en">List user input examples</p>
+    "!   List the user input examples for an intent, optionally including contextual
+    "!    entity mentions.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2487,7 +2596,14 @@ constants:
       !E_RESPONSE type T_EXAMPLE_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create user input example.
+    "! <p class="shorttext synchronized" lang="en">Create user input example</p>
+    "!   Add a new user input example to an intent.<br/>
+    "!   <br/>
+    "!   If you want to add multiple exaples with a single API call, consider using the
+    "!    **[Update intent](#update-intent)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2514,7 +2630,11 @@ constants:
       !E_RESPONSE type T_EXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get user input example.
+    "! <p class="shorttext synchronized" lang="en">Get user input example</p>
+    "!   Get information about a user input example.<br/>
+    "!   <br/>
+    "!   This operation is limited to 6000 requests per 5 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2540,7 +2660,14 @@ constants:
       !E_RESPONSE type T_EXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update user input example.
+    "! <p class="shorttext synchronized" lang="en">Update user input example</p>
+    "!   Update the text of a user input example.<br/>
+    "!   <br/>
+    "!   If you want to update multiple examples with a single API call, consider using
+    "!    the **[Update intent](#update-intent)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2570,7 +2697,11 @@ constants:
       !E_RESPONSE type T_EXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete user input example.
+    "! <p class="shorttext synchronized" lang="en">Delete user input example</p>
+    "!   Delete a user input example from an intent.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2589,7 +2720,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List counterexamples.
+    "! <p class="shorttext synchronized" lang="en">List counterexamples</p>
+    "!   List the counterexamples for a workspace. Counterexamples are examples that have
+    "!    been marked as irrelevant input.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2619,7 +2755,15 @@ constants:
       !E_RESPONSE type T_COUNTEREXAMPLE_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create counterexample.
+    "! <p class="shorttext synchronized" lang="en">Create counterexample</p>
+    "!   Add a new counterexample to a workspace. Counterexamples are examples that have
+    "!    been marked as irrelevant input.<br/>
+    "!   <br/>
+    "!   If you want to add multiple counterexamples with a single API call, consider
+    "!    using the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2643,7 +2787,12 @@ constants:
       !E_RESPONSE type T_COUNTEREXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get counterexample.
+    "! <p class="shorttext synchronized" lang="en">Get counterexample</p>
+    "!   Get information about a counterexample. Counterexamples are examples that have
+    "!    been marked as irrelevant input.<br/>
+    "!   <br/>
+    "!   This operation is limited to 6000 requests per 5 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2666,7 +2815,15 @@ constants:
       !E_RESPONSE type T_COUNTEREXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update counterexample.
+    "! <p class="shorttext synchronized" lang="en">Update counterexample</p>
+    "!   Update the text of a counterexample. Counterexamples are examples that have been
+    "!    marked as irrelevant input.<br/>
+    "!   <br/>
+    "!   If you want to update multiple counterexamples with a single API call, consider
+    "!    using the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2693,7 +2850,12 @@ constants:
       !E_RESPONSE type T_COUNTEREXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete counterexample.
+    "! <p class="shorttext synchronized" lang="en">Delete counterexample</p>
+    "!   Delete a counterexample from a workspace. Counterexamples are examples that have
+    "!    been marked as irrelevant input.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2709,7 +2871,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List entities.
+    "! <p class="shorttext synchronized" lang="en">List entities</p>
+    "!   List the entities for a workspace.<br/>
+    "!   <br/>
+    "!   With **export**=`false`, this operation is limited to 1000 requests per 30
+    "!    minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2745,7 +2912,14 @@ constants:
       !E_RESPONSE type T_ENTITY_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create entity.
+    "! <p class="shorttext synchronized" lang="en">Create entity</p>
+    "!   Create a new entity, or enable a system entity.<br/>
+    "!   <br/>
+    "!   If you want to create multiple entities with a single API call, consider using
+    "!    the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2769,7 +2943,12 @@ constants:
       !E_RESPONSE type T_ENTITY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get entity.
+    "! <p class="shorttext synchronized" lang="en">Get entity</p>
+    "!   Get information about an entity, optionally including all entity content.<br/>
+    "!   <br/>
+    "!   With **export**=`false`, this operation is limited to 6000 requests per 5
+    "!    minutes. With **export**=`true`, the limit is 200 requests per 30 minutes. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2798,7 +2977,15 @@ constants:
       !E_RESPONSE type T_ENTITY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update entity.
+    "! <p class="shorttext synchronized" lang="en">Update entity</p>
+    "!   Update an existing entity with new or modified data. You must provide component
+    "!    objects defining the content of the updated entity.<br/>
+    "!   <br/>
+    "!   If you want to update multiple entities with a single API call, consider using
+    "!    the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2842,7 +3029,11 @@ constants:
       !E_RESPONSE type T_ENTITY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete entity.
+    "! <p class="shorttext synchronized" lang="en">Delete entity</p>
+    "!   Delete an entity from a workspace, or disable a system entity.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2858,7 +3049,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List entity mentions.
+    "! <p class="shorttext synchronized" lang="en">List entity mentions</p>
+    "!   List mentions for a contextual entity. An entity mention is an occurrence of a
+    "!    contextual entity in the context of an intent user input example.<br/>
+    "!   <br/>
+    "!   This operation is limited to 200 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2888,7 +3084,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List entity values.
+    "! <p class="shorttext synchronized" lang="en">List entity values</p>
+    "!   List the values for an entity.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2927,7 +3127,14 @@ constants:
       !E_RESPONSE type T_VALUE_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create entity value.
+    "! <p class="shorttext synchronized" lang="en">Create entity value</p>
+    "!   Create a new value for an entity.<br/>
+    "!   <br/>
+    "!   If you want to create multiple entity values with a single API call, consider
+    "!    using the **[Update entity](#update-entity)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2954,7 +3161,11 @@ constants:
       !E_RESPONSE type T_VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get entity value.
+    "! <p class="shorttext synchronized" lang="en">Get entity value</p>
+    "!   Get information about an entity value.<br/>
+    "!   <br/>
+    "!   This operation is limited to 6000 requests per 5 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2986,7 +3197,15 @@ constants:
       !E_RESPONSE type T_VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update entity value.
+    "! <p class="shorttext synchronized" lang="en">Update entity value</p>
+    "!   Update an existing entity value with new or modified data. You must provide
+    "!    component objects defining the content of the updated entity value.<br/>
+    "!   <br/>
+    "!   If you want to update multiple entity values with a single API call, consider
+    "!    using the **[Update entity](#update-entity)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3035,7 +3254,11 @@ constants:
       !E_RESPONSE type T_VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete entity value.
+    "! <p class="shorttext synchronized" lang="en">Delete entity value</p>
+    "!   Delete a value from an entity.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3054,7 +3277,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List entity value synonyms.
+    "! <p class="shorttext synchronized" lang="en">List entity value synonyms</p>
+    "!   List the synonyms for an entity value.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3090,7 +3317,15 @@ constants:
       !E_RESPONSE type T_SYNONYM_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create entity value synonym.
+    "! <p class="shorttext synchronized" lang="en">Create entity value synonym</p>
+    "!   Add a new synonym to an entity value.<br/>
+    "!   <br/>
+    "!   If you want to create multiple synonyms with a single API call, consider using
+    "!    the **[Update entity](#update-entity)** or **[Update entity
+    "!    value](#update-entity-value)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3120,7 +3355,11 @@ constants:
       !E_RESPONSE type T_SYNONYM
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get entity value synonym.
+    "! <p class="shorttext synchronized" lang="en">Get entity value synonym</p>
+    "!   Get information about a synonym of an entity value.<br/>
+    "!   <br/>
+    "!   This operation is limited to 6000 requests per 5 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3149,7 +3388,15 @@ constants:
       !E_RESPONSE type T_SYNONYM
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update entity value synonym.
+    "! <p class="shorttext synchronized" lang="en">Update entity value synonym</p>
+    "!   Update an existing entity value synonym with new text.<br/>
+    "!   <br/>
+    "!   If you want to update multiple synonyms with a single API call, consider using
+    "!    the **[Update entity](#update-entity)** or **[Update entity
+    "!    value](#update-entity-value)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3182,7 +3429,11 @@ constants:
       !E_RESPONSE type T_SYNONYM
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete entity value synonym.
+    "! <p class="shorttext synchronized" lang="en">Delete entity value synonym</p>
+    "!   Delete a synonym from an entity value.<br/>
+    "!   <br/>
+    "!   This operation is limited to 1000 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3204,7 +3455,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List dialog nodes.
+    "! <p class="shorttext synchronized" lang="en">List dialog nodes</p>
+    "!   List the dialog nodes for a workspace.<br/>
+    "!   <br/>
+    "!   This operation is limited to 2500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3234,7 +3489,14 @@ constants:
       !E_RESPONSE type T_DIALOG_NODE_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create dialog node.
+    "! <p class="shorttext synchronized" lang="en">Create dialog node</p>
+    "!   Create a new dialog node.<br/>
+    "!   <br/>
+    "!   If you want to create multiple dialog nodes with a single API call, consider
+    "!    using the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3258,7 +3520,11 @@ constants:
       !E_RESPONSE type T_DIALOG_NODE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get dialog node.
+    "! <p class="shorttext synchronized" lang="en">Get dialog node</p>
+    "!   Get information about a dialog node.<br/>
+    "!   <br/>
+    "!   This operation is limited to 6000 requests per 5 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3281,7 +3547,14 @@ constants:
       !E_RESPONSE type T_DIALOG_NODE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update dialog node.
+    "! <p class="shorttext synchronized" lang="en">Update dialog node</p>
+    "!   Update an existing dialog node with new or modified data.<br/>
+    "!   <br/>
+    "!   If you want to update multiple dialog nodes with a single API call, consider
+    "!    using the **[Update workspace](#update-workspace)** method instead.<br/>
+    "!   <br/>
+    "!   This operation is limited to 500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3314,7 +3587,11 @@ constants:
       !E_RESPONSE type T_DIALOG_NODE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete dialog node.
+    "! <p class="shorttext synchronized" lang="en">Delete dialog node</p>
+    "!   Delete a dialog node from a workspace.<br/>
+    "!   <br/>
+    "!   This operation is limited to 500 requests per 30 minutes. For more information,
+    "!    see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3330,7 +3607,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List log events in a workspace.
+    "! <p class="shorttext synchronized" lang="en">List log events in a workspace</p>
+    "!   List the events from the log of a specific workspace.<br/>
+    "!   <br/>
+    "!   If **cursor** is not specified, this operation is limited to 40 requests per 30
+    "!    minutes. If **cursor** is specified, the limit is 120 requests per minute. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3362,7 +3644,12 @@ constants:
       !E_RESPONSE type T_LOG_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List log events in all workspaces.
+    "! <p class="shorttext synchronized" lang="en">List log events in all workspaces</p>
+    "!   List the events from the logs of all workspaces in the service instance.<br/>
+    "!   <br/>
+    "!   If **cursor** is not specified, this operation is limited to 40 requests per 30
+    "!    minutes. If **cursor** is specified, the limit is 120 requests per minute. For
+    "!    more information, see **Rate limiting**.
     "!
     "! @parameter I_FILTER |
     "!   A cacheable parameter that limits the results to those matching the specified
@@ -3394,7 +3681,18 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Delete labeled data.
+    "! <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+    "!   Deletes all data associated with a specified customer ID. The method has no
+    "!    effect if no data is associated with the customer ID. <br/>
+    "!   <br/>
+    "!   You associate a customer ID with data by passing the `X-Watson-Metadata` header
+    "!    with a request that passes data. For more information about personal data and
+    "!    customer IDs, see [Information
+    "!    security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-secu
+    "!   rity#information-security).<br/>
+    "!   <br/>
+    "!   This operation is limited to 4 requests per minute. For more information, see
+    "!    **Rate limiting**.
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -3484,7 +3782,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092810'.
+    e_sdk_version_date = '20200310173420'.
 
   endmethod.
 

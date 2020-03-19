@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-"! <h1>Discovery</h1>
+"! <p class="shorttext synchronized" lang="en">Discovery</p>
 "! IBM Watson&trade; Discovery is a cognitive search and content analytics engine
 "!  that you can add to applications to identify patterns, trends and actionable
 "!  insights to drive better decision-making. Securely unify structured and
@@ -24,7 +24,9 @@ class ZCL_IBMC_DISCOVERY_V1 DEFINITION
 
 public section.
   types:
-    "!   An aggregation produced by  Discovery to analyze the input provided.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An aggregation produced by  Discovery to analyze the input</p>
+    "!     provided.
     begin of T_QUERY_AGGREGATION,
       "!   The type of aggregation command used. For example: term, filter, max, min, etc.
       TYPE type STRING,
@@ -36,7 +38,8 @@ public section.
       AGGREGATIONS type STANDARD TABLE OF DATA_REFERENCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_QUERY_AGGREGATION.
   types:
-    "!   Aggregation results for the specified query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Aggregation results for the specified query.</p>
     begin of T_AGGREGATION_RESULT,
       "!   Key that matched the aggregation type.
       KEY type STRING,
@@ -46,7 +49,8 @@ public section.
       AGGREGATIONS type STANDARD TABLE OF T_QUERY_AGGREGATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_AGGREGATION_RESULT.
   types:
-    "!   Training status details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training status details.</p>
     begin of T_TRAINING_STATUS,
       "!   The total number of training examples uploaded to this collection.
       TOTAL_EXAMPLES type INTEGER,
@@ -71,7 +75,8 @@ public section.
       DATA_UPDATED type DATETIME,
     end of T_TRAINING_STATUS.
   types:
-    "!   Object describing the current status of the wordlist.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object describing the current status of the wordlist.</p>
     begin of T_TOKEN_DICT_STATUS_RESPONSE,
       "!   Current wordlist status for the specified collection.
       STATUS type STRING,
@@ -79,20 +84,24 @@ public section.
       TYPE type STRING,
     end of T_TOKEN_DICT_STATUS_RESPONSE.
   types:
-    "!   An object that indicates the Categories enrichment will be applied to the
-    "!    specified field.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object that indicates the Categories enrichment will be</p>
+    "!     applied to the specified field.
       T_NLU_ENRICHMENT_CATEGORIES type MAP.
   types:
-    "!   An object specifying the relations enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifying the relations enrichment and related</p>
+    "!     parameters.
     begin of T_NLU_ENRICHMENT_RELATIONS,
-      "!   *For use with `natural_language_understanding` enrichments only.* The enrichement
-      "!   * model to use with relationship extraction. May be a custom model provided by
-      "!   * Watson Knowledge Studio, the default public model is`en-news`.
+      "!   *For use with `natural_language_understanding` enrichments only.* The
+      "!    enrichement model to use with relationship extraction. May be a custom model
+      "!    provided by Watson Knowledge Studio, the default public model is`en-news`.
       MODEL type STRING,
     end of T_NLU_ENRICHMENT_RELATIONS.
   types:
-    "!   An object specifying the sentiment extraction enrichment and related parameters.
-    "!
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifying the sentiment extraction enrichment and</p>
+    "!     related parameters.
     begin of T_NLU_ENRICHMENT_SENTIMENT,
       "!   When `true`, sentiment analysis is performed on the entire field.
       DOCUMENT type BOOLEAN,
@@ -101,7 +110,9 @@ public section.
       TARGETS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_NLU_ENRICHMENT_SENTIMENT.
   types:
-    "!   An object specifiying the semantic roles enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifiying the semantic roles enrichment and</p>
+    "!     related parameters.
     begin of T_NL_ENRICHMENT_SEMANTIC_ROLES,
       "!   When `true`, entities are extracted from the identified sentence parts.
       ENTITIES type BOOLEAN,
@@ -112,7 +123,9 @@ public section.
       LIMIT type INTEGER,
     end of T_NL_ENRICHMENT_SEMANTIC_ROLES.
   types:
-    "!   An object speficying the Entities enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object speficying the Entities enrichment and related</p>
+    "!     parameters.
     begin of T_NLU_ENRICHMENT_ENTITIES,
       "!   When `true`, sentiment analysis of entities will be performed on the specified
       "!    field.
@@ -137,7 +150,9 @@ public section.
       MODEL type STRING,
     end of T_NLU_ENRICHMENT_ENTITIES.
   types:
-    "!   An object specifying the emotion detection enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifying the emotion detection enrichment and</p>
+    "!     related parameters.
     begin of T_NLU_ENRICHMENT_EMOTION,
       "!   When `true`, emotion detection is performed on the entire field.
       DOCUMENT type BOOLEAN,
@@ -146,14 +161,18 @@ public section.
       TARGETS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_NLU_ENRICHMENT_EMOTION.
   types:
-    "!   An object specifiying the concepts enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifiying the concepts enrichment and related</p>
+    "!     parameters.
     begin of T_NLU_ENRICHMENT_CONCEPTS,
       "!   The maximum number of concepts enrichments to extact from each instance of the
       "!    specified field.
       LIMIT type INTEGER,
     end of T_NLU_ENRICHMENT_CONCEPTS.
   types:
-    "!   An object specifying the Keyword enrichment and related parameters.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifying the Keyword enrichment and related</p>
+    "!     parameters.
     begin of T_NLU_ENRICHMENT_KEYWORDS,
       "!   When `true`, sentiment analysis of keywords will be performed on the specified
       "!    field.
@@ -166,7 +185,9 @@ public section.
       LIMIT type INTEGER,
     end of T_NLU_ENRICHMENT_KEYWORDS.
   types:
-    "!   Object containing Natural Language Understanding features to be used.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing Natural Language Understanding features to</p>
+    "!     be used.
     begin of T_NLU_ENRICHMENT_FEATURES,
       "!   An object specifying the Keyword enrichment and related parameters.
       KEYWORDS type T_NLU_ENRICHMENT_KEYWORDS,
@@ -188,8 +209,9 @@ public section.
       CONCEPTS type T_NLU_ENRICHMENT_CONCEPTS,
     end of T_NLU_ENRICHMENT_FEATURES.
   types:
-    "!   An object representing the configuration options to use for the
-    "!    `natural_language_understanding` enrichments.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object representing the configuration options to use for</p>
+    "!     the `natural_language_understanding` enrichments.
     begin of T_NLU_ENRICHMENT_OPTIONS,
       "!   Object containing Natural Language Understanding features to be used.
       FEATURES type T_NLU_ENRICHMENT_FEATURES,
@@ -202,7 +224,8 @@ public section.
       LANGUAGE type STRING,
     end of T_NLU_ENRICHMENT_OPTIONS.
   types:
-    "!   An object defining a single tokenizaion rule.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining a single tokenizaion rule.</p>
     begin of T_TOKEN_DICT_RULE,
       "!   The string to tokenize.
       TEXT type STRING,
@@ -216,8 +239,9 @@ public section.
       PART_OF_SPEECH type STRING,
     end of T_TOKEN_DICT_RULE.
   types:
-    "!   Tokenization dictionary describing how words are tokenized during ingestion and
-    "!    at query time.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Tokenization dictionary describing how words are tokenized</p>
+    "!     during ingestion and at query time.
     begin of T_TOKEN_DICT,
       "!   An array of tokenization rules. Each rule contains, the original `text` string,
       "!    component `tokens`, any alternate character set `readings`, and which
@@ -225,13 +249,14 @@ public section.
       TOKENIZATION_RULES type STANDARD TABLE OF T_TOKEN_DICT_RULE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TOKEN_DICT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_FILTER,
       "!   The match the aggregated results queried for.
       MATCH type STRING,
     end of T_FILTER.
   types:
-    "!   Object defining which URL to crawl and how to crawl it.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object defining which URL to crawl and how to crawl it.</p>
     begin of T_SOURCE_OPTIONS_WEB_CRAWL,
       "!   The starting URL to crawl.
       URL type STRING,
@@ -260,30 +285,32 @@ public section.
       "!    This must be be set to `true` when a **gateway_id** is specied in the
       "!    **credentials**.
       OVERRIDE_ROBOTS_TXT type BOOLEAN,
-      "!   Array of URL's to be excluded while crawling. The crawler will not follow links
-      "!    which contains this string. For example, listing `https://ibm.com/watson` also
-      "!    excludes `https://ibm.com/watson/discovery`.
+      "!   Array of URL&apos;s to be excluded while crawling. The crawler will not follow
+      "!    links which contains this string. For example, listing `https://ibm.com/watson`
+      "!    also excludes `https://ibm.com/watson/discovery`.
       BLACKLIST type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_SOURCE_OPTIONS_WEB_CRAWL.
   types:
-    "!   Object containing details of the stored credentials. <br/>
-    "!   <br/>
-    "!   Obtain credentials for your source from the administrator of the source.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing details of the stored credentials. </p><br/>
+    "!    <br/>
+    "!    Obtain credentials for your source from the administrator of the source.
     begin of T_CREDENTIAL_DETAILS,
       "!   The authentication method for this credentials definition. The
       "!    **credential_type** specified must be supported by the **source_type**. The
       "!    following combinations are possible:<br/>
       "!   <br/>
-      "!   -  `"source_type": "box"` - valid `credential_type`s: `oauth2`<br/>
-      "!   -  `"source_type": "salesforce"` - valid `credential_type`s:
+      "!   -  `&quot;source_type&quot;: &quot;box&quot;` - valid `credential_type`s:
+      "!    `oauth2`<br/>
+      "!   -  `&quot;source_type&quot;: &quot;salesforce&quot;` - valid `credential_type`s:
       "!    `username_password`<br/>
-      "!   -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml` with
-      "!    **source_version** of `online`, or `ntlm_v1` with **source_version** of
-      "!    `2016`<br/>
-      "!   -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or
-      "!    `basic`<br/>
-      "!   -  "source_type": "cloud_object_storage"` - valid `credential_type`s:
-      "!    `aws4_hmac`.
+      "!   -  `&quot;source_type&quot;: &quot;sharepoint&quot;` - valid `credential_type`s:
+      "!    `saml` with **source_version** of `online`, or `ntlm_v1` with
+      "!    **source_version** of `2016`<br/>
+      "!   -  `&quot;source_type&quot;: &quot;web_crawl&quot;` - valid `credential_type`s:
+      "!    `noauth` or `basic`<br/>
+      "!   -  &quot;source_type&quot;: &quot;cloud_object_storage&quot;` - valid
+      "!    `credential_type`s: `aws4_hmac`.
       CREDENTIAL_TYPE type STRING,
       "!   The **client_id** of the source that these credentials connect to. Only valid,
       "!    and required, with a **credential_type** of `oauth2`.
@@ -364,7 +391,8 @@ public section.
       SECRET_ACCESS_KEY type STRING,
     end of T_CREDENTIAL_DETAILS.
   types:
-    "!   Object containing credential information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing credential information.</p>
     begin of T_CREDENTIALS,
       "!   Unique identifier for this set of credentials.
       CREDENTIAL_ID type STRING,
@@ -390,13 +418,15 @@ public section.
       STATUS type STRING,
     end of T_CREDENTIALS.
   types:
-    "!   Object containing array of credential definitions.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing array of credential definitions.</p>
     begin of T_CREDENTIALS_LIST,
       "!   An array of credential definitions that were created for this instance.
       CREDENTIALS type STANDARD TABLE OF T_CREDENTIALS WITH NON-UNIQUE DEFAULT KEY,
     end of T_CREDENTIALS_LIST.
   types:
-    "!   Summary of the collection usage in the environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Summary of the collection usage in the environment.</p>
     begin of T_COLLECTION_USAGE,
       "!   Number of active collections in the environment.
       AVAILABLE type INTEGER,
@@ -404,24 +434,29 @@ public section.
       MAXIMUM_ALLOWED type INTEGER,
     end of T_COLLECTION_USAGE.
   types:
-    "!   Summary of the disk usage statistics for the environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Summary of the disk usage statistics for the environment.</p>
     begin of T_DISK_USAGE,
-      "!   Number of bytes within the environment's disk capacity that are currently used
-      "!    to store data.
+      "!   Number of bytes within the environment&apos;s disk capacity that are currently
+      "!    used to store data.
       USED_BYTES type INTEGER,
-      "!   Total number of bytes available in the environment's disk capacity.
+      "!   Total number of bytes available in the environment&apos;s disk capacity.
       MAXIMUM_ALLOWED_BYTES type INTEGER,
     end of T_DISK_USAGE.
   types:
-    "!   Summary of the document usage statistics for the environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Summary of the document usage statistics for the</p>
+    "!     environment.
     begin of T_ENVIRONMENT_DOCUMENTS,
       "!   Number of documents indexed for the environment.
       INDEXED type INTEGER,
-      "!   Total number of documents allowed in the environment's capacity.
+      "!   Total number of documents allowed in the environment&apos;s capacity.
       MAXIMUM_ALLOWED type INTEGER,
     end of T_ENVIRONMENT_DOCUMENTS.
   types:
-    "!   Details about the resource usage and capacity of the environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about the resource usage and capacity of the</p>
+    "!     environment.
     begin of T_INDEX_CAPACITY,
       "!   Summary of the document usage statistics for the environment.
       DOCUMENTS type T_ENVIRONMENT_DOCUMENTS,
@@ -431,7 +466,9 @@ public section.
       COLLECTIONS type T_COLLECTION_USAGE,
     end of T_INDEX_CAPACITY.
   types:
-    "!   Information about the Continuous Relevancy Training for this environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about the Continuous Relevancy Training for this</p>
+    "!     environment.
     begin of T_SEARCH_STATUS,
       "!   Current scope of the training. Always returned as `environment`.
       SCOPE type STRING,
@@ -443,7 +480,8 @@ public section.
       LAST_TRAINED type DATE,
     end of T_SEARCH_STATUS.
   types:
-    "!   Details about an environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Details about an environment.</p>
     begin of T_ENVIRONMENT,
       "!   Unique identifier for the environment.
       ENVIRONMENT_ID type STRING,
@@ -451,10 +489,11 @@ public section.
       NAME type STRING,
       "!   Description of the environment.
       DESCRIPTION type STRING,
-      "!   Creation date of the environment, in the format `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`.
+      "!   Creation date of the environment, in the format
+      "!    `yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;`.
       CREATED type DATETIME,
       "!   Date of most recent environment update, in the format
-      "!    `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`.
+      "!    `yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;`.
       UPDATED type DATETIME,
       "!   Current status of the environment. `resizing` is displayed when a request to
       "!    increase the environment size has been made, but is still in the process of
@@ -477,13 +516,16 @@ public section.
       SEARCH_STATUS type T_SEARCH_STATUS,
     end of T_ENVIRONMENT.
   types:
-    "!   Response object containing an array of configured environments.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response object containing an array of configured</p>
+    "!     environments.
     begin of T_LIST_ENVIRONMENTS_RESPONSE,
       "!   An array of [environments] that are available for the service instance.
       ENVIRONMENTS type STANDARD TABLE OF T_ENVIRONMENT WITH NON-UNIQUE DEFAULT KEY,
     end of T_LIST_ENVIRONMENTS_RESPONSE.
   types:
-    "!   Gatway deletion confirmation.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Gatway deletion confirmation.</p>
     begin of T_GATEWAY_DELETE,
       "!   The gateway ID of the deleted gateway.
       GATEWAY_ID type STRING,
@@ -491,7 +533,8 @@ public section.
       STATUS type STRING,
     end of T_GATEWAY_DELETE.
   types:
-    "!   Training example details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training example details.</p>
     begin of T_TRAINING_EXAMPLE,
       "!   The document ID associated with this training example.
       DOCUMENT_ID type STRING,
@@ -501,7 +544,8 @@ public section.
       RELEVANCE type INTEGER,
     end of T_TRAINING_EXAMPLE.
   types:
-    "!   Training query details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training query details.</p>
     begin of T_TRAINING_QUERY,
       "!   The query ID associated with the training query.
       QUERY_ID type STRING,
@@ -514,12 +558,13 @@ public section.
       EXAMPLES type STANDARD TABLE OF T_TRAINING_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_QUERY.
   types:
-    "!   A passage query result.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A passage query result.</p>
     begin of T_QUERY_PASSAGES,
       "!   The unique identifier of the document from which the passage has been extracted.
       "!
       DOCUMENT_ID type STRING,
-      "!   The confidence score of the passages's analysis. A higher score indicates
+      "!   The confidence score of the passages&apos;s analysis. A higher score indicates
       "!    greater confidence.
       PASSAGE_SCORE type DOUBLE,
       "!   The content of the extracted passage.
@@ -534,7 +579,8 @@ public section.
       FIELD type STRING,
     end of T_QUERY_PASSAGES.
   types:
-    "!   Object containing normalization operations.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing normalization operations.</p>
     begin of T_NORMALIZATION_OPERATION,
       "!   Identifies what type of operation to perform. <br/>
       "!   <br/>
@@ -574,7 +620,8 @@ public section.
       DESTINATION_FIELD type STRING,
     end of T_NORMALIZATION_OPERATION.
   types:
-    "!   Font matching configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Font matching configuration.</p>
     begin of T_FONT_SETTING,
       "!   The HTML heading level that any content with the matching font is converted to.
       LEVEL type INTEGER,
@@ -590,7 +637,9 @@ public section.
       NAME type STRING,
     end of T_FONT_SETTING.
   types:
-    "!   Microsoft Word styles to convert into a specified HTML head level.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Microsoft Word styles to convert into a specified HTML head</p>
+    "!     level.
     begin of T_WORD_STYLE,
       "!   HTML head level that content matching this style is tagged with.
       LEVEL type INTEGER,
@@ -598,8 +647,9 @@ public section.
       NAMES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORD_STYLE.
   types:
-    "!   Object containing heading detection conversion settings for Microsoft Word
-    "!    documents.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing heading detection conversion settings for</p>
+    "!     Microsoft Word documents.
     begin of T_WORD_HEADING_DETECTION,
       "!   Array of font matching configurations.
       FONTS type STANDARD TABLE OF T_FONT_SETTING WITH NON-UNIQUE DEFAULT KEY,
@@ -607,19 +657,24 @@ public section.
       STYLES type STANDARD TABLE OF T_WORD_STYLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORD_HEADING_DETECTION.
   types:
-    "!   Object containing heading detection conversion settings for PDF documents.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing heading detection conversion settings for</p>
+    "!     PDF documents.
     begin of T_PDF_HEADING_DETECTION,
       "!   Array of font matching configurations.
       FONTS type STANDARD TABLE OF T_FONT_SETTING WITH NON-UNIQUE DEFAULT KEY,
     end of T_PDF_HEADING_DETECTION.
   types:
-    "!   A list of PDF conversion settings.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of PDF conversion settings.</p>
     begin of T_PDF_SETTINGS,
       "!   Object containing heading detection conversion settings for PDF documents.
       HEADING type T_PDF_HEADING_DETECTION,
     end of T_PDF_SETTINGS.
   types:
-    "!   Object that defines a box folder to crawl with this configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that defines a box folder to crawl with this</p>
+    "!     configuration.
     begin of T_SOURCE_OPTIONS_FOLDER,
       "!   The Box user ID of the user who owns the folder to crawl.
       OWNER_USER_ID type STRING,
@@ -630,7 +685,8 @@ public section.
       LIMIT type INTEGER,
     end of T_SOURCE_OPTIONS_FOLDER.
   types:
-    "!   Object defining a cloud object store bucket to crawl.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object defining a cloud object store bucket to crawl.</p>
     begin of T_SOURCE_OPTIONS_BUCKETS,
       "!   The name of the cloud object store bucket to crawl.
       NAME type STRING,
@@ -639,7 +695,8 @@ public section.
       LIMIT type INTEGER,
     end of T_SOURCE_OPTIONS_BUCKETS.
   types:
-    "!   Object containing the schedule information for the source.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing the schedule information for the source.</p>
     begin of T_SOURCE_SCHEDULE,
       "!   When `true`, the source is re-crawled based on the **frequency** field in this
       "!    object. When `false` the source is not re-crawled; When `false` and connecting
@@ -659,8 +716,9 @@ public section.
       FREQUENCY type STRING,
     end of T_SOURCE_SCHEDULE.
   types:
-    "!   Object that defines a Salesforce document object type crawl with this
-    "!    configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that defines a Salesforce document object type crawl</p>
+    "!     with this configuration.
     begin of T_SOURCE_OPTIONS_OBJECT,
       "!   The name of the Salesforce document object to crawl. For example, `case`.
       NAME type STRING,
@@ -669,8 +727,9 @@ public section.
       LIMIT type INTEGER,
     end of T_SOURCE_OPTIONS_OBJECT.
   types:
-    "!   Object that defines a Microsoft SharePoint site collection to crawl with this
-    "!    configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that defines a Microsoft SharePoint site collection</p>
+    "!     to crawl with this configuration.
     begin of T_SOURCE_OPTIONS_SITE_COLL,
       "!   The Microsoft SharePoint Online site collection path to crawl. The path must be
       "!    be relative to the **organization_url** that was specified in the credentials
@@ -681,7 +740,9 @@ public section.
       LIMIT type INTEGER,
     end of T_SOURCE_OPTIONS_SITE_COLL.
   types:
-    "!   The **options** object defines which items to crawl from the source system.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The **options** object defines which items to crawl from the</p>
+    "!     source system.
     begin of T_SOURCE_OPTIONS,
       "!   Array of folders to crawl from the Box source. Only valid, and required, when
       "!    the **type** field of the **source** object is set to `box`.
@@ -707,7 +768,8 @@ public section.
       CRAWL_ALL_BUCKETS type BOOLEAN,
     end of T_SOURCE_OPTIONS.
   types:
-    "!   Object containing source parameters for the configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing source parameters for the configuration.</p>
     begin of T_SOURCE,
       "!   The type of source to connect to.<br/>
       "!   -  `box` indicates the configuration is to connect an instance of Enterprise
@@ -730,13 +792,15 @@ public section.
       OPTIONS type T_SOURCE_OPTIONS,
     end of T_SOURCE.
   types:
-    "!   Object containing an array of XPaths.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing an array of XPaths.</p>
     begin of T_XPATH_PATTERNS,
       "!   An array to XPaths.
       XPATHS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_XPATH_PATTERNS.
   types:
-    "!   Options which are specific to a particular enrichment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Options which are specific to a particular enrichment.</p>
     begin of T_ENRICHMENT_OPTIONS,
       "!   Object containing Natural Language Understanding features to be used.
       FEATURES type T_NLU_ENRICHMENT_FEATURES,
@@ -748,12 +812,14 @@ public section.
       "!    detection is recommended.
       LANGUAGE type STRING,
       "!   *For use with `elements` enrichments only.* The element extraction model to use.
-      "!   * Models available are: `contract`.
+      "!    Models available are: `contract`.
       MODEL type STRING,
     end of T_ENRICHMENT_OPTIONS.
   types:
-    "!   Enrichment step to perform on the document. Each enrichment is performed on the
-    "!    specified field in the order that they are listed in the configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Enrichment step to perform on the document. Each enrichment</p>
+    "!     is performed on the specified field in the order that they are listed in the
+    "!     configuration.
     begin of T_ENRICHMENT,
       "!   Describes what the enrichment step does.
       DESCRIPTION type STRING,
@@ -790,7 +856,8 @@ public section.
       OPTIONS type T_ENRICHMENT_OPTIONS,
     end of T_ENRICHMENT.
   types:
-    "!   A list of Document Segmentation settings.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of Document Segmentation settings.</p>
     begin of T_SEGMENT_SETTINGS,
       "!   Enables/disables the Document Segmentation feature.
       ENABLED type BOOLEAN,
@@ -813,14 +880,16 @@ public section.
       ANNOTATED_FIELDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_SEGMENT_SETTINGS.
   types:
-    "!   A list of Word conversion settings.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of Word conversion settings.</p>
     begin of T_WORD_SETTINGS,
       "!   Object containing heading detection conversion settings for Microsoft Word
       "!    documents.
       HEADING type T_WORD_HEADING_DETECTION,
     end of T_WORD_SETTINGS.
   types:
-    "!   A list of HTML conversion settings.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of HTML conversion settings.</p>
     begin of T_HTML_SETTINGS,
       "!   Array of HTML tags that are excluded completely.
       EXCLUDE_TAGS_COMPLETELY type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
@@ -836,7 +905,8 @@ public section.
       EXCLUDE_TAG_ATTRIBUTES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_HTML_SETTINGS.
   types:
-    "!   Document conversion settings.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Document conversion settings.</p>
     begin of T_CONVERSIONS,
       "!   A list of PDF conversion settings.
       PDF type T_PDF_SETTINGS,
@@ -858,17 +928,18 @@ public section.
       IMAGE_TEXT_RECOGNITION type BOOLEAN,
     end of T_CONVERSIONS.
   types:
-    "!   A custom configuration for the environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A custom configuration for the environment.</p>
     begin of T_CONFIGURATION,
       "!   The unique identifier of the configuration.
       CONFIGURATION_ID type STRING,
       "!   The name of the configuration.
       NAME type STRING,
       "!   The creation date of the configuration in the format
-      "!    yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+      "!    yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;.
       CREATED type DATETIME,
       "!   The timestamp of when the configuration was last updated in the format
-      "!    yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+      "!    yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;.
       UPDATED type DATETIME,
       "!   The description of the configuration, if available.
       DESCRIPTION type STRING,
@@ -884,13 +955,15 @@ public section.
       SOURCE type T_SOURCE,
     end of T_CONFIGURATION.
   types:
-    "!   Object containing an array of available configurations.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing an array of available configurations.</p>
     begin of T_LIST_CONFIGURATIONS_RESPONSE,
       "!   An array of configurations that are available for the service instance.
       CONFIGURATIONS type STANDARD TABLE OF T_CONFIGURATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_LIST_CONFIGURATIONS_RESPONSE.
   types:
-    "!   Object containing source crawl status information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing source crawl status information.</p>
     begin of T_SOURCE_STATUS,
       "!   The current status of the source crawl for this collection. This field returns
       "!    `not_configured` if the default configuration for this source does not have a
@@ -906,7 +979,8 @@ public section.
       NEXT_CRAWL type DATETIME,
     end of T_SOURCE_STATUS.
   types:
-    "!   Object returned after credentials are deleted.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object returned after credentials are deleted.</p>
     begin of T_DELETE_CREDENTIALS,
       "!   The unique identifier of the credentials that have been deleted.
       CREDENTIAL_ID type STRING,
@@ -914,7 +988,8 @@ public section.
       STATUS type STRING,
     end of T_DELETE_CREDENTIALS.
   types:
-    "!   A notice produced for the collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A notice produced for the collection.</p>
     begin of T_NOTICE,
       "!   Identifies the notice. Many notices might have the same ID. This field exists so
       "!    that user applications can programmatically identify a notice and take
@@ -930,7 +1005,8 @@ public section.
       "!    `smart_document_understanding_page_warning`. **Note:** This is not a complete
       "!    list, other values might be returned.
       NOTICE_ID type STRING,
-      "!   The creation date of the collection in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+      "!   The creation date of the collection in the format
+      "!    yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;.
       CREATED type DATETIME,
       "!   Unique identifier of the document.
       DOCUMENT_ID type STRING,
@@ -947,7 +1023,8 @@ public section.
       DESCRIPTION type STRING,
     end of T_NOTICE.
   types:
-    "!   Information returned after an uploaded document is accepted.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information returned after an uploaded document is accepted.</p>
     begin of T_DOCUMENT_ACCEPTED,
       "!   The unique identifier of the ingested document.
       DOCUMENT_ID type STRING,
@@ -959,7 +1036,8 @@ public section.
       NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
     end of T_DOCUMENT_ACCEPTED.
   types:
-    "!   Object describing a specific gateway.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object describing a specific gateway.</p>
     begin of T_GATEWAY,
       "!   The gateway ID of the gateway.
       GATEWAY_ID type STRING,
@@ -977,7 +1055,8 @@ public section.
       TOKEN_ID type STRING,
     end of T_GATEWAY.
   types:
-    "!   Aggregation result data for the requested metric.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Aggregation result data for the requested metric.</p>
     begin of T_METRIC_AGGREGATION_RESULT,
       "!   Date in string form representing the start of this interval.
       KEY_AS_STRING type DATETIME,
@@ -991,7 +1070,9 @@ public section.
       EVENT_RATE type DOUBLE,
     end of T_METRIC_AGGREGATION_RESULT.
   types:
-    "!   An aggregation analyzing log information for queries and events.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An aggregation analyzing log information for queries and</p>
+    "!     events.
     begin of T_METRIC_AGGREGATION,
       "!   The measurement interval for this metric. Metric intervals are always 1 day
       "!    (`1d`).
@@ -1003,13 +1084,15 @@ public section.
       RESULTS type STANDARD TABLE OF T_METRIC_AGGREGATION_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_METRIC_AGGREGATION.
   types:
-    "!   The response generated from a call to a **metrics** method.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The response generated from a call to a **metrics** method.</p>
     begin of T_METRIC_RESPONSE,
       "!   Array of metric aggregations.
       AGGREGATIONS type STANDARD TABLE OF T_METRIC_AGGREGATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_METRIC_RESPONSE.
   types:
-    "!   Metadata of a query result.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata of a query result.</p>
     begin of T_QUERY_RESULT_METADATA,
       "!   An unbounded measure of the relevance of a particular result, dependent on the
       "!    query and matching document. A higher score indicates a greater match to the
@@ -1023,7 +1106,8 @@ public section.
       CONFIDENCE type DOUBLE,
     end of T_QUERY_RESULT_METADATA.
   types:
-    "!   Query result object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Query result object.</p>
     begin of T_QUERY_NOTICES_RESULT,
       "!   The unique identifier of the document.
       ID type STRING,
@@ -1046,8 +1130,9 @@ public section.
       NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
     end of T_QUERY_NOTICES_RESULT.
   types:
-    "!   Each object in the **results** array corresponds to an individual document
-    "!    returned by the original query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Each object in the **results** array corresponds to an</p>
+    "!     individual document returned by the original query.
     begin of T_LOG_QRY_RESP_RSLT_DOCS_RSLT,
       "!   The result rank of this document. A position of `1` indicates that it was the
       "!    first returned result.
@@ -1057,15 +1142,17 @@ public section.
       "!   The raw score of this result. A higher score indicates a greater match to the
       "!    query parameters.
       SCORE type DOUBLE,
-      "!   The confidence score of the result's analysis. A higher score indicating greater
-      "!    confidence.
+      "!   The confidence score of the result&apos;s analysis. A higher score indicating
+      "!    greater confidence.
       CONFIDENCE type DOUBLE,
       "!   The **collection_id** of the document represented by this result.
       COLLECTION_ID type STRING,
     end of T_LOG_QRY_RESP_RSLT_DOCS_RSLT.
   types:
-    "!   Object containing result information that was returned by the query used to
-    "!    create this log entry. Only returned with logs of type `query`.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing result information that was returned by</p>
+    "!     the query used to create this log entry. Only returned with logs of type
+    "!     `query`.
     begin of T_LOG_QUERY_RESP_RESULT_DOCS,
       "!   Array of log query response results.
       RESULTS type STANDARD TABLE OF T_LOG_QRY_RESP_RSLT_DOCS_RSLT WITH NON-UNIQUE DEFAULT KEY,
@@ -1073,7 +1160,8 @@ public section.
       COUNT type INTEGER,
     end of T_LOG_QUERY_RESP_RESULT_DOCS.
   types:
-    "!   Object containing field details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing field details.</p>
     begin of T_FIELD,
       "!   The name of the field.
       FIELD type STRING,
@@ -1081,7 +1169,8 @@ public section.
       TYPE type STRING,
     end of T_FIELD.
   types:
-    "!   Query event data object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Query event data object.</p>
     begin of T_EVENT_DATA,
       "!   The **environment_id** associated with the query that the event is associated
       "!    with.
@@ -1103,7 +1192,8 @@ public section.
       QUERY_ID type STRING,
     end of T_EVENT_DATA.
   types:
-    "!   An object defining the event being created.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the event being created.</p>
     begin of T_CREATE_EVENT_OBJECT,
       "!   The event type to be created.
       TYPE type STRING,
@@ -1111,17 +1201,18 @@ public section.
       DATA type T_EVENT_DATA,
     end of T_CREATE_EVENT_OBJECT.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_NESTED,
       "!   The area of the results the aggregation was restricted to.
       PATH type STRING,
     end of T_NESTED.
   types:
-    "!   Object that describes a long query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that describes a long query.</p>
     begin of T_QUERY_LARGE,
-      "!   A cacheable query that excludes documents that don't mention the query content.
-      "!    Filter searches are better for metadata-type searches and for assessing the
-      "!    concepts in the data set.
+      "!   A cacheable query that excludes documents that don&apos;t mention the query
+      "!    content. Filter searches are better for metadata-type searches and for
+      "!    assessing the concepts in the data set.
       FILTER type STRING,
       "!   A query search returns all documents in your data set with full enrichments and
       "!    full text, but with the most relevant documents listed first. Use a query
@@ -1195,13 +1286,15 @@ public section.
       BIAS type STRING,
     end of T_QUERY_LARGE.
   types:
-    "!   Object containing user-defined name.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing user-defined name.</p>
     begin of T_GATEWAY_NAME,
       "!   User-defined name.
       NAME type STRING,
     end of T_GATEWAY_NAME.
   types:
-    "!   Object containing collection document count information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing collection document count information.</p>
     begin of T_DOCUMENT_COUNTS,
       "!   The total number of available documents in the collection.
       AVAILABLE type LONG,
@@ -1214,8 +1307,9 @@ public section.
       PENDING type LONG,
     end of T_DOCUMENT_COUNTS.
   types:
-    "!   Information about custom smart document understanding fields that exist in this
-    "!    collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information about custom smart document understanding fields</p>
+    "!     that exist in this collection.
     begin of T_SDU_STATUS_CUSTOM_FIELDS,
       "!   The number of custom fields defined for this collection.
       DEFINED type LONG,
@@ -1223,7 +1317,9 @@ public section.
       MAXIMUM_ALLOWED type LONG,
     end of T_SDU_STATUS_CUSTOM_FIELDS.
   types:
-    "!   Object containing smart document understanding information for this collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing smart document understanding information</p>
+    "!     for this collection.
     begin of T_SDU_STATUS,
       "!   When `true`, smart document understanding conversion is enabled for this
       "!    collection. All collections created with a version date after `2019-04-30` have
@@ -1250,19 +1346,23 @@ public section.
       CUSTOM_FIELDS type T_SDU_STATUS_CUSTOM_FIELDS,
     end of T_SDU_STATUS.
   types:
-    "!   Object containing information about the crawl status of this collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing information about the crawl status of this</p>
+    "!     collection.
     begin of T_COLLECTION_CRAWL_STATUS,
       "!   Object containing source crawl status information.
       SOURCE_CRAWL type T_SOURCE_STATUS,
     end of T_COLLECTION_CRAWL_STATUS.
   types:
-    "!   Summary of the disk usage statistics for this collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Summary of the disk usage statistics for this collection.</p>
     begin of T_COLLECTION_DISK_USAGE,
       "!   Number of bytes used by the collection.
       USED_BYTES type INTEGER,
     end of T_COLLECTION_DISK_USAGE.
   types:
-    "!   A collection for storing documents.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A collection for storing documents.</p>
     begin of T_COLLECTION,
       "!   The unique identifier of the collection.
       COLLECTION_ID type STRING,
@@ -1271,14 +1371,14 @@ public section.
       "!   The description of the collection.
       DESCRIPTION type STRING,
       "!   The creation date of the collection in the format
-      "!    yyyy-MM-dd'T'HH:mmcon:ss.SSS'Z'.
+      "!    yyyy-MM-dd&apos;T&apos;HH:mmcon:ss.SSS&apos;Z&apos;.
       CREATED type DATETIME,
       "!   The timestamp of when the collection was last updated in the format
-      "!    yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+      "!    yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;.
       UPDATED type DATETIME,
       "!   The status of the collection.
       STATUS type STRING,
-      "!   The unique identifier of the collection's configuration.
+      "!   The unique identifier of the collection&apos;s configuration.
       CONFIGURATION_ID type STRING,
       "!   The language of the documents stored in the collection. Permitted values include
       "!    `en` (English), `de` (German), and `es` (Spanish).
@@ -1295,18 +1395,21 @@ public section.
       SMART_DOCUMENT_UNDERSTANDING type T_SDU_STATUS,
     end of T_COLLECTION.
   types:
-    "!   Array of Microsoft Word styles to convert.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Array of Microsoft Word styles to convert.</p>
       T_WORD_STYLES type STANDARD TABLE OF T_WORD_STYLE WITH NON-UNIQUE DEFAULT KEY.
   types:
-    "!   An object representing the configuration options to use for the `elements`
-    "!    enrichment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object representing the configuration options to use for</p>
+    "!     the `elements` enrichment.
     begin of T_ELEMENTS_ENRICHMENT_OPTIONS,
       "!   *For use with `elements` enrichments only.* The element extraction model to use.
-      "!   * Models available are: `contract`.
+      "!    Models available are: `contract`.
       MODEL type STRING,
     end of T_ELEMENTS_ENRICHMENT_OPTIONS.
   types:
-    "!   Object containing information about a new environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing information about a new environment.</p>
     begin of T_CREATE_ENVIRONMENT_REQUEST,
       "!   Name that identifies the environment.
       NAME type STRING,
@@ -1317,7 +1420,8 @@ public section.
       SIZE type STRING,
     end of T_CREATE_ENVIRONMENT_REQUEST.
   types:
-    "!   Object containing specification for a new collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing specification for a new collection.</p>
     begin of T_CREATE_COLLECTION_REQUEST,
       "!   The name of the collection to be created.
       NAME type STRING,
@@ -1330,13 +1434,14 @@ public section.
       LANGUAGE type STRING,
     end of T_CREATE_COLLECTION_REQUEST.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_INLINE_OBJECT,
       "!   The content of the stopword list to ingest.
       STOPWORD_FILE type FILE,
     end of T_INLINE_OBJECT.
   types:
-    "!   Query result object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Query result object.</p>
     begin of T_QUERY_RESULT,
       "!   The unique identifier of the document.
       ID type STRING,
@@ -1348,7 +1453,8 @@ public section.
       RESULT_METADATA type T_QUERY_RESULT_METADATA,
     end of T_QUERY_RESULT.
   types:
-    "!   Top hit information for this query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Top hit information for this query.</p>
     begin of T_TOP_HITS_RESULTS,
       "!   Number of matching results.
       MATCHING_RESULTS type INTEGER,
@@ -1356,7 +1462,8 @@ public section.
       HITS type STANDARD TABLE OF T_QUERY_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_TOP_HITS_RESULTS.
   types:
-    "!   Response object returned when deleting a colleciton.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response object returned when deleting a colleciton.</p>
     begin of T_DELETE_COLLECTION_RESPONSE,
       "!   The unique identifier of the collection that is being deleted.
       COLLECTION_ID type STRING,
@@ -1365,7 +1472,7 @@ public section.
       STATUS type STRING,
     end of T_DELETE_COLLECTION_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TERM,
       "!   The field where the aggregation is located in the document.
       FIELD type STRING,
@@ -1373,13 +1480,15 @@ public section.
       COUNT type INTEGER,
     end of T_TERM.
   types:
-    "!   An object containing an array of autocompletion suggestions.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object containing an array of autocompletion suggestions.</p>
     begin of T_COMPLETIONS,
       "!   Array of autcomplete suggestion based on the provided prefix.
       COMPLETIONS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_COMPLETIONS.
   types:
-    "!   An object contain retrieval type information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object contain retrieval type information.</p>
     begin of T_RETRIEVAL_DETAILS,
       "!   Indentifies the document retrieval strategy used for this query.
       "!    `relevancy_training` indicates that the results were returned using a relevancy
@@ -1394,7 +1503,8 @@ public section.
       DOCUMENT_RETRIEVAL_STRATEGY type STRING,
     end of T_RETRIEVAL_DETAILS.
   types:
-    "!   Response object returned when deleting an environment.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response object returned when deleting an environment.</p>
     begin of T_DELETE_ENVIRONMENT_RESPONSE,
       "!   The unique identifier for the environment.
       ENVIRONMENT_ID type STRING,
@@ -1402,27 +1512,29 @@ public section.
       STATUS type STRING,
     end of T_DELETE_ENVIRONMENT_RESPONSE.
   types:
-    "!   The list of fetched fields.<br/>
-    "!   <br/>
-    "!   The fields are returned using a fully qualified name format, however, the format
-    "!    differs slightly from that used by the query operations.<br/>
-    "!   <br/>
-    "!     * Fields which contain nested JSON objects are assigned a type of
-    "!    "nested".<br/>
-    "!   <br/>
-    "!     * Fields which belong to a nested object are prefixed with `.properties` (for
-    "!    example, `warnings.properties.severity` means that the `warnings` object has a
-    "!    property called `severity`).<br/>
-    "!   <br/>
-    "!     * Fields returned from the News collection are prefixed with
-    "!    `v&#123;N&#125;-fullnews-t3-&#123;YEAR&#125;.mappings` (for example,
-    "!    `v5-fullnews-t3-2016.mappings.text.properties.author`).
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The list of fetched fields.</p><br/>
+    "!    <br/>
+    "!    The fields are returned using a fully qualified name format, however, the format
+    "!     differs slightly from that used by the query operations.<br/>
+    "!    <br/>
+    "!      * Fields which contain nested JSON objects are assigned a type of
+    "!     &quot;nested&quot;.<br/>
+    "!    <br/>
+    "!      * Fields which belong to a nested object are prefixed with `.properties` (for
+    "!     example, `warnings.properties.severity` means that the `warnings` object has a
+    "!     property called `severity`).<br/>
+    "!    <br/>
+    "!      * Fields returned from the News collection are prefixed with
+    "!     `v&#123;N&#125;-fullnews-t3-&#123;YEAR&#125;.mappings` (for example,
+    "!     `v5-fullnews-t3-2016.mappings.text.properties.author`).
     begin of T_LST_COLLECTION_FIELDS_RESP,
       "!   An array containing information about each field in the collections.
       FIELDS type STANDARD TABLE OF T_FIELD WITH NON-UNIQUE DEFAULT KEY,
     end of T_LST_COLLECTION_FIELDS_RESP.
   types:
-    "!   Object containing collection update information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing collection update information.</p>
     begin of T_UPDATE_COLLECTION_REQUEST,
       "!   The name of the collection.
       NAME type STRING,
@@ -1432,13 +1544,15 @@ public section.
       CONFIGURATION_ID type STRING,
     end of T_UPDATE_COLLECTION_REQUEST.
   types:
-    "!   Object containing gateways array.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing gateways array.</p>
     begin of T_GATEWAY_LIST,
       "!   Array of configured gateway connections.
       GATEWAYS type STANDARD TABLE OF T_GATEWAY WITH NON-UNIQUE DEFAULT KEY,
     end of T_GATEWAY_LIST.
   types:
-    "!   Aggregation result data for the requested metric.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Aggregation result data for the requested metric.</p>
     begin of T_METRIC_TOKEN_AGGR_RESULT,
       "!   The content of the **natural_language_query** parameter used in the query that
       "!    this result represents.
@@ -1451,7 +1565,9 @@ public section.
       EVENT_RATE type DOUBLE,
     end of T_METRIC_TOKEN_AGGR_RESULT.
   types:
-    "!   An aggregation analyzing log information for queries and events.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An aggregation analyzing log information for queries and</p>
+    "!     events.
     begin of T_METRIC_TOKEN_AGGREGATION,
       "!   The event type associated with this metric result. This field, when present,
       "!    will always be `click`.
@@ -1460,11 +1576,12 @@ public section.
       RESULTS type STANDARD TABLE OF T_METRIC_TOKEN_AGGR_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_METRIC_TOKEN_AGGREGATION.
   types:
-    "!   Object that describes a long query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that describes a long query.</p>
     begin of T_COLL_QUERY_LARGE,
-      "!   A cacheable query that excludes documents that don't mention the query content.
-      "!    Filter searches are better for metadata-type searches and for assessing the
-      "!    concepts in the data set.
+      "!   A cacheable query that excludes documents that don&apos;t mention the query
+      "!    content. Filter searches are better for metadata-type searches and for
+      "!    assessing the concepts in the data set.
       FILTER type STRING,
       "!   A query search returns all documents in your data set with full enrichments and
       "!    full text, but with the most relevant documents listed first. Use a query
@@ -1546,7 +1663,8 @@ public section.
       SPELLING_SUGGESTIONS type BOOLEAN,
     end of T_COLL_QUERY_LARGE.
   types:
-    "!   Object containing environment update information.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing environment update information.</p>
     begin of T_UPDATE_ENVIRONMENT_REQUEST,
       "!   Name that identifies the environment.
       NAME type STRING,
@@ -1558,7 +1676,8 @@ public section.
       SIZE type STRING,
     end of T_UPDATE_ENVIRONMENT_REQUEST.
   types:
-    "!   Information returned when a configuration is deleted.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information returned when a configuration is deleted.</p>
     begin of T_DEL_CONFIGURATION_RESPONSE,
       "!   The unique identifier for the configuration.
       CONFIGURATION_ID type STRING,
@@ -1568,7 +1687,9 @@ public section.
       NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
     end of T_DEL_CONFIGURATION_RESPONSE.
   types:
-    "!   A response containing the documents and aggregations for the query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A response containing the documents and aggregations for the</p>
+    "!     query.
     begin of T_QUERY_RESPONSE,
       "!   The number of matching results for the query.
       MATCHING_RESULTS type INTEGER,
@@ -1591,7 +1712,7 @@ public section.
       SUGGESTED_QUERY type STRING,
     end of T_QUERY_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TIMESLICE,
       "!   The field where the aggregation is located in the document.
       FIELD type STRING,
@@ -1604,7 +1725,8 @@ public section.
       ANOMALY type BOOLEAN,
     end of T_TIMESLICE.
   types:
-    "!   Training query to add.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training query to add.</p>
     begin of T_NEW_TRAINING_QUERY,
       "!   The natural text query for the new training query.
       NATURAL_LANGUAGE_QUERY type STRING,
@@ -1615,7 +1737,8 @@ public section.
       EXAMPLES type STANDARD TABLE OF T_TRAINING_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_NEW_TRAINING_QUERY.
   types:
-    "!   Status information about a submitted document.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Status information about a submitted document.</p>
     begin of T_DOCUMENT_STATUS,
       "!   The unique identifier of the document.
       DOCUMENT_ID type STRING,
@@ -1635,11 +1758,12 @@ public section.
       NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
     end of T_DOCUMENT_STATUS.
   types:
-    "!   Object that describes a long query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object that describes a long query.</p>
     begin of T_FED_QUERY_LARGE,
-      "!   A cacheable query that excludes documents that don't mention the query content.
-      "!    Filter searches are better for metadata-type searches and for assessing the
-      "!    concepts in the data set.
+      "!   A cacheable query that excludes documents that don&apos;t mention the query
+      "!    content. Filter searches are better for metadata-type searches and for
+      "!    assessing the concepts in the data set.
       FILTER type STRING,
       "!   A query search returns all documents in your data set with full enrichments and
       "!    full text, but with the most relevant documents listed first. Use a query
@@ -1715,7 +1839,8 @@ public section.
       COLLECTION_IDS type STRING,
     end of T_FED_QUERY_LARGE.
   types:
-    "!   An error response object.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An error response object.</p>
     begin of T_ERROR_RESPONSE,
       "!   The HTTP error status code.
       CODE type INTEGER,
@@ -1723,9 +1848,10 @@ public section.
       ERROR type STRING,
     end of T_ERROR_RESPONSE.
   types:
-    "!   An expansion definition. Each object respresents one set of expandable strings.
-    "!    For example, you could have expansions for the word `hot` in one object, and
-    "!    expansions for the word `cold` in another.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An expansion definition. Each object respresents one set of</p>
+    "!     expandable strings. For example, you could have expansions for the word `hot`
+    "!     in one object, and expansions for the word `cold` in another.
     begin of T_EXPANSION,
       "!   A list of terms that will be expanded for this expansion. If specified, only the
       "!    items in this list are expanded.
@@ -1735,7 +1861,9 @@ public section.
       EXPANDED_TERMS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
     end of T_EXPANSION.
   types:
-    "!   The query expansion definitions for the specified collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The query expansion definitions for the specified</p>
+    "!     collection.
     begin of T_EXPANSIONS,
       "!   An array of query expansion definitions. <br/>
       "!   <br/>
@@ -1756,7 +1884,8 @@ public section.
       EXPANSIONS type STANDARD TABLE OF T_EXPANSION WITH NON-UNIQUE DEFAULT KEY,
     end of T_EXPANSIONS.
   types:
-    "!   An object defining the event being created.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object defining the event being created.</p>
     begin of T_CREATE_EVENT_RESPONSE,
       "!   The event type that was created.
       TYPE type STRING,
@@ -1764,23 +1893,28 @@ public section.
       DATA type T_EVENT_DATA,
     end of T_CREATE_EVENT_RESPONSE.
   types:
-    "!   An array of document enrichment settings for the configuration.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An array of document enrichment settings for the</p>
+    "!     configuration.
       T_ENRICHMENTS type STANDARD TABLE OF T_ENRICHMENT WITH NON-UNIQUE DEFAULT KEY.
   types:
-    "!   The response generated from a call to a **metrics** method that evaluates
-    "!    tokens.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The response generated from a call to a **metrics** method</p>
+    "!     that evaluates tokens.
     begin of T_METRIC_TOKEN_RESPONSE,
       "!   Array of metric token aggregations.
       AGGREGATIONS type STANDARD TABLE OF T_METRIC_TOKEN_AGGREGATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_METRIC_TOKEN_RESPONSE.
   types:
-    "!   Object containing an array of training examples.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing an array of training examples.</p>
     begin of T_TRAINING_EXAMPLE_LIST,
       "!   Array of training examples.
       EXAMPLES type STANDARD TABLE OF T_TRAINING_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_EXAMPLE_LIST.
   types:
-    "!   Information returned when a document is deleted.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information returned when a document is deleted.</p>
     begin of T_DELETE_DOCUMENT_RESPONSE,
       "!   The unique identifier of the document.
       DOCUMENT_ID type STRING,
@@ -1788,7 +1922,7 @@ public section.
       STATUS type STRING,
     end of T_DELETE_DOCUMENT_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_TOP_HITS,
       "!   Number of top hits returned by the aggregation.
       SIZE type INTEGER,
@@ -1796,8 +1930,10 @@ public section.
       HITS type T_TOP_HITS_RESULTS,
     end of T_TOP_HITS.
   types:
-    "!   Individual result object for a **logs** query. Each object represents either a
-    "!    query to a Discovery collection or an event that is associated with a query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Individual result object for a **logs** query. Each object</p>
+    "!     represents either a query to a Discovery collection or an event that is
+    "!     associated with a query.
     begin of T_LOG_QUERY_RESPONSE_RESULT,
       "!   The environment ID that is associated with this log entry.
       ENVIRONMENT_ID type STRING,
@@ -1864,7 +2000,9 @@ public section.
       RESULT_TYPE type STRING,
     end of T_LOG_QUERY_RESPONSE_RESULT.
   types:
-    "!   Object containing results that match the requested **logs** query.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing results that match the requested **logs**</p>
+    "!     query.
     begin of T_LOG_QUERY_RESPONSE,
       "!   Number of matching results.
       MATCHING_RESULTS type INTEGER,
@@ -1872,12 +2010,14 @@ public section.
       RESULTS type STANDARD TABLE OF T_LOG_QUERY_RESPONSE_RESULT WITH NON-UNIQUE DEFAULT KEY,
     end of T_LOG_QUERY_RESPONSE.
   types:
-    "!   Defines operations that can be used to transform the final output JSON into a
-    "!    normalized form. Operations are executed in the order that they appear in the
-    "!    array.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Defines operations that can be used to transform the final</p>
+    "!     output JSON into a normalized form. Operations are executed in the order that
+    "!     they appear in the array.
       T_NORMALIZATIONS type STANDARD TABLE OF T_NORMALIZATION_OPERATION WITH NON-UNIQUE DEFAULT KEY.
   types:
-    "!   Training example to add.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training example to add.</p>
     begin of T_TRAINING_EXAMPLE_PATCH,
       "!   The example to add.
       CROSS_REFERENCE type STRING,
@@ -1885,13 +2025,14 @@ public section.
       RELEVANCE type INTEGER,
     end of T_TRAINING_EXAMPLE_PATCH.
   types:
-    "!   Response object containing an array of collection details.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response object containing an array of collection details.</p>
     begin of T_LIST_COLLECTIONS_RESPONSE,
       "!   An array containing information about each collection in the environment.
       COLLECTIONS type STANDARD TABLE OF T_COLLECTION WITH NON-UNIQUE DEFAULT KEY,
     end of T_LIST_COLLECTIONS_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_CALCULATION,
       "!   The field where the aggregation is located in the document.
       FIELD type STRING,
@@ -1899,7 +2040,8 @@ public section.
       VALUE type DOUBLE,
     end of T_CALCULATION.
   types:
-    "!   Training information for a specific collection.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Training information for a specific collection.</p>
     begin of T_TRAINING_DATA_SET,
       "!   The environment id associated with this training data set.
       ENVIRONMENT_ID type STRING,
@@ -1909,10 +2051,12 @@ public section.
       QUERIES type STANDARD TABLE OF T_TRAINING_QUERY WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRAINING_DATA_SET.
   types:
-    "!   Array of font matching configurations.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Array of font matching configurations.</p>
       T_FONT_SETTINGS type STANDARD TABLE OF T_FONT_SETTING WITH NON-UNIQUE DEFAULT KEY.
   types:
-    "!   Object containing notice query results.
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Object containing notice query results.</p>
     begin of T_QUERY_NOTICES_RESPONSE,
       "!   The number of matching results.
       MATCHING_RESULTS type INTEGER,
@@ -1926,15 +2070,16 @@ public section.
       DUPLICATES_REMOVED type INTEGER,
     end of T_QUERY_NOTICES_RESPONSE.
   types:
-    "!   No documentation available.
+    "! No documentation available.
     begin of T_HISTOGRAM,
       "!   The field where the aggregation is located in the document.
       FIELD type STRING,
-      "!   Interval of the aggregation. (For 'histogram' type).
+      "!   Interval of the aggregation. (For &apos;histogram&apos; type).
       INTERVAL type INTEGER,
     end of T_HISTOGRAM.
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_QUERY_AGGREGATION type string value '|',
     T_AGGREGATION_RESULT type string value '|',
@@ -2057,6 +2202,7 @@ constants:
   end of C_REQUIRED_FIELDS .
 
 constants:
+  "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
      ENVIRONMENT_ID type string value 'environment_id',
      NAME type string value 'name',
@@ -2313,7 +2459,12 @@ constants:
     redefinition .
 
 
-    "! Create an environment.
+    "! <p class="shorttext synchronized" lang="en">Create an environment</p>
+    "!   Creates a new environment for private data. An environment must be created
+    "!    before collections can be created. <br/>
+    "!   <br/>
+    "!   **Note**: You can create only one environment for private data per service
+    "!    instance. An attempt to create another environment results in an error.
     "!
     "! @parameter I_BODY |
     "!   An object that defines an environment name and optional description. The fields
@@ -2332,7 +2483,8 @@ constants:
       !E_RESPONSE type T_ENVIRONMENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List environments.
+    "! <p class="shorttext synchronized" lang="en">List environments</p>
+    "!   List existing environments for the service instance.
     "!
     "! @parameter I_NAME |
     "!   Show only the environment with the given name.
@@ -2348,7 +2500,7 @@ constants:
       !E_RESPONSE type T_LIST_ENVIRONMENTS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get environment info.
+    "! <p class="shorttext synchronized" lang="en">Get environment info</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2364,12 +2516,15 @@ constants:
       !E_RESPONSE type T_ENVIRONMENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update an environment.
+    "! <p class="shorttext synchronized" lang="en">Update an environment</p>
+    "!   Updates an environment. The environment&apos;s **name** and  **description**
+    "!    parameters can be changed. You must specify a **name** for the environment.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
     "! @parameter I_BODY |
-    "!   An object that defines the environment's name and, optionally, description.
+    "!   An object that defines the environment&apos;s name and, optionally, description.
+    "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ENVIRONMENT
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -2384,7 +2539,7 @@ constants:
       !E_RESPONSE type T_ENVIRONMENT
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete environment.
+    "! <p class="shorttext synchronized" lang="en">Delete environment</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2400,7 +2555,9 @@ constants:
       !E_RESPONSE type T_DELETE_ENVIRONMENT_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List fields across collections.
+    "! <p class="shorttext synchronized" lang="en">List fields across collections</p>
+    "!   Gets a list of the unique fields (and their types) stored in the indexes of the
+    "!    specified collections.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2420,7 +2577,19 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Add configuration.
+    "! <p class="shorttext synchronized" lang="en">Add configuration</p>
+    "!   Creates a new configuration.<br/>
+    "!   <br/>
+    "!   If the input configuration contains the **configuration_id**, **created**, or
+    "!    **updated** properties, then they are ignored and overridden by the system, and
+    "!    an error is not returned so that the overridden fields do not need to be
+    "!    removed when copying a configuration.<br/>
+    "!   <br/>
+    "!   The configuration can contain unrecognized JSON fields. Any such fields are
+    "!    ignored and do not generate an error. This makes it easier to use newer
+    "!    configuration files with older versions of the API and the service. It also
+    "!    makes it possible for the tooling to add additional metadata and information to
+    "!    the configuration.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2455,7 +2624,8 @@ constants:
       !E_RESPONSE type T_CONFIGURATION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List configurations.
+    "! <p class="shorttext synchronized" lang="en">List configurations</p>
+    "!   Lists existing configurations for the service instance.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2474,7 +2644,7 @@ constants:
       !E_RESPONSE type T_LIST_CONFIGURATIONS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get configuration details.
+    "! <p class="shorttext synchronized" lang="en">Get configuration details</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2493,7 +2663,16 @@ constants:
       !E_RESPONSE type T_CONFIGURATION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a configuration.
+    "! <p class="shorttext synchronized" lang="en">Update a configuration</p>
+    "!   Replaces an existing configuration.<br/>
+    "!     * Completely replaces the original configuration.<br/>
+    "!     * The **configuration_id**, **updated**, and **created** fields are accepted
+    "!    in the request, but they are ignored, and an error is not generated. It is also
+    "!    acceptable for users to submit an updated configuration with none of the three
+    "!    properties.<br/>
+    "!     * Documents are processed with a snapshot of the configuration as it was at
+    "!    the time the document was submitted to be ingested. This means that already
+    "!    submitted documents will not see any updates made to the configuration.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2531,7 +2710,13 @@ constants:
       !E_RESPONSE type T_CONFIGURATION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a configuration.
+    "! <p class="shorttext synchronized" lang="en">Delete a configuration</p>
+    "!   The deletion is performed unconditionally. A configuration deletion request
+    "!    succeeds even if the configuration is referenced by a collection or document
+    "!    ingestion. However, documents that have already been submitted for processing
+    "!    continue to use the deleted configuration. Documents are always processed with
+    "!    a snapshot of the configuration as it existed at the time the document was
+    "!    submitted.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2551,7 +2736,7 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create a collection.
+    "! <p class="shorttext synchronized" lang="en">Create a collection</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2571,7 +2756,8 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List collections.
+    "! <p class="shorttext synchronized" lang="en">List collections</p>
+    "!   Lists existing collections for the service instance.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2590,7 +2776,7 @@ constants:
       !E_RESPONSE type T_LIST_COLLECTIONS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get collection details.
+    "! <p class="shorttext synchronized" lang="en">Get collection details</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2609,7 +2795,7 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a collection.
+    "! <p class="shorttext synchronized" lang="en">Update a collection</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2632,7 +2818,7 @@ constants:
       !E_RESPONSE type T_COLLECTION
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a collection.
+    "! <p class="shorttext synchronized" lang="en">Delete a collection</p>
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2651,7 +2837,8 @@ constants:
       !E_RESPONSE type T_DELETE_COLLECTION_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List collection fields.
+    "! <p class="shorttext synchronized" lang="en">List collection fields</p>
+    "!   Gets a list of the unique fields (and their types) stored in the index.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2671,7 +2858,9 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Get the expansion list.
+    "! <p class="shorttext synchronized" lang="en">Get the expansion list</p>
+    "!   Returns the current expansion list for the specified collection. If an expansion
+    "!    list is not specified, an object with empty expansion arrays is returned.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2690,7 +2879,10 @@ constants:
       !E_RESPONSE type T_EXPANSIONS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create or update expansion list.
+    "! <p class="shorttext synchronized" lang="en">Create or update expansion list</p>
+    "!   Create or replace the Expansion list for this collection. The maximum number of
+    "!    expanded terms per collection is `500`.<br/>
+    "!   The current expansion list is replaced with the uploaded content.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2713,7 +2905,9 @@ constants:
       !E_RESPONSE type T_EXPANSIONS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete the expansion list.
+    "! <p class="shorttext synchronized" lang="en">Delete the expansion list</p>
+    "!   Remove the expansion information for this collection. The expansion list must be
+    "!    deleted to disable query expansion for a collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2727,7 +2921,9 @@ constants:
       !I_COLLECTION_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get tokenization dictionary status.
+    "! <p class="shorttext synchronized" lang="en">Get tokenization dictionary status</p>
+    "!   Returns the current status of the tokenization dictionary for the specified
+    "!    collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2746,7 +2942,8 @@ constants:
       !E_RESPONSE type T_TOKEN_DICT_STATUS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create tokenization dictionary.
+    "! <p class="shorttext synchronized" lang="en">Create tokenization dictionary</p>
+    "!   Upload a custom tokenization dictionary to use with the specified collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2769,7 +2966,8 @@ constants:
       !E_RESPONSE type T_TOKEN_DICT_STATUS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete tokenization dictionary.
+    "! <p class="shorttext synchronized" lang="en">Delete tokenization dictionary</p>
+    "!   Delete the tokenization dictionary from the collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2783,7 +2981,8 @@ constants:
       !I_COLLECTION_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get stopword list status.
+    "! <p class="shorttext synchronized" lang="en">Get stopword list status</p>
+    "!   Returns the current status of the stopword list for the specified collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2802,7 +3001,8 @@ constants:
       !E_RESPONSE type T_TOKEN_DICT_STATUS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create stopword list.
+    "! <p class="shorttext synchronized" lang="en">Create stopword list</p>
+    "!   Upload a custom stopword list to use with the specified collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2829,7 +3029,9 @@ constants:
       !E_RESPONSE type T_TOKEN_DICT_STATUS_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a custom stopword list.
+    "! <p class="shorttext synchronized" lang="en">Delete a custom stopword list</p>
+    "!   Delete a custom stopword list from the collection. After a custom stopword list
+    "!    is deleted, the default list is used for the collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2844,7 +3046,36 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Add a document.
+    "! <p class="shorttext synchronized" lang="en">Add a document</p>
+    "!   Add a document to a collection with optional metadata.<br/>
+    "!   <br/>
+    "!     * The **version** query parameter is still required.<br/>
+    "!   <br/>
+    "!     * Returns immediately after the system has accepted the document for
+    "!    processing.<br/>
+    "!   <br/>
+    "!     * The user must provide document content, metadata, or both. If the request is
+    "!    missing both document content and metadata, it is rejected.<br/>
+    "!   <br/>
+    "!     * The user can set the **Content-Type** parameter on the **file** part to
+    "!    indicate the media type of the document. If the **Content-Type** parameter is
+    "!    missing or is one of the generic media types (for example,
+    "!    `application/octet-stream`), then the service attempts to automatically detect
+    "!    the document&apos;s media type.<br/>
+    "!   <br/>
+    "!     * The following field names are reserved and will be filtered out if present
+    "!    after normalization: `id`, `score`, `highlight`, and any field with the prefix
+    "!    of: `_`, `+`, or `-`<br/>
+    "!   <br/>
+    "!     * Fields with empty name values after normalization are filtered out before
+    "!    indexing.<br/>
+    "!   <br/>
+    "!     * Fields containing the following characters after normalization are filtered
+    "!    out before indexing: `#` and `,`<br/>
+    "!   <br/>
+    "!    **Note:** Documents can be added with a specific **document_id** by using the
+    "!    **/v1/environments/&#123;environment_id&#125;/collections/&#123;collection_id&#
+    "!   125;/documents** method.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2862,8 +3093,8 @@ constants:
     "! @parameter I_METADATA |
     "!   The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
     "!    MB are rejected. Example:  ``` &#123;<br/>
-    "!     "Creator": "Johnny Appleseed",<br/>
-    "!     "Subject": "Apples"<br/>
+    "!     &quot;Creator&quot;: &quot;Johnny Appleseed&quot;,<br/>
+    "!     &quot;Subject&quot;: &quot;Apples&quot;<br/>
     "!   &#125; ```.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DOCUMENT_ACCEPTED
@@ -2883,7 +3114,12 @@ constants:
       !E_RESPONSE type T_DOCUMENT_ACCEPTED
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get document details.
+    "! <p class="shorttext synchronized" lang="en">Get document details</p>
+    "!   Fetch status details about a submitted document. **Note:** this operation does
+    "!    not return the document itself. Instead, it returns only the document&apos;s
+    "!    processing status and any notices (warnings or errors) that were generated when
+    "!    the document was ingested. Use the query API to retrieve the actual document
+    "!    content.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2905,7 +3141,12 @@ constants:
       !E_RESPONSE type T_DOCUMENT_STATUS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update a document.
+    "! <p class="shorttext synchronized" lang="en">Update a document</p>
+    "!   Replace an existing document or add a document with a specified **document_id**.
+    "!    Starts ingesting a document with optional metadata.<br/>
+    "!   <br/>
+    "!   **Note:** When uploading a new document with this method it automatically
+    "!    replaces any document stored with the same **document_id** if it exists.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2925,8 +3166,8 @@ constants:
     "! @parameter I_METADATA |
     "!   The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
     "!    MB are rejected. Example:  ``` &#123;<br/>
-    "!     "Creator": "Johnny Appleseed",<br/>
-    "!     "Subject": "Apples"<br/>
+    "!     &quot;Creator&quot;: &quot;Johnny Appleseed&quot;,<br/>
+    "!     &quot;Subject&quot;: &quot;Apples&quot;<br/>
     "!   &#125; ```.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_DOCUMENT_ACCEPTED
@@ -2947,7 +3188,10 @@ constants:
       !E_RESPONSE type T_DOCUMENT_ACCEPTED
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a document.
+    "! <p class="shorttext synchronized" lang="en">Delete a document</p>
+    "!   If the given document ID is invalid, or if the document is not found, then the a
+    "!    success response is returned (HTTP status code `200`) with the status set to
+    "!    &apos;deleted&apos;.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2970,7 +3214,11 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Query a collection.
+    "! <p class="shorttext synchronized" lang="en">Query a collection</p>
+    "!   By using this method, you can construct long queries. For details, see the
+    "!    [Discovery
+    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
+    "!   ery-concepts#query-concepts).
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -2996,16 +3244,21 @@ constants:
       !E_RESPONSE type T_QUERY_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Query system notices.
+    "! <p class="shorttext synchronized" lang="en">Query system notices</p>
+    "!   Queries for notices (errors or warnings) that might have been generated by the
+    "!    system. Notices are generated when ingesting documents and performing relevance
+    "!    training. See the [Discovery
+    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
+    "!   ery-concepts#query-concepts) for more details on the query language.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
     "! @parameter I_COLLECTION_ID |
     "!   The ID of the collection.
     "! @parameter I_FILTER |
-    "!   A cacheable query that excludes documents that don't mention the query content.
-    "!    Filter searches are better for metadata-type searches and for assessing the
-    "!    concepts in the data set.
+    "!   A cacheable query that excludes documents that don&apos;t mention the query
+    "!    content. Filter searches are better for metadata-type searches and for
+    "!    assessing the concepts in the data set.
     "! @parameter I_QUERY |
     "!   A query search returns all documents in your data set with full enrichments and
     "!    full text, but with the most relevant documents listed first.
@@ -3094,7 +3347,11 @@ constants:
       !E_RESPONSE type T_QUERY_NOTICES_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Query multiple collections.
+    "! <p class="shorttext synchronized" lang="en">Query multiple collections</p>
+    "!   By using this method, you can construct long queries that search multiple
+    "!    collection. For details, see the [Discovery
+    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
+    "!   ery-concepts#query-concepts).
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3117,16 +3374,21 @@ constants:
       !E_RESPONSE type T_QUERY_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Query multiple collection system notices.
+    "! <p class="shorttext synchronized" lang="en">Query multiple collection system notices</p>
+    "!   Queries for notices (errors or warnings) that might have been generated by the
+    "!    system. Notices are generated when ingesting documents and performing relevance
+    "!    training. See the [Discovery
+    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
+    "!   ery-concepts#query-concepts) for more details on the query language.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
     "! @parameter I_COLLECTION_IDS |
     "!   A comma-separated list of collection IDs to be queried against.
     "! @parameter I_FILTER |
-    "!   A cacheable query that excludes documents that don't mention the query content.
-    "!    Filter searches are better for metadata-type searches and for assessing the
-    "!    concepts in the data set.
+    "!   A cacheable query that excludes documents that don&apos;t mention the query
+    "!    content. Filter searches are better for metadata-type searches and for
+    "!    assessing the concepts in the data set.
     "! @parameter I_QUERY |
     "!   A query search returns all documents in your data set with full enrichments and
     "!    full text, but with the most relevant documents listed first.
@@ -3201,7 +3463,10 @@ constants:
       !E_RESPONSE type T_QUERY_NOTICES_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get Autocomplete Suggestions.
+    "! <p class="shorttext synchronized" lang="en">Get Autocomplete Suggestions</p>
+    "!   Returns completion query suggestions for the specified prefix.  /n/n
+    "!    **Important:** this method is only valid when using the Cloud Pak version of
+    "!    Discovery.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3233,7 +3498,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List training data.
+    "! <p class="shorttext synchronized" lang="en">List training data</p>
+    "!   Lists the training data for the specified collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3252,14 +3518,16 @@ constants:
       !E_RESPONSE type T_TRAINING_DATA_SET
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Add query to training data.
+    "! <p class="shorttext synchronized" lang="en">Add query to training data</p>
+    "!   Adds a query to the training data for this collection. The query can contain a
+    "!    filter and natural language query.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
     "! @parameter I_COLLECTION_ID |
     "!   The ID of the collection.
     "! @parameter I_BODY |
-    "!   The body of the training data query that is to be added to the collection's
+    "!   The body of the training data query that is to be added to the collection&apos;s
     "!    training data.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TRAINING_QUERY
@@ -3276,7 +3544,8 @@ constants:
       !E_RESPONSE type T_TRAINING_QUERY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete all training data.
+    "! <p class="shorttext synchronized" lang="en">Delete all training data</p>
+    "!   Deletes all training data from a collection.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3290,7 +3559,9 @@ constants:
       !I_COLLECTION_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get details about a query.
+    "! <p class="shorttext synchronized" lang="en">Get details about a query</p>
+    "!   Gets details for a specific training data query, including the query string and
+    "!    all examples.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3312,7 +3583,9 @@ constants:
       !E_RESPONSE type T_TRAINING_QUERY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete a training data query.
+    "! <p class="shorttext synchronized" lang="en">Delete a training data query</p>
+    "!   Removes the training data query and all associated examples from the training
+    "!    data set.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3329,7 +3602,8 @@ constants:
       !I_QUERY_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List examples for a training data query.
+    "! <p class="shorttext synchronized" lang="en">List examples for a training data query</p>
+    "!   List all examples for this training data query.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3351,7 +3625,8 @@ constants:
       !E_RESPONSE type T_TRAINING_EXAMPLE_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Add example to training data query.
+    "! <p class="shorttext synchronized" lang="en">Add example to training data query</p>
+    "!   Adds a example to this training data query.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3377,7 +3652,8 @@ constants:
       !E_RESPONSE type T_TRAINING_EXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete example for training data query.
+    "! <p class="shorttext synchronized" lang="en">Delete example for training data query</p>
+    "!   Deletes the example document with the given ID from the training data query.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3397,7 +3673,8 @@ constants:
       !I_EXAMPLE_ID type STRING
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Change label or cross reference for example.
+    "! <p class="shorttext synchronized" lang="en">Change label or cross reference for example</p>
+    "!   Changes the label or cross reference query for this training data example.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3426,7 +3703,8 @@ constants:
       !E_RESPONSE type T_TRAINING_EXAMPLE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Get details for training data example.
+    "! <p class="shorttext synchronized" lang="en">Get details for training data example</p>
+    "!   Gets the details for this training example.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3452,7 +3730,15 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Delete labeled data.
+    "! <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+    "!   Deletes all data associated with a specified customer ID. The method has no
+    "!    effect if no data is associated with the customer ID. <br/>
+    "!   <br/>
+    "!   You associate a customer ID with data by passing the **X-Watson-Metadata**
+    "!    header with a request that passes data. For more information about personal
+    "!    data and customer IDs, see [Information
+    "!    security](https://cloud.ibm.com/docs/services/discovery?topic=discovery-informa
+    "!   tion-security#information-security).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -3464,7 +3750,10 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! Create event.
+    "! <p class="shorttext synchronized" lang="en">Create event</p>
+    "!   The **Events** API can be used to create log entries that are associated with
+    "!    specific queries. For example, you can record which documents in the results
+    "!    set were &quot;clicked&quot; by a user and when that click occurred.
     "!
     "! @parameter I_QUERY_EVENT |
     "!   An object that defines a query event to be added to the log.
@@ -3481,12 +3770,15 @@ constants:
       !E_RESPONSE type T_CREATE_EVENT_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Search the query and event log.
+    "! <p class="shorttext synchronized" lang="en">Search the query and event log</p>
+    "!   Searches the query and event log to find query sessions that match the specified
+    "!    criteria. Searching the **logs** endpoint uses the standard Discovery query
+    "!    syntax for the parameters that are supported.
     "!
     "! @parameter I_FILTER |
-    "!   A cacheable query that excludes documents that don't mention the query content.
-    "!    Filter searches are better for metadata-type searches and for assessing the
-    "!    concepts in the data set.
+    "!   A cacheable query that excludes documents that don&apos;t mention the query
+    "!    content. Filter searches are better for metadata-type searches and for
+    "!    assessing the concepts in the data set.
     "! @parameter I_QUERY |
     "!   A query search returns all documents in your data set with full enrichments and
     "!    full text, but with the most relevant documents listed first.
@@ -3519,7 +3811,9 @@ constants:
       !E_RESPONSE type T_LOG_QUERY_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Number of queries over time.
+    "! <p class="shorttext synchronized" lang="en">Number of queries over time</p>
+    "!   Total number of queries using the **natural_language_query** parameter over a
+    "!    specific time window.
     "!
     "! @parameter I_START_TIME |
     "!   Metric is computed from data recorded after this timestamp; must be in
@@ -3543,7 +3837,11 @@ constants:
       !E_RESPONSE type T_METRIC_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Number of queries with an event over time.
+    "! <p class="shorttext synchronized" lang="en">Number of queries with an event over time</p>
+    "!   Total number of queries using the **natural_language_query** parameter that have
+    "!    a corresponding &quot;click&quot; event over a specified time window. This
+    "!    metric requires having integrated event tracking in your application using the
+    "!    **Events** API.
     "!
     "! @parameter I_START_TIME |
     "!   Metric is computed from data recorded after this timestamp; must be in
@@ -3567,7 +3865,9 @@ constants:
       !E_RESPONSE type T_METRIC_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Number of queries with no search results over time.
+    "! <p class="shorttext synchronized" lang="en">Number of queries with no search results over time</p>
+    "!   Total number of queries using the **natural_language_query** parameter that have
+    "!    no results returned over a specified time window.
     "!
     "! @parameter I_START_TIME |
     "!   Metric is computed from data recorded after this timestamp; must be in
@@ -3591,7 +3891,11 @@ constants:
       !E_RESPONSE type T_METRIC_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Percentage of queries with an associated event.
+    "! <p class="shorttext synchronized" lang="en">Percentage of queries with an associated event</p>
+    "!   The percentage of queries using the **natural_language_query** parameter that
+    "!    have a corresponding &quot;click&quot; event over a specified time window.
+    "!    This metric requires having integrated event tracking in your application using
+    "!    the **Events** API.
     "!
     "! @parameter I_START_TIME |
     "!   Metric is computed from data recorded after this timestamp; must be in
@@ -3615,7 +3919,11 @@ constants:
       !E_RESPONSE type T_METRIC_RESPONSE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Most frequent query tokens with an event.
+    "! <p class="shorttext synchronized" lang="en">Most frequent query tokens with an event</p>
+    "!   The most frequent query tokens parsed from the **natural_language_query**
+    "!    parameter and their corresponding &quot;click&quot; event rate within the
+    "!    recording period (queries and events are stored for 30 days). A query token is
+    "!    an individual word or unigram within the query string.
     "!
     "! @parameter I_COUNT |
     "!   Number of results to return. The maximum for the **count** and **offset** values
@@ -3633,7 +3941,12 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List credentials.
+    "! <p class="shorttext synchronized" lang="en">List credentials</p>
+    "!   List all the source credentials that have been created for this service
+    "!    instance.<br/>
+    "!   <br/>
+    "!    **Note:**  All credentials are sent over an encrypted connection and encrypted
+    "!    at rest.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3649,7 +3962,13 @@ constants:
       !E_RESPONSE type T_CREDENTIALS_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create credentials.
+    "! <p class="shorttext synchronized" lang="en">Create credentials</p>
+    "!   Creates a set of credentials to connect to a remote source. Created credentials
+    "!    are used in a configuration to associate a collection with the remote
+    "!    source.<br/>
+    "!   <br/>
+    "!   **Note:** All credentials are sent over an encrypted connection and encrypted at
+    "!    rest.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3669,7 +3988,11 @@ constants:
       !E_RESPONSE type T_CREDENTIALS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! View Credentials.
+    "! <p class="shorttext synchronized" lang="en">View Credentials</p>
+    "!   Returns details about the specified credentials.<br/>
+    "!   <br/>
+    "!    **Note:** Secure credential information such as a password or SSH key is never
+    "!    returned and must be obtained from the source system.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3688,7 +4011,11 @@ constants:
       !E_RESPONSE type T_CREDENTIALS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Update credentials.
+    "! <p class="shorttext synchronized" lang="en">Update credentials</p>
+    "!   Updates an existing set of source credentials.<br/>
+    "!   <br/>
+    "!   **Note:** All credentials are sent over an encrypted connection and encrypted at
+    "!    rest.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3711,7 +4038,8 @@ constants:
       !E_RESPONSE type T_CREDENTIALS
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete credentials.
+    "! <p class="shorttext synchronized" lang="en">Delete credentials</p>
+    "!   Deletes a set of stored credentials from your Discovery instance.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3731,7 +4059,8 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
-    "! List Gateways.
+    "! <p class="shorttext synchronized" lang="en">List Gateways</p>
+    "!   List the currently configured gateways.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3747,7 +4076,8 @@ constants:
       !E_RESPONSE type T_GATEWAY_LIST
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Create Gateway.
+    "! <p class="shorttext synchronized" lang="en">Create Gateway</p>
+    "!   Create a gateway configuration to use with a remotely installed gateway.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3767,7 +4097,8 @@ constants:
       !E_RESPONSE type T_GATEWAY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! List Gateway Details.
+    "! <p class="shorttext synchronized" lang="en">List Gateway Details</p>
+    "!   List information about the specified gateway.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3786,7 +4117,8 @@ constants:
       !E_RESPONSE type T_GATEWAY
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-    "! Delete Gateway.
+    "! <p class="shorttext synchronized" lang="en">Delete Gateway</p>
+    "!   Delete the specified gateway configuration.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3883,7 +4215,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200210092816'.
+    e_sdk_version_date = '20200310173426'.
 
   endmethod.
 
