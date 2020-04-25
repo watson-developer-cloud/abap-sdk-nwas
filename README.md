@@ -457,7 +457,7 @@ This library is licensed under the [Apache 2.0 license][license].
 
 In addition, we would like to thank the [abapGit][abapgit] contributors and the SAP Mentors of this team.
 
-[wdc]: http://www.ibm.com/watson/developercloud/
+[wdc]: https://www.ibm.com/watson/developer
 [ibm_cloud]: https://cloud.ibm.com/
 [ibm_cloud_onboarding]: https://cloud.ibm.com/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-ABAP
 [license]: http://www.apache.org/licenses/LICENSE-2.0
