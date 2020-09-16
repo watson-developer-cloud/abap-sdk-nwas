@@ -4742,15 +4742,15 @@ method CREATE_LANGUAGE_MODEL.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5420,15 +5420,15 @@ method ADD_WORDS.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5499,15 +5499,15 @@ method ADD_WORD.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -5736,15 +5736,15 @@ method ADD_GRAMMAR.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5904,15 +5904,15 @@ method CREATE_ACOUSTIC_MODEL.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
