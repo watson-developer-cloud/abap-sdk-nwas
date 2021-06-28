@@ -85,11 +85,6 @@ public section.
     end of T_TOKEN_DICT_STATUS_RESPONSE.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    An object that indicates the Categories enrichment will be</p>
-    "!     applied to the specified field.
-      T_NLU_ENRICHMENT_CATEGORIES type MAP.
-  types:
-    "! <p class="shorttext synchronized" lang="en">
     "!    An object specifying the relations enrichment and related</p>
     "!     parameters.
     begin of T_NLU_ENRICHMENT_RELATIONS,
@@ -200,7 +195,7 @@ public section.
       EMOTION type T_NLU_ENRICHMENT_EMOTION,
       "!   An object that indicates the Categories enrichment will be applied to the
       "!    specified field.
-      CATEGORIES type T_NLU_ENRICHMENT_CATEGORIES,
+      CATEGORIES type MAP,
       "!   An object specifiying the semantic roles enrichment and related parameters.
       SEMANTIC_ROLES type T_NL_ENRICHMENT_SEMANTIC_ROLES,
       "!   An object specifying the relations enrichment and related parameters.
@@ -292,6 +287,11 @@ public section.
     end of T_SOURCE_OPTIONS_WEB_CRAWL.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    An object that indicates the Categories enrichment will be</p>
+    "!     applied to the specified field.
+      T_NLU_ENRICHMENT_CATEGORIES type MAP.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Object containing details of the stored credentials. </p><br/>
     "!    <br/>
     "!    Obtain credentials for your source from the administrator of the source.
@@ -379,15 +379,15 @@ public section.
       "!    required, with a **credential_type** of `aws4_hmac`. This value is never
       "!    returned and is only used when creating or modifying **credentials**. For more
       "!    infomation, see the [cloud object store
-      "!    documentation](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=c
-      "!   loud-object-storage-using-hmac-credentials#using-hmac-credentials).
+      "!    documentation](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-obje
+      "!   ct-storage-using-hmac-credentials#using-hmac-credentials).
       ACCESS_KEY_ID type STRING,
       "!   The secret access key associated with the cloud object store. Only valid, and
       "!    required, with a **credential_type** of `aws4_hmac`. This value is never
       "!    returned and is only used when creating or modifying **credentials**. For more
       "!    infomation, see the [cloud object store
-      "!    documentation](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=c
-      "!   loud-object-storage-using-hmac-credentials#using-hmac-credentials).
+      "!    documentation](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-obje
+      "!   ct-storage-using-hmac-credentials#using-hmac-credentials).
       SECRET_ACCESS_KEY type STRING,
     end of T_CREDENTIAL_DETAILS.
   types:
@@ -449,7 +449,7 @@ public section.
     "!     environment.
     begin of T_ENVIRONMENT_DOCUMENTS,
       "!   Number of documents indexed for the environment.
-      INDEXED type INTEGER,
+      AVAILABLE type INTEGER,
       "!   Total number of documents allowed in the environment&apos;s capacity.
       MAXIMUM_ALLOWED type INTEGER,
     end of T_ENVIRONMENT_DOCUMENTS.
@@ -846,8 +846,8 @@ public section.
       "!    Classification options. Additionally, when using the `elements` enrichment the
       "!    configuration specified and files ingested must meet all the criteria specified
       "!    in [the
-      "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-el
-      "!   ement-classification#element-classification).
+      "!    documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-element-cla
+      "!   ssification#element-classification).
       ENRICHMENT type STRING,
       "!   If true, then most errors generated during the enrichment process will be
       "!    treated as warnings and will not cause the document to fail processing.
@@ -2222,7 +2222,6 @@ constants:
      MAXIMUM_ALLOWED_BYTES type string value 'maximum_allowed_bytes',
      AVAILABLE type string value 'available',
      MAXIMUM_ALLOWED type string value 'maximum_allowed',
-     INDEXED type string value 'indexed',
      ENVIRONMENTS type string value 'environments',
      CONFIGURATION_ID type string value 'configuration_id',
      LANGUAGE type string value 'language',
@@ -2248,26 +2247,20 @@ constants:
      IMAGE_TEXT_RECOGNITION type string value 'image_text_recognition',
      HEADING type string value 'heading',
      FONTS type string value 'fonts',
-     FONTSETTING type string value 'fontSetting',
+     FONT_SETTING type string value 'font_setting',
      STYLES type string value 'styles',
-     WORDSTYLE type string value 'wordStyle',
+     WORD_STYLE type string value 'word_style',
      LEVEL type string value 'level',
      NAMES type string value 'names',
      EXCLUDE_TAGS_COMPLETELY type string value 'exclude_tags_completely',
-     EXCLUDETAGSCOMPLETELY type string value 'excludeTagsCompletely',
      EXCLUDE_TAGS_KEEP_CONTENT type string value 'exclude_tags_keep_content',
-     EXCLUDETAGSKEEPCONTENT type string value 'excludeTagsKeepContent',
      KEEP_CONTENT type string value 'keep_content',
      EXCLUDE_CONTENT type string value 'exclude_content',
      KEEP_TAG_ATTRIBUTES type string value 'keep_tag_attributes',
-     KEEPTAGATTRIBUTES type string value 'keepTagAttributes',
      EXCLUDE_TAG_ATTRIBUTES type string value 'exclude_tag_attributes',
-     EXCLUDETAGATTRIBUTES type string value 'excludeTagAttributes',
      ENABLED type string value 'enabled',
      SELECTOR_TAGS type string value 'selector_tags',
-     SELECTORTAGS type string value 'selectorTags',
      ANNOTATED_FIELDS type string value 'annotated_fields',
-     ANNOTATEDFIELDS type string value 'annotatedFields',
      XPATHS type string value 'xpaths',
      MIN_SIZE type string value 'min_size',
      MAX_SIZE type string value 'max_size',
@@ -2352,9 +2345,7 @@ constants:
      TARGET type string value 'target',
      EXPANSIONS type string value 'expansions',
      INPUT_TERMS type string value 'input_terms',
-     INPUTTERMS type string value 'inputTerms',
      EXPANDED_TERMS type string value 'expanded_terms',
-     EXPANDEDTERMS type string value 'expandedTerms',
      DATA type string value 'data',
      CLIENT_TIMESTAMP type string value 'client_timestamp',
      DISPLAY_RANK type string value 'display_rank',
@@ -2397,7 +2388,6 @@ constants:
      FOLDERS type string value 'folders',
      OBJECTS type string value 'objects',
      SITE_COLLECTIONS type string value 'site_collections',
-     SITECOLLECTIONS type string value 'siteCollections',
      URLS type string value 'urls',
      BUCKETS type string value 'buckets',
      CRAWL_ALL_BUCKETS type string value 'crawl_all_buckets',
@@ -2422,7 +2412,6 @@ constants:
      SIMILAR_FIELDS type string value 'similar.fields',
      BIAS type string value 'bias',
      TOKENIZATION_RULES type string value 'tokenization_rules',
-     TOKENIZATIONRULES type string value 'tokenizationRules',
      TEXT type string value 'text',
      TOKENS type string value 'tokens',
      READINGS type string value 'readings',
@@ -2445,8 +2434,8 @@ constants:
      COMPLETIONS type string value 'completions',
      COLLECTION_IDS type string value 'collection_ids',
      SPELLING_SUGGESTIONS type string value 'spelling_suggestions',
-     SOURCE_CRAWL type string value 'source_crawl',
      DEFINED type string value 'defined',
+     SOURCE_CRAWL type string value 'source_crawl',
      STOPWORD_FILE type string value 'stopword_file',
   end of C_ABAPNAME_DICTIONARY .
 
@@ -3217,8 +3206,8 @@ constants:
     "! <p class="shorttext synchronized" lang="en">Query a collection</p>
     "!   By using this method, you can construct long queries. For details, see the
     "!    [Discovery
-    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
-    "!   ery-concepts#query-concepts).
+    "!    documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-conce
+    "!   pts#query-concepts).
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3248,8 +3237,8 @@ constants:
     "!   Queries for notices (errors or warnings) that might have been generated by the
     "!    system. Notices are generated when ingesting documents and performing relevance
     "!    training. See the [Discovery
-    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
-    "!   ery-concepts#query-concepts) for more details on the query language.
+    "!    documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-conce
+    "!   pts#query-concepts) for more details on the query language.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3350,8 +3339,8 @@ constants:
     "! <p class="shorttext synchronized" lang="en">Query multiple collections</p>
     "!   By using this method, you can construct long queries that search multiple
     "!    collection. For details, see the [Discovery
-    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
-    "!   ery-concepts#query-concepts).
+    "!    documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-conce
+    "!   pts#query-concepts).
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3378,8 +3367,8 @@ constants:
     "!   Queries for notices (errors or warnings) that might have been generated by the
     "!    system. Notices are generated when ingesting documents and performing relevance
     "!    training. See the [Discovery
-    "!    documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-qu
-    "!   ery-concepts#query-concepts) for more details on the query language.
+    "!    documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-conce
+    "!   pts#query-concepts) for more details on the query language.
     "!
     "! @parameter I_ENVIRONMENT_ID |
     "!   The ID of the environment.
@@ -3737,8 +3726,8 @@ constants:
     "!   You associate a customer ID with data by passing the **X-Watson-Metadata**
     "!    header with a request that passes data. For more information about personal
     "!    data and customer IDs, see [Information
-    "!    security](https://cloud.ibm.com/docs/services/discovery?topic=discovery-informa
-    "!   tion-security#information-security).
+    "!    security](https://cloud.ibm.com/docs/discovery?topic=discovery-information-secu
+    "!   rity#information-security).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -4143,10 +4132,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_DISCOVERY_V1 IMPLEMENTATION.
@@ -4188,22 +4173,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'ICP4D'.
-    e_request_prop-auth_name       = 'ICP4D'.
-    e_request_prop-auth_type       = 'apiKey'.
-    e_request_prop-auth_headername = 'Authorization'.
-    e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/discovery/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.discovery.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -4215,7 +4192,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173426'.
+    e_sdk_version_date = '20210312144431'.
 
   endmethod.
 
@@ -4279,15 +4256,15 @@ method CREATE_ENVIRONMENT.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -4472,15 +4449,15 @@ method UPDATE_ENVIRONMENT.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -4673,15 +4650,15 @@ method CREATE_CONFIGURATION.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -4872,15 +4849,15 @@ method UPDATE_CONFIGURATION.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -5009,15 +4986,15 @@ method CREATE_COLLECTION.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5208,15 +5185,15 @@ method UPDATE_COLLECTION.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -5447,15 +5424,15 @@ method CREATE_EXPANSIONS.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5626,15 +5603,15 @@ method CREATE_TOKENIZATION_DICTIONARY.
     endif.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5917,8 +5894,8 @@ method ADD_DOCUMENT.
 
     if not i_METADATA is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_METADATA.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -6065,8 +6042,8 @@ method UPDATE_DOCUMENT.
 
     if not i_METADATA is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_METADATA.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -6239,15 +6216,15 @@ method QUERY.
     endif.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -6617,15 +6594,15 @@ method FEDERATED_QUERY.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -7078,15 +7055,15 @@ method ADD_TRAINING_DATA.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -7352,15 +7329,15 @@ method CREATE_TRAINING_EXAMPLE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -7487,15 +7464,15 @@ method UPDATE_TRAINING_EXAMPLE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -7673,15 +7650,15 @@ method CREATE_EVENT.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -8301,15 +8278,15 @@ method CREATE_CREDENTIALS.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -8439,15 +8416,15 @@ method UPDATE_CREDENTIALS.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -8626,15 +8603,15 @@ method CREATE_GATEWAY.
     endif.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -8752,23 +8729,5 @@ method DELETE_GATEWAY.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_DISCOVERY_V1->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

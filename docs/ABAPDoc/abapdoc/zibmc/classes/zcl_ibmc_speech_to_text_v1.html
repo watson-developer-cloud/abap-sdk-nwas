@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_SPEECH_TO_TEXT_V1</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_SPEECH_TO_TEXT_V1</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Speech to Text</p>
- The IBM&reg; Speech to Text service provides APIs that use IBM&apos;s
+ The IBM Watson&trade; Speech to Text service provides APIs that use IBM&apos;s
   speech-recognition capabilities to produce transcripts of spoken audio. The
   service can transcribe speech from various languages and audio formats. In
   addition to basic transcription, the service can produce detailed information
@@ -20,9 +20,10 @@
   service also supports grammars. A grammar is a formal language specification
   that lets you restrict the phrases that the service can recognize. <br/>
  <br/>
- Language model customization is generally available for production use with most
-  supported languages. Acoustic model customization is beta functionality that is
-  available for all supported languages.  <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_acoustic_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+ Language model customization and acoustic model customization are generally
+  available for production use with all language models that are generally
+  available. Grammars are beta functionality for all language models that support
+  language model customization.  <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_acoustic_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Information about an existing custom acoustic model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_acoustic_models</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Information about existing custom acoustic models.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_audio_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Information about an audio resource from a custom acoustic</p>
@@ -112,14 +113,14 @@
     that has the same name as an existing audio resource, set the `allow_overwrite`
     parameter to `true`; otherwise, the request fails. <br/>
    <br/>
-   The method is asynchronous. It can take several seconds to complete depending on
-    the duration of the audio and, in the case of an archive file, the total number
-    of audio files being processed. The service returns a 201 response code if the
-    audio is valid. It then asynchronously analyzes the contents of the audio file
-    or files and automatically extracts information about the audio such as its
-    length, sampling rate, and encoding. You cannot submit requests to train or
-    upgrade the model until the service&apos;s analysis of all audio resources for
-    current requests completes. <br/>
+   The method is asynchronous. It can take several seconds or minutes to complete
+    depending on the duration of the audio and, in the case of an archive file, the
+    total number of audio files being processed. The service returns a 201 response
+    code if the audio is valid. It then asynchronously analyzes the contents of the
+    audio file or files and automatically extracts information about the audio such
+    as its length, sampling rate, and encoding. You cannot submit requests to train
+    or upgrade the model until the service&apos;s analysis of all audio resources
+    for current requests completes. <br/>
    <br/>
    To determine the status of the service&apos;s analysis of the audio, use the
     **Get an audio resource** method to poll the status of the audio. The method
@@ -264,19 +265,21 @@
    <br/>
    The call returns an HTTP 201 response code if the corpus is valid. The service
     then asynchronously processes the contents of the corpus and automatically
-    extracts new words that it finds. This can take on the order of a minute or two
-    to complete depending on the total number of words and the number of new words
-    in the corpus, as well as the current load on the service. You cannot submit
-    requests to add additional resources to the custom model or to train the model
-    until the service&apos;s analysis of the corpus for the current request
+    extracts new words that it finds. This operation can take on the order of
+    minutes to complete depending on the total number of words and the number of
+    new words in the corpus, as well as the current load on the service. You cannot
+    submit requests to add additional resources to the custom model or to train the
+    model until the service&apos;s analysis of the corpus for the current request
     completes. Use the **List a corpus** method to check the status of the
     analysis. <br/>
    <br/>
    The service auto-populates the model&apos;s words resource with words from the
-    corpus that are not found in its base vocabulary. These are referred to as
-    out-of-vocabulary (OOV) words. You can use the **List custom words** method to
-    examine the words resource. You can use other words method to eliminate typos
-    and modify how words are pronounced as needed. <br/>
+    corpus that are not found in its base vocabulary. These words are referred to
+    as out-of-vocabulary (OOV) words. After adding a corpus, you must validate the
+    words resource to ensure that each OOV word&apos;s definition is complete and
+    valid. You can use the **List custom words** method to examine the words
+    resource. You can use other words method to eliminate typos and modify how
+    words are pronounced as needed. <br/>
    <br/>
    To add a corpus file that has the same name as an existing corpus, set the
     `allow_overwrite` parameter to `true`; otherwise, the request fails.
@@ -294,12 +297,15 @@
     directly. <br/>
    <br/>
    **See also:**<br/>
+   * [Add a corpus to the custom language
+    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+   reate#addCorpus)<br/>
    * [Working with
     corpora](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpora
    Words#workingCorpora)<br/>
-   * [Add a corpus to the custom language
-    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-   reate#addCorpus)
+   * [Validating a words
+    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+   aWords#validateModel)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom language model that is to be used for
@@ -350,12 +356,12 @@
    <br/>
    The call returns an HTTP 201 response code if the grammar is valid. The service
     then asynchronously processes the contents of the grammar and automatically
-    extracts new words that it finds. This can take a few seconds to complete
-    depending on the size and complexity of the grammar, as well as the current
-    load on the service. You cannot submit requests to add additional resources to
-    the custom model or to train the model until the service&apos;s analysis of the
-    grammar for the current request completes. Use the **Get a grammar** method to
-    check the status of the analysis. <br/>
+    extracts new words that it finds. This operation can take a few seconds or
+    minutes to complete depending on the size and complexity of the grammar, as
+    well as the current load on the service. You cannot submit requests to add
+    additional resources to the custom model or to train the model until the
+    service&apos;s analysis of the grammar for the current request completes. Use
+    the **Get a grammar** method to check the status of the analysis. <br/>
    <br/>
    The service populates the model&apos;s words resource with any word that is
     recognized by the grammar that is not found in the model&apos;s base
@@ -449,7 +455,10 @@
     Use the parameter for words that are difficult to pronounce, foreign words,
     acronyms, and so on. For example, you might specify that the word `IEEE` can
     sound like `i triple e`. You can specify a maximum of five sounds-like
-    pronunciations for a word.<br/>
+    pronunciations for a word. If you omit the `sounds_like` field, the service
+    attempts to set the field to its pronunciation of the word. It cannot generate
+    a pronunciation for all words, so you must review the word&apos;s definition to
+    ensure that it is complete and valid.<br/>
    * The `display_as` field provides a different way of spelling the word in a
     transcript. Use the parameter when you want the word to appear different from
     its usual representation or from its spelling in training data. For example,
@@ -463,12 +472,15 @@
     add. <br/>
    <br/>
    **See also:**<br/>
+   * [Add words to the custom language
+    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+   reate#addWords)<br/>
    * [Working with custom
     words](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWo
    rds#workingWords)<br/>
-   * [Add words to the custom language
-    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-   reate#addWords)
+   * [Validating a words
+    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+   aWords#validateModel)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom language model that is to be used for
@@ -509,7 +521,10 @@
     Use the parameter for words that are difficult to pronounce, foreign words,
     acronyms, and so on. For example, you might specify that the word `IEEE` can
     sound like `i triple e`. You can specify a maximum of five sounds-like
-    pronunciations for a word.<br/>
+    pronunciations for a word. If you omit the `sounds_like` field, the service
+    attempts to set the field to its pronunciation of the word. It cannot generate
+    a pronunciation for all words, so you must review the word&apos;s definition to
+    ensure that it is complete and valid.<br/>
    * The `display_as` field provides a different way of spelling the word in a
     transcript. Use the parameter when you want the word to appear different from
     its usual representation or from its spelling in training data. For example,
@@ -541,12 +556,15 @@
     as needed. <br/>
    <br/>
    **See also:**<br/>
+   * [Add words to the custom language
+    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+   reate#addWords)<br/>
    * [Working with custom
     words](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWo
    rds#workingWords)<br/>
-   * [Add words to the custom language
-    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-   reate#addWords)
+   * [Validating a words
+    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+   aWords#validateModel)
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customization_id</span></td><td><span class="abapDocComment">
    The customization ID (GUID) of the custom language model that is to be used for
@@ -619,7 +637,7 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_ACOUSTIC_MODEL
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_job</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_audio</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;application&#x2f;octet-stream&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_model</span></td><td>type STRING default &#x27;en-US_BroadbandModel&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_callback_url</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_events</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_user_token</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_results_ttl</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_language_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_acoustic_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_base_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_weight</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_inactivity_timeout</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_max_alternatives</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_alternatives_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_confidence</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_timestamps</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_profanity_filter</span></td><td>type BOOLEAN default C_BOOLEAN_TRUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_smart_formatting</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speaker_labels</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_grammar_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_redaction</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_processing_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_processing_metrics_interval</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_audio_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_of_phrase_silence_time</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_splt_trnscrpt_at_phrase_end</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_RECOGNITION_JOB</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a job</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_job</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_audio</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;application&#x2f;octet-stream&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_model</span></td><td>type STRING default &#x27;en-US_BroadbandModel&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_callback_url</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_events</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_user_token</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_results_ttl</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_language_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_acoustic_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_base_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_weight</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_inactivity_timeout</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_max_alternatives</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_alternatives_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_confidence</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_timestamps</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_profanity_filter</span></td><td>type BOOLEAN default C_BOOLEAN_TRUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_smart_formatting</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speaker_labels</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_grammar_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_redaction</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_processing_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_processing_metrics_interval</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_audio_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_of_phrase_silence_time</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_splt_trnscrpt_at_phrase_end</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speech_detector_sensitivity</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_background_audio_suppression</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_RECOGNITION_JOB</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a job</p>
    Creates a job for a new asynchronous recognition request. The job is owned by
     the instance of the service whose credentials are used to create it. How you
     learn the status and results of a job depends on the parameters you include
@@ -732,13 +750,14 @@
    The format (MIME type) of the audio. For more information about specifying an
     audio format, see **Audio formats (content types)** in the method description.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_model</span></td><td><span class="abapDocComment">
-   The identifier of the model that is to be used for the recognition request. See
-    [Languages and
+   The identifier of the model that is to be used for the recognition request.
+    (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use
+    `ar-MS_BroadbandModel` instead.) See [Languages and
     models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
    odels).
  </span></td></tr><tr ><td><span class="identifier parameterName">i_callback_url</span></td><td><span class="abapDocComment">
    A URL to which callback notifications are to be sent. The URL must already be
-    successfully white-listed by using the **Register a callback** method. You can
+    successfully allowlisted by using the **Register a callback** method. You can
     include the same callback URL with any number of job creation requests. Omit
     the parameter to poll the service for job completion and results. <br/>
    <br/>
@@ -833,9 +852,15 @@
    An array of keyword strings to spot in the audio. Each keyword string can
     include one or more string tokens. Keywords are spotted only in the final
     results, not in interim hypotheses. If you specify any keywords, you must also
-    specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
-    parameter or specify an empty array if you do not need to spot keywords. See
-    [Keyword
+    specify a keywords threshold. Omit the parameter or specify an empty array if
+    you do not need to spot keywords. <br/>
+   <br/>
+   You can spot a maximum of 1000 keywords with a single request. A single keyword
+    can have a maximum length of 1024 characters, though the maximum effective
+    length for double-byte languages might be shorter. Keywords are
+    case-insensitive. <br/>
+   <br/>
+   See [Keyword
     spotting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output
    #keyword_spotting).
  </span></td></tr><tr ><td><span class="identifier parameterName">i_keywords_threshold</span></td><td><span class="abapDocComment">
@@ -898,11 +923,9 @@
     parameter to be `true`, regardless of whether you specify `false` for the
     parameter. <br/>
    <br/>
-   **Note:** Applies to US English, Japanese, and Spanish (both broadband and
-    narrowband models) and UK English (narrowband model) transcription only. To
-    determine whether a language model supports speaker labels, you can also use
-    the **Get a model** method and check that the attribute `speaker_labels` is set
-    to `true`. <br/>
+   **Note:** Applies to US English, Australian English, German, Japanese, Korean,
+    and Spanish (both broadband and narrowband models) and UK English (narrowband
+    model) transcription only. <br/>
    <br/>
    See [Speaker
     labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#s
@@ -1003,6 +1026,36 @@
    See [Split transcript at phrase
     end](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#spli
    t_transcript).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_speech_detector_sensitivity</span></td><td><span class="abapDocComment">
+   The sensitivity of speech activity detection that the service is to perform. Use
+    the parameter to suppress word insertions from music, coughing, and other
+    non-speech events. The service biases the audio it passes for speech
+    recognition by evaluating the input audio against prior models of speech and
+    non-speech activity. <br/>
+   <br/>
+   Specify a value between 0.0 and 1.0:<br/>
+   * 0.0 suppresses all audio (no speech is transcribed).<br/>
+   * 0.5 (the default) provides a reasonable compromise for the level of
+    sensitivity.<br/>
+   * 1.0 suppresses no audio (speech detection sensitivity is disabled). <br/>
+   <br/>
+   The values increase on a monotonic curve. See [Speech Activity
+    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+   #detection).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_background_audio_suppression</span></td><td><span class="abapDocComment">
+   The level to which the service is to suppress background audio based on its
+    volume to prevent it from being transcribed as speech. Use the parameter to
+    suppress side conversations or background noise. <br/>
+   <br/>
+   Specify a value in the range of 0.0 to 1.0:<br/>
+   * 0.0 (the default) provides no suppression (background audio suppression is
+    disabled).<br/>
+   * 0.5 provides a reasonable level of audio suppression for general usage.<br/>
+   * 1.0 suppresses all audio (no audio is transcribed). <br/>
+   <br/>
+   The values increase on a monotonic curve. See [Speech Activity
+    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+   #detection).
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_RECOGNITION_JOB
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
@@ -1144,10 +1197,15 @@
     information was added. The method has no effect if no data is associated with
     the customer ID. You must issue the request with credentials for the same
     instance of the service that was used to associate the customer ID with the
-    data. <br/>
+    data. You associate a customer ID with data by passing the `X-Watson-Metadata`
+    header with a request that passes the data. <br/>
    <br/>
-   You associate a customer ID with data by passing the `X-Watson-Metadata` header
-    with a request that passes the data. <br/>
+   **Note:** If you delete an instance of the service from the service console, all
+    data associated with that service instance is automatically deleted. This
+    includes all custom language models, corpora, grammars, and words; all custom
+    acoustic models and audio resources; all registered endpoints for the
+    asynchronous HTTP interface; and all data related to speech recognition
+    requests. <br/>
    <br/>
    **See also:** [Information
     security](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-inform
@@ -1298,7 +1356,8 @@
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
    The identifier of the model in the form of its name from the output of the **Get
-    a model** method.
+    a model** method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated;
+    use `ar-MS_BroadbandModel` instead.).
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_SPEECH_MODEL
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
@@ -1337,9 +1396,14 @@
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_language</span></td><td><span class="abapDocComment">
    The identifier of the language for which custom language or custom acoustic
-    models are to be returned (for example, `en-US`). Omit the parameter to see all
-    custom language or custom acoustic models that are owned by the requesting
-    credentials.
+    models are to be returned. Omit the parameter to see all custom language or
+    custom acoustic models that are owned by the requesting credentials. (**Note:**
+    The identifier `ar-AR` is deprecated; use `ar-MS` instead.) <br/>
+   <br/>
+   To determine the languages for which customization is available, see [Language
+    support for
+    customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-c
+   ustomization#languageSupport).
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_ACOUSTIC_MODELS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
@@ -1410,16 +1474,22 @@
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_language</span></td><td><span class="abapDocComment">
    The identifier of the language for which custom language or custom acoustic
-    models are to be returned (for example, `en-US`). Omit the parameter to see all
-    custom language or custom acoustic models that are owned by the requesting
-    credentials.
+    models are to be returned. Omit the parameter to see all custom language or
+    custom acoustic models that are owned by the requesting credentials. (**Note:**
+    The identifier `ar-AR` is deprecated; use `ar-MS` instead.) <br/>
+   <br/>
+   To determine the languages for which customization is available, see [Language
+    support for
+    customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-c
+   ustomization#languageSupport).
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_LANGUAGE_MODELS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SPEECH_MODELS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List models</p>
    Lists all language models that are available for use with the service. The
     information includes the name of the model and its minimum sampling rate in
-    Hertz, among other things. <br/>
+    Hertz, among other things. The ordering of the list of models can change from
+    call to call; do not rely on an alphabetized or static list of models. <br/>
    <br/>
    **See also:** [Languages and
     models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
@@ -1466,7 +1536,7 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_WORDS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">recognize</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_audio</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;application&#x2f;octet-stream&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_model</span></td><td>type STRING default &#x27;en-US_BroadbandModel&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_language_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_acoustic_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_base_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_weight</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_inactivity_timeout</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_max_alternatives</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_alternatives_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_confidence</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_timestamps</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_profanity_filter</span></td><td>type BOOLEAN default C_BOOLEAN_TRUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_smart_formatting</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speaker_labels</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_grammar_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_redaction</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_audio_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_of_phrase_silence_time</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_splt_trnscrpt_at_phrase_end</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SPEECH_RECOGNITION_RESULTS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Recognize audio</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">recognize</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_audio</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_content_type</span></td><td>type STRING default &#x27;application&#x2f;octet-stream&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_model</span></td><td>type STRING default &#x27;en-US_BroadbandModel&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_language_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_acoustic_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_base_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_weight</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_inactivity_timeout</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords</span></td><td>type TT_STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_keywords_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_max_alternatives</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_alternatives_threshold</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_word_confidence</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_timestamps</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_profanity_filter</span></td><td>type BOOLEAN default C_BOOLEAN_TRUE</td></tr><tr><td></td><td><span class="identifier parameterName">i_smart_formatting</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speaker_labels</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_customization_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_grammar_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_redaction</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_audio_metrics</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_of_phrase_silence_time</span></td><td>type DOUBLE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_splt_trnscrpt_at_phrase_end</span></td><td>type BOOLEAN default C_BOOLEAN_FALSE</td></tr><tr><td></td><td><span class="identifier parameterName">i_speech_detector_sensitivity</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_background_audio_suppression</span></td><td>type FLOAT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SPEECH_RECOGNITION_RESULTS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Recognize audio</p>
    Sends audio and returns transcription results for a recognition request. You can
     pass a maximum of 100 MB and a minimum of 100 bytes of audio with a request.
     The service automatically detects the endianness of the incoming audio and, for
@@ -1570,8 +1640,9 @@
    The format (MIME type) of the audio. For more information about specifying an
     audio format, see **Audio formats (content types)** in the method description.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_model</span></td><td><span class="abapDocComment">
-   The identifier of the model that is to be used for the recognition request. See
-    [Languages and
+   The identifier of the model that is to be used for the recognition request.
+    (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use
+    `ar-MS_BroadbandModel` instead.) See [Languages and
     models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
    odels).
  </span></td></tr><tr ><td><span class="identifier parameterName">i_language_customization_id</span></td><td><span class="abapDocComment">
@@ -1633,9 +1704,15 @@
    An array of keyword strings to spot in the audio. Each keyword string can
     include one or more string tokens. Keywords are spotted only in the final
     results, not in interim hypotheses. If you specify any keywords, you must also
-    specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
-    parameter or specify an empty array if you do not need to spot keywords. See
-    [Keyword
+    specify a keywords threshold. Omit the parameter or specify an empty array if
+    you do not need to spot keywords. <br/>
+   <br/>
+   You can spot a maximum of 1000 keywords with a single request. A single keyword
+    can have a maximum length of 1024 characters, though the maximum effective
+    length for double-byte languages might be shorter. Keywords are
+    case-insensitive. <br/>
+   <br/>
+   See [Keyword
     spotting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output
    #keyword_spotting).
  </span></td></tr><tr ><td><span class="identifier parameterName">i_keywords_threshold</span></td><td><span class="abapDocComment">
@@ -1698,11 +1775,9 @@
     parameter to be `true`, regardless of whether you specify `false` for the
     parameter. <br/>
    <br/>
-   **Note:** Applies to US English, Japanese, and Spanish (both broadband and
-    narrowband models) and UK English (narrowband model) transcription only. To
-    determine whether a language model supports speaker labels, you can also use
-    the **Get a model** method and check that the attribute `speaker_labels` is set
-    to `true`. <br/>
+   **Note:** Applies to US English, Australian English, German, Japanese, Korean,
+    and Spanish (both broadband and narrowband models) and UK English (narrowband
+    model) transcription only. <br/>
    <br/>
    See [Speaker
     labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#s
@@ -1777,12 +1852,42 @@
    See [Split transcript at phrase
     end](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#spli
    t_transcript).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_speech_detector_sensitivity</span></td><td><span class="abapDocComment">
+   The sensitivity of speech activity detection that the service is to perform. Use
+    the parameter to suppress word insertions from music, coughing, and other
+    non-speech events. The service biases the audio it passes for speech
+    recognition by evaluating the input audio against prior models of speech and
+    non-speech activity. <br/>
+   <br/>
+   Specify a value between 0.0 and 1.0:<br/>
+   * 0.0 suppresses all audio (no speech is transcribed).<br/>
+   * 0.5 (the default) provides a reasonable compromise for the level of
+    sensitivity.<br/>
+   * 1.0 suppresses no audio (speech detection sensitivity is disabled). <br/>
+   <br/>
+   The values increase on a monotonic curve. See [Speech Activity
+    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+   #detection).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_background_audio_suppression</span></td><td><span class="abapDocComment">
+   The level to which the service is to suppress background audio based on its
+    volume to prevent it from being transcribed as speech. Use the parameter to
+    suppress side conversations or background noise. <br/>
+   <br/>
+   Specify a value in the range of 0.0 to 1.0:<br/>
+   * 0.0 (the default) provides no suppression (background audio suppression is
+    disabled).<br/>
+   * 0.5 provides a reasonable level of audio suppression for general usage.<br/>
+   * 1.0 suppresses all audio (no audio is transcribed). <br/>
+   <br/>
+   The values increase on a monotonic curve. See [Speech Activity
+    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+   #detection).
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_SPEECH_RECOGNITION_RESULTS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">register_callback</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_callback_url</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_user_secret</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_REGISTER_STATUS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Register a callback</p>
    Registers a callback URL with the service for use with subsequent asynchronous
-    recognition requests. The service attempts to register, or white-list, the
+    recognition requests. The service attempts to register, or allowlist, the
     callback URL if it is not already registered by sending a `GET` request to the
     callback URL. The service passes a random alphanumeric challenge string via the
     `challenge_string` parameter of the request. The request includes an `Accept`
@@ -1797,9 +1902,9 @@
    The service sends only a single `GET` request to the callback URL. If the
     service does not receive a reply with a response code of 200 and a body that
     echoes the challenge string sent by the service within five seconds, it does
-    not white-list the URL; it instead sends status code 400 in response to the
+    not allowlist the URL; it instead sends status code 400 in response to the
     **Register a callback** request. If the requested callback URL is already
-    white-listed, the service responds to the initial registration request with
+    allowlisted, the service responds to the initial registration request with
     response code 200. <br/>
    <br/>
    If you specify a user secret with the request, the service uses it as a key to
@@ -1820,7 +1925,7 @@
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_callback_url</span></td><td><span class="abapDocComment">
    An HTTP or HTTPS URL to which callback notifications are to be sent. To be
-    white-listed, the URL must successfully echo the challenge string during URL
+    allowlisted, the URL must successfully echo the challenge string during URL
     verification. During verification, the client can also check the signature that
     the service sends in the `X-Callback-Signature` header to verify the origin of
     the request.
@@ -1877,14 +1982,14 @@
     you train it. You must use credentials for the instance of the service that
     owns a model to train it. <br/>
    <br/>
-   The training method is asynchronous. It can take on the order of minutes or
-    hours to complete depending on the total amount of audio data on which the
-    custom acoustic model is being trained and the current load on the service.
-    Typically, training a custom acoustic model takes approximately two to four
-    times the length of its audio data. The range of time depends on the model
-    being trained and the nature of the audio, such as whether the audio is clean
-    or noisy. The method returns an HTTP 200 response code to indicate that the
-    training process has begun. <br/>
+   The training method is asynchronous. Training time depends on the cumulative
+    amount of audio data that the custom acoustic model contains and the current
+    load on the service. When you train or retrain a model, the service uses all of
+    the model&apos;s audio data in the training. Training a custom acoustic model
+    takes approximately as long as the length of its cumulative audio data. For
+    example, it takes approximately 2 hours to train a model that contains a total
+    of 2 hours of audio. The method returns an HTTP 200 response code to indicate
+    that the training process has begun. <br/>
    <br/>
    You can monitor the status of the training by using the **Get a custom acoustic
     model** method to poll the model&apos;s status. Use a loop to check the status
@@ -1900,8 +2005,9 @@
     training. Train with a custom language model if you have verbatim
     transcriptions of the audio files that you have added to the custom model or
     you have either corpora (text files) or a list of words that are relevant to
-    the contents of the audio files. Both of the custom models must be based on the
-    same version of the same base model for training to succeed. <br/>
+    the contents of the audio files. For training to succeed, both of the custom
+    models must be based on the same version of the same base model, and the custom
+    language model must be fully trained and available. <br/>
    <br/>
    **See also:**<br/>
    * [Train the custom acoustic
@@ -1919,6 +2025,9 @@
     model.<br/>
    * The custom model contains less than 10 minutes or more than 200 hours of audio
     data.<br/>
+   * You passed a custom language model with the `custom_language_model_id` query
+    parameter that is not in the available state. A custom language model must be
+    fully trained and available to be used to train a custom acoustic model.<br/>
    * You passed an incompatible custom language model with the
     `custom_language_model_id` query parameter. Both custom models must be based on
     the same version of the same base model.<br/>
@@ -1937,8 +2046,9 @@
     been trained with verbatim transcriptions of the audio resources or that
     contains words that are relevant to the contents of the audio resources. The
     custom language model must be based on the same version of the same base model
-    as the custom acoustic model. The credentials specified with the request must
-    own both custom models.
+    as the custom acoustic model, and the custom language model must be fully
+    trained and available. The credentials specified with the request must own both
+    custom models.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_TRAINING_RESPONSE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
@@ -2014,7 +2124,7 @@
    Service return value of type T_TRAINING_RESPONSE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">unregister_callback</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_callback_url</span></td><td>type STRING</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Unregister a callback</p>
-   Unregisters a callback URL that was previously white-listed with a **Register a
+   Unregisters a callback URL that was previously allowlisted with a **Register a
     callback** request for use with the asynchronous interface. Once unregistered,
     the URL can no longer be used with asynchronous recognition requests. <br/>
    <br/>
@@ -2065,7 +2175,8 @@
    If the custom acoustic model was trained with a custom language model, the
     customization ID (GUID) of that custom language model. The custom language
     model must be upgraded before the custom acoustic model can be upgraded. The
-    credentials specified with the request must own both custom models.
+    custom language model must be fully trained and available. The credentials
+    specified with the request must own both custom models.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_force</span></td><td><span class="abapDocComment">
    If `true`, forces the upgrade of a custom acoustic model for which no input data
     has been modified since it was last trained. Use this parameter only to force
@@ -2102,4 +2213,4 @@
     the request. You must make the request with credentials for the instance of the
     service that owns the custom model.
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>

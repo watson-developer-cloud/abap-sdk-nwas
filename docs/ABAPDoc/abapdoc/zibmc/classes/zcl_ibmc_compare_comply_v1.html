@@ -172,11 +172,11 @@
    <br/>
    **Important:** Batch processing requires the use of the [IBM Cloud Object
     Storage
-    service](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-o
-   bject-storage-about#about-ibm-cloud-object-storage). The use of IBM Cloud Object
-    Storage with Compare and Comply is discussed at [Using batch
-    processing](https://cloud.ibm.com/docs/services/compare-comply?topic=compare-co
-   mply-batching#before-you-batch).
+    service](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-sto
+   rage-about#about-ibm-cloud-object-storage). The use of IBM Cloud Object Storage
+    with Compare and Comply is discussed at [Using batch
+    processing](https://cloud.ibm.com/docs/compare-comply?topic=compare-comply-batc
+   hing#before-you-batch).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_function</span></td><td><span class="abapDocComment">
    The Compare and Comply method to run across the submitted input documents.
@@ -267,18 +267,12 @@
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_BATCHES
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_feedback</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_feedback_type</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_before</span></td><td>type DATE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_after</span></td><td>type DATE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_document_title</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_removed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_added</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_not_changed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_removed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_added</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_not_changed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_total</span></td><td>type BOOLEAN optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_FEEDBACK_LIST</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List the feedback in a document</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_feedback</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_feedback_type</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_document_title</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_version</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_removed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_added</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_category_not_changed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_removed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_added</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_type_not_changed</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_include_total</span></td><td>type BOOLEAN optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_FEEDBACK_LIST</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List the feedback in a document</p>
    Lists the feedback in a document.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_feedback_type</span></td><td><span class="abapDocComment">
    An optional string that filters the output to include only feedback with the
     specified feedback type. The only permitted value is `element_classification`.
- </span></td></tr><tr ><td><span class="identifier parameterName">i_before</span></td><td><span class="abapDocComment">
-   An optional string in the format `YYYY-MM-DD` that filters the output to include
-    only feedback that was added before the specified date.
- </span></td></tr><tr ><td><span class="identifier parameterName">i_after</span></td><td><span class="abapDocComment">
-   An optional string in the format `YYYY-MM-DD` that filters the output to include
-    only feedback that was added after the specified date.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_document_title</span></td><td><span class="abapDocComment">
    An optional string that filters the output to include only feedback from the
     document with the specified `document_title`.
@@ -347,4 +341,4 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_BATCH_STATUS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>

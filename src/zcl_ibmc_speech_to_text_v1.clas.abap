@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 "! <p class="shorttext synchronized" lang="en">Speech to Text</p>
-"! The IBM&reg; Speech to Text service provides APIs that use IBM&apos;s
+"! The IBM Watson&trade; Speech to Text service provides APIs that use IBM&apos;s
 "!  speech-recognition capabilities to produce transcripts of spoken audio. The
 "!  service can transcribe speech from various languages and audio formats. In
 "!  addition to basic transcription, the service can produce detailed information
@@ -33,9 +33,10 @@
 "!  service also supports grammars. A grammar is a formal language specification
 "!  that lets you restrict the phrases that the service can recognize. <br/>
 "! <br/>
-"! Language model customization is generally available for production use with most
-"!  supported languages. Acoustic model customization is beta functionality that is
-"!  available for all supported languages.  <br/>
+"! Language model customization and acoustic model customization are generally
+"!  available for production use with all language models that are generally
+"!  available. Grammars are beta functionality for all language models that support
+"!  language model customization.  <br/>
 class ZCL_IBMC_SPEECH_TO_TEXT_V1 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -853,7 +854,12 @@ public section.
       "!    language model based on the language model.
       CUSTOM_LANGUAGE_MODEL type BOOLEAN,
       "!   Indicates whether the `speaker_labels` parameter can be used with the language
-      "!    model.
+      "!    model. <br/>
+      "!   <br/>
+      "!   **Note:** The field returns `true` for all models. However, speaker labels are
+      "!    supported only for US English, Australian English, German, Japanese, Korean,
+      "!    and Spanish (both broadband and narrowband models) and UK English (narrowband
+      "!    model only). Speaker labels are not supported for any other models.
       SPEAKER_LABELS type BOOLEAN,
     end of T_SUPPORTED_FEATURES.
   types:
@@ -939,7 +945,8 @@ public section.
       NAME type STRING,
       "!   The name of the base language model that is to be customized by the new custom
       "!    acoustic model. The new custom model can be used only with the base model that
-      "!    it customizes. <br/>
+      "!    it customizes. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use
+      "!    `ar-MS_BroadbandModel` instead.) <br/>
       "!   <br/>
       "!   To determine whether a base model supports acoustic model customization, refer
       "!    to [Language support for
@@ -984,9 +991,9 @@ public section.
     "!     asynchronous speech recognition.
     begin of T_REGISTER_STATUS,
       "!   The current status of the job:<br/>
-      "!   * `created`: The service successfully white-listed the callback URL as a result
+      "!   * `created`: The service successfully allowlisted the callback URL as a result
       "!    of the call.<br/>
-      "!   * `already created`: The URL was already white-listed.
+      "!   * `already created`: The URL was already allowlisted.
       STATUS type STRING,
       "!   The callback URL that is successfully registered.
       URL type STRING,
@@ -1053,7 +1060,6 @@ constants:
      WARNINGS type string value 'warnings',
      RESULT_INDEX type string value 'result_index',
      SPEAKER_LABELS type string value 'speaker_labels',
-     SPEAKERLABELS type string value 'speakerLabels',
      PROCESSING_METRICS type string value 'processing_metrics',
      AUDIO_METRICS type string value 'audio_metrics',
      FINAL type string value 'final',
@@ -1061,7 +1067,6 @@ constants:
      KEYWORDS_RESULT type string value 'keywords_result',
      INNER type string value 'inner',
      WORD_ALTERNATIVES type string value 'word_alternatives',
-     WORDALTERNATIVES type string value 'wordAlternatives',
      END_OF_UTTERANCE type string value 'end_of_utterance',
      NORMALIZED_TEXT type string value 'normalized_text',
      START_TIME type string value 'start_time',
@@ -1071,7 +1076,6 @@ constants:
      TRANSCRIPT type string value 'transcript',
      TIMESTAMPS type string value 'timestamps',
      WORD_CONFIDENCE type string value 'word_confidence',
-     WORDCONFIDENCE type string value 'wordConfidence',
      FROM type string value 'from',
      TO type string value 'to',
      SPEAKER type string value 'speaker',
@@ -1087,13 +1091,9 @@ constants:
      SPEECH_RATIO type string value 'speech_ratio',
      HIGH_FREQUENCY_LOSS type string value 'high_frequency_loss',
      DIRECT_CURRENT_OFFSET type string value 'direct_current_offset',
-     DIRECTCURRENTOFFSET type string value 'directCurrentOffset',
      CLIPPING_RATE type string value 'clipping_rate',
-     CLIPPINGRATE type string value 'clippingRate',
      SPEECH_LEVEL type string value 'speech_level',
-     SPEECHLEVEL type string value 'speechLevel',
      NON_SPEECH_LEVEL type string value 'non_speech_level',
-     NONSPEECHLEVEL type string value 'nonSpeechLevel',
      BEGIN type string value 'begin',
      END type string value 'end',
      COUNT type string value 'count',
@@ -1117,7 +1117,6 @@ constants:
      OUT_OF_VOCABULARY_WORDS type string value 'out_of_vocabulary_words',
      WORDS type string value 'words',
      SOUNDS_LIKE type string value 'sounds_like',
-     SOUNDSLIKE type string value 'soundsLike',
      DISPLAY_AS type string value 'display_as',
      SOURCE type string value 'source',
      ELEMENT type string value 'element',
@@ -1149,7 +1148,8 @@ constants:
     "! <p class="shorttext synchronized" lang="en">List models</p>
     "!   Lists all language models that are available for use with the service. The
     "!    information includes the name of the model and its minimum sampling rate in
-    "!    Hertz, among other things. <br/>
+    "!    Hertz, among other things. The ordering of the list of models can change from
+    "!    call to call; do not rely on an alphabetized or static list of models. <br/>
     "!   <br/>
     "!   **See also:** [Languages and
     "!    models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
@@ -1177,7 +1177,8 @@ constants:
     "!
     "! @parameter I_MODEL_ID |
     "!   The identifier of the model in the form of its name from the output of the **Get
-    "!    a model** method.
+    "!    a model** method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated;
+    "!    use `ar-MS_BroadbandModel` instead.).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SPEECH_MODEL
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1295,8 +1296,9 @@ constants:
     "!   The format (MIME type) of the audio. For more information about specifying an
     "!    audio format, see **Audio formats (content types)** in the method description.
     "! @parameter I_MODEL |
-    "!   The identifier of the model that is to be used for the recognition request. See
-    "!    [Languages and
+    "!   The identifier of the model that is to be used for the recognition request.
+    "!    (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use
+    "!    `ar-MS_BroadbandModel` instead.) See [Languages and
     "!    models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
     "!   odels).
     "! @parameter I_LANGUAGE_CUSTOMIZATION_ID |
@@ -1358,9 +1360,15 @@ constants:
     "!   An array of keyword strings to spot in the audio. Each keyword string can
     "!    include one or more string tokens. Keywords are spotted only in the final
     "!    results, not in interim hypotheses. If you specify any keywords, you must also
-    "!    specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
-    "!    parameter or specify an empty array if you do not need to spot keywords. See
-    "!    [Keyword
+    "!    specify a keywords threshold. Omit the parameter or specify an empty array if
+    "!    you do not need to spot keywords. <br/>
+    "!   <br/>
+    "!   You can spot a maximum of 1000 keywords with a single request. A single keyword
+    "!    can have a maximum length of 1024 characters, though the maximum effective
+    "!    length for double-byte languages might be shorter. Keywords are
+    "!    case-insensitive. <br/>
+    "!   <br/>
+    "!   See [Keyword
     "!    spotting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output
     "!   #keyword_spotting).
     "! @parameter I_KEYWORDS_THRESHOLD |
@@ -1423,11 +1431,9 @@ constants:
     "!    parameter to be `true`, regardless of whether you specify `false` for the
     "!    parameter. <br/>
     "!   <br/>
-    "!   **Note:** Applies to US English, Japanese, and Spanish (both broadband and
-    "!    narrowband models) and UK English (narrowband model) transcription only. To
-    "!    determine whether a language model supports speaker labels, you can also use
-    "!    the **Get a model** method and check that the attribute `speaker_labels` is set
-    "!    to `true`. <br/>
+    "!   **Note:** Applies to US English, Australian English, German, Japanese, Korean,
+    "!    and Spanish (both broadband and narrowband models) and UK English (narrowband
+    "!    model) transcription only. <br/>
     "!   <br/>
     "!   See [Speaker
     "!    labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#s
@@ -1502,6 +1508,36 @@ constants:
     "!   See [Split transcript at phrase
     "!    end](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#spli
     "!   t_transcript).
+    "! @parameter I_SPEECH_DETECTOR_SENSITIVITY |
+    "!   The sensitivity of speech activity detection that the service is to perform. Use
+    "!    the parameter to suppress word insertions from music, coughing, and other
+    "!    non-speech events. The service biases the audio it passes for speech
+    "!    recognition by evaluating the input audio against prior models of speech and
+    "!    non-speech activity. <br/>
+    "!   <br/>
+    "!   Specify a value between 0.0 and 1.0:<br/>
+    "!   * 0.0 suppresses all audio (no speech is transcribed).<br/>
+    "!   * 0.5 (the default) provides a reasonable compromise for the level of
+    "!    sensitivity.<br/>
+    "!   * 1.0 suppresses no audio (speech detection sensitivity is disabled). <br/>
+    "!   <br/>
+    "!   The values increase on a monotonic curve. See [Speech Activity
+    "!    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+    "!   #detection).
+    "! @parameter I_BACKGROUND_AUDIO_SUPPRESSION |
+    "!   The level to which the service is to suppress background audio based on its
+    "!    volume to prevent it from being transcribed as speech. Use the parameter to
+    "!    suppress side conversations or background noise. <br/>
+    "!   <br/>
+    "!   Specify a value in the range of 0.0 to 1.0:<br/>
+    "!   * 0.0 (the default) provides no suppression (background audio suppression is
+    "!    disabled).<br/>
+    "!   * 0.5 provides a reasonable level of audio suppression for general usage.<br/>
+    "!   * 1.0 suppresses all audio (no audio is transcribed). <br/>
+    "!   <br/>
+    "!   The values increase on a monotonic curve. See [Speech Activity
+    "!    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+    "!   #detection).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_SPEECH_RECOGNITION_RESULTS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -1531,6 +1567,8 @@ constants:
       !I_AUDIO_METRICS type BOOLEAN default c_boolean_false
       !I_END_OF_PHRASE_SILENCE_TIME type DOUBLE optional
       !I_SPLT_TRNSCRPT_AT_PHRASE_END type BOOLEAN default c_boolean_false
+      !I_SPEECH_DETECTOR_SENSITIVITY type FLOAT optional
+      !I_BACKGROUND_AUDIO_SUPPRESSION type FLOAT optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_SPEECH_RECOGNITION_RESULTS
@@ -1539,7 +1577,7 @@ constants:
 
     "! <p class="shorttext synchronized" lang="en">Register a callback</p>
     "!   Registers a callback URL with the service for use with subsequent asynchronous
-    "!    recognition requests. The service attempts to register, or white-list, the
+    "!    recognition requests. The service attempts to register, or allowlist, the
     "!    callback URL if it is not already registered by sending a `GET` request to the
     "!    callback URL. The service passes a random alphanumeric challenge string via the
     "!    `challenge_string` parameter of the request. The request includes an `Accept`
@@ -1554,9 +1592,9 @@ constants:
     "!   The service sends only a single `GET` request to the callback URL. If the
     "!    service does not receive a reply with a response code of 200 and a body that
     "!    echoes the challenge string sent by the service within five seconds, it does
-    "!    not white-list the URL; it instead sends status code 400 in response to the
+    "!    not allowlist the URL; it instead sends status code 400 in response to the
     "!    **Register a callback** request. If the requested callback URL is already
-    "!    white-listed, the service responds to the initial registration request with
+    "!    allowlisted, the service responds to the initial registration request with
     "!    response code 200. <br/>
     "!   <br/>
     "!   If you specify a user secret with the request, the service uses it as a key to
@@ -1577,7 +1615,7 @@ constants:
     "!
     "! @parameter I_CALLBACK_URL |
     "!   An HTTP or HTTPS URL to which callback notifications are to be sent. To be
-    "!    white-listed, the URL must successfully echo the challenge string during URL
+    "!    allowlisted, the URL must successfully echo the challenge string during URL
     "!    verification. During verification, the client can also check the signature that
     "!    the service sends in the `X-Callback-Signature` header to verify the origin of
     "!    the request.
@@ -1601,7 +1639,7 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Unregister a callback</p>
-    "!   Unregisters a callback URL that was previously white-listed with a **Register a
+    "!   Unregisters a callback URL that was previously allowlisted with a **Register a
     "!    callback** request for use with the asynchronous interface. Once unregistered,
     "!    the URL can no longer be used with asynchronous recognition requests. <br/>
     "!   <br/>
@@ -1731,13 +1769,14 @@ constants:
     "!   The format (MIME type) of the audio. For more information about specifying an
     "!    audio format, see **Audio formats (content types)** in the method description.
     "! @parameter I_MODEL |
-    "!   The identifier of the model that is to be used for the recognition request. See
-    "!    [Languages and
+    "!   The identifier of the model that is to be used for the recognition request.
+    "!    (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use
+    "!    `ar-MS_BroadbandModel` instead.) See [Languages and
     "!    models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#m
     "!   odels).
     "! @parameter I_CALLBACK_URL |
     "!   A URL to which callback notifications are to be sent. The URL must already be
-    "!    successfully white-listed by using the **Register a callback** method. You can
+    "!    successfully allowlisted by using the **Register a callback** method. You can
     "!    include the same callback URL with any number of job creation requests. Omit
     "!    the parameter to poll the service for job completion and results. <br/>
     "!   <br/>
@@ -1832,9 +1871,15 @@ constants:
     "!   An array of keyword strings to spot in the audio. Each keyword string can
     "!    include one or more string tokens. Keywords are spotted only in the final
     "!    results, not in interim hypotheses. If you specify any keywords, you must also
-    "!    specify a keywords threshold. You can spot a maximum of 1000 keywords. Omit the
-    "!    parameter or specify an empty array if you do not need to spot keywords. See
-    "!    [Keyword
+    "!    specify a keywords threshold. Omit the parameter or specify an empty array if
+    "!    you do not need to spot keywords. <br/>
+    "!   <br/>
+    "!   You can spot a maximum of 1000 keywords with a single request. A single keyword
+    "!    can have a maximum length of 1024 characters, though the maximum effective
+    "!    length for double-byte languages might be shorter. Keywords are
+    "!    case-insensitive. <br/>
+    "!   <br/>
+    "!   See [Keyword
     "!    spotting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output
     "!   #keyword_spotting).
     "! @parameter I_KEYWORDS_THRESHOLD |
@@ -1897,11 +1942,9 @@ constants:
     "!    parameter to be `true`, regardless of whether you specify `false` for the
     "!    parameter. <br/>
     "!   <br/>
-    "!   **Note:** Applies to US English, Japanese, and Spanish (both broadband and
-    "!    narrowband models) and UK English (narrowband model) transcription only. To
-    "!    determine whether a language model supports speaker labels, you can also use
-    "!    the **Get a model** method and check that the attribute `speaker_labels` is set
-    "!    to `true`. <br/>
+    "!   **Note:** Applies to US English, Australian English, German, Japanese, Korean,
+    "!    and Spanish (both broadband and narrowband models) and UK English (narrowband
+    "!    model) transcription only. <br/>
     "!   <br/>
     "!   See [Speaker
     "!    labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#s
@@ -2002,6 +2045,36 @@ constants:
     "!   See [Split transcript at phrase
     "!    end](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#spli
     "!   t_transcript).
+    "! @parameter I_SPEECH_DETECTOR_SENSITIVITY |
+    "!   The sensitivity of speech activity detection that the service is to perform. Use
+    "!    the parameter to suppress word insertions from music, coughing, and other
+    "!    non-speech events. The service biases the audio it passes for speech
+    "!    recognition by evaluating the input audio against prior models of speech and
+    "!    non-speech activity. <br/>
+    "!   <br/>
+    "!   Specify a value between 0.0 and 1.0:<br/>
+    "!   * 0.0 suppresses all audio (no speech is transcribed).<br/>
+    "!   * 0.5 (the default) provides a reasonable compromise for the level of
+    "!    sensitivity.<br/>
+    "!   * 1.0 suppresses no audio (speech detection sensitivity is disabled). <br/>
+    "!   <br/>
+    "!   The values increase on a monotonic curve. See [Speech Activity
+    "!    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+    "!   #detection).
+    "! @parameter I_BACKGROUND_AUDIO_SUPPRESSION |
+    "!   The level to which the service is to suppress background audio based on its
+    "!    volume to prevent it from being transcribed as speech. Use the parameter to
+    "!    suppress side conversations or background noise. <br/>
+    "!   <br/>
+    "!   Specify a value in the range of 0.0 to 1.0:<br/>
+    "!   * 0.0 (the default) provides no suppression (background audio suppression is
+    "!    disabled).<br/>
+    "!   * 0.5 provides a reasonable level of audio suppression for general usage.<br/>
+    "!   * 1.0 suppresses all audio (no audio is transcribed). <br/>
+    "!   <br/>
+    "!   The values increase on a monotonic curve. See [Speech Activity
+    "!    Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input
+    "!   #detection).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_RECOGNITION_JOB
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -2037,6 +2110,8 @@ constants:
       !I_AUDIO_METRICS type BOOLEAN default c_boolean_false
       !I_END_OF_PHRASE_SILENCE_TIME type DOUBLE optional
       !I_SPLT_TRNSCRPT_AT_PHRASE_END type BOOLEAN default c_boolean_false
+      !I_SPEECH_DETECTOR_SENSITIVITY type FLOAT optional
+      !I_BACKGROUND_AUDIO_SUPPRESSION type FLOAT optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_RECOGNITION_JOB
@@ -2168,9 +2243,14 @@ constants:
     "!
     "! @parameter I_LANGUAGE |
     "!   The identifier of the language for which custom language or custom acoustic
-    "!    models are to be returned (for example, `en-US`). Omit the parameter to see all
-    "!    custom language or custom acoustic models that are owned by the requesting
-    "!    credentials.
+    "!    models are to be returned. Omit the parameter to see all custom language or
+    "!    custom acoustic models that are owned by the requesting credentials. (**Note:**
+    "!    The identifier `ar-AR` is deprecated; use `ar-MS` instead.) <br/>
+    "!   <br/>
+    "!   To determine the languages for which customization is available, see [Language
+    "!    support for
+    "!    customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-c
+    "!   ustomization#languageSupport).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_LANGUAGE_MODELS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -2412,19 +2492,21 @@ constants:
     "!   <br/>
     "!   The call returns an HTTP 201 response code if the corpus is valid. The service
     "!    then asynchronously processes the contents of the corpus and automatically
-    "!    extracts new words that it finds. This can take on the order of a minute or two
-    "!    to complete depending on the total number of words and the number of new words
-    "!    in the corpus, as well as the current load on the service. You cannot submit
-    "!    requests to add additional resources to the custom model or to train the model
-    "!    until the service&apos;s analysis of the corpus for the current request
+    "!    extracts new words that it finds. This operation can take on the order of
+    "!    minutes to complete depending on the total number of words and the number of
+    "!    new words in the corpus, as well as the current load on the service. You cannot
+    "!    submit requests to add additional resources to the custom model or to train the
+    "!    model until the service&apos;s analysis of the corpus for the current request
     "!    completes. Use the **List a corpus** method to check the status of the
     "!    analysis. <br/>
     "!   <br/>
     "!   The service auto-populates the model&apos;s words resource with words from the
-    "!    corpus that are not found in its base vocabulary. These are referred to as
-    "!    out-of-vocabulary (OOV) words. You can use the **List custom words** method to
-    "!    examine the words resource. You can use other words method to eliminate typos
-    "!    and modify how words are pronounced as needed. <br/>
+    "!    corpus that are not found in its base vocabulary. These words are referred to
+    "!    as out-of-vocabulary (OOV) words. After adding a corpus, you must validate the
+    "!    words resource to ensure that each OOV word&apos;s definition is complete and
+    "!    valid. You can use the **List custom words** method to examine the words
+    "!    resource. You can use other words method to eliminate typos and modify how
+    "!    words are pronounced as needed. <br/>
     "!   <br/>
     "!   To add a corpus file that has the same name as an existing corpus, set the
     "!    `allow_overwrite` parameter to `true`; otherwise, the request fails.
@@ -2442,12 +2524,15 @@ constants:
     "!    directly. <br/>
     "!   <br/>
     "!   **See also:**<br/>
+    "!   * [Add a corpus to the custom language
+    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+    "!   reate#addCorpus)<br/>
     "!   * [Working with
     "!    corpora](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpora
     "!   Words#workingCorpora)<br/>
-    "!   * [Add a corpus to the custom language
-    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-    "!   reate#addCorpus)
+    "!   * [Validating a words
+    "!    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+    "!   aWords#validateModel)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom language model that is to be used for
@@ -2631,7 +2716,10 @@ constants:
     "!    Use the parameter for words that are difficult to pronounce, foreign words,
     "!    acronyms, and so on. For example, you might specify that the word `IEEE` can
     "!    sound like `i triple e`. You can specify a maximum of five sounds-like
-    "!    pronunciations for a word.<br/>
+    "!    pronunciations for a word. If you omit the `sounds_like` field, the service
+    "!    attempts to set the field to its pronunciation of the word. It cannot generate
+    "!    a pronunciation for all words, so you must review the word&apos;s definition to
+    "!    ensure that it is complete and valid.<br/>
     "!   * The `display_as` field provides a different way of spelling the word in a
     "!    transcript. Use the parameter when you want the word to appear different from
     "!    its usual representation or from its spelling in training data. For example,
@@ -2663,12 +2751,15 @@ constants:
     "!    as needed. <br/>
     "!   <br/>
     "!   **See also:**<br/>
+    "!   * [Add words to the custom language
+    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+    "!   reate#addWords)<br/>
     "!   * [Working with custom
     "!    words](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWo
     "!   rds#workingWords)<br/>
-    "!   * [Add words to the custom language
-    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-    "!   reate#addWords)
+    "!   * [Validating a words
+    "!    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+    "!   aWords#validateModel)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom language model that is to be used for
@@ -2709,7 +2800,10 @@ constants:
     "!    Use the parameter for words that are difficult to pronounce, foreign words,
     "!    acronyms, and so on. For example, you might specify that the word `IEEE` can
     "!    sound like `i triple e`. You can specify a maximum of five sounds-like
-    "!    pronunciations for a word.<br/>
+    "!    pronunciations for a word. If you omit the `sounds_like` field, the service
+    "!    attempts to set the field to its pronunciation of the word. It cannot generate
+    "!    a pronunciation for all words, so you must review the word&apos;s definition to
+    "!    ensure that it is complete and valid.<br/>
     "!   * The `display_as` field provides a different way of spelling the word in a
     "!    transcript. Use the parameter when you want the word to appear different from
     "!    its usual representation or from its spelling in training data. For example,
@@ -2723,12 +2817,15 @@ constants:
     "!    add. <br/>
     "!   <br/>
     "!   **See also:**<br/>
+    "!   * [Add words to the custom language
+    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
+    "!   reate#addWords)<br/>
     "!   * [Working with custom
     "!    words](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWo
     "!   rds#workingWords)<br/>
-    "!   * [Add words to the custom language
-    "!    model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageC
-    "!   reate#addWords)
+    "!   * [Validating a words
+    "!    resource](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corpor
+    "!   aWords#validateModel)
     "!
     "! @parameter I_CUSTOMIZATION_ID |
     "!   The customization ID (GUID) of the custom language model that is to be used for
@@ -2858,12 +2955,12 @@ constants:
     "!   <br/>
     "!   The call returns an HTTP 201 response code if the grammar is valid. The service
     "!    then asynchronously processes the contents of the grammar and automatically
-    "!    extracts new words that it finds. This can take a few seconds to complete
-    "!    depending on the size and complexity of the grammar, as well as the current
-    "!    load on the service. You cannot submit requests to add additional resources to
-    "!    the custom model or to train the model until the service&apos;s analysis of the
-    "!    grammar for the current request completes. Use the **Get a grammar** method to
-    "!    check the status of the analysis. <br/>
+    "!    extracts new words that it finds. This operation can take a few seconds or
+    "!    minutes to complete depending on the size and complexity of the grammar, as
+    "!    well as the current load on the service. You cannot submit requests to add
+    "!    additional resources to the custom model or to train the model until the
+    "!    service&apos;s analysis of the grammar for the current request completes. Use
+    "!    the **Get a grammar** method to check the status of the analysis. <br/>
     "!   <br/>
     "!   The service populates the model&apos;s words resource with any word that is
     "!    recognized by the grammar that is not found in the model&apos;s base
@@ -3049,9 +3146,14 @@ constants:
     "!
     "! @parameter I_LANGUAGE |
     "!   The identifier of the language for which custom language or custom acoustic
-    "!    models are to be returned (for example, `en-US`). Omit the parameter to see all
-    "!    custom language or custom acoustic models that are owned by the requesting
-    "!    credentials.
+    "!    models are to be returned. Omit the parameter to see all custom language or
+    "!    custom acoustic models that are owned by the requesting credentials. (**Note:**
+    "!    The identifier `ar-AR` is deprecated; use `ar-MS` instead.) <br/>
+    "!   <br/>
+    "!   To determine the languages for which customization is available, see [Language
+    "!    support for
+    "!    customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-c
+    "!   ustomization#languageSupport).
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_ACOUSTIC_MODELS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -3119,14 +3221,14 @@ constants:
     "!    you train it. You must use credentials for the instance of the service that
     "!    owns a model to train it. <br/>
     "!   <br/>
-    "!   The training method is asynchronous. It can take on the order of minutes or
-    "!    hours to complete depending on the total amount of audio data on which the
-    "!    custom acoustic model is being trained and the current load on the service.
-    "!    Typically, training a custom acoustic model takes approximately two to four
-    "!    times the length of its audio data. The range of time depends on the model
-    "!    being trained and the nature of the audio, such as whether the audio is clean
-    "!    or noisy. The method returns an HTTP 200 response code to indicate that the
-    "!    training process has begun. <br/>
+    "!   The training method is asynchronous. Training time depends on the cumulative
+    "!    amount of audio data that the custom acoustic model contains and the current
+    "!    load on the service. When you train or retrain a model, the service uses all of
+    "!    the model&apos;s audio data in the training. Training a custom acoustic model
+    "!    takes approximately as long as the length of its cumulative audio data. For
+    "!    example, it takes approximately 2 hours to train a model that contains a total
+    "!    of 2 hours of audio. The method returns an HTTP 200 response code to indicate
+    "!    that the training process has begun. <br/>
     "!   <br/>
     "!   You can monitor the status of the training by using the **Get a custom acoustic
     "!    model** method to poll the model&apos;s status. Use a loop to check the status
@@ -3142,8 +3244,9 @@ constants:
     "!    training. Train with a custom language model if you have verbatim
     "!    transcriptions of the audio files that you have added to the custom model or
     "!    you have either corpora (text files) or a list of words that are relevant to
-    "!    the contents of the audio files. Both of the custom models must be based on the
-    "!    same version of the same base model for training to succeed. <br/>
+    "!    the contents of the audio files. For training to succeed, both of the custom
+    "!    models must be based on the same version of the same base model, and the custom
+    "!    language model must be fully trained and available. <br/>
     "!   <br/>
     "!   **See also:**<br/>
     "!   * [Train the custom acoustic
@@ -3161,6 +3264,9 @@ constants:
     "!    model.<br/>
     "!   * The custom model contains less than 10 minutes or more than 200 hours of audio
     "!    data.<br/>
+    "!   * You passed a custom language model with the `custom_language_model_id` query
+    "!    parameter that is not in the available state. A custom language model must be
+    "!    fully trained and available to be used to train a custom acoustic model.<br/>
     "!   * You passed an incompatible custom language model with the
     "!    `custom_language_model_id` query parameter. Both custom models must be based on
     "!    the same version of the same base model.<br/>
@@ -3179,8 +3285,9 @@ constants:
     "!    been trained with verbatim transcriptions of the audio resources or that
     "!    contains words that are relevant to the contents of the audio resources. The
     "!    custom language model must be based on the same version of the same base model
-    "!    as the custom acoustic model. The credentials specified with the request must
-    "!    own both custom models.
+    "!    as the custom acoustic model, and the custom language model must be fully
+    "!    trained and available. The credentials specified with the request must own both
+    "!    custom models.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TRAINING_RESPONSE
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -3260,7 +3367,8 @@ constants:
     "!   If the custom acoustic model was trained with a custom language model, the
     "!    customization ID (GUID) of that custom language model. The custom language
     "!    model must be upgraded before the custom acoustic model can be upgraded. The
-    "!    credentials specified with the request must own both custom models.
+    "!    custom language model must be fully trained and available. The credentials
+    "!    specified with the request must own both custom models.
     "! @parameter I_FORCE |
     "!   If `true`, forces the upgrade of a custom acoustic model for which no input data
     "!    has been modified since it was last trained. Use this parameter only to force
@@ -3332,14 +3440,14 @@ constants:
     "!    that has the same name as an existing audio resource, set the `allow_overwrite`
     "!    parameter to `true`; otherwise, the request fails. <br/>
     "!   <br/>
-    "!   The method is asynchronous. It can take several seconds to complete depending on
-    "!    the duration of the audio and, in the case of an archive file, the total number
-    "!    of audio files being processed. The service returns a 201 response code if the
-    "!    audio is valid. It then asynchronously analyzes the contents of the audio file
-    "!    or files and automatically extracts information about the audio such as its
-    "!    length, sampling rate, and encoding. You cannot submit requests to train or
-    "!    upgrade the model until the service&apos;s analysis of all audio resources for
-    "!    current requests completes. <br/>
+    "!   The method is asynchronous. It can take several seconds or minutes to complete
+    "!    depending on the duration of the audio and, in the case of an archive file, the
+    "!    total number of audio files being processed. The service returns a 201 response
+    "!    code if the audio is valid. It then asynchronously analyzes the contents of the
+    "!    audio file or files and automatically extracts information about the audio such
+    "!    as its length, sampling rate, and encoding. You cannot submit requests to train
+    "!    or upgrade the model until the service&apos;s analysis of all audio resources
+    "!    for current requests completes. <br/>
     "!   <br/>
     "!   To determine the status of the service&apos;s analysis of the audio, use the
     "!    **Get an audio resource** method to poll the status of the audio. The method
@@ -3565,10 +3673,15 @@ constants:
     "!    information was added. The method has no effect if no data is associated with
     "!    the customer ID. You must issue the request with credentials for the same
     "!    instance of the service that was used to associate the customer ID with the
-    "!    data. <br/>
+    "!    data. You associate a customer ID with data by passing the `X-Watson-Metadata`
+    "!    header with a request that passes the data. <br/>
     "!   <br/>
-    "!   You associate a customer ID with data by passing the `X-Watson-Metadata` header
-    "!    with a request that passes the data. <br/>
+    "!   **Note:** If you delete an instance of the service from the service console, all
+    "!    data associated with that service instance is automatically deleted. This
+    "!    includes all custom language models, corpora, grammars, and words; all custom
+    "!    acoustic models and audio resources; all registered endpoints for the
+    "!    asynchronous HTTP interface; and all data related to speech recognition
+    "!    requests. <br/>
     "!   <br/>
     "!   **See also:** [Information
     "!    security](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-inform
@@ -3588,10 +3701,6 @@ constants:
 protected section.
 
 private section.
-
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
 
 ENDCLASS.
 
@@ -3634,22 +3743,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'ICP4D'.
-    e_request_prop-auth_name       = 'ICP4D'.
-    e_request_prop-auth_type       = 'apiKey'.
-    e_request_prop-auth_headername = 'Authorization'.
-    e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/speech-to-text/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.speech-to-text.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -3661,7 +3762,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173436'.
+    e_sdk_version_date = '20210312144441'.
 
   endmethod.
 
@@ -3788,6 +3889,8 @@ endmethod.
 * | [--->] I_AUDIO_METRICS        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_END_OF_PHRASE_SILENCE_TIME        TYPE DOUBLE(optional)
 * | [--->] I_SPLT_TRNSCRPT_AT_PHRASE_END        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_SPEECH_DETECTOR_SENSITIVITY        TYPE FLOAT(optional)
+* | [--->] I_BACKGROUND_AUDIO_SUPPRESSION        TYPE FLOAT(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_SPEECH_RECOGNITION_RESULTS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4038,6 +4141,26 @@ method RECOGNIZE.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
+    if i_SPEECH_DETECTOR_SENSITIVITY is supplied.
+    lv_queryparam = i_SPEECH_DETECTOR_SENSITIVITY.
+    add_query_parameter(
+      exporting
+        i_parameter  = `speech_detector_sensitivity`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_BACKGROUND_AUDIO_SUPPRESSION is supplied.
+    lv_queryparam = i_BACKGROUND_AUDIO_SUPPRESSION.
+    add_query_parameter(
+      exporting
+        i_parameter  = `background_audio_suppression`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
     " process header parameters
     data:
       lv_headerparam type string  ##NEEDED.
@@ -4213,6 +4336,8 @@ endmethod.
 * | [--->] I_AUDIO_METRICS        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_END_OF_PHRASE_SILENCE_TIME        TYPE DOUBLE(optional)
 * | [--->] I_SPLT_TRNSCRPT_AT_PHRASE_END        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_SPEECH_DETECTOR_SENSITIVITY        TYPE FLOAT(optional)
+* | [--->] I_BACKGROUND_AUDIO_SUPPRESSION        TYPE FLOAT(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_RECOGNITION_JOB
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -4524,6 +4649,26 @@ method CREATE_JOB.
         c_url        = ls_request_prop-url )  ##NO_TEXT.
     endif.
 
+    if i_SPEECH_DETECTOR_SENSITIVITY is supplied.
+    lv_queryparam = i_SPEECH_DETECTOR_SENSITIVITY.
+    add_query_parameter(
+      exporting
+        i_parameter  = `speech_detector_sensitivity`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_BACKGROUND_AUDIO_SUPPRESSION is supplied.
+    lv_queryparam = i_BACKGROUND_AUDIO_SUPPRESSION.
+    add_query_parameter(
+      exporting
+        i_parameter  = `background_audio_suppression`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
     " process header parameters
     data:
       lv_headerparam type string  ##NEEDED.
@@ -4742,15 +4887,15 @@ method CREATE_LANGUAGE_MODEL.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5420,15 +5565,15 @@ method ADD_WORDS.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5499,15 +5644,15 @@ method ADD_WORD.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP PUT request
@@ -5736,15 +5881,15 @@ method ADD_GRAMMAR.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -5904,15 +6049,15 @@ method CREATE_ACOUSTIC_MODEL.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -6503,15 +6648,5 @@ method DELETE_USER_DATA.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_SPEECH_TO_TEXT_V1->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-  endmethod.
 
 ENDCLASS.

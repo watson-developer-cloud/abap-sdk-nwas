@@ -6,14 +6,15 @@
   content.<br/>
  <br/>
  You can create [custom
-  models](https://cloud.ibm.com/docs/services/natural-language-understanding?topi
- c=natural-language-understanding-customizing) with Watson Knowledge Studio to
-  detect custom entities and relations in Natural Language Understanding. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_analysis_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Results of the analysis, organized by feature.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_analysis_results_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Webpage metadata, such as the author and the title of the</p>
-     page.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_analysis_results_usage</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+  models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural
+ -language-understanding-customizing) with Watson Knowledge Studio to detect
+  custom entities and relations in Natural Language Understanding. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_advanced_rules_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Advanced rules model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_advanced_rules_model_list</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    List of advanced rules models.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_advncd_rls_analysis_results</span> type JSONOBJECT</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_analysis_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Results of the analysis, organized by feature.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_analysis_results_usage</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     API usage information for the request.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_author</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The author of the analyzed content.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_categories_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The author of the analyzed content.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_advanced_rules_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Advanced rules model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_categories_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Returns a five-level taxonomy of the content. The top three</p>
      categories are returned. <br/>
     <br/>
@@ -45,9 +46,9 @@
      conveyed by the content. Emotion information can be returned for detected
      entities, keywords, or user-specified target phrases found in the text.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_emotion_scores</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_entities_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Identifies people, cities, organizations, and other entities</p>
-     in the content. See [Entity types and
-     subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-    pic=natural-language-understanding-entity-types).<br/>
+     in the content. For more information, see [Entity types and
+     subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+    al-language-understanding-entity-types).<br/>
     <br/>
     Supported languages: English, French, German, Italian, Japanese, Korean,
      Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported
@@ -58,7 +59,8 @@
     Analysis results for each requested feature.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_features_results_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Webpage metadata, such as the author and the title of the</p>
      page.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_feature_sentiment_results</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_feed</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    RSS or ATOM feed found on the webpage.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_keywords_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    RSS or ATOM feed found on the webpage.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_file_and_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Metadata associated with this custom model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_keywords_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Returns important keywords in the content.</p><br/>
     <br/>
     Supported languages: English, French, German, Italian, Japanese, Korean,
@@ -76,9 +78,10 @@
     An object containing request parameters.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_relations_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Recognizes when two entities are related and identifies the</p>
      type of relation. For example, an `awardedTo` relation might connect the
-     entities &quot;Nobel Prize&quot; and &quot;Albert Einstein&quot;. See [Relation
-     types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-    =natural-language-understanding-relations).<br/>
+     entities &quot;Nobel Prize&quot; and &quot;Albert Einstein&quot;. For more
+     information, see [Relation
+     types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+    language-understanding-relations).<br/>
     <br/>
     Supported languages: Arabic, English, German, Japanese, Korean, Spanish.
      Chinese, Dutch, French, Italian, and Portuguese custom models are also
@@ -91,7 +94,7 @@
     The object containing the actions and the objects the</p>
      actions act upon.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_result_action</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     The extracted action from the sentence.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_result_object</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The extracted object from the sentence.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_subject</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_verb</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentence_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentiment_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The extracted object from the sentence.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_subject</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_semantic_roles_verb</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentence_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentiment_model</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentiment_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Analyzes the general sentiment of your content or the</p>
      sentiment toward specific target phrases. You can analyze sentiment for
      detected entities with `entities.sentiment` and for keywords with
@@ -100,7 +103,12 @@
      Supported languages: Arabic, English, French, German, Italian, Japanese,
      Korean, Portuguese, Russian, Spanish.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sentiment_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     The sentiment of the content.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_smntc_roles_result_subject</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The extracted subject from the sentence.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_syntax_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The extracted subject from the sentence.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_sntmnt_mdl_file_and_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Metadata associated with this custom model.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_summarization_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    (Experimental) Returns a summary of content.</p><br/>
+    <br/>
+    Supported languages: English only.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_summarization_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    (Experimental) Summary of content.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_syntax_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Returns tokens and sentences from the input text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_syntax_options_tokens</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Tokenization options.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_syntax_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Tokens and sentences returned from syntax analysis.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_targeted_emotion_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
@@ -116,12 +124,13 @@
    - Relations<br/>
    - Semantic roles<br/>
    - Sentiment<br/>
-   - Syntax (Experimental).<br/>
+   - Syntax<br/>
+   - Summarization (Experimental)<br/>
    <br/>
    If a language for the input text is not specified with the `language` parameter,
     the service [automatically detects the
-    language](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-   pic=natural-language-understanding-detectable-languages).
+    language](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+   al-language-understanding-detectable-languages).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_parameters</span></td><td><span class="abapDocComment">
    An object containing request parameters. The `features` object and one of the
@@ -139,11 +148,11 @@
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_LIST_MODELS_RESULTS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List models</p>
    Lists Watson Knowledge Studio [custom entities and relations
-    models](https://cloud.ibm.com/docs/services/natural-language-understanding?topi
-   c=natural-language-understanding-customizing) that are deployed to your Natural
-    Language Understanding service.
+    models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural
+   -language-understanding-customizing) that are deployed to your Natural Language
+    Understanding service.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_LIST_MODELS_RESULTS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>

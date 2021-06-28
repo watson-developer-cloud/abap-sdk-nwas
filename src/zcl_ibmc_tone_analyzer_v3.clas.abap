@@ -245,10 +245,8 @@ constants:
      USER type string value 'user',
      DOCUMENT_TONE type string value 'document_tone',
      SENTENCES_TONE type string value 'sentences_tone',
-     SENTENCESTONE type string value 'sentencesTone',
      TONES type string value 'tones',
      TONE_CATEGORIES type string value 'tone_categories',
-     TONECATEGORIES type string value 'toneCategories',
      WARNING type string value 'warning',
      SENTENCE_ID type string value 'sentence_id',
      INPUT_FROM type string value 'input_from',
@@ -259,7 +257,6 @@ constants:
      CATEGORY_ID type string value 'category_id',
      CATEGORY_NAME type string value 'category_name',
      UTTERANCES_TONE type string value 'utterances_tone',
-     UTTERANCESTONE type string value 'utterancesTone',
      UTTERANCE_ID type string value 'utterance_id',
      UTTERANCE_TEXT type string value 'utterance_text',
      ERROR type string value 'error',
@@ -403,10 +400,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_TONE_ANALYZER_V3 IMPLEMENTATION.
@@ -448,17 +441,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/tone-analyzer/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.tone-analyzer.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -470,7 +460,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173440'.
+    e_sdk_version_date = '20210312144444'.
 
   endmethod.
 
@@ -594,15 +584,15 @@ method TONE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -703,15 +693,15 @@ method TONE_CHAT.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -729,23 +719,5 @@ method TONE_CHAT.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_TONE_ANALYZER_V3->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

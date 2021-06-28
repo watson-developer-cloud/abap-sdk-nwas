@@ -19,9 +19,9 @@
 "!  content.<br/>
 "! <br/>
 "! You can create [custom
-"!  models](https://cloud.ibm.com/docs/services/natural-language-understanding?topi
-"! c=natural-language-understanding-customizing) with Watson Knowledge Studio to
-"!  detect custom entities and relations in Natural Language Understanding. <br/>
+"!  models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural
+"! -language-understanding-customizing) with Watson Knowledge Studio to detect
+"!  custom entities and relations in Natural Language Understanding. <br/>
 class ZCL_IBMC_NAT_LANG_UNDRSTND_V1 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -116,11 +116,13 @@ public section.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
       USER_METADATA type MAP,
-      "!   The language code of this model.
+      "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
       VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
@@ -168,7 +170,7 @@ public section.
       STATUS type STRING,
       "!   Unique model ID.
       MODEL_ID type STRING,
-      "!   ISO 639-1 code indicating the language of the model.
+      "!   ISO 639-1 code that indicates the language of the model.
       LANGUAGE type STRING,
       "!   Model description.
       DESCRIPTION type STRING,
@@ -176,6 +178,8 @@ public section.
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
       "!   The model version, if it was manually provided in Watson Knowledge Studio.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
       VERSION type STRING,
       "!   The description of the version, if it was manually provided in Watson Knowledge
       "!    Studio.
@@ -360,8 +364,8 @@ public section.
     begin of T_TOKEN_RESULT,
       "!   The token as it appears in the analyzed text.
       TEXT type STRING,
-      "!   The part of speech of the token. For descriptions of the values, see [Universal
-      "!    Dependencies POS tags](https://universaldependencies.org/u/pos/).
+      "!   The part of speech of the token. For more information about the values, see
+      "!    [Universal Dependencies POS tags](https://universaldependencies.org/u/pos/).
       PART_OF_SPEECH type STRING,
       "!   Character offsets indicating the beginning and end of the token in the analyzed
       "!    text.
@@ -414,11 +418,10 @@ public section.
     "! <p class="shorttext synchronized" lang="en">
     "!    A categorization of the analyzed text.</p>
     begin of T_CATEGORIES_RESULT,
-      "!   The path to the category through the 5-level taxonomy hierarchy. For the
-      "!    complete list of categories, see the [Categories
-      "!    hierarchy](https://cloud.ibm.com/docs/services/natural-language-understanding?t
-      "!   opic=natural-language-understanding-categories#categories-hierarchy)
-      "!    documentation.
+      "!   The path to the category through the 5-level taxonomy hierarchy. For more
+      "!    information about the categories, see [Categories
+      "!    hierarchy](https://cloud.ibm.com/docs/natural-language-understanding?topic=natu
+      "!   ral-language-understanding-categories#categories-hierarchy).
       LABEL type STRING,
       "!   Confidence score for the category classification. Higher values indicate greater
       "!    confidence.
@@ -549,6 +552,33 @@ public section.
     end of T_SYNTAX_OPTIONS_TOKENS.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
+    begin of T_FILE_AND_METADATA,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type MAP,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
+      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   Model file exported from the advanced rules editor in Watson Knowledge Studio.
+      "!    For more information, see [Creating an advanced rules
+      "!    model](https://cloud.ibm.com/docs/watson-knowledge-studio?topic=watson-knowledg
+      "!   e-studio-create-advanced-rules-model#create-advanced-rules-model-procedure).
+      MODEL type FILE,
+    end of T_FILE_AND_METADATA.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Returns important keywords in the content.</p><br/>
     "!    <br/>
     "!    Supported languages: English, French, German, Italian, Japanese, Korean,
@@ -565,25 +595,26 @@ public section.
     "! <p class="shorttext synchronized" lang="en">
     "!    Recognizes when two entities are related and identifies the</p>
     "!     type of relation. For example, an `awardedTo` relation might connect the
-    "!     entities &quot;Nobel Prize&quot; and &quot;Albert Einstein&quot;. See [Relation
-    "!     types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-    "!    =natural-language-understanding-relations).<br/>
+    "!     entities &quot;Nobel Prize&quot; and &quot;Albert Einstein&quot;. For more
+    "!     information, see [Relation
+    "!     types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+    "!    language-understanding-relations).<br/>
     "!    <br/>
     "!    Supported languages: Arabic, English, German, Japanese, Korean, Spanish.
     "!     Chinese, Dutch, French, Italian, and Portuguese custom models are also
     "!     supported.
     begin of T_RELATIONS_OPTIONS,
       "!   Enter a [custom
-      "!    model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-      "!   =natural-language-understanding-customizing) ID to override the default model.
+      "!    model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-customizing) ID to override the default model.
       MODEL type STRING,
     end of T_RELATIONS_OPTIONS.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Identifies people, cities, organizations, and other entities</p>
-    "!     in the content. See [Entity types and
-    "!     subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-    "!    pic=natural-language-understanding-entity-types).<br/>
+    "!     in the content. For more information, see [Entity types and
+    "!     subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+    "!    al-language-understanding-entity-types).<br/>
     "!    <br/>
     "!    Supported languages: English, French, German, Italian, Japanese, Korean,
     "!     Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported
@@ -594,9 +625,9 @@ public section.
       "!   Set this to `true` to return locations of entity mentions.
       MENTIONS type BOOLEAN,
       "!   Enter a [custom
-      "!    model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-      "!   =natural-language-understanding-customizing) ID to override the standard entity
-      "!    detection model.
+      "!    model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-customizing) ID to override the standard entity detection
+      "!    model.
       MODEL type STRING,
       "!   Set this to `true` to return sentiment information for detected entities.
       SENTIMENT type BOOLEAN,
@@ -615,12 +646,6 @@ public section.
       "!   Maximum number of concepts to return.
       LIMIT type INTEGER,
     end of T_CONCEPTS_OPTIONS.
-  types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    Returns information from the document, including author</p>
-    "!     name, title, RSS/ATOM feeds, prominent page image, and publication date.
-    "!     Supports URL and HTML input types only.
-      T_METADATA_OPTIONS type JSONOBJECT.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Returns tokens and sentences from the input text.</p>
@@ -644,9 +669,9 @@ public section.
       "!   Maximum number of categories to return.
       LIMIT type INTEGER,
       "!   Enter a [custom
-      "!    model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-      "!   =natural-language-understanding-customizing) ID to override the standard
-      "!    categories model. <br/>
+      "!    model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-customizing) ID to override the standard categories
+      "!    model. <br/>
       "!   <br/>
       "!   The custom categories experimental feature will be retired on 19 December 2019.
       "!    On that date, deployed custom categories models will no longer be accessible in
@@ -673,10 +698,10 @@ public section.
       "!   <br/>
       "!   Supported languages: English.
       EMOTION type T_EMOTION_OPTIONS,
-      "!   Identifies people, cities, organizations, and other entities in the content. See
-      "!    [Entity types and
-      "!    subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-      "!   pic=natural-language-understanding-entity-types).<br/>
+      "!   Identifies people, cities, organizations, and other entities in the content. For
+      "!    more information, see [Entity types and
+      "!    subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+      "!   al-language-understanding-entity-types).<br/>
       "!   <br/>
       "!   Supported languages: English, French, German, Italian, Japanese, Korean,
       "!    Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported
@@ -690,12 +715,13 @@ public section.
       "!   Returns information from the document, including author name, title, RSS/ATOM
       "!    feeds, prominent page image, and publication date. Supports URL and HTML input
       "!    types only.
-      METADATA type T_METADATA_OPTIONS,
+      METADATA type JSONOBJECT,
       "!   Recognizes when two entities are related and identifies the type of relation.
       "!    For example, an `awardedTo` relation might connect the entities &quot;Nobel
-      "!    Prize&quot; and &quot;Albert Einstein&quot;. See [Relation
-      "!    types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-      "!   =natural-language-understanding-relations).<br/>
+      "!    Prize&quot; and &quot;Albert Einstein&quot;. For more information, see
+      "!    [Relation
+      "!    types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-relations).<br/>
       "!   <br/>
       "!   Supported languages: Arabic, English, German, Japanese, Korean, Spanish.
       "!    Chinese, Dutch, French, Italian, and Portuguese custom models are also
@@ -723,20 +749,38 @@ public section.
     end of T_FEATURES.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    Webpage metadata, such as the author and the title of the</p>
-    "!     page.
-    begin of T_ANALYSIS_RESULTS_METADATA,
-      "!   The authors of the document.
-      AUTHORS type STANDARD TABLE OF T_AUTHOR WITH NON-UNIQUE DEFAULT KEY,
-      "!   The publication date in the format ISO 8601.
-      PUBLICATION_DATE type STRING,
-      "!   The title of the document.
-      TITLE type STRING,
-      "!   URL of a prominent image on the webpage.
-      IMAGE type STRING,
-      "!   RSS/ATOM feeds found on the webpage.
-      FEEDS type STANDARD TABLE OF T_FEED WITH NON-UNIQUE DEFAULT KEY,
-    end of T_ANALYSIS_RESULTS_METADATA.
+    "!    Advanced rules model.</p>
+    begin of T_BASE_ADVANCED_RULES_MODEL,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type MAP,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
+      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   The service features that are supported by the custom model.
+      FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   When the status is `available`, the model is ready to use.
+      STATUS type STRING,
+      "!   Unique model ID.
+      MODEL_ID type STRING,
+      "!   dateTime indicating when the model was created.
+      CREATED type DATETIME,
+      "!   dateTime of last successful model training.
+      LAST_TRAINED type DATETIME,
+      "!   dateTime of last successful model deployment.
+      LAST_DEPLOYED type DATETIME,
+    end of T_BASE_ADVANCED_RULES_MODEL.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    API usage information for the request.</p>
@@ -771,7 +815,7 @@ public section.
       "!   The anger, disgust, fear, joy, or sadness conveyed by the content.
       EMOTION type T_EMOTION_RESULT,
       "!   Webpage metadata, such as the author and the title of the page.
-      METADATA type T_ANALYSIS_RESULTS_METADATA,
+      METADATA type T_FEATURES_RESULTS_METADATA,
       "!   The relationships between entities in the content.
       RELATIONS type STANDARD TABLE OF T_RELATIONS_RESULT WITH NON-UNIQUE DEFAULT KEY,
       "!   Sentences parsed into `subject`, `action`, and `object` form.
@@ -793,6 +837,63 @@ public section.
     end of T_SEMANTIC_ROLES_SUBJECT.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    (Experimental) Returns a summary of content.</p><br/>
+    "!    <br/>
+    "!    Supported languages: English only.
+    begin of T_SUMMARIZATION_OPTIONS,
+      "!   Maximum number of summary sentences to return.
+      LIMIT type INTEGER,
+    end of T_SUMMARIZATION_OPTIONS.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    (Experimental) Summary of content.</p>
+    begin of T_SUMMARIZATION_RESULT,
+      "!   Summary sentences of input source.
+      TEXT type STRING,
+    end of T_SUMMARIZATION_RESULT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Advanced rules model.</p>
+    begin of T_ADVANCED_RULES_MODEL,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type MAP,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
+      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   The service features that are supported by the custom model.
+      FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   When the status is `available`, the model is ready to use.
+      STATUS type STRING,
+      "!   Unique model ID.
+      MODEL_ID type STRING,
+      "!   dateTime indicating when the model was created.
+      CREATED type DATETIME,
+      "!   dateTime of last successful model training.
+      LAST_TRAINED type DATETIME,
+      "!   dateTime of last successful model deployment.
+      LAST_DEPLOYED type DATETIME,
+    end of T_ADVANCED_RULES_MODEL.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of advanced rules models.</p>
+    begin of T_ADVANCED_RULES_MODEL_LIST,
+      "!   The advanced rules models.
+      MODELS type STANDARD TABLE OF T_ADVANCED_RULES_MODEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_ADVANCED_RULES_MODEL_LIST.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Custom models that are available for entities and relations.</p>
     begin of T_LIST_MODELS_RESULTS,
       "!   An array of available models.
@@ -808,6 +909,12 @@ public section.
     end of T_SEMANTIC_ROLES_OBJECT.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    Returns information from the document, including author</p>
+    "!     name, title, RSS/ATOM feeds, prominent page image, and publication date.
+    "!     Supports URL and HTML input types only.
+      T_METADATA_OPTIONS type JSONOBJECT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    An object containing request parameters.</p>
     begin of T_PARAMETERS,
       "!   The plain text to analyze. One of the `text`, `html`, or `url` parameters is
@@ -821,17 +928,17 @@ public section.
       URL type STRING,
       "!   Specific features to analyze the document for.
       FEATURES type T_FEATURES,
-      "!   Set this to `false` to disable webpage cleaning. To learn more about webpage
-      "!    cleaning, see the [Analyzing
-      "!    webpages](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-      "!   pic=natural-language-understanding-analyzing-webpages) documentation.
+      "!   Set this to `false` to disable webpage cleaning. For more information about
+      "!    webpage cleaning, see [Analyzing
+      "!    webpages](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+      "!   al-language-understanding-analyzing-webpages).
       CLEAN type BOOLEAN,
       "!   An [XPath
-      "!    query](https://cloud.ibm.com/docs/services/natural-language-understanding?topic
-      "!   =natural-language-understanding-analyzing-webpages#xpath) to perform on `html`
-      "!    or `url` input. Results of the query will be appended to the cleaned webpage
-      "!    text before it is analyzed. To analyze only the results of the XPath query, set
-      "!    the `clean` parameter to `false`.
+      "!    query](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-analyzing-webpages#xpath) to perform on `html` or `url`
+      "!    input. Results of the query will be appended to the cleaned webpage text before
+      "!    it is analyzed. To analyze only the results of the XPath query, set the `clean`
+      "!    parameter to `false`.
       XPATH type STRING,
       "!   Whether to use raw HTML content if text cleaning fails.
       FALLBACK_TO_RAW type BOOLEAN,
@@ -839,17 +946,77 @@ public section.
       RETURN_ANALYZED_TEXT type BOOLEAN,
       "!   ISO 639-1 code that specifies the language of your text. This overrides
       "!    automatic language detection. Language support differs depending on the
-      "!    features you include in your analysis. See [Language
-      "!    support](https://cloud.ibm.com/docs/services/natural-language-understanding?top
-      "!   ic=natural-language-understanding-language-support) for more information.
+      "!    features you include in your analysis. For more information, see [Language
+      "!    support](https://cloud.ibm.com/docs/natural-language-understanding?topic=natura
+      "!   l-language-understanding-language-support).
       LANGUAGE type STRING,
       "!   Sets the maximum number of characters that are processed by the service.
       LIMIT_TEXT_CHARACTERS type INTEGER,
     end of T_PARAMETERS.
   types:
+    "! No documentation available.
+    begin of T_SENTIMENT_MODEL,
+      "!   The service features that are supported by the custom model.
+      FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   When the status is `available`, the model is ready to use.
+      STATUS type STRING,
+      "!   Unique model ID.
+      MODEL_ID type STRING,
+      "!   dateTime indicating when the model was created.
+      CREATED type DATETIME,
+      "!   dateTime of last successful model training.
+      LAST_TRAINED type DATETIME,
+      "!   dateTime of last successful model deployment.
+      LAST_DEPLOYED type DATETIME,
+      "!   A name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type MAP,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
+      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+    end of T_SENTIMENT_MODEL.
+  types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Link to the corresponding DBpedia resource.</p>
       T_DBPEDIA_RESOURCE type String.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
+    begin of T_SNTMNT_MDL_FILE_AND_METADATA,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type MAP,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
+      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   Training data in CSV format. For more information, see [Sentiment training data
+      "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+      "!   atural-language-understanding-customizing#sentiment-training-data-requirements).
+      "!
+      TRAINING_DATA type FILE,
+    end of T_SNTMNT_MDL_FILE_AND_METADATA.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Metadata associated with this custom model.</p>
@@ -858,11 +1025,13 @@ public section.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
       USER_METADATA type MAP,
-      "!   The language code of this model.
+      "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   Deprecated — use `model_version`.
       VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
@@ -872,6 +1041,9 @@ public section.
       "!   No documentation available.
       FILE type FILE,
     end of T_MODEL_FILE_AND_METADATA.
+  types:
+    "! No documentation available.
+      T_ADVNCD_RLS_ANALYSIS_RESULTS type JSONOBJECT.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Delete model results.</p>
@@ -926,6 +1098,7 @@ constants:
     T_SENTIMENT_OPTIONS type string value '|',
     T_SEMANTIC_ROLES_ACTION type string value '|',
     T_SYNTAX_OPTIONS_TOKENS type string value '|',
+    T_FILE_AND_METADATA type string value '|LANGUAGE|',
     T_KEYWORDS_OPTIONS type string value '|',
     T_RELATIONS_OPTIONS type string value '|',
     T_ENTITIES_OPTIONS type string value '|',
@@ -933,13 +1106,19 @@ constants:
     T_SYNTAX_OPTIONS type string value '|',
     T_CATEGORIES_OPTIONS type string value '|',
     T_FEATURES type string value '|',
-    T_ANALYSIS_RESULTS_METADATA type string value '|',
+    T_BASE_ADVANCED_RULES_MODEL type string value '|LANGUAGE|',
     T_ANALYSIS_RESULTS_USAGE type string value '|',
     T_ANALYSIS_RESULTS type string value '|',
     T_SEMANTIC_ROLES_SUBJECT type string value '|',
+    T_SUMMARIZATION_OPTIONS type string value '|',
+    T_SUMMARIZATION_RESULT type string value '|',
+    T_ADVANCED_RULES_MODEL type string value '|LANGUAGE|STATUS|MODEL_ID|CREATED|',
+    T_ADVANCED_RULES_MODEL_LIST type string value '|',
     T_LIST_MODELS_RESULTS type string value '|',
     T_SEMANTIC_ROLES_OBJECT type string value '|',
     T_PARAMETERS type string value '|FEATURES|',
+    T_SENTIMENT_MODEL type string value '|',
+    T_SNTMNT_MDL_FILE_AND_METADATA type string value '|LANGUAGE|TRAINING_DATA|',
     T_MODEL_FILE_AND_METADATA type string value '|LANGUAGE|FILE|',
     T_DELETE_MODEL_RESULTS type string value '|',
     __DUMMY type string value SPACE,
@@ -948,15 +1127,30 @@ constants:
 constants:
   "! <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p>
   begin of C_ABAPNAME_DICTIONARY,
+     NAME type string value 'name',
+     USER_METADATA type string value 'user_metadata',
+     INNER type string value 'inner',
+     LANGUAGE type string value 'language',
+     DESCRIPTION type string value 'description',
+     MODEL_VERSION type string value 'model_version',
+     VERSION type string value 'version',
+     WORKSPACE_ID type string value 'workspace_id',
+     VERSION_DESCRIPTION type string value 'version_description',
+     FEATURES type string value 'features',
+     STATUS type string value 'status',
+     MODEL_ID type string value 'model_id',
+     CREATED type string value 'created',
+     LAST_TRAINED type string value 'last_trained',
+     LAST_DEPLOYED type string value 'last_deployed',
+     MODELS type string value 'models',
+     MODEL type string value 'model',
      TEXT type string value 'text',
      HTML type string value 'html',
      URL type string value 'url',
-     FEATURES type string value 'features',
      CLEAN type string value 'clean',
      XPATH type string value 'xpath',
      FALLBACK_TO_RAW type string value 'fallback_to_raw',
      RETURN_ANALYZED_TEXT type string value 'return_analyzed_text',
-     LANGUAGE type string value 'language',
      LIMIT_TEXT_CHARACTERS type string value 'limit_text_characters',
      CONCEPTS type string value 'concepts',
      EMOTION type string value 'emotion',
@@ -968,23 +1162,12 @@ constants:
      SENTIMENT type string value 'sentiment',
      CATEGORIES type string value 'categories',
      SYNTAX type string value 'syntax',
-     MODELS type string value 'models',
      DELETED type string value 'deleted',
-     STATUS type string value 'status',
-     MODEL_ID type string value 'model_id',
-     DESCRIPTION type string value 'description',
-     WORKSPACE_ID type string value 'workspace_id',
-     VERSION type string value 'version',
-     VERSION_DESCRIPTION type string value 'version_description',
-     CREATED type string value 'created',
-     NAME type string value 'name',
-     USER_METADATA type string value 'user_metadata',
-     INNER type string value 'inner',
+     TRAINING_DATA type string value 'training_data',
      FILE type string value 'file',
      ANALYZED_TEXT type string value 'analyzed_text',
      RETRIEVED_URL type string value 'retrieved_url',
      USAGE type string value 'usage',
-     SEMANTICROLES type string value 'semanticRoles',
      TEXT_CHARACTERS type string value 'text_characters',
      TEXT_UNITS type string value 'text_units',
      RELEVANCE type string value 'relevance',
@@ -1025,11 +1208,9 @@ constants:
      PART_OF_SPEECH type string value 'part_of_speech',
      LEMMA type string value 'lemma',
      LIMIT type string value 'limit',
-     MODEL type string value 'model',
      CODE type string value 'code',
      ERROR type string value 'error',
      RELEVANT_TEXT type string value 'relevant_text',
-     RELEVANTTEXT type string value 'relevantText',
   end of C_ABAPNAME_DICTIONARY .
 
 
@@ -1052,12 +1233,13 @@ constants:
     "!   - Relations<br/>
     "!   - Semantic roles<br/>
     "!   - Sentiment<br/>
-    "!   - Syntax (Experimental).<br/>
+    "!   - Syntax<br/>
+    "!   - Summarization (Experimental)<br/>
     "!   <br/>
     "!   If a language for the input text is not specified with the `language` parameter,
     "!    the service [automatically detects the
-    "!    language](https://cloud.ibm.com/docs/services/natural-language-understanding?to
-    "!   pic=natural-language-understanding-detectable-languages).
+    "!    language](https://cloud.ibm.com/docs/natural-language-understanding?topic=natur
+    "!   al-language-understanding-detectable-languages).
     "!
     "! @parameter I_PARAMETERS |
     "!   An object containing request parameters. The `features` object and one of the
@@ -1078,9 +1260,9 @@ constants:
 
     "! <p class="shorttext synchronized" lang="en">List models</p>
     "!   Lists Watson Knowledge Studio [custom entities and relations
-    "!    models](https://cloud.ibm.com/docs/services/natural-language-understanding?topi
-    "!   c=natural-language-understanding-customizing) that are deployed to your Natural
-    "!    Language Understanding service.
+    "!    models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural
+    "!   -language-understanding-customizing) that are deployed to your Natural Language
+    "!    Understanding service.
     "!
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_LIST_MODELS_RESULTS
@@ -1115,10 +1297,6 @@ constants:
 protected section.
 
 private section.
-
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
 
 ENDCLASS.
 
@@ -1161,22 +1339,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'ICP4D'.
-    e_request_prop-auth_name       = 'ICP4D'.
-    e_request_prop-auth_type       = 'apiKey'.
-    e_request_prop-auth_headername = 'Authorization'.
-    e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/natural-language-understanding/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.natural-language-understanding.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -1188,7 +1358,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173433'.
+    e_sdk_version_date = '20210312144437'.
 
   endmethod.
 
@@ -1252,15 +1422,15 @@ method ANALYZE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -1373,23 +1543,5 @@ method DELETE_MODEL.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

@@ -14,6 +14,12 @@
    <DESCRIPTIONS>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
+     <CMPNAME>BULK_CLASSIFY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Identify intents and entities in multiple user utterances</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
      <CMPNAME>CREATE_SESSION</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Create a session</DESCRIPT>
@@ -26,9 +32,27 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
+     <CMPNAME>DELETE_USER_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Delete labeled data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
+     <CMPNAME>LIST_LOGS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>List log events for an assistant</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
      <CMPNAME>MESSAGE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Send user input to assistant</DESCRIPT>
+     <DESCRIPT>Send user input to assistant (stateful)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_ASSISTANT_V2</CLSNAME>
+     <CMPNAME>MESSAGE_STATELESS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Send user input to assistant (stateless)</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

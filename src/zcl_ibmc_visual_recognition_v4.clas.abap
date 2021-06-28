@@ -12,8 +12,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 "! <p class="shorttext synchronized" lang="en">Visual Recognition v4</p>
-"! Provide images to the IBM Watson&trade; Visual Recognition service for analysis.
-"!  The service detects objects based on a set of images with training data. <br/>
+"! IBM Watson&trade; Visual Recognition is discontinued. Existing instances are
+"!  supported until 1 December 2021, but as of 7 January 2021, you can&apos;t
+"!  create instances. Any instance that is provisioned on 1 December 2021 will be
+"!  deleted.<br/>
+"! &#123;: deprecated&#125;<br/>
+"! <br/>
+"! Provide images to the IBM Watson Visual Recognition service for analysis. The
+"!  service detects objects based on a set of images with training data. <br/>
 class ZCL_IBMC_VISUAL_RECOGNITION_V4 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -45,6 +51,8 @@ public section.
       DATA_CHANGED type BOOLEAN,
       "!   Whether the most recent training failed.
       LATEST_FAILED type BOOLEAN,
+      "!   Whether the model can be downloaded after the training status is `ready`.
+      RSCNN_READY type BOOLEAN,
       "!   Details about the training. If training is in progress, includes information
       "!    about the status. If training is not in progress, includes a success message or
       "!    information about why training failed.
@@ -103,6 +111,13 @@ public section.
     end of T_TRAINING_DATA_OBJECTS.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    Training status information for the collection.</p>
+    begin of T_COLLECTION_TRAINING_STATUS,
+      "!   Training status for the objects in the collection.
+      OBJECTS type T_OBJECT_TRAINING_STATUS,
+    end of T_COLLECTION_TRAINING_STATUS.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Details about a collection.</p>
     begin of T_COLLECTION,
       "!   The identifier of the collection.
@@ -120,7 +135,7 @@ public section.
       "!   Number of images in the collection.
       IMAGE_COUNT type INTEGER,
       "!   Training status information for the collection.
-      TRAINING_STATUS type T_TRAINING_STATUS,
+      TRAINING_STATUS type T_COLLECTION_TRAINING_STATUS,
     end of T_COLLECTION.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -131,6 +146,19 @@ public section.
       "!   Width in pixels of the image.
       WIDTH type INTEGER,
     end of T_IMAGE_DIMENSIONS.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Defines the location of the bounding box around the object.</p>
+    begin of T_OBJECT_DETAIL_LOCATION,
+      "!   Y-position of top-left pixel of the bounding box.
+      TOP type INTEGER,
+      "!   X-position of top-left pixel of the bounding box.
+      LEFT type INTEGER,
+      "!   Width in pixels of of the bounding box.
+      WIDTH type INTEGER,
+      "!   Height in pixels of the bounding box.
+      HEIGHT type INTEGER,
+    end of T_OBJECT_DETAIL_LOCATION.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Details about the specific area of the problem.</p>
@@ -205,7 +233,7 @@ public section.
       "!   The label for the object.
       OBJECT type STRING,
       "!   Defines the location of the bounding box around the object.
-      LOCATION type T_LOCATION,
+      LOCATION type T_OBJECT_DETAIL_LOCATION,
       "!   Confidence score for the object in the range of 0 to 1. A higher score indicates
       "!    greater likelihood that the object is depicted at this location in the image.
       SCORE type FLOAT,
@@ -289,7 +317,7 @@ public section.
       SOURCE type T_IMAGE_SOURCE,
       "!   Height and width of an image.
       DIMENSIONS type T_IMAGE_DIMENSIONS,
-      "!   No documentation available.
+      "!   Details about the errors.
       ERRORS type STANDARD TABLE OF T_ERROR WITH NON-UNIQUE DEFAULT KEY,
       "!   Training data for all objects.
       TRAINING_DATA type T_TRAINING_DATA_OBJECTS,
@@ -444,14 +472,16 @@ constants:
   "! <p class="shorttext synchronized" lang="en">List of required fields per type.</p>
   begin of C_REQUIRED_FIELDS,
     T_LOCATION type string value '|TOP|LEFT|WIDTH|HEIGHT|',
-    T_OBJECT_TRAINING_STATUS type string value '|READY|IN_PROGRESS|DATA_CHANGED|LATEST_FAILED|DESCRIPTION|',
+    T_OBJECT_TRAINING_STATUS type string value '|READY|IN_PROGRESS|DATA_CHANGED|LATEST_FAILED|RSCNN_READY|DESCRIPTION|',
     T_TRAINING_STATUS type string value '|OBJECTS|',
     T_OBJECT_METADATA type string value '|',
     T_IMAGE_SOURCE type string value '|TYPE|',
     T_TRAINING_DATA_OBJECT type string value '|',
     T_TRAINING_DATA_OBJECTS type string value '|',
+    T_COLLECTION_TRAINING_STATUS type string value '|OBJECTS|',
     T_COLLECTION type string value '|COLLECTION_ID|NAME|DESCRIPTION|CREATED|UPDATED|IMAGE_COUNT|TRAINING_STATUS|',
     T_IMAGE_DIMENSIONS type string value '|',
+    T_OBJECT_DETAIL_LOCATION type string value '|TOP|LEFT|WIDTH|HEIGHT|',
     T_ERROR_TARGET type string value '|TYPE|NAME|',
     T_ERROR type string value '|CODE|MESSAGE|',
     T_ERROR_RESPONSE type string value '|ERRORS|TRACE|',
@@ -473,7 +503,7 @@ constants:
     T_IMAGE type string value '|SOURCE|DIMENSIONS|OBJECTS|',
     T_ANALYZE_RESPONSE type string value '|IMAGES|',
     T_BASE_COLLECTION type string value '|',
-    T_UPDATE_OBJECT_METADATA type string value '|OBJECT|COUNT|',
+    T_UPDATE_OBJECT_METADATA type string value '|OBJECT|',
     T_OBJECT_METADATA_LIST type string value '|OBJECT_COUNT|',
     __DUMMY type string value SPACE,
   end of C_REQUIRED_FIELDS .
@@ -513,6 +543,7 @@ constants:
      IN_PROGRESS type string value 'in_progress',
      DATA_CHANGED type string value 'data_changed',
      LATEST_FAILED type string value 'latest_failed',
+     RSCNN_READY type string value 'rscnn_ready',
      IMAGE_ID type string value 'image_id',
      SOURCE type string value 'source',
      DIMENSIONS type string value 'dimensions',
@@ -528,12 +559,9 @@ constants:
      TOP type string value 'top',
      LEFT type string value 'left',
      COLLECTION_IDS type string value 'collection_ids',
-     COLLECTIONIDS type string value 'collectionIds',
      FEATURES type string value 'features',
      IMAGES_FILE type string value 'images_file',
-     IMAGESFILE type string value 'imagesFile',
      IMAGE_URL type string value 'image_url',
-     IMAGEURL type string value 'imageUrl',
      THRESHOLD type string value 'threshold',
   end of C_ABAPNAME_DICTIONARY .
 
@@ -685,6 +713,36 @@ constants:
     importing
       !I_COLLECTION_ID type STRING
       !I_accept      type string default 'application/json'
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Get a model</p>
+    "!   Download a model that you can deploy to detect objects in images. The collection
+    "!    must include a generated model, which is indicated in the response for the
+    "!    collection details as `&quot;rscnn_ready&quot;: true`. If the value is `false`,
+    "!    train or retrain the collection to generate the model.<br/>
+    "!   <br/>
+    "!   Currently, the model format is specific to Android apps. For more information
+    "!    about how to deploy the model to your app, see the [Watson Visual Recognition
+    "!    on Android](https://github.com/matt-ny/rscnn) project in GitHub.
+    "!
+    "! @parameter I_COLLECTION_ID |
+    "!   The identifier of the collection.
+    "! @parameter I_FEATURE |
+    "!   The feature for the model.
+    "! @parameter I_MODEL_FORMAT |
+    "!   The format of the returned model.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type FILE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods GET_MODEL_FILE
+    importing
+      !I_COLLECTION_ID type STRING
+      !I_FEATURE type STRING
+      !I_MODEL_FORMAT type STRING
+      !I_accept      type string default 'application/octet-stream'
+    exporting
+      !E_RESPONSE type FILE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
 
@@ -966,8 +1024,8 @@ constants:
     "!
   methods GET_TRAINING_USAGE
     importing
-      !I_START_TIME type STRING optional
-      !I_END_TIME type STRING optional
+      !I_START_TIME type DATE optional
+      !I_END_TIME type DATE optional
       !I_accept      type string default 'application/json'
     exporting
       !E_RESPONSE type T_TRAINING_EVENTS
@@ -999,10 +1057,6 @@ constants:
 protected section.
 
 private section.
-
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
 
 ENDCLASS.
 
@@ -1045,13 +1099,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/visual-recognition/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.visual-recognition.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -1063,7 +1118,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173444'.
+    e_sdk_version_date = '20210312144448'.
 
   endmethod.
 
@@ -1118,8 +1173,8 @@ method ANALYZE.
 
     if not i_COLLECTION_IDS is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="collection_ids"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_COLLECTION_IDS> like line of i_COLLECTION_IDS.
       loop at i_COLLECTION_IDS assigning <l_COLLECTION_IDS>.
@@ -1130,8 +1185,8 @@ method ANALYZE.
 
     if not i_FEATURES is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="features"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_FEATURES> like line of i_FEATURES.
       loop at i_FEATURES assigning <l_FEATURES>.
@@ -1142,8 +1197,8 @@ method ANALYZE.
 
     if not i_IMAGE_URL is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="image_url"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_IMAGE_URL> like line of i_IMAGE_URL.
       loop at i_IMAGE_URL assigning <l_IMAGE_URL>.
@@ -1154,9 +1209,9 @@ method ANALYZE.
 
     if not i_THRESHOLD is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="threshold"'  ##NO_TEXT.
-      lv_formdata = i_THRESHOLD.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_THRESHOLD i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
@@ -1267,15 +1322,15 @@ method CREATE_COLLECTION.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -1449,15 +1504,15 @@ method UPDATE_COLLECTION.
     endif.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -1514,6 +1569,68 @@ method DELETE_COLLECTION.
 
 endmethod.
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_MODEL_FILE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_COLLECTION_ID        TYPE STRING
+* | [--->] I_FEATURE        TYPE STRING
+* | [--->] I_MODEL_FORMAT        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/octet-stream')
+* | [<---] E_RESPONSE                    TYPE        FILE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method GET_MODEL_FILE.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v4/collections/{collection_id}/model'.
+    replace all occurrences of `{collection_id}` in ls_request_prop-url-path with i_COLLECTION_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+    " process query parameters
+    data:
+      lv_queryparam type string.
+
+    lv_queryparam = escape( val = i_FEATURE format = cl_abap_format=>e_uri_full ).
+    add_query_parameter(
+      exporting
+        i_parameter  = `feature`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+
+    lv_queryparam = escape( val = i_MODEL_FORMAT format = cl_abap_format=>e_uri_full ).
+    add_query_parameter(
+      exporting
+        i_parameter  = `model_format`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve file data
+    e_response = get_response_binary( lo_response ).
+
+endmethod.
+
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->ADD_IMAGES
@@ -1564,8 +1681,8 @@ method ADD_IMAGES.
 
     if not i_IMAGE_URL is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="image_url"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_IMAGE_URL> like line of i_IMAGE_URL.
       loop at i_IMAGE_URL assigning <l_IMAGE_URL>.
@@ -1576,8 +1693,8 @@ method ADD_IMAGES.
 
     if not i_TRAINING_DATA is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="training_data"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_TRAINING_DATA.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1937,15 +2054,15 @@ method UPDATE_OBJECT_METADATA.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -2165,15 +2282,15 @@ method ADD_IMAGE_TRAINING_DATA.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -2194,8 +2311,8 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_VISUAL_RECOGNITION_V4->GET_TRAINING_USAGE
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_START_TIME        TYPE STRING(optional)
-* | [--->] I_END_TIME        TYPE STRING(optional)
+* | [--->] I_START_TIME        TYPE DATE(optional)
+* | [--->] I_END_TIME        TYPE DATE(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_TRAINING_EVENTS
 * | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
@@ -2222,7 +2339,7 @@ method GET_TRAINING_USAGE.
       lv_queryparam type string.
 
     if i_START_TIME is supplied.
-    lv_queryparam = escape( val = i_START_TIME format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = i_START_TIME.
     add_query_parameter(
       exporting
         i_parameter  = `start_time`
@@ -2232,7 +2349,7 @@ method GET_TRAINING_USAGE.
     endif.
 
     if i_END_TIME is supplied.
-    lv_queryparam = escape( val = i_END_TIME format = cl_abap_format=>e_uri_full ).
+    lv_queryparam = i_END_TIME.
     add_query_parameter(
       exporting
         i_parameter  = `end_time`
@@ -2310,23 +2427,5 @@ method DELETE_USER_DATA.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_VISUAL_RECOGNITION_V4->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.
