@@ -13,7 +13,7 @@
 * limitations under the License.
 "! <p class="shorttext synchronized" lang="en">Language Translator</p>
 "! IBM Watson&trade; Language Translator translates text from one language to
-"!  another. The service offers multiple IBM provided translation models that you
+"!  another. The service offers multiple IBM-provided translation models that you
 "!  can customize based on your unique terminology and language. Use Language
 "!  Translator to take news from across the globe and present it in your language,
 "!  communicate with your customers in their own language, and more. <br/>
@@ -55,6 +55,13 @@ public section.
       WORD_COUNT type INTEGER,
       "!   Number of characters in the input text.
       CHARACTER_COUNT type INTEGER,
+      "!   The language code of the source text if the source language was automatically
+      "!    detected.
+      DETECTED_LANGUAGE type STRING,
+      "!   A score between 0 and 1 indicating the confidence of source language detection.
+      "!    A higher value indicates greater confidence. This is returned only when the
+      "!    service automatically detects the source language.
+      DETECTED_LANGUAGE_CONFIDENCE type DOUBLE,
       "!   List of translation output in UTF-8, corresponding to the input text entries.
       TRANSLATIONS type STANDARD TABLE OF T_TRANSLATION WITH NON-UNIQUE DEFAULT KEY,
     end of T_TRANSLATION_RESULT.
@@ -72,6 +79,33 @@ public section.
       "!   A ranking of identified languages with confidence scores.
       LANGUAGES type STANDARD TABLE OF T_IDENTIFIED_LANGUAGE WITH NON-UNIQUE DEFAULT KEY,
     end of T_IDENTIFIED_LANGUAGES.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Response payload for languages.</p>
+    begin of T_LANGUAGE,
+      "!   The language code for the language (for example, `af`).
+      LANGUAGE type STRING,
+      "!   The name of the language in English (for example, `Afrikaans`).
+      LANGUAGE_NAME type STRING,
+      "!   The native name of the language (for example, `Afrikaans`).
+      NATIVE_LANGUAGE_NAME type STRING,
+      "!   The country code for the language (for example, `ZA` for South Africa).
+      COUNTRY_CODE type STRING,
+      "!   Indicates whether words of the language are separated by whitespace: `true` if
+      "!    the words are separated; `false` otherwise.
+      WORDS_SEPARATED type BOOLEAN,
+      "!   Indicates the direction of the language: `right_to_left` or `left_to_right`.
+      DIRECTION type STRING,
+      "!   Indicates whether the language can be used as the source for translation: `true`
+      "!    if the language can be used as the source; `false` otherwise.
+      SUPPORTED_AS_SOURCE type BOOLEAN,
+      "!   Indicates whether the language can be used as the target for translation: `true`
+      "!    if the language can be used as the target; `false` otherwise.
+      SUPPORTED_AS_TARGET type BOOLEAN,
+      "!   Indicates whether the language supports automatic detection: `true` if the
+      "!    language can be detected automatically; `false` otherwise.
+      IDENTIFIABLE type BOOLEAN,
+    end of T_LANGUAGE.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Translation target language code.</p>
@@ -101,6 +135,10 @@ public section.
       BASE_MODEL_ID type STRING,
       "!   Translation source language code.
       SOURCE type STRING,
+      "!   A score between 0 and 1 indicating the confidence of source language detection.
+      "!    A higher value indicates greater confidence. This is returned only when the
+      "!    service automatically detects the source language.
+      DETECTED_LANGUAGE_CONFIDENCE type DOUBLE,
       "!   Translation target language code.
       TARGET type STRING,
       "!   The time when the document was submitted.
@@ -116,6 +154,9 @@ public section.
     end of T_DOCUMENT_STATUS.
   types:
     "! No documentation available.
+      T_GET_TRANSLATED_DOC_RESPONSE type FILE.
+  types:
+    "! No documentation available.
     begin of T_ERROR_RESPONSE,
       "!   The http error code.
       CODE type INTEGER,
@@ -129,38 +170,54 @@ public section.
   types:
     "! No documentation available.
     begin of T_INLINE_OBJECT1,
-      "!   The model to use for translation. `model_id` or both `source` and `target` are
-      "!    required.
+      "!   The model to use for translation. For example, `en-de` selects the IBM-provided
+      "!    base model for English-to-German translation. A model ID overrides the `source`
+      "!    and `target` parameters and is required if you use a custom model. If no model
+      "!    ID is specified, you must specify at least a target language.
       MODEL_ID type STRING,
-      "!   Language code that specifies the language of the source document.
+      "!   Language code that specifies the language of the source document. If omitted,
+      "!    the service derives the source language from the input text. The input must
+      "!    contain sufficient text for the service to identify the language reliably.
       SOURCE type STRING,
-      "!   Language code that specifies the target language for translation.
+      "!   Language code that specifies the target language for translation. Required if
+      "!    model ID is not specified.
       TARGET type STRING,
       "!   To use a previously submitted document as the source for a new translation,
       "!    enter the `document_id` of the document.
       DOCUMENT_ID type STRING,
-      "!   The contents of the source file to translate.<br/>
-      "!   <br/>
-      "!   [Supported file
-      "!    types](https://cloud.ibm.com/docs/services/language-translator?topic=language-t
-      "!   ranslator-document-translator-tutorial#supported-file-formats)<br/>
-      "!   <br/>
-      "!   Maximum file size: **20 MB**.
+      "!   The contents of the source file to translate. The maximum file size for document
+      "!    translation is 20 MB for service instances on the Standard, Advanced, and
+      "!    Premium plans, and 2 MB for service instances on the Lite plan. For more
+      "!    information, see [Supported file formats
+      "!    (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translato
+      "!   r-document-translator-tutorial#supported-file-formats).
       FILE type FILE,
     end of T_INLINE_OBJECT1.
   types:
     "! No documentation available.
     begin of T_INLINE_OBJECT,
-      "!   A TMX file with your customizations. The customizations in the file completely
-      "!    overwrite the domain translaton data, including high frequency or high
-      "!    confidence phrase translations. You can upload only one glossary with a file
-      "!    size less than 10 MB per call. A forced glossary should contain single words or
-      "!    short phrases.
+      "!   A file with forced glossary terms for the source and target languages. The
+      "!    customizations in the file completely overwrite the domain translation data,
+      "!    including high frequency or high confidence phrase translations. <br/>
+      "!   <br/>
+      "!   You can upload only one glossary file for a custom model, and the glossary can
+      "!    have a maximum size of 10 MB. A forced glossary must contain single words or
+      "!    short phrases. For more information, see **Supported file formats** in the
+      "!    method description. <br/>
+      "!   <br/>
+      "!   *With `curl`, use `--form forced_glossary=&#64;&#123;filename&#125;`.*.
       FORCED_GLOSSARY type FILE,
-      "!   A TMX file with parallel sentences for source and target language. You can
-      "!    upload multiple parallel_corpus files in one request. All uploaded
-      "!    parallel_corpus files combined, your parallel corpus must contain at least
-      "!    5,000 parallel sentences to train successfully.
+      "!   A file with parallel sentences for the source and target languages. You can
+      "!    upload multiple parallel corpus files in one request by repeating the
+      "!    parameter. All uploaded parallel corpus files combined must contain at least
+      "!    5000 parallel sentences to train successfully. You can provide a maximum of
+      "!    500,000 parallel sentences across all corpora. <br/>
+      "!   <br/>
+      "!   A single entry in a corpus file can contain a maximum of 80 words. All corpora
+      "!    files for a custom model can have a cumulative maximum size of 250 MB. For more
+      "!    information, see **Supported file formats** in the method description. <br/>
+      "!   <br/>
+      "!   *With `curl`, use `--form parallel_corpus=&#64;&#123;filename&#125;`.*.
       PARALLEL_CORPUS type FILE,
     end of T_INLINE_OBJECT.
   types:
@@ -209,21 +266,34 @@ public section.
       T_BASE_MODEL_ID type String.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    The response type for listing supported languages.</p>
+    begin of T_LANGUAGES,
+      "!   An array of supported languages with information about each language.
+      LANGUAGES type STANDARD TABLE OF T_LANGUAGE WITH NON-UNIQUE DEFAULT KEY,
+    end of T_LANGUAGES.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    System generated ID identifying a document being translated</p>
     "!     using one specific translation model.
       T_DOCUMENT_ID type String.
   types:
     "! No documentation available.
     begin of T_TRANSLATE_REQUEST,
-      "!   Input text in UTF-8 encoding. Multiple entries will result in multiple
-      "!    translations in the response.
+      "!   Input text in UTF-8 encoding. Submit a maximum of 50 KB (51,200 bytes) of text
+      "!    with a single request. Multiple elements result in multiple translations in the
+      "!    response.
       TEXT type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
-      "!   A globally unique string that identifies the underlying model that is used for
-      "!    translation.
+      "!   The model to use for translation. For example, `en-de` selects the IBM-provided
+      "!    base model for English-to-German translation. A model ID overrides the `source`
+      "!    and `target` parameters and is required if you use a custom model. If no model
+      "!    ID is specified, you must specify at least a target language.
       MODEL_ID type STRING,
-      "!   Translation source language code.
+      "!   Language code that specifies the language of the input text. If omitted, the
+      "!    service derives the source language from the input text. The input must contain
+      "!    sufficient text for the service to identify the language reliably.
       SOURCE type STRING,
-      "!   Translation target language code.
+      "!   Language code that specifies the target language for translation. Required if
+      "!    model ID is not specified.
       TARGET type STRING,
     end of T_TRANSLATE_REQUEST.
   types:
@@ -248,12 +318,14 @@ constants:
     T_TRANSLATION_RESULT type string value '|WORD_COUNT|CHARACTER_COUNT|TRANSLATIONS|',
     T_IDENTIFIED_LANGUAGE type string value '|LANGUAGE|CONFIDENCE|',
     T_IDENTIFIED_LANGUAGES type string value '|LANGUAGES|',
+    T_LANGUAGE type string value '|',
     T_DOCUMENT_STATUS type string value '|DOCUMENT_ID|FILENAME|STATUS|MODEL_ID|SOURCE|TARGET|CREATED|',
     T_ERROR_RESPONSE type string value '|CODE|ERROR|',
     T_INLINE_OBJECT1 type string value '|FILE|',
     T_INLINE_OBJECT type string value '|',
     T_TRANSLATION_MODEL type string value '|MODEL_ID|',
     T_TRANSLATION_MODELS type string value '|MODELS|',
+    T_LANGUAGES type string value '|LANGUAGES|',
     T_TRANSLATE_REQUEST type string value '|TEXT|',
     T_DELETE_MODEL_RESULT type string value '|STATUS|',
     T_DOCUMENT_LIST type string value '|DOCUMENTS|',
@@ -270,11 +342,22 @@ constants:
      MODEL_ID type string value 'model_id',
      BASE_MODEL_ID type string value 'base_model_id',
      SOURCE type string value 'source',
+     DETECTED_LANGUAGE_CONFIDENCE type string value 'detected_language_confidence',
      TARGET type string value 'target',
      CREATED type string value 'created',
      COMPLETED type string value 'completed',
      WORD_COUNT type string value 'word_count',
      CHARACTER_COUNT type string value 'character_count',
+     LANGUAGES type string value 'languages',
+     LANGUAGE type string value 'language',
+     LANGUAGE_NAME type string value 'language_name',
+     NATIVE_LANGUAGE_NAME type string value 'native_language_name',
+     COUNTRY_CODE type string value 'country_code',
+     WORDS_SEPARATED type string value 'words_separated',
+     DIRECTION type string value 'direction',
+     SUPPORTED_AS_SOURCE type string value 'supported_as_source',
+     SUPPORTED_AS_TARGET type string value 'supported_as_target',
+     IDENTIFIABLE type string value 'identifiable',
      MODELS type string value 'models',
      NAME type string value 'name',
      DOMAIN type string value 'domain',
@@ -282,10 +365,9 @@ constants:
      DEFAULT_MODEL type string value 'default_model',
      OWNER type string value 'owner',
      TEXT type string value 'text',
+     DETECTED_LANGUAGE type string value 'detected_language',
      TRANSLATIONS type string value 'translations',
      TRANSLATION type string value 'translation',
-     LANGUAGES type string value 'languages',
-     LANGUAGE type string value 'language',
      CONFIDENCE type string value 'confidence',
      CODE type string value 'code',
      ERROR type string value 'error',
@@ -303,8 +385,36 @@ constants:
     redefinition .
 
 
+    "! <p class="shorttext synchronized" lang="en">List supported languages</p>
+    "!   Lists all supported languages for translation. The method returns an array of
+    "!    supported languages with information about each language. Languages are listed
+    "!    in alphabetical order by language code (for example, `af`, `ar`). In addition
+    "!    to basic information about each language, the response indicates whether the
+    "!    language is `supported_as_source` for translation and `supported_as_target` for
+    "!    translation. It also lists whether the language is `identifiable`.
+    "!
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_LANGUAGES
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods LIST_LANGUAGES
+    importing
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_LANGUAGES
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+
     "! <p class="shorttext synchronized" lang="en">Translate</p>
     "!   Translates the input text from the source language to the target language.
+    "!    Specify a model ID that indicates the source and target languages, or specify
+    "!    the source and target languages individually. You can omit the source language
+    "!    to have the service attempt to detect the language from the input text. If you
+    "!    omit the source language, the request must contain sufficient input text for
+    "!    the service to identify the source language. <br/>
+    "!   <br/>
+    "!   You can translate a maximum of 50 KB (51,200 bytes) of text with a single
+    "!    request. All input text must be encoded in UTF-8 format.
     "!
     "! @parameter I_REQUEST |
     "!   The translate request containing the text, and either a model ID or source and
@@ -365,11 +475,11 @@ constants:
     "! @parameter I_TARGET |
     "!   Specify a language code to filter results by target language.
     "! @parameter I_DEFAULT |
-    "!   If the default parameter isn&apos;t specified, the service will return all
-    "!    models (default and non-default) for each language pair. To return only default
-    "!    models, set this to `true`. To return only non-default models, set this to
-    "!    `false`. There is exactly one default model per language pair, the IBM provided
-    "!    base model.
+    "!   If the `default` parameter isn&apos;t specified, the service returns all models
+    "!    (default and non-default) for each language pair. To return only default
+    "!    models, set this parameter to `true`. To return only non-default models, set
+    "!    this parameter to `false`. There is exactly one default model, the IBM-provided
+    "!    base model, per language pair.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TRANSLATION_MODELS
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -385,45 +495,112 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Create model</p>
-    "!   Uploads Translation Memory eXchange (TMX) files to customize a translation
-    "!    model.<br/>
+    "!   Uploads training files to customize a translation model. You can customize a
+    "!    model with a forced glossary or with a parallel corpus:<br/>
+    "!   * Use a *forced glossary* to force certain terms and phrases to be translated in
+    "!    a specific way. You can upload only a single forced glossary file for a model.
+    "!    The size of a forced glossary file for a custom model is limited to 10 MB.<br/>
+    "!   * Use a *parallel corpus* when you want your custom model to learn from general
+    "!    translation patterns in parallel sentences in your samples. What your model
+    "!    learns from a parallel corpus can improve translation results for input text
+    "!    that the model has not been trained on. You can upload multiple parallel
+    "!    corpora files with a request. To successfully train with parallel corpora, the
+    "!    corpora files must contain a cumulative total of at least 5000 parallel
+    "!    sentences. The cumulative size of all uploaded corpus files for a custom model
+    "!    is limited to 250 MB. <br/>
     "!   <br/>
-    "!   You can either customize a model with a forced glossary or with a corpus that
-    "!    contains parallel sentences. To create a model that is customized with a
-    "!    parallel corpus &lt;b&gt;and&lt;/b&gt; a forced glossary, proceed in two steps:
-    "!    customize with a parallel corpus first and then customize the resulting model
-    "!    with a glossary. Depending on the type of customization and the size of the
-    "!    uploaded corpora, training can range from minutes for a glossary to several
-    "!    hours for a large parallel corpus. You can upload a single forced glossary file
-    "!    and this file must be less than &lt;b&gt;10 MB&lt;/b&gt;. You can upload
-    "!    multiple parallel corpora tmx files. The cumulative file size of all uploaded
-    "!    files is limited to &lt;b&gt;250 MB&lt;/b&gt;. To successfully train with a
-    "!    parallel corpus you must have at least &lt;b&gt;5,000 parallel
-    "!    sentences&lt;/b&gt; in your corpus.<br/>
+    "!   Depending on the type of customization and the size of the uploaded files,
+    "!    training time can range from minutes for a glossary to several hours for a
+    "!    large parallel corpus. To create a model that is customized with a parallel
+    "!    corpus and a forced glossary, customize the model with a parallel corpus first
+    "!    and then customize the resulting model with a forced glossary. <br/>
     "!   <br/>
-    "!   You can have a &lt;b&gt;maximum of 10 custom models per language pair&lt;/b&gt;.
-    "!
+    "!   You can create a maximum of 10 custom models per language pair. For more
+    "!    information about customizing a translation model, including the formatting and
+    "!    character restrictions for data files, see [Customizing your
+    "!    model](https://cloud.ibm.com/docs/language-translator?topic=language-translator
+    "!   -customizing). <br/>
+    "!   <br/>
+    "!   #### Supported file formats<br/>
+    "!   <br/>
+    "!    You can provide your training data for customization in the following document
+    "!    formats: <br/>
+    "!   * **TMX** (`.tmx`) - Translation Memory eXchange (TMX) is an XML specification
+    "!    for the exchange of translation memories. <br/>
+    "!   * **XLIFF** (`.xliff`) - XML Localization Interchange File Format (XLIFF) is an
+    "!    XML specification for the exchange of translation memories. <br/>
+    "!   * **CSV** (`.csv`) - Comma-separated values (CSV) file with two columns for
+    "!    aligned sentences and phrases. The first row must have two language codes. The
+    "!    first column is for the source language code, and the second column is for the
+    "!    target language code. <br/>
+    "!   * **TSV** (`.tsv` or `.tab`) - Tab-separated values (TSV) file with two columns
+    "!    for aligned sentences and phrases. The first row must have two language codes.
+    "!    The first column is for the source language code, and the second column is for
+    "!    the target language code. <br/>
+    "!   * **JSON** (`.json`) - Custom JSON format for specifying aligned sentences and
+    "!    phrases.<br/>
+    "!   * **Microsoft Excel** (`.xls` or `.xlsx`) - Excel file with the first two
+    "!    columns for aligned sentences and phrases. The first row contains the language
+    "!    code. <br/>
+    "!   <br/>
+    "!   You must encode all text data in UTF-8 format. For more information, see
+    "!    [Supported document formats for training
+    "!    data](https://cloud.ibm.com/docs/language-translator?topic=language-translator-
+    "!   customizing#supported-document-formats-for-training-data). <br/>
+    "!   <br/>
+    "!   #### Specifying file formats<br/>
+    "!   <br/>
+    "!    You can indicate the format of a file by including the file extension with the
+    "!    file name. Use the file extensions shown in **Supported file formats**. <br/>
+    "!   <br/>
+    "!   Alternatively, you can omit the file extension and specify one of the following
+    "!    `content-type` specifications for the file:<br/>
+    "!   * **TMX** - `application/x-tmx+xml` <br/>
+    "!   * **XLIFF** - `application/xliff+xml`<br/>
+    "!   * **CSV** - `text/csv`<br/>
+    "!   * **TSV** - `text/tab-separated-values`<br/>
+    "!   * **JSON** - `application/json`<br/>
+    "!   * **Microsoft Excel** -
+    "!    `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` <br/>
+    "!   <br/>
+    "!   For example, with `curl`, use the following `content-type` specification to
+    "!    indicate the format of a CSV file named **glossary**: <br/>
+    "!   <br/>
+    "!   `--form &quot;forced_glossary=&#64;glossary;type=text/csv&quot;`
     "!
     "! @parameter I_BASE_MODEL_ID |
-    "!   The model ID of the model to use as the base for customization. To see available
-    "!    models, use the `List models` method. Usually all IBM provided models are
-    "!    customizable. In addition, all your models that have been created via parallel
-    "!    corpus customization, can be further customized with a forced glossary.
+    "!   The ID of the translation model to use as the base for customization. To see
+    "!    available models and IDs, use the `List models` method. Most models that are
+    "!    provided with the service are customizable. In addition, all models that you
+    "!    create with parallel corpora customization can be further customized with a
+    "!    forced glossary.
     "! @parameter I_FORCED_GLOSSARY |
-    "!   A TMX file with your customizations. The customizations in the file completely
-    "!    overwrite the domain translaton data, including high frequency or high
-    "!    confidence phrase translations. You can upload only one glossary with a file
-    "!    size less than 10 MB per call. A forced glossary should contain single words or
-    "!    short phrases.
+    "!   A file with forced glossary terms for the source and target languages. The
+    "!    customizations in the file completely overwrite the domain translation data,
+    "!    including high frequency or high confidence phrase translations. <br/>
+    "!   <br/>
+    "!   You can upload only one glossary file for a custom model, and the glossary can
+    "!    have a maximum size of 10 MB. A forced glossary must contain single words or
+    "!    short phrases. For more information, see **Supported file formats** in the
+    "!    method description. <br/>
+    "!   <br/>
+    "!   *With `curl`, use `--form forced_glossary=&#64;&#123;filename&#125;`.*.
     "! @parameter I_PARALLEL_CORPUS |
-    "!   A TMX file with parallel sentences for source and target language. You can
-    "!    upload multiple parallel_corpus files in one request. All uploaded
-    "!    parallel_corpus files combined, your parallel corpus must contain at least
-    "!    5,000 parallel sentences to train successfully.
+    "!   A file with parallel sentences for the source and target languages. You can
+    "!    upload multiple parallel corpus files in one request by repeating the
+    "!    parameter. All uploaded parallel corpus files combined must contain at least
+    "!    5000 parallel sentences to train successfully. You can provide a maximum of
+    "!    500,000 parallel sentences across all corpora. <br/>
+    "!   <br/>
+    "!   A single entry in a corpus file can contain a maximum of 80 words. All corpora
+    "!    files for a custom model can have a cumulative maximum size of 250 MB. For more
+    "!    information, see **Supported file formats** in the method description. <br/>
+    "!   <br/>
+    "!   *With `curl`, use `--form parallel_corpus=&#64;&#123;filename&#125;`.*.
     "! @parameter I_NAME |
     "!   An optional model name that you can use to identify the model. Valid characters
-    "!    are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum
-    "!    length is 32 characters.
+    "!    are letters, numbers, dashes, underscores, spaces, and apostrophes. The maximum
+    "!    length of the name is 32 characters.
     "! @parameter E_RESPONSE |
     "!   Service return value of type T_TRANSLATION_MODEL
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
@@ -462,7 +639,7 @@ constants:
     "! <p class="shorttext synchronized" lang="en">Get model details</p>
     "!   Gets information about a translation model, including training status for custom
     "!    models. Use this API call to poll the status of your customization request. A
-    "!    successfully completed training will have a status of `available`.
+    "!    successfully completed training has a status of `available`.
     "!
     "! @parameter I_MODEL_ID |
     "!   Model ID of the model to get.
@@ -496,27 +673,33 @@ constants:
     "! <p class="shorttext synchronized" lang="en">Translate document</p>
     "!   Submit a document for translation. You can submit the document contents in the
     "!    `file` parameter, or you can reference a previously submitted document by
-    "!    document ID.
+    "!    document ID. The maximum file size for document translation is<br/>
+    "!   * 20 MB for service instances on the Standard, Advanced, and Premium plans<br/>
+    "!   * 2 MB for service instances on the Lite plan
     "!
     "! @parameter I_FILE |
-    "!   The contents of the source file to translate.<br/>
-    "!   <br/>
-    "!   [Supported file
-    "!    types](https://cloud.ibm.com/docs/services/language-translator?topic=language-t
-    "!   ranslator-document-translator-tutorial#supported-file-formats)<br/>
-    "!   <br/>
-    "!   Maximum file size: **20 MB**.
+    "!   The contents of the source file to translate. The maximum file size for document
+    "!    translation is 20 MB for service instances on the Standard, Advanced, and
+    "!    Premium plans, and 2 MB for service instances on the Lite plan. For more
+    "!    information, see [Supported file formats
+    "!    (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translato
+    "!   r-document-translator-tutorial#supported-file-formats).
     "! @parameter I_FILENAME |
     "!   The filename for file.
     "! @parameter I_FILE_CONTENT_TYPE |
     "!   The content type of file.
     "! @parameter I_MODEL_ID |
-    "!   The model to use for translation. `model_id` or both `source` and `target` are
-    "!    required.
+    "!   The model to use for translation. For example, `en-de` selects the IBM-provided
+    "!    base model for English-to-German translation. A model ID overrides the `source`
+    "!    and `target` parameters and is required if you use a custom model. If no model
+    "!    ID is specified, you must specify at least a target language.
     "! @parameter I_SOURCE |
-    "!   Language code that specifies the language of the source document.
+    "!   Language code that specifies the language of the source document. If omitted,
+    "!    the service derives the source language from the input text. The input must
+    "!    contain sufficient text for the service to identify the language reliably.
     "! @parameter I_TARGET |
-    "!   Language code that specifies the target language for translation.
+    "!   Language code that specifies the target language for translation. Required if
+    "!    model ID is not specified.
     "! @parameter I_DOCUMENT_ID |
     "!   To use a previously submitted document as the source for a new translation,
     "!    enter the `document_id` of the document.
@@ -605,10 +788,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_LANG_TRANSLATOR_V3 IMPLEMENTATION.
@@ -650,17 +829,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/language-translator/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.language-translator.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -672,10 +848,57 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173429'.
+    e_sdk_version_date = '20210312144434'.
 
   endmethod.
 
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_LANG_TRANSLATOR_V3->LIST_LANGUAGES
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_LANGUAGES
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method LIST_LANGUAGES.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v3/languages'.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -736,15 +959,15 @@ method TRANSLATE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -867,15 +1090,15 @@ method IDENTIFY.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -1280,8 +1503,8 @@ method TRANSLATE_DOCUMENT.
 
     if not i_MODEL_ID is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="model_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_MODEL_ID.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1289,8 +1512,8 @@ method TRANSLATE_DOCUMENT.
 
     if not i_SOURCE is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="source"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_SOURCE.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1298,8 +1521,8 @@ method TRANSLATE_DOCUMENT.
 
     if not i_TARGET is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="target"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_TARGET.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1307,8 +1530,8 @@ method TRANSLATE_DOCUMENT.
 
     if not i_DOCUMENT_ID is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="document_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_DOCUMENT_ID.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1488,23 +1711,5 @@ method GET_TRANSLATED_DOCUMENT.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_LANG_TRANSLATOR_V3->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

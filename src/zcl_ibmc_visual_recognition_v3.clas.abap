@@ -12,10 +12,16 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 "! <p class="shorttext synchronized" lang="en">Visual Recognition</p>
-"! The IBM Watson&trade; Visual Recognition service uses deep learning algorithms
-"!  to identify scenes and objects in images that you upload to the service. You
-"!  can create and train a custom classifier to identify subjects that suit your
-"!  needs. <br/>
+"! IBM Watson&trade; Visual Recognition is discontinued. Existing instances are
+"!  supported until 1 December 2021, but as of 7 January 2021, you can&apos;t
+"!  create instances. Any instance that is provisioned on 1 December 2021 will be
+"!  deleted.<br/>
+"! &#123;: deprecated&#125;<br/>
+"! <br/>
+"! The IBM Watson Visual Recognition service uses deep learning algorithms to
+"!  identify scenes and objects in images that you upload to the service. You can
+"!  create and train a custom classifier to identify subjects that suit your needs.
+"!  <br/>
 class ZCL_IBMC_VISUAL_RECOGNITION_V3 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -356,7 +362,6 @@ constants:
      THRESHOLD type string value 'threshold',
      OWNERS type string value 'owners',
      CLASSIFIER_IDS type string value 'classifier_ids',
-     CLASSIFIERID type string value 'classifierId',
      POSITIVE_EXAMPLES type string value 'positive_examples',
      NEGATIVE_EXAMPLES type string value 'negative_examples',
   end of C_ABAPNAME_DICTIONARY .
@@ -654,10 +659,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_VISUAL_RECOGNITION_V3 IMPLEMENTATION.
@@ -699,13 +700,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/visual-recognition/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.visual-recognition.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -717,7 +719,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173442'.
+    e_sdk_version_date = '20210312144446'.
 
   endmethod.
 
@@ -788,8 +790,8 @@ method CLASSIFY.
 
     if not i_URL is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="url"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_URL.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -797,17 +799,17 @@ method CLASSIFY.
 
     if not i_THRESHOLD is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="threshold"'  ##NO_TEXT.
-      lv_formdata = i_THRESHOLD.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_THRESHOLD i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
     endif.
 
     if not i_OWNERS is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="owners"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_OWNERS> like line of i_OWNERS.
       loop at i_OWNERS assigning <l_OWNERS>.
@@ -824,8 +826,8 @@ method CLASSIFY.
 
     if not i_CLASSIFIER_IDS is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="classifier_ids"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       field-symbols:
         <l_CLASSIFIER_IDS> like line of i_CLASSIFIER_IDS.
       loop at i_CLASSIFIER_IDS assigning <l_CLASSIFIER_IDS>.
@@ -928,8 +930,8 @@ method CREATE_CLASSIFIER.
 
     if not i_NAME is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -1329,23 +1331,5 @@ method DELETE_USER_DATA.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_VISUAL_RECOGNITION_V3->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

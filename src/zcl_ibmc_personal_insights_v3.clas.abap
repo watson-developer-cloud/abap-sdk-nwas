@@ -12,12 +12,25 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 "! <p class="shorttext synchronized" lang="en">Personality Insights</p>
-"! The IBM Watson&trade; Personality Insights service enables applications to
-"!  derive insights from social media, enterprise data, or other digital
-"!  communications. The service uses linguistic analytics to infer
-"!  individuals&apos; intrinsic personality characteristics, including Big Five,
-"!  Needs, and Values, from digital communications such as email, text messages,
-"!  tweets, and forum posts.<br/>
+"! IBM&reg; will begin sunsetting IBM Watson&trade; Personality Insights on 1
+"!  December 2020. For a period of one year from this date, you will still be able
+"!  to use Watson Personality Insights. However, as of 1 December 2021, the
+"!  offering will no longer be available.&lt;br/&gt;&lt;br/&gt;As an alternative,
+"!  we encourage you to consider migrating to IBM Watson&trade; Natural Language
+"!  Understanding, a service on IBM Cloud&reg; that uses deep learning to extract
+"!  data and insights from text such as keywords, categories, sentiment, emotion,
+"!  and syntax to provide insights for your business or industry. For more
+"!  information, see [About Natural Language
+"!  Understanding](https://cloud.ibm.com/docs/natural-language-understanding?topic=
+"! natural-language-understanding-about).<br/>
+"! &#123;: deprecated&#125;<br/>
+"! <br/>
+"! The IBM Watson Personality Insights service enables applications to derive
+"!  insights from social media, enterprise data, or other digital communications.
+"!  The service uses linguistic analytics to infer individuals&apos; intrinsic
+"!  personality characteristics, including Big Five, Needs, and Values, from
+"!  digital communications such as email, text messages, tweets, and forum
+"!  posts.<br/>
 "! <br/>
 "! The service can automatically infer, from potentially noisy social media,
 "!  portraits of individuals that reflect their personality characteristics. The
@@ -287,7 +300,6 @@ constants:
      VALUES type string value 'values',
      BEHAVIOR type string value 'behavior',
      CONSUMPTION_PREFERENCES type string value 'consumption_preferences',
-     CONSUMPTIONPREFERENCES type string value 'consumptionPreferences',
      WARNINGS type string value 'warnings',
      TRAIT_ID type string value 'trait_id',
      NAME type string value 'name',
@@ -303,7 +315,7 @@ constants:
      WARNING_ID type string value 'warning_id',
      MESSAGE type string value 'message',
      CONTENTITEMS type string value 'contentItems',
-     CONTENTITEM type string value 'contentItem',
+     CONTENT_ITEM type string value 'content_item',
      CONTENT type string value 'content',
      ID type string value 'id',
      CREATED type string value 'created',
@@ -542,10 +554,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_PERSONAL_INSIGHTS_V3 IMPLEMENTATION.
@@ -587,17 +595,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/personality-insights/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.personality-insights.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -609,7 +614,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173434'.
+    e_sdk_version_date = '20210312144439'.
 
   endmethod.
 
@@ -739,15 +744,15 @@ method PROFILE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -889,15 +894,15 @@ method PROFILE_AS_CSV.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -909,23 +914,5 @@ method PROFILE_AS_CSV.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_PERSONAL_INSIGHTS_V3->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

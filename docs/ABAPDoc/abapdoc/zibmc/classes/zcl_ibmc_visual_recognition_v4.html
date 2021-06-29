@@ -1,13 +1,20 @@
 <!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_VISUAL_RECOGNITION_V4</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_VISUAL_RECOGNITION_V4</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Visual Recognition v4</p>
- Provide images to the IBM Watson&trade; Visual Recognition service for analysis.
-  The service detects objects based on a set of images with training data. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_analyze_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+ IBM Watson&trade; Visual Recognition is discontinued. Existing instances are
+  supported until 1 December 2021, but as of 7 January 2021, you can&apos;t
+  create instances. Any instance that is provisioned on 1 December 2021 will be
+  deleted.<br/>
+ &#123;: deprecated&#125;<br/>
+ <br/>
+ Provide images to the IBM Watson Visual Recognition service for analysis. The
+  service detects objects based on a set of images with training data. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_analyze_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Results for all images.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_collection</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Base details about a collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_object</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Details about an object and its location.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_training_data_objects</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Container for the training data.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_collection</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Details about a collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_collections_list</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     A container for the list of collections.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_collection_objects</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The objects in a collection that are detected in an image.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_detected_objects</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The objects in a collection that are detected in an image.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_collection_training_status</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Training status information for the collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_detected_objects</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Container for the list of collections that have objects</p>
      detected in an image.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty</span> type JSONOBJECT</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Empty response.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
@@ -23,7 +30,8 @@
     List of images.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_jpeg_image</span> type FILE</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     A file returned in the response.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_location</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Defines the location of the bounding box around the object.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_detail</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Details about an object in the collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Details about an object in the collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_detail_location</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Defines the location of the bounding box around the object.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Basic information about an object.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_metadata_list</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     List of objects.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_object_training_status</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Training status for the objects in the collection.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_training_data_object</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
@@ -205,6 +213,25 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type FILE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_model_file</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_collection_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_feature</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_format</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;octet-stream&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type FILE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a model</p>
+   Download a model that you can deploy to detect objects in images. The collection
+    must include a generated model, which is indicated in the response for the
+    collection details as `&quot;rscnn_ready&quot;: true`. If the value is `false`,
+    train or retrain the collection to generate the model.<br/>
+   <br/>
+   Currently, the model format is specific to Android apps. For more information
+    about how to deploy the model to your app, see the [Watson Visual Recognition
+    on Android](https://github.com/matt-ny/rscnn) project in GitHub.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The identifier of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_feature</span></td><td><span class="abapDocComment">
+   The feature for the model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_model_format</span></td><td><span class="abapDocComment">
+   The format of the returned model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type FILE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_object_metadata</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_collection_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_object</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_OBJECT_METADATA</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get object metadata</p>
    Get the number of bounding boxes for a single object in a collection.
 
@@ -215,7 +242,7 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_OBJECT_METADATA
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_training_usage</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_start_time</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_time</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRAINING_EVENTS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get training usage</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_training_usage</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_start_time</span></td><td>type DATE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_end_time</span></td><td>type DATE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRAINING_EVENTS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get training usage</p>
    Information about the completed training events. You can use this information to
     determine how close you are to the training limits for the month.
 
@@ -289,4 +316,4 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_UPDATE_OBJECT_METADATA
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>

@@ -38,8 +38,8 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 </details>
 
 ## ANNOUNCEMENTS
-### Minor version 0.3.0 released
-Version v0.3.0 of the SDK has been released and includes one breaking change - see what's changed in the [migration guide](MIGRATION-V0.3.0.md).
+### Major version 1.0.0 released
+Version v1.0.0 of the SDK has been released and includes breaking changes - see what's changed in the [migration guide](MIGRATION-V1.0.0.md).
 
 ## Before you begin
 * You need an [IBM Cloud][ibm_cloud_onboarding] account.
@@ -184,21 +184,23 @@ Afterwards, service methods can be called as long as the provided token is valid
 The client library is delivered as package *ZIBMC*. Once the Git Repository has been cloned to the SAP system, a Watson service instance is wrapped by an ABAP class instance.<br>
 The following Watson services are currently supported:
 
-| Service                        | ABAP Class Name                |
-|:------------------------------ |:------------------------------ |
-| Compare and Comply             | ZCL_IBMC_COMPARE_COMPLY_V1     |
-| Discovery                      | ZCL_IBMC_DISCOVERY_V1          |
-| Language Translator            | ZCL_IBMC_LANG_TRANSLATOR_V3    |
-| Natural Language Classifier    | ZCL_IBMC_NAT_LANG_CLASS_V1     |
-| Natural Language Understanding | ZCL_IBMC_NAT_LANG_UNDRSTND_V1  |
-| Personality Insights           | ZCL_IBMC_PERSONAL_INSIGHTS_V3  |
-| Speech to Text                 | ZCL_IBMC_SPEECH_TO_TEXT_V1     |
-| Text to Speech                 | ZCL_IBMC_TEXT_TO_SPEECH_V1     |
-| Tone Analyzer                  | ZCL_IBMC_TONE_ANALYZER_V3      |
-| Visual Recognition             | ZCL_IBMC_VISUAL_RECOGNITION_V3 |
-|                                | ZCL_IBMC_VISUAL_RECOGNITION_V4 |
-| Watson Assistant               | ZCL_IBMC_ASSISTANT_V1          |
-|                                | ZCL_IBMC_ASSISTANT_V2          |
+| Service                        | ABAP Class Name                     |
+|:------------------------------ |:----------------------------------- |
+| Compare and Comply             | ZCL_IBMC_COMPARE_COMPLY_V1 (\*)     |
+| Discovery                      | ZCL_IBMC_DISCOVERY_V1               |
+| Language Translator            | ZCL_IBMC_LANG_TRANSLATOR_V3         |
+| Natural Language Classifier    | ZCL_IBMC_NAT_LANG_CLASS_V1          |
+| Natural Language Understanding | ZCL_IBMC_NAT_LANG_UNDRSTND_V1       |
+| Personality Insights           | ZCL_IBMC_PERSONAL_INSIGHTS_V3 (\*)  |
+| Speech to Text                 | ZCL_IBMC_SPEECH_TO_TEXT_V1          |
+| Text to Speech                 | ZCL_IBMC_TEXT_TO_SPEECH_V1          |
+| Tone Analyzer                  | ZCL_IBMC_TONE_ANALYZER_V3           |
+| Visual Recognition             | ZCL_IBMC_VISUAL_RECOGNITION_V3 (\*) |
+|                                | ZCL_IBMC_VISUAL_RECOGNITION_V4 (\*) |
+| Watson Assistant               | ZCL_IBMC_ASSISTANT_V1               |
+|                                | ZCL_IBMC_ASSISTANT_V2               |
+
+(\*) Deprecated service; will be discontinued in the future.
 
 Using the client library requires two steps:
 
@@ -319,63 +321,6 @@ Using the client library requires two steps:
 </details>
 
 <details>
-  <summary>Personality Insights Example</summary>
-
-```abap
-* Analyze profile using example text using Watson Personality Insights
-
-  " declare variables
-  data:
-    lv_apikey                  type string value '...',
-    lo_personality_insights    type ref to zcl_ibmc_personal_insights_v3,
-    lo_service_exception       type ref to zcx_ibmc_service_exception,
-    ls_content_item            type zcl_ibmc_personal_insights_v3=>t_content_item,
-    ls_response                type zcl_ibmc_personal_insights_v3=>t_profile,
-    ls_content                 type zcl_ibmc_personal_insights_v3=>t_content,
-    lv_content_language        type string value 'en',
-    lv_accept_language         type string value 'en',
-    lv_raw_scores              type boolean value 'C_BOOLEAN_FALSE',
-    lv_csv_headers             type boolean valiue 'C_BOOLEAN_FALSE',
-    lv_consumption_preferences type boolean value 'C_BOOLEAN_FALSE',
-    lv_accept                  type string value 'text/csv'.
-
-  " get Watson Personality Insights service instance
-  zcl_ibmc_service_ext=>get_instance(
-    exporting
-      i_url     = 'https://api.eu-gb.personality-insights.watson.cloud.ibm.com/instances/<uuid>'
-      i_apikey  = lv_apikey
-      i_version = '2018-05-01'
-    importing
-      eo_instance = lo_personality_insights ).
-
-  " store text to be analyzed into ls_content
-  " concatenate ... into ls_content_item-content
-  " append ls_content_item to ls_content-contentitems
-
-  " call Watson Personality Insights service to analyze text in ls_content
-  try.
-      lo_personality_insights->profile(
-        exporting
-          i_content                 = ls_content
-          i_content_language        = lv_content_language
-          i_accept_language         = lv_accept_language
-          i_raw_scores              = lv_raw_scores
-          i_csv_headers             = lv_csv_headers
-          i_consumption_preferences = lv_consumption_preferences
-        importing
-          e_response = ls_response ).
-
-    catch zcx_ibmc_service_exception into lo_service_exception.
-      message lo_service_exception type 'E'.
-  endtry.
-
-  " retreive profile analysis results from ls_response
-
-```
-
-</details>
-
-<details>
   <summary>Language Translator Example</summary>
 
 ```abap
@@ -434,7 +379,7 @@ GitHub Pages contain the [ABAP Client Library for Watson API Reference](https://
 
 The ABAP SDK is a Community SDK for IBM Watson, created by the IBM Watson development community and SAP's ABAP development community - written by ABAPers from IBM Cloud, IBM Services and IBM Systems. Therefore as a community release it is not updated with the same schedule as IBM-supported SDKs, and does not include support by IBM. For more information on IBM-supported SDKs and the update policy, please see https://cloud.ibm.com/docs/watson?topic=watson-using-sdks
 
-If you have questions about the IBM Watson services or are having difficulties using the APIs, please ask a question at [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
+If you have questions about the IBM Watson services or are having difficulties using the APIs, please ask a question at [IBM Support Forums](https://www.ibm.com/mysupport/s/forumshome) or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
 
 ## License
 

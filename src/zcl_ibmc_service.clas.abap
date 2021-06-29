@@ -411,6 +411,10 @@ protected section.
     changing
       !C_BASE type ANY .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
+  methods SET_DEFAULT_QUERY_PARAMETERS
+    changing
+      !C_URL type TS_URL .
+  "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   methods SET_URI_AND_AUTHORIZATION
     importing
       !I_CLIENT type TS_CLIENT
@@ -1180,6 +1184,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       lt_compname   type tt_string,
       lv_compname   type string,
       lv_index      type i,
+      lv_rowno      type i,
       begin of ls_stack,
         name   type string,
         ref    type ref to data,
@@ -1187,11 +1192,16 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
         type   type char,
       end of ls_stack,
       ls_stack_new like ls_stack,
-      lt_stack     like standard table of ls_stack.
+      lt_stack     like standard table of ls_stack,
+      lr_ref       type ref to data.
     field-symbols:
       <ls_dataref> type data,
+      <lt_table>   type standard table,
+      <lt_comp>    type standard table,
       <lv_comp>    type any,
       <lv_subcomp> type any,
+      <lv_tabrow>  type any,
+      <lv_comprow> type any,
       <lv_ref>     type ref to data,
       <lv_struct>  type any.
 
@@ -1211,29 +1221,24 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       if lv_index <= 0. exit. endif.
       read table lt_stack into ls_stack index lv_index.
 
-      assign ls_stack-ref->* to <ls_dataref>.
-      assign ls_stack-struct->* to <lv_struct>.
-      if ls_stack-name is initial.
-        assign e_abap to <lv_comp>.
-      else.
-        assign component ls_stack-name of structure <lv_struct> to <lv_comp>.
-      endif.
       if ls_stack-type eq 'u' or ls_stack-type eq 'v'.  " structure
+        assign ls_stack-struct->* to <lv_struct>.
+        assign ls_stack-ref->* to <ls_dataref>.
         get_components(
           exporting
-            i_structure = <lv_comp>
+            i_structure = <lv_struct>
           importing
             e_components = lt_compname ).
         loop at lt_compname into lv_compname.
+          assign component lv_compname of structure <lv_struct> to <lv_comp>.
           ls_stack_new-name = lv_compname.
           ls_stack_new-struct = ref #( <lv_comp> ).
           assign component lv_compname of structure <ls_dataref> to <lv_ref>.
           if sy-subrc = 0.
             ls_stack_new-ref = <lv_ref>.
-            assign component lv_compname of structure <lv_comp> to <lv_subcomp>.
             get_field_type(
               exporting
-                i_field = <lv_subcomp>
+                i_field = <lv_comp>
               importing
                 e_technical_type = ls_stack_new-type ).
             append ls_stack_new to lt_stack.
@@ -1241,14 +1246,38 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
         endloop.
 
       else.
-        if not ls_stack-name is initial.
-          assign ls_stack-struct->* to <lv_struct>.
-          assign component ls_stack-name of structure <lv_struct> to <lv_comp>.
-        endif.
-        if ls_stack-type eq 'l' or ls_stack-type eq 'r'.  " reference
-          <lv_comp> = ls_stack-ref.
+
+        if ls_stack-type eq 'h'.  " internal table
+          assign ls_stack-struct->* to <lt_comp>.
+          assign ls_stack-ref->* to <lt_table>.
+          loop at <lt_table> assigning <lv_tabrow>.
+            ls_stack_new-ref = <lv_tabrow>.
+            create data ls_stack_new-struct like line of <lt_comp>.
+            assign ls_stack_new-struct->* to <lv_comprow>.
+
+            append <lv_comprow> to <lt_comp>.                            " append copies data
+            lv_rowno = lines( <lt_comp> ).
+            read table <lt_comp> assigning <lv_comprow> index lv_rowno.  " -> re-read row for reference
+            ls_stack_new-struct = ref #( <lv_comprow> ).
+
+            get_field_type(
+              exporting
+                i_field = <lv_comprow>
+              importing
+                e_technical_type = ls_stack_new-type ).
+            clear ls_stack_new-name.
+            append ls_stack_new to lt_stack.
+          endloop.
+
         else.
-          <lv_comp> = <ls_dataref>.
+          assign ls_stack-struct->* to <lv_comp>.
+          if ls_stack-type eq 'l' or ls_stack-type eq 'r'.  " reference
+            <lv_comp> = ls_stack-ref.
+
+          else.  " simple type
+            assign ls_stack-ref->* to <ls_dataref>.
+            <lv_comp> = <ls_dataref>.
+          endif.
         endif.
       endif.
 
@@ -1441,6 +1470,20 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+  method set_default_query_parameters.
+
+    if not p_version is initial.
+      add_query_parameter(
+        exporting
+          i_parameter = `version`
+          i_value     = p_version
+        changing
+          c_url       = c_url ).
+    endif.
+
+  endmethod.
+
+
   method set_uri_and_authorization.
 
     data:
@@ -1482,7 +1525,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
         if i_request_prop-auth_apikey eq c_boolean_true.
           add_query_parameter(
             exporting
-              i_parameter = 'apikey'  ##NO_TEXT
+              i_parameter = 'apiKey'  ##NO_TEXT
               i_value     = lv_password
             changing
               c_url       = ls_url ).

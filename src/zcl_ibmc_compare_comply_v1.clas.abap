@@ -81,6 +81,8 @@ public section.
       LABEL type T_LABEL,
       "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The type of modification of the feedback entry in the updated labels response.
+      MODIFICATION type STRING,
     end of T_TYPE_LABEL.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -99,6 +101,8 @@ public section.
       LABEL type STRING,
       "!   Hashed values that you can send to IBM to provide feedback or receive support.
       PROVENANCE_IDS type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   The type of modification of the feedback entry in the updated labels response.
+      MODIFICATION type STRING,
     end of T_CATEGORY.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -110,10 +114,6 @@ public section.
       "!   List of functional categories into which the element falls; in other words, the
       "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
-      "!   A string identifying the type of modification the feedback entry in the
-      "!    `updated_labels` array. Possible values are `added`, `not_changed`, and
-      "!    `removed`.
-      MODIFICATION type STRING,
     end of T_ORIGINAL_LABELS_OUT.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -125,9 +125,6 @@ public section.
       "!   List of functional categories into which the element falls; in other words, the
       "!    subject matter of the element.
       CATEGORIES type STANDARD TABLE OF T_CATEGORY WITH NON-UNIQUE DEFAULT KEY,
-      "!   The type of modification the feedback entry in the `updated_labels` array.
-      "!    Possible values are `added`, `not_changed`, and `removed`.
-      MODIFICATION type STRING,
     end of T_UPDATED_LABELS_OUT.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -1165,37 +1162,24 @@ constants:
      MODEL_VERSION type string value 'model_version',
      ELEMENTS type string value 'elements',
      EFFECTIVE_DATES type string value 'effective_dates',
-     EFFECTIVEDATES type string value 'effectiveDates',
      CONTRACT_AMOUNTS type string value 'contract_amounts',
-     CONTRACTAMOUNTS type string value 'contractAmounts',
      TERMINATION_DATES type string value 'termination_dates',
-     TERMINATIONDATES type string value 'terminationDates',
      CONTRACT_TYPES type string value 'contract_types',
-     CONTRACTTYPES type string value 'contractTypes',
      CONTRACT_TERMS type string value 'contract_terms',
-     CONTRACTTERMS type string value 'contractTerms',
      PAYMENT_TERMS type string value 'payment_terms',
-     PAYMENTTERMS type string value 'paymentTerms',
      CONTRACT_CURRENCIES type string value 'contract_currencies',
-     CONTRACTCURRENCIES type string value 'contractCurrencies',
      TABLES type string value 'tables',
      DOCUMENT_STRUCTURE type string value 'document_structure',
      PARTIES type string value 'parties',
      SECTION_TITLES type string value 'section_titles',
-     SECTIONTITLES type string value 'sectionTitles',
      LEADING_SENTENCES type string value 'leading_sentences',
-     LEADINGSENTENCES type string value 'leadingSentences',
      PARAGRAPHS type string value 'paragraphs',
      DOCUMENTS type string value 'documents',
      ALIGNED_ELEMENTS type string value 'aligned_elements',
-     ALIGNEDELEMENTS type string value 'alignedElements',
      UNALIGNED_ELEMENTS type string value 'unaligned_elements',
-     UNALIGNEDELEMENTS type string value 'unalignedElements',
      ELEMENT_PAIR type string value 'element_pair',
-     ELEMENTPAIR type string value 'elementPair',
      IDENTICAL_TEXT type string value 'identical_text',
      PROVENANCE_IDS type string value 'provenance_ids',
-     PROVENANCEIDS type string value 'provenanceIds',
      SIGNIFICANT_ELEMENTS type string value 'significant_elements',
      DOCUMENT_LABEL type string value 'document_label',
      LOCATION type string value 'location',
@@ -1204,24 +1188,19 @@ constants:
      CATEGORIES type string value 'categories',
      ATTRIBUTES type string value 'attributes',
      LABEL type string value 'label',
+     MODIFICATION type string value 'modification',
      HASH type string value 'hash',
      CODE type string value 'code',
      ERROR type string value 'error',
      SECTION_TITLE type string value 'section_title',
      TABLE_HEADERS type string value 'table_headers',
-     TABLEHEADERS type string value 'tableHeaders',
      ROW_HEADERS type string value 'row_headers',
-     ROWHEADERS type string value 'rowHeaders',
      COLUMN_HEADERS type string value 'column_headers',
-     COLUMNHEADERS type string value 'columnHeaders',
      BODY_CELLS type string value 'body_cells',
-     BODYCELLS type string value 'bodyCells',
      CONTEXTS type string value 'contexts',
      KEY_VALUE_PAIRS type string value 'key_value_pairs',
-     KEYVALUEPAIRS type string value 'keyValuePairs',
      LEVEL type string value 'level',
      ELEMENT_LOCATIONS type string value 'element_locations',
-     ELEMENTLOCATIONS type string value 'elementLocations',
      BEGIN type string value 'begin',
      END type string value 'end',
      CELL_ID type string value 'cell_id',
@@ -1233,17 +1212,11 @@ constants:
      KEY type string value 'key',
      VALUE type string value 'value',
      ROW_HEADER_IDS type string value 'row_header_ids',
-     ROWHEADERIDS type string value 'rowHeaderIds',
      ROW_HEADER_TEXTS type string value 'row_header_texts',
-     ROWHEADERTEXTS type string value 'rowHeaderTexts',
      ROW_HEADER_TEXTS_NORMALIZED type string value 'row_header_texts_normalized',
-     ROWHEADERTEXTSNORMALIZED type string value 'rowHeaderTextsNormalized',
      COLUMN_HEADER_IDS type string value 'column_header_ids',
-     COLUMNHEADERIDS type string value 'columnHeaderIds',
      COLUMN_HEADER_TEXTS type string value 'column_header_texts',
-     COLUMNHEADERTEXTS type string value 'columnHeaderTexts',
      COLUMN_HEADER_TEXTS_NORMALIZED type string value 'column_header_texts_normalized',
-     COLUMNHEADERTEXTSNORMALIZED type string value 'columnHeaderTextsNormalized',
      USER_ID type string value 'user_id',
      COMMENT type string value 'comment',
      FEEDBACK_DATA type string value 'feedback_data',
@@ -1258,7 +1231,6 @@ constants:
      REFRESH_URL type string value 'refresh_url',
      NEXT_URL type string value 'next_url',
      TOTAL type string value 'total',
-     MODIFICATION type string value 'modification',
      FEEDBACK type string value 'feedback',
      STATUS type string value 'status',
      MESSAGE type string value 'message',
@@ -1459,12 +1431,6 @@ constants:
     "! @parameter I_FEEDBACK_TYPE |
     "!   An optional string that filters the output to include only feedback with the
     "!    specified feedback type. The only permitted value is `element_classification`.
-    "! @parameter I_BEFORE |
-    "!   An optional string in the format `YYYY-MM-DD` that filters the output to include
-    "!    only feedback that was added before the specified date.
-    "! @parameter I_AFTER |
-    "!   An optional string in the format `YYYY-MM-DD` that filters the output to include
-    "!    only feedback that was added after the specified date.
     "! @parameter I_DOCUMENT_TITLE |
     "!   An optional string that filters the output to include only feedback from the
     "!    document with the specified `document_title`.
@@ -1520,8 +1486,6 @@ constants:
   methods LIST_FEEDBACK
     importing
       !I_FEEDBACK_TYPE type STRING optional
-      !I_BEFORE type DATE optional
-      !I_AFTER type DATE optional
       !I_DOCUMENT_TITLE type STRING optional
       !I_MODEL_ID type STRING optional
       !I_MODEL_VERSION type STRING optional
@@ -1594,11 +1558,11 @@ constants:
     "!   <br/>
     "!   **Important:** Batch processing requires the use of the [IBM Cloud Object
     "!    Storage
-    "!    service](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-o
-    "!   bject-storage-about#about-ibm-cloud-object-storage). The use of IBM Cloud Object
-    "!    Storage with Compare and Comply is discussed at [Using batch
-    "!    processing](https://cloud.ibm.com/docs/services/compare-comply?topic=compare-co
-    "!   mply-batching#before-you-batch).
+    "!    service](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-sto
+    "!   rage-about#about-ibm-cloud-object-storage). The use of IBM Cloud Object Storage
+    "!    with Compare and Comply is discussed at [Using batch
+    "!    processing](https://cloud.ibm.com/docs/compare-comply?topic=compare-comply-batc
+    "!   hing#before-you-batch).
     "!
     "! @parameter I_FUNCTION |
     "!   The Compare and Comply method to run across the submitted input documents.
@@ -1715,10 +1679,6 @@ protected section.
 
 private section.
 
-  methods SET_DEFAULT_QUERY_PARAMETERS
-    changing
-      !C_URL type TS_URL .
-
 ENDCLASS.
 
 class ZCL_IBMC_COMPARE_COMPLY_V1 IMPLEMENTATION.
@@ -1760,22 +1720,14 @@ method GET_REQUEST_PROP.
     e_request_prop-auth_name       = 'IAM'.
     e_request_prop-auth_type       = 'apiKey'.
     e_request_prop-auth_headername = 'Authorization'.
+    e_request_prop-auth_query      = c_boolean_false.
     e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'ICP4D'.
-    e_request_prop-auth_name       = 'ICP4D'.
-    e_request_prop-auth_type       = 'apiKey'.
-    e_request_prop-auth_headername = 'Authorization'.
-    e_request_prop-auth_header     = c_boolean_true.
-  elseif lv_auth_method eq 'basicAuth'.
-    e_request_prop-auth_name       = 'basicAuth'.
-    e_request_prop-auth_type       = 'http'.
-    e_request_prop-auth_basic      = c_boolean_true.
   else.
   endif.
 
-  e_request_prop-url-protocol    = 'http'.
-  e_request_prop-url-host        = 'localhost'.
-  e_request_prop-url-path_base   = '/compare-comply/api'.
+  e_request_prop-url-protocol    = 'https'.
+  e_request_prop-url-host        = 'api.us-south.compare-comply.watson.cloud.ibm.com'.
+  e_request_prop-url-path_base   = ''.
 
 endmethod.
 
@@ -1787,7 +1739,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20200310173424'.
+    e_sdk_version_date = '20210312144429'.
 
   endmethod.
 
@@ -2242,15 +2194,15 @@ method ADD_FEEDBACK.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-	  lv_body = `{` && lv_body && `}`.
-	endif.
+      lv_body = `{` && lv_body && `}`.
+    endif.
 
-	if ls_request_prop-header_content_type cp '*charset=utf-8*'.
-	  ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-	  replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
-	else.
-	  ls_request_prop-body = lv_body.
-	endif.
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
 
 
     " execute HTTP POST request
@@ -2272,8 +2224,6 @@ endmethod.
 * | Instance Public Method ZCL_IBMC_COMPARE_COMPLY_V1->LIST_FEEDBACK
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_FEEDBACK_TYPE        TYPE STRING(optional)
-* | [--->] I_BEFORE        TYPE DATE(optional)
-* | [--->] I_AFTER        TYPE DATE(optional)
 * | [--->] I_DOCUMENT_TITLE        TYPE STRING(optional)
 * | [--->] I_MODEL_ID        TYPE STRING(optional)
 * | [--->] I_MODEL_VERSION        TYPE STRING(optional)
@@ -2317,26 +2267,6 @@ method LIST_FEEDBACK.
     add_query_parameter(
       exporting
         i_parameter  = `feedback_type`
-        i_value      = lv_queryparam
-      changing
-        c_url        = ls_request_prop-url )  ##NO_TEXT.
-    endif.
-
-    if i_BEFORE is supplied.
-    lv_queryparam = i_BEFORE.
-    add_query_parameter(
-      exporting
-        i_parameter  = `before`
-        i_value      = lv_queryparam
-      changing
-        c_url        = ls_request_prop-url )  ##NO_TEXT.
-    endif.
-
-    if i_AFTER is supplied.
-    lv_queryparam = i_AFTER.
-    add_query_parameter(
-      exporting
-        i_parameter  = `after`
         i_value      = lv_queryparam
       changing
         c_url        = ls_request_prop-url )  ##NO_TEXT.
@@ -2690,8 +2620,8 @@ method CREATE_BATCH.
 
     if not i_INPUT_BUCKET_LOCATION is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="input_bucket_location"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_INPUT_BUCKET_LOCATION.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -2699,8 +2629,8 @@ method CREATE_BATCH.
 
     if not i_INPUT_BUCKET_NAME is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="input_bucket_name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_INPUT_BUCKET_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -2708,8 +2638,8 @@ method CREATE_BATCH.
 
     if not i_OUTPUT_BUCKET_LOCATION is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="output_bucket_location"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_OUTPUT_BUCKET_LOCATION.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -2717,8 +2647,8 @@ method CREATE_BATCH.
 
     if not i_OUTPUT_BUCKET_NAME is initial.
       clear ls_form_part.
-      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       ls_form_part-content_disposition = 'form-data; name="output_bucket_name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
       lv_formdata = i_OUTPUT_BUCKET_NAME.
       ls_form_part-cdata = lv_formdata.
       append ls_form_part to lt_form_part.
@@ -2930,23 +2860,5 @@ method UPDATE_BATCH.
 
 endmethod.
 
-
-
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method ZCL_IBMC_COMPARE_COMPLY_V1->SET_DEFAULT_QUERY_PARAMETERS
-* +-------------------------------------------------------------------------------------------------+
-* | [<-->] C_URL                          TYPE        TS_URL
-* +--------------------------------------------------------------------------------------</SIGNATURE>
-  method set_default_query_parameters.
-    if not p_version is initial.
-      add_query_parameter(
-        exporting
-          i_parameter = `version`
-          i_value     = p_version
-        changing
-          c_url       = c_url ).
-    endif.
-  endmethod.
 
 ENDCLASS.

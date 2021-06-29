@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_LANG_TRANSLATOR_V3</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_LANG_TRANSLATOR_V3</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Language Translator</p>
  IBM Watson&trade; Language Translator translates text from one language to
-  another. The service offers multiple IBM provided translation models that you
+  another. The service offers multiple IBM-provided translation models that you
   can customize based on your unique terminology and language. Use Language
   Translator to take news from across the globe and present it in your language,
   communicate with your customers in their own language, and more. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_base_model_id</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
@@ -9,7 +9,9 @@
      string.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_delete_model_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_id</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     System generated ID identifying a document being translated</p>
      using one specific translation model.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_list</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_document_status</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Document information, including translation status.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_language</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_languages</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_language</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_languages</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_model_id</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Document information, including translation status.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_get_translated_doc_response</span> type FILE</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_language</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identifiable_languages</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_language</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_identified_languages</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_inline_object1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_language</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Response payload for languages.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_languages</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The response type for listing supported languages.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_model_id</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     A globally unique string that identifies the underlying</p>
      model that is used for translation.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_source</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Translation source language code.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_target</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
@@ -18,45 +20,112 @@
     The response type for listing existing translation models.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_translation_status</span> type STRING</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     The status of the translation job associated with a</p>
      submitted document.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_base_model_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_forced_glossary</span></td><td>type FILE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_parallel_corpus</span></td><td>type FILE optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_name</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_forced_glossary_ct</span></td><td>type STRING default ZIF_IBMC_SERVICE_ARCH&#x7e;C_MEDIATYPE-ALL</td></tr><tr><td></td><td><span class="identifier parameterName">i_parallel_corpus_ct</span></td><td>type STRING default ZIF_IBMC_SERVICE_ARCH&#x7e;C_MEDIATYPE-ALL</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;multipart&#x2f;form-data&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create model</p>
-   Uploads Translation Memory eXchange (TMX) files to customize a translation
-    model.<br/>
+   Uploads training files to customize a translation model. You can customize a
+    model with a forced glossary or with a parallel corpus:<br/>
+   * Use a *forced glossary* to force certain terms and phrases to be translated in
+    a specific way. You can upload only a single forced glossary file for a model.
+    The size of a forced glossary file for a custom model is limited to 10 MB.<br/>
+   * Use a *parallel corpus* when you want your custom model to learn from general
+    translation patterns in parallel sentences in your samples. What your model
+    learns from a parallel corpus can improve translation results for input text
+    that the model has not been trained on. You can upload multiple parallel
+    corpora files with a request. To successfully train with parallel corpora, the
+    corpora files must contain a cumulative total of at least 5000 parallel
+    sentences. The cumulative size of all uploaded corpus files for a custom model
+    is limited to 250 MB. <br/>
    <br/>
-   You can either customize a model with a forced glossary or with a corpus that
-    contains parallel sentences. To create a model that is customized with a
-    parallel corpus &lt;b&gt;and&lt;/b&gt; a forced glossary, proceed in two steps:
-    customize with a parallel corpus first and then customize the resulting model
-    with a glossary. Depending on the type of customization and the size of the
-    uploaded corpora, training can range from minutes for a glossary to several
-    hours for a large parallel corpus. You can upload a single forced glossary file
-    and this file must be less than &lt;b&gt;10 MB&lt;/b&gt;. You can upload
-    multiple parallel corpora tmx files. The cumulative file size of all uploaded
-    files is limited to &lt;b&gt;250 MB&lt;/b&gt;. To successfully train with a
-    parallel corpus you must have at least &lt;b&gt;5,000 parallel
-    sentences&lt;/b&gt; in your corpus.<br/>
+   Depending on the type of customization and the size of the uploaded files,
+    training time can range from minutes for a glossary to several hours for a
+    large parallel corpus. To create a model that is customized with a parallel
+    corpus and a forced glossary, customize the model with a parallel corpus first
+    and then customize the resulting model with a forced glossary. <br/>
    <br/>
-   You can have a &lt;b&gt;maximum of 10 custom models per language pair&lt;/b&gt;.
-
+   You can create a maximum of 10 custom models per language pair. For more
+    information about customizing a translation model, including the formatting and
+    character restrictions for data files, see [Customizing your
+    model](https://cloud.ibm.com/docs/language-translator?topic=language-translator
+   -customizing). <br/>
+   <br/>
+   #### Supported file formats<br/>
+   <br/>
+    You can provide your training data for customization in the following document
+    formats: <br/>
+   * **TMX** (`.tmx`) - Translation Memory eXchange (TMX) is an XML specification
+    for the exchange of translation memories. <br/>
+   * **XLIFF** (`.xliff`) - XML Localization Interchange File Format (XLIFF) is an
+    XML specification for the exchange of translation memories. <br/>
+   * **CSV** (`.csv`) - Comma-separated values (CSV) file with two columns for
+    aligned sentences and phrases. The first row must have two language codes. The
+    first column is for the source language code, and the second column is for the
+    target language code. <br/>
+   * **TSV** (`.tsv` or `.tab`) - Tab-separated values (TSV) file with two columns
+    for aligned sentences and phrases. The first row must have two language codes.
+    The first column is for the source language code, and the second column is for
+    the target language code. <br/>
+   * **JSON** (`.json`) - Custom JSON format for specifying aligned sentences and
+    phrases.<br/>
+   * **Microsoft Excel** (`.xls` or `.xlsx`) - Excel file with the first two
+    columns for aligned sentences and phrases. The first row contains the language
+    code. <br/>
+   <br/>
+   You must encode all text data in UTF-8 format. For more information, see
+    [Supported document formats for training
+    data](https://cloud.ibm.com/docs/language-translator?topic=language-translator-
+   customizing#supported-document-formats-for-training-data). <br/>
+   <br/>
+   #### Specifying file formats<br/>
+   <br/>
+    You can indicate the format of a file by including the file extension with the
+    file name. Use the file extensions shown in **Supported file formats**. <br/>
+   <br/>
+   Alternatively, you can omit the file extension and specify one of the following
+    `content-type` specifications for the file:<br/>
+   * **TMX** - `application/x-tmx+xml` <br/>
+   * **XLIFF** - `application/xliff+xml`<br/>
+   * **CSV** - `text/csv`<br/>
+   * **TSV** - `text/tab-separated-values`<br/>
+   * **JSON** - `application/json`<br/>
+   * **Microsoft Excel** -
+    `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` <br/>
+   <br/>
+   For example, with `curl`, use the following `content-type` specification to
+    indicate the format of a CSV file named **glossary**: <br/>
+   <br/>
+   `--form &quot;forced_glossary=&#64;glossary;type=text/csv&quot;`
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_base_model_id</span></td><td><span class="abapDocComment">
-   The model ID of the model to use as the base for customization. To see available
-    models, use the `List models` method. Usually all IBM provided models are
-    customizable. In addition, all your models that have been created via parallel
-    corpus customization, can be further customized with a forced glossary.
+   The ID of the translation model to use as the base for customization. To see
+    available models and IDs, use the `List models` method. Most models that are
+    provided with the service are customizable. In addition, all models that you
+    create with parallel corpora customization can be further customized with a
+    forced glossary.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_forced_glossary</span></td><td><span class="abapDocComment">
-   A TMX file with your customizations. The customizations in the file completely
-    overwrite the domain translaton data, including high frequency or high
-    confidence phrase translations. You can upload only one glossary with a file
-    size less than 10 MB per call. A forced glossary should contain single words or
-    short phrases.
+   A file with forced glossary terms for the source and target languages. The
+    customizations in the file completely overwrite the domain translation data,
+    including high frequency or high confidence phrase translations. <br/>
+   <br/>
+   You can upload only one glossary file for a custom model, and the glossary can
+    have a maximum size of 10 MB. A forced glossary must contain single words or
+    short phrases. For more information, see **Supported file formats** in the
+    method description. <br/>
+   <br/>
+   *With `curl`, use `--form forced_glossary=&#64;&#123;filename&#125;`.*.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_parallel_corpus</span></td><td><span class="abapDocComment">
-   A TMX file with parallel sentences for source and target language. You can
-    upload multiple parallel_corpus files in one request. All uploaded
-    parallel_corpus files combined, your parallel corpus must contain at least
-    5,000 parallel sentences to train successfully.
+   A file with parallel sentences for the source and target languages. You can
+    upload multiple parallel corpus files in one request by repeating the
+    parameter. All uploaded parallel corpus files combined must contain at least
+    5000 parallel sentences to train successfully. You can provide a maximum of
+    500,000 parallel sentences across all corpora. <br/>
+   <br/>
+   A single entry in a corpus file can contain a maximum of 80 words. All corpora
+    files for a custom model can have a cumulative maximum size of 250 MB. For more
+    information, see **Supported file formats** in the method description. <br/>
+   <br/>
+   *With `curl`, use `--form parallel_corpus=&#64;&#123;filename&#125;`.*.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_name</span></td><td><span class="abapDocComment">
    An optional model name that you can use to identify the model. Valid characters
-    are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum
-    length is 32 characters.
+    are letters, numbers, dashes, underscores, spaces, and apostrophes. The maximum
+    length of the name is 32 characters.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_TRANSLATION_MODEL
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
@@ -85,7 +154,7 @@
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">get_model</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODEL</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get model details</p>
    Gets information about a translation model, including training status for custom
     models. Use this API call to poll the status of your customization request. A
-    successfully completed training will have a status of `available`.
+    successfully completed training has a status of `available`.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
    Model ID of the model to get.
@@ -135,6 +204,17 @@
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_IDENTIFIABLE_LANGUAGES
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_languages</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_LANGUAGES</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List supported languages</p>
+   Lists all supported languages for translation. The method returns an array of
+    supported languages with information about each language. Languages are listed
+    in alphabetical order by language code (for example, `af`, `ar`). In addition
+    to basic information about each language, the response indicates whether the
+    language is `supported_as_source` for translation and `supported_as_target` for
+    translation. It also lists whether the language is `identifiable`.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LANGUAGES
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_models</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_source</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_target</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_default</span></td><td>type BOOLEAN optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_MODELS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List models</p>
    Lists available translation models.
 
@@ -143,16 +223,24 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">i_target</span></td><td><span class="abapDocComment">
    Specify a language code to filter results by target language.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_default</span></td><td><span class="abapDocComment">
-   If the default parameter isn&apos;t specified, the service will return all
-    models (default and non-default) for each language pair. To return only default
-    models, set this to `true`. To return only non-default models, set this to
-    `false`. There is exactly one default model per language pair, the IBM provided
-    base model.
+   If the `default` parameter isn&apos;t specified, the service returns all models
+    (default and non-default) for each language pair. To return only default
+    models, set this parameter to `true`. To return only non-default models, set
+    this parameter to `false`. There is exactly one default model, the IBM-provided
+    base model, per language pair.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_TRANSLATION_MODELS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">translate</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_request</span></td><td>type T_TRANSLATE_REQUEST</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_TRANSLATION_RESULT</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Translate</p>
    Translates the input text from the source language to the target language.
+    Specify a model ID that indicates the source and target languages, or specify
+    the source and target languages individually. You can omit the source language
+    to have the service attempt to detect the language from the input text. If you
+    omit the source language, the request must contain sufficient input text for
+    the service to identify the source language. <br/>
+   <br/>
+   You can translate a maximum of 50 KB (51,200 bytes) of text with a single
+    request. All input text must be encoded in UTF-8 format.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
    The translate request containing the text, and either a model ID or source and
@@ -163,31 +251,37 @@
 </span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">translate_document</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_file</span></td><td>type FILE</td></tr><tr><td></td><td><span class="identifier parameterName">i_filename</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_file_content_type</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_model_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_source</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_target</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_document_id</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;multipart&#x2f;form-data&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_DOCUMENT_STATUS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Translate document</p>
    Submit a document for translation. You can submit the document contents in the
     `file` parameter, or you can reference a previously submitted document by
-    document ID.
+    document ID. The maximum file size for document translation is<br/>
+   * 20 MB for service instances on the Standard, Advanced, and Premium plans<br/>
+   * 2 MB for service instances on the Lite plan
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
-   The contents of the source file to translate.<br/>
-   <br/>
-   [Supported file
-    types](https://cloud.ibm.com/docs/services/language-translator?topic=language-t
-   ranslator-document-translator-tutorial#supported-file-formats)<br/>
-   <br/>
-   Maximum file size: **20 MB**.
+   The contents of the source file to translate. The maximum file size for document
+    translation is 20 MB for service instances on the Standard, Advanced, and
+    Premium plans, and 2 MB for service instances on the Lite plan. For more
+    information, see [Supported file formats
+    (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translato
+   r-document-translator-tutorial#supported-file-formats).
  </span></td></tr><tr ><td><span class="identifier parameterName">i_filename</span></td><td><span class="abapDocComment">
    The filename for file.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_file_content_type</span></td><td><span class="abapDocComment">
    The content type of file.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
-   The model to use for translation. `model_id` or both `source` and `target` are
-    required.
+   The model to use for translation. For example, `en-de` selects the IBM-provided
+    base model for English-to-German translation. A model ID overrides the `source`
+    and `target` parameters and is required if you use a custom model. If no model
+    ID is specified, you must specify at least a target language.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_source</span></td><td><span class="abapDocComment">
-   Language code that specifies the language of the source document.
+   Language code that specifies the language of the source document. If omitted,
+    the service derives the source language from the input text. The input must
+    contain sufficient text for the service to identify the language reliably.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_target</span></td><td><span class="abapDocComment">
-   Language code that specifies the target language for translation.
+   Language code that specifies the target language for translation. Required if
+    model ID is not specified.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
    To use a previously submitted document as the source for a new translation,
     enter the `document_id` of the document.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_DOCUMENT_STATUS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12.03.2020</div></body></html>
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>
