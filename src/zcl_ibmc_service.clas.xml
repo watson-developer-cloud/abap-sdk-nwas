@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
@@ -125,6 +125,12 @@
      <CMPNAME>HTTP_POST</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Sends a HTTP POST request.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>
+     <CMPNAME>HTTP_PATCH</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Sends a HTTP PATCH request.</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE</CLSNAME>

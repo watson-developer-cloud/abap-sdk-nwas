@@ -1,4 +1,4 @@
-* Copyright 2019,2020 IBM Corp. All Rights Reserved.
+* Copyright 2019,2020 IBM Corp. All Rights Reserved.OR
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -11,88 +11,88 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-class ZCL_IBMC_SERVICE definition
+class ZCL_IBMC_service definition
   public
-  inheriting from ZCL_IBMC_SERVICE_ARCH
+  inheriting from ZCL_IBMC_service_arch
   create public .
 
 public section.
 
-  types DATA_REFERENCE type ref to DATA .
+  types data_reference type ref to data .
   types:
-    FIELDNAME(30) type c .
-  types BOOLEAN type ZIF_IBMC_SERVICE_ARCH~BOOLEAN .
-  types CHAR type ZIF_IBMC_SERVICE_ARCH~CHAR .
-  types DATE type STRING .
-  types TIME type STRING .
-  types INTEGER type I .
-  types SHORT type INT2 .
-  types LONG type INT8 .
-  types FLOAT type F .
-  types DOUBLE type F .
-  types NUMBER type F .
-  types FILE type XSTRING .
-  types BINARY type XSTRING .
-  types JSONOBJECT type ref to DATA .
-  types MAP type ref to DATA .
+    fieldname(30) type c .
+  types boolean type ZIF_IBMC_service_arch~boolean .
+  types char type ZIF_IBMC_service_arch~char .
+  types date type string .
+  types time type string .
+  types integer type i .
+  types short type int2 .
+  types long type int8 .
+  types float type f .
+  types double type f .
+  types number type f .
+  types file type xstring .
+  types binary type xstring .
+  types jsonobject type ref to data .
+  types map type ref to data .
   types:
     "! <p class="shorttext synchronized" lang="en">DateTime type, format 2018-10-23T15:18:18.914xxxZ</p>
-    DATETIME(27) type c .
-  types TT_STRING type ZIF_IBMC_SERVICE_ARCH~TT_STRING .
+    datetime(27) type c .
+  types tt_string type ZIF_IBMC_service_arch~tt_string .
   types:
-    TT_BOOLEAN type standard table of ZIF_IBMC_SERVICE_ARCH~BOOLEAN with non-unique default key .
+    tt_boolean type standard table of ZIF_IBMC_service_arch~boolean with non-unique default key .
   types:
-    TT_CHAR type standard table of ZIF_IBMC_SERVICE_ARCH~CHAR with non-unique default key .
+    tt_char type standard table of ZIF_IBMC_service_arch~char with non-unique default key .
   types:
-    TT_INTEGER type standard table of INTEGER with non-unique default key .
+    tt_integer type standard table of integer with non-unique default key .
   types:
-    TT_SHORT type standard table of SHORT with non-unique default key .
+    tt_short type standard table of short with non-unique default key .
   types:
-    TT_LONG type standard table of LONG with non-unique default key .
+    tt_long type standard table of long with non-unique default key .
   types:
-    TT_FLOAT type standard table of FLOAT with non-unique default key .
+    tt_float type standard table of float with non-unique default key .
   types:
-    TT_DOUBLE type standard table of DOUBLE with non-unique default key .
+    tt_double type standard table of double with non-unique default key .
   types:
-    TT_NUMBER type standard table of NUMBER with non-unique default key .
+    tt_number type standard table of number with non-unique default key .
   types:
-    TT_FILE type standard table of FILE with non-unique default key .
+    tt_file type standard table of file with non-unique default key .
   types:
-    begin of TS_MAP_FILE,
-        KEY  type STRING,
-        DATA type FILE,
-      end of TS_MAP_FILE .
+    begin of ts_map_file,
+        key  type string,
+        data type file,
+      end of ts_map_file .
   types:
-    TT_MAP_FILE type standard table of TS_MAP_FILE with non-unique default key .
+    tt_map_file type standard table of ts_map_file with non-unique default key .
   types:
-    begin of TS_FILE_WITH_METADATA,
-      FILENAME     type string,
-      CONTENT_TYPE type string,
-      DATA         type xstring,
-    end of TS_FILE_WITH_METADATA .
+    begin of ts_file_with_metadata,
+      filename     type string,
+      content_type type string,
+      data         type xstring,
+    end of ts_file_with_metadata .
   types:
-    TT_FILE_WITH_METADATA type standard table of TS_FILE_WITH_METADATA with non-unique default key .
-  types TS_FORM_PART type ZIF_IBMC_SERVICE_ARCH~TS_FORM_PART .
-  types TT_FORM_PART type ZIF_IBMC_SERVICE_ARCH~TT_FORM_PART .
+    tt_file_with_metadata type standard table of ts_file_with_metadata with non-unique default key .
+  types ts_form_part type ZIF_IBMC_service_arch~ts_form_part .
+  types tt_form_part type ZIF_IBMC_service_arch~tt_form_part .
 
-  constants C_BOOLEAN_FALSE type BOOLEAN value SPACE ##NO_TEXT.
-  constants C_BOOLEAN_TRUE type BOOLEAN value 'X' ##NO_TEXT.
-  constants C_TRIBOOL_FALSE type BOOLEAN value '-' ##NO_TEXT.
-  constants C_DEFAULT type STRING value 'DEFAULT' ##NO_TEXT.
-  constants C_SUBRC_UNKNOWN type SY-SUBRC value 999999 ##NO_TEXT.
-  constants C_MSGID type SY-MSGID value 'ZIBMC' ##NO_TEXT.
-  constants C_I_ZERO type I value -2147481648 ##NO_TEXT.
-  constants C_I8_ZERO type INT8 value -9223372036854775608 ##NO_TEXT.
-  constants C_F_ZERO type F value '-2147481.648' ##NO_TEXT.
-  constants C_BLANK type STRING value '&#§§#&__%$X' ##NO_TEXT.
+  constants c_boolean_false type boolean value space ##NO_TEXT.
+  constants c_boolean_true type boolean value 'X' ##NO_TEXT.
+  constants c_tribool_false type boolean value '-' ##NO_TEXT.
+  constants c_default type string value 'DEFAULT' ##NO_TEXT.
+  constants c_subrc_unknown type sy-subrc value 999999 ##NO_TEXT.
+  constants c_msgid type sy-msgid value 'ZIBMC' ##NO_TEXT.
+  constants c_i_zero type i value -2147481648 ##NO_TEXT.
+  constants c_i8_zero type int8 value -9223372036854775608 ##NO_TEXT.
+  constants c_f_zero type f value '-2147481.648' ##NO_TEXT.
+  constants c_blank type string value '&#!-#&__%$X' ##NO_TEXT.
   constants:
-    begin of C_DATATYPE,
+    begin of c_datatype,
       string type char value 'g',
       struct type char value 'v',
-    end of C_DATATYPE .
-  data P_REQUEST_PROP_DEFAULT type TS_REQUEST_PROP .
-  data P_DEBUG_MODE type CHAR value SPACE ##NO_TEXT.
-  data P_VERSION type STRING .
+    end of c_datatype .
+  data p_request_prop_default type ts_request_prop .
+  data p_debug_mode type char value space ##NO_TEXT.
+  data p_version type string .
 
   "! <p class="shorttext synchronized" lang="en">Raises an exception.</p>
   "!
@@ -107,19 +107,19 @@ public section.
   "! @parameter I_HTTP_STATUS | HTTP status code if exception is triggered by HTTP error
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised.
   "!
-  class-methods RAISE_EXCEPTION
+  class-methods raise_exception
     importing
-      !I_MSGNO type SY-MSGNO optional
-      !I_MSGV1 type STRING optional
-      !I_MSGV2 type STRING optional
-      !I_MSGV3 type STRING optional
-      !I_MSGV4 type STRING optional
-      !I_TEXT type STRING optional
-      !I_SUBRC type SY-SUBRC default C_SUBRC_UNKNOWN
-      !I_PREVIOUS type ref to CX_ROOT optional
-      !I_HTTP_STATUS type TS_HTTP_STATUS optional
+      !i_msgno type sy-msgno optional
+      !i_msgv1 type string optional
+      !i_msgv2 type string optional
+      !i_msgv3 type string optional
+      !i_msgv4 type string optional
+      !i_text type string optional
+      !i_subrc type sy-subrc default c_subrc_unknown
+      !i_previous type ref to cx_root optional
+      !i_http_status type ts_http_status optional
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Returns field type and length of a given parameter.</p>
   "!
   "! @parameter I_FIELD | Field of type that is supposed to be determined.
@@ -127,23 +127,23 @@ public section.
   "! @parameter E_RELATIVE_TYPE | Relative type (= data type) of I_FIELD.
   "! @parameter E_LENGTH | Length of type of I_FIELD.
   "!
-  class-methods GET_FIELD_TYPE
+  class-methods get_field_type
     importing
-      !I_FIELD type ANY
+      !i_field type any
     exporting
-      !E_TECHNICAL_TYPE type ZIF_IBMC_SERVICE_ARCH~CHAR
-      !E_RELATIVE_TYPE type STRING
-      !E_LENGTH type I .
+      !e_technical_type type ZIF_IBMC_service_arch~char
+      !e_relative_type type string
+      !e_length type i .
   "! <p class="shorttext synchronized" lang="en">Returns component names of a given structure.</p>
   "!
   "! @parameter I_STRUCTURE | Structure with components.
   "! @parameter E_COMPONENTS | Internal table of component names.
   "!
-  class-methods GET_COMPONENTS
+  class-methods get_components
     importing
-      !I_STRUCTURE type ANY
+      !i_structure type any
     exporting
-      value(E_COMPONENTS) type ZIF_IBMC_SERVICE_ARCH~TT_STRING .
+      value(e_components) type ZIF_IBMC_service_arch~tt_string .
   "! <p class="shorttext synchronized" lang="en">Parses a JSON string into an ABAP structure.</p>
   "!
   "! @parameter I_JSON | JSON string.
@@ -151,103 +151,103 @@ public section.
   "! @parameter C_ABAP | ABAP structure to be filled
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  class-methods PARSE_JSON
+  class-methods parse_json
     importing
-      !I_JSON type STRING
-      !I_DICTIONARY type ANY optional
+      !i_json type string
+      !i_dictionary type any optional
     changing
-      value(C_ABAP) type ANY
+      value(c_abap) type any
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  methods GET_REQUEST_PROP
+  methods get_request_prop
     importing
-      !I_AUTH_METHOD type STRING default C_DEFAULT
+      !i_auth_method type string default c_default
     returning
-      value(E_REQUEST_PROP) type TS_REQUEST_PROP .
+      value(e_request_prop) type ts_request_prop .
   "! <p class="shorttext synchronized" lang="en">Returns data type of a given parameter.</p>
   "!
   "! @parameter I_FIELD | Field of type that is supposed to be determined.
   "! @parameter E_DATATYPE | Technical type (= base type) of I_FIELD.
   "!
-  class-methods GET_DATATYPE
+  class-methods get_datatype
     importing
-      !I_FIELD type ANY
+      !i_field type any
     returning
-      value(E_DATATYPE) type ZIF_IBMC_SERVICE_ARCH~CHAR .
+      value(e_datatype) type ZIF_IBMC_service_arch~char .
   "! <p class="shorttext synchronized" lang="en">Unescape unicode codepoints to characters in a string</p>,
   "!  e.g. '\u0041 b \u0063' -&gt; 'A b c'
   "!
   "! @parameter I_IN | String with unicode codepoints.
   "! @parameter E_OUT | Unescaped string.
   "!
-  class-methods UNESCAPE_UNICODE
+  class-methods unescape_unicode
     importing
-      !I_IN type STRING
+      !i_in type string
     returning
-      value(E_OUT) type STRING .
+      value(e_out) type string .
   "! <p class="shorttext synchronized" lang="en">Returns the file extension for a mime type</p>,
   "!  e.g. 'text/plain' -&gt; 'txt'
   "!
   "! @parameter I_MIME_TYPE | MIME type.
   "! @parameter E_EXTENSION | File extension (without leading dot).
   "!
-  class-methods GET_FILE_EXTENSION
+  class-methods get_file_extension
     importing
-      value(I_MIME_TYPE) type STRING
+      value(i_mime_type) type string
     returning
-      value(E_EXTENSION) type STRING .
+      value(e_extension) type string .
   "! <p class="shorttext synchronized" lang="en">Moves a referenced data structure to an ABAP structure.</p>
   "!
   "! @parameter I_DATA_REFERENCE | Reference to data object.
   "! @parameter E_ABAP | ABAP structure to be filled.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  class-methods MOVE_DATA_REFERENCE_TO_ABAP
+  class-methods move_data_reference_to_abap
     importing
-      !I_DATA_REFERENCE type DATA_REFERENCE
+      !i_data_reference type data_reference
     exporting
-      value(E_ABAP) type ANY
+      value(e_abap) type any
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  class-methods ADD_QUERY_PARAMETER
+  class-methods add_query_parameter
     importing
-      !I_PARAMETER type STRING
-      !I_VALUE type STRING
-      !I_IS_BOOLEAN type BOOLEAN default C_BOOLEAN_FALSE
+      !i_parameter type string
+      !i_value type string
+      !i_is_boolean type boolean default c_boolean_false
     changing
-      !C_URL type TS_URL .
+      !c_url type ts_url .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  class-methods ADD_HEADER_PARAMETER
+  class-methods add_header_parameter
     importing
-      !I_PARAMETER type STRING
-      !I_VALUE type STRING
-      !I_IS_BOOLEAN type BOOLEAN default C_BOOLEAN_FALSE
+      !i_parameter type string
+      !i_value type string
+      !i_is_boolean type boolean default c_boolean_false
     changing
-      !C_HEADERS type ZIF_IBMC_SERVICE_ARCH~TS_REQUEST_PROP-HEADERS .
+      !c_headers type ZIF_IBMC_service_arch~ts_request_prop-headers .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  class-methods GET_FULL_URL
+  class-methods get_full_url
     importing
-      !I_URL type TS_URL
+      !i_url type ts_url
     returning
-      value(E_URL) type STRING .
+      value(e_url) type string .
   "! <p class="shorttext synchronized" lang="en">Returns the service name.</p>
   "!
   "! @parameter E_APPNAME | Name of the service.
   "!
-  methods GET_APPNAME
+  methods get_appname
     returning
-      value(E_APPNAME) type STRING .
+      value(e_appname) type string .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  class-methods NORMALIZE_URL
+  class-methods normalize_url
     changing
-      !C_URL type TS_URL .
+      !c_url type ts_url .
   "! <p class="shorttext synchronized" lang="en">Extracts a JSON string from an ABAP structure.</p>
   "!
   "! @parameter I_NAME | Name of component to be extracted.
@@ -260,27 +260,27 @@ public section.
   "! @parameter I_LOWER_CASE | If set to C_BOOLEAN_TRUE all keys in JSON string will be lower case.
   "! @parameter E_JSON | JSON string.
   "!
-  class-methods ABAP_TO_JSON
+  class-methods abap_to_json
     importing
-      !I_NAME type STRING optional
-      !I_VALUE type ANY
-      !I_DICTIONARY type ANY optional
-      !I_REQUIRED_FIELDS type ANY optional
-      !I_LOWER_CASE type BOOLEAN default C_BOOLEAN_TRUE
+      !i_name type string optional
+      !i_value type any
+      !i_dictionary type any optional
+      !i_required_fields type any optional
+      !i_lower_case type boolean default c_boolean_true
     returning
-      value(E_JSON) type STRING .
+      value(e_json) type string .
   "! <p class="shorttext synchronized" lang="en">Throws an exception, if HTTP response indicates an error.</p>
   "!
   "! @parameter I_RESPONSE | HTTP response to be checked.
   "! @parameter I_URL | URL that the request has been sent to.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods CHECK_HTTP_RESPONSE
+  methods check_http_response
     importing
-      !I_RESPONSE type TO_REST_RESPONSE optional
-      !I_URL type TS_URL optional
+      !i_response type to_rest_response optional
+      !i_url type ts_url optional
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Class constructor.</p>
   "!
   "! @parameter I_URL | URL of the service.
@@ -294,82 +294,95 @@ public section.
   "! @parameter I_SSL_ID | ID of PSE, not applicable on SAP Cloud Platform.
   "! @parameter I_DEBUG_MODE | not used.
   "!
-  methods CONSTRUCTOR
+  methods constructor
     importing
-      !I_URL type STRING optional
-      !I_HOST type STRING optional
-      !I_PROXY_HOST type STRING optional
-      !I_PROXY_PORT type STRING optional
-      !I_USERNAME type STRING optional
-      !I_PASSWORD type STRING optional
-      !I_APIKEY type STRING optional
-      !I_ACCESS_TOKEN type TS_ACCESS_TOKEN optional
-      !I_SSL_ID type ZIF_IBMC_SERVICE_ARCH~TY_SSL_ID optional
-      !I_DEBUG_MODE type CHAR default SPACE .
+      !i_url type string optional
+      !i_host type string optional
+      !i_proxy_host type string optional
+      !i_proxy_port type string optional
+      !i_username type string optional
+      !i_password type string optional
+      !i_apikey type string optional
+      !i_access_token type ts_access_token optional
+      !i_ssl_id type ZIF_IBMC_service_arch~ty_ssl_id optional
+      !i_debug_mode type char default space .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  methods GET_REST_CLIENT
+  methods get_rest_client
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_request_prop type ts_request_prop
     returning
-      value(E_CLIENT) type TS_CLIENT
+      value(e_client) type ts_client
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
   "!
-  methods GET_ACCESS_TOKEN
+  methods get_access_token
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP optional
+      !i_request_prop type ts_request_prop optional
     returning
-      value(E_ACCESS_TOKEN) type TS_ACCESS_TOKEN
+      value(e_access_token) type ts_access_token
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Sends a HTTP DELETE request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods HTTP_DELETE
+  methods http_delete
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_request_prop type ts_request_prop
     returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
+      value(e_response) type to_rest_response
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Sets an access token explicitly.</p>
   "!
   "! @parameter I_ACCESS_TOKEN | Access token.
   "!
-  methods SET_ACCESS_TOKEN
+  methods set_access_token
     importing
-      !I_ACCESS_TOKEN type TS_ACCESS_TOKEN .
+      !i_access_token type ts_access_token .
   "! <p class="shorttext synchronized" lang="en">Sends a HTTP GET request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods HTTP_GET
+  methods http_get
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_request_prop type ts_request_prop
     returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
+      value(e_response) type to_rest_response
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Sends a HTTP POST request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods HTTP_POST
+  methods http_post
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_request_prop type ts_request_prop
     returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
+      value(e_response) type to_rest_response
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Sends a HTTP PATCH request.</p>
+  "!
+  "! @parameter I_REQUEST_PROP | Request properties.
+  "! @parameter E_RESPONSE | Response returned by service.
+  "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+  "!
+  methods http_patch
+    importing
+      !i_request_prop type ts_request_prop
+    returning
+      value(e_response) type to_rest_response
+    raising
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Sends a HTTP POST request with multipart body.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
@@ -377,52 +390,52 @@ public section.
   "! @parameter E_RESPONSE | Response returned by service.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods HTTP_POST_MULTIPART
+  methods http_post_multipart
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
-      !IT_FORM_PART type TT_FORM_PART
+      !i_request_prop type ts_request_prop
+      !it_form_part type tt_form_part
     returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
+      value(e_response) type to_rest_response
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
   "! <p class="shorttext synchronized" lang="en">Sends a HTTP PUT request.</p>
   "!
   "! @parameter I_REQUEST_PROP | Request properties.
   "! @parameter E_RESPONSE | Response returned by service.
   "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
   "!
-  methods HTTP_PUT
+  methods http_put
     importing
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_request_prop type ts_request_prop
     returning
-      value(E_RESPONSE) type TO_REST_RESPONSE
+      value(e_response) type to_rest_response
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
 protected section.
 
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
-  methods ADJUST_REQUEST_PROP
+  methods adjust_request_prop
     changing
-      !C_REQUEST_PROP type TS_REQUEST_PROP .
+      !c_request_prop type ts_request_prop .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
-  class-methods MERGE_STRUCTURE
+  class-methods merge_structure
     importing
-      !I_ALTERNATIVE type ANY
+      !i_alternative type any
     changing
-      !C_BASE type ANY .
+      !c_base type any .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
-  methods SET_DEFAULT_QUERY_PARAMETERS
+  methods set_default_query_parameters
     changing
-      !C_URL type TS_URL .
+      !c_url type ts_url .
   "! <p class="shorttext synchronized" lang="en">Method for internal use.</p>
-  methods SET_URI_AND_AUTHORIZATION
+  methods set_uri_and_authorization
     importing
-      !I_CLIENT type TS_CLIENT
-      !I_REQUEST_PROP type TS_REQUEST_PROP
+      !i_client type ts_client
+      !i_request_prop type ts_request_prop
     returning
-      value(E_URI) type STRING
+      value(e_uri) type string
     raising
-      ZCX_IBMC_SERVICE_EXCEPTION .
+      ZCX_IBMC_service_exception .
 private section.
 ENDCLASS.
 
@@ -431,6 +444,16 @@ ENDCLASS.
 CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>ABAP_TO_JSON
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_NAME                         TYPE        STRING(optional)
+* | [--->] I_VALUE                        TYPE        ANY
+* | [--->] I_DICTIONARY                   TYPE        ANY(optional)
+* | [--->] I_REQUIRED_FIELDS              TYPE        ANY(optional)
+* | [--->] I_LOWER_CASE                   TYPE        BOOLEAN (default =C_BOOLEAN_TRUE)
+* | [<-()] E_JSON                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method abap_to_json.
 
     data:
@@ -464,7 +487,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       importing
         e_technical_type = lv_type
         e_relative_type  = lv_relative_type ).
-    if lv_type eq zif_ibmc_service_arch~c_datatype-dataref or lv_type eq zif_ibmc_service_arch~c_datatype-objectref.
+    if lv_type eq ZIF_IBMC_service_arch~c_datatype-dataref or lv_type eq ZIF_IBMC_service_arch~c_datatype-objectref.
       if i_value is initial.
         return.
       endif.
@@ -480,7 +503,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     endif.
 
 
-    if lv_type ne zif_ibmc_service_arch~c_datatype-struct and lv_type ne zif_ibmc_service_arch~c_datatype-struct_deep and lv_type ne zif_ibmc_service_arch~c_datatype-itab.
+    if lv_type ne ZIF_IBMC_service_arch~c_datatype-struct and lv_type ne ZIF_IBMC_service_arch~c_datatype-struct_deep and lv_type ne ZIF_IBMC_service_arch~c_datatype-itab.
       " simple type
 
       if lv_type eq 'C' or lv_type eq 'N' or lv_type eq 'g'.
@@ -489,13 +512,21 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
           " parameter is blank, not initial (i.e. null)
           lv_str = ''.
         else.
+          replace all occurrences of '\' in lv_str with '\\'.
           replace all occurrences of '"' in lv_str with '\"'.
           replace all occurrences of cl_abap_char_utilities=>cr_lf in lv_str with '\n'.
           replace all occurrences of cl_abap_char_utilities=>newline in lv_str with '\n'.
+          replace all occurrences of cl_abap_char_utilities=>backspace in lv_str with '\b'.
         endif.
 
         " quote value unless it is a boolean
-        if lv_relative_type eq 'BOOLEAN'.
+        if lv_relative_type eq 'BOOLEAN' or
+           lv_relative_type eq 'ABAP_BOOL' or
+           lv_relative_type eq 'BOOL' or
+           lv_relative_type eq 'TRIBOOL' or
+           lv_relative_type eq 'BOOLE_D' or
+           lv_relative_type eq 'BOOLE' or
+           lv_relative_type eq 'XFELD'.
           if lv_str eq c_boolean_true.
             lv_json = `true`.
           elseif lv_str eq c_boolean_false.
@@ -536,7 +567,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
         lv_json = lv_json_num.
       endif.
 
-    elseif lv_type eq zif_ibmc_service_arch~c_datatype-struct or lv_type eq zif_ibmc_service_arch~c_datatype-struct_deep.
+    elseif lv_type eq ZIF_IBMC_service_arch~c_datatype-struct or lv_type eq ZIF_IBMC_service_arch~c_datatype-struct_deep.
       " structure
 
       get_components(
@@ -588,7 +619,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       endloop.
       lv_json = lv_json && `}`.
 
-    elseif lv_type eq zif_ibmc_service_arch~c_datatype-itab.
+    elseif lv_type eq ZIF_IBMC_service_arch~c_datatype-itab.
       " internal table
 
       lv_json = lv_json && `[`.
@@ -625,10 +656,18 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>ADD_HEADER_PARAMETER
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_PARAMETER                    TYPE        STRING
+* | [--->] I_VALUE                        TYPE        STRING
+* | [--->] I_IS_BOOLEAN                   TYPE        BOOLEAN (default =C_BOOLEAN_FALSE)
+* | [<-->] C_HEADERS                      TYPE        ZIF_IBMC_SERVICE_ARCH~TS_REQUEST_PROP-HEADERS
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method add_header_parameter.
 
     data:
-      ls_header type line of zif_ibmc_service_arch~ts_request_prop-headers,
+      ls_header type line of ZIF_IBMC_service_arch~ts_request_prop-headers,
       lv_value  type string.
 
     if i_is_boolean eq c_boolean_true.
@@ -649,6 +688,14 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>ADD_QUERY_PARAMETER
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_PARAMETER                    TYPE        STRING
+* | [--->] I_VALUE                        TYPE        STRING
+* | [--->] I_IS_BOOLEAN                   TYPE        BOOLEAN (default =C_BOOLEAN_FALSE)
+* | [<-->] C_URL                          TYPE        TS_URL
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method add_query_parameter.
 
     data:
@@ -675,6 +722,11 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Protected Method ZCL_IBMC_SERVICE->ADJUST_REQUEST_PROP
+* +-------------------------------------------------------------------------------------------------+
+* | [<-->] C_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method adjust_request_prop.
 
     data:
@@ -720,6 +772,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->CHECK_HTTP_RESPONSE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_RESPONSE                     TYPE        TO_REST_RESPONSE(optional)
+* | [--->] I_URL                          TYPE        TS_URL(optional)
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method check_http_response.
 
     data:
@@ -728,7 +787,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       ls_url               type ts_url,
       lv_strlen            type i,
       lv_code              type string,
-      lo_service_exception type ref to zcx_ibmc_service_exception.
+      lo_service_exception type ref to ZCX_IBMC_service_exception.
 
     lv_http_status = get_http_status( i_rest_response = i_response ).
     lv_code = lv_http_status-code.
@@ -753,7 +812,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
             i_msgv2 = lv_http_status-reason
             i_msgv3 = lv_full_url
             i_http_status = lv_http_status ).
-        catch zcx_ibmc_service_exception into lo_service_exception.
+        catch ZCX_IBMC_service_exception into lo_service_exception.
           lo_service_exception->p_msg_json = lv_http_status-json.
       endtry.
 
@@ -763,6 +822,20 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->CONSTRUCTOR
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_URL                          TYPE        STRING(optional)
+* | [--->] I_HOST                         TYPE        STRING(optional)
+* | [--->] I_PROXY_HOST                   TYPE        STRING(optional)
+* | [--->] I_PROXY_PORT                   TYPE        STRING(optional)
+* | [--->] I_USERNAME                     TYPE        STRING(optional)
+* | [--->] I_PASSWORD                     TYPE        STRING(optional)
+* | [--->] I_APIKEY                       TYPE        STRING(optional)
+* | [--->] I_ACCESS_TOKEN                 TYPE        TS_ACCESS_TOKEN(optional)
+* | [--->] I_SSL_ID                       TYPE        ZIF_IBMC_SERVICE_ARCH~TY_SSL_ID(optional)
+* | [--->] I_DEBUG_MODE                   TYPE        CHAR (default =SPACE)
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method constructor.
 
     data:
@@ -811,6 +884,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->GET_ACCESS_TOKEN
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP(optional)
+* | [<-()] E_ACCESS_TOKEN                 TYPE        TS_ACCESS_TOKEN
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_access_token.
 
     e_access_token = p_request_prop_default-access_token.
@@ -818,10 +898,21 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->GET_APPNAME
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] E_APPNAME                      TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_appname.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>GET_COMPONENTS
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_STRUCTURE                    TYPE        ANY
+* | [<---] E_COMPONENTS                   TYPE        ZIF_IBMC_SERVICE_ARCH~TT_STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_components.
 
     data:
@@ -842,6 +933,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>GET_DATATYPE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_FIELD                        TYPE        ANY
+* | [<-()] E_DATATYPE                     TYPE        ZIF_IBMC_SERVICE_ARCH~CHAR
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_datatype.
 
     get_field_type(
@@ -853,6 +950,14 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>GET_FIELD_TYPE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_FIELD                        TYPE        ANY
+* | [<---] E_TECHNICAL_TYPE               TYPE        ZIF_IBMC_SERVICE_ARCH~CHAR
+* | [<---] E_RELATIVE_TYPE                TYPE        STRING
+* | [<---] E_LENGTH                       TYPE        I
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_field_type.
     data:
       lo_abap_type type ref to cl_abap_typedescr,
@@ -867,7 +972,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     e_technical_type = lo_typedescr->type_kind.
 
     if e_relative_type is requested.
-      if e_technical_type eq zif_ibmc_service_arch~c_datatype-objectref.
+      if e_technical_type eq ZIF_IBMC_service_arch~c_datatype-objectref.
         data lo_refdescr type ref to cl_abap_refdescr.
         lo_refdescr ?= cl_abap_typedescr=>describe_by_data( i_field ).
         lo_abap_type ?= lo_refdescr->get_referenced_type( ).
@@ -878,8 +983,8 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     endif.
 
     if e_length is requested.
-      if e_technical_type eq zif_ibmc_service_arch~c_datatype-c or
-         e_technical_type eq zif_ibmc_service_arch~c_datatype-n.
+      if e_technical_type eq ZIF_IBMC_service_arch~c_datatype-c or
+         e_technical_type eq ZIF_IBMC_service_arch~c_datatype-n.
          e_length = lo_typedescr->length.
       else.
         e_length = 0.
@@ -889,6 +994,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>GET_FILE_EXTENSION
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MIME_TYPE                    TYPE        STRING
+* | [<-()] E_EXTENSION                    TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_file_extension.
 
     data:
@@ -904,8 +1015,14 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       when 'application/octet-stream'. e_extension = 'bin'.
       when others.
         e_extension = 'dat'.
-        find regex '([^/]*)$' in i_mime_type submatches lv_ext.
-        if sy-subrc = 0.
+        "find regex '([^/]*)$' in i_mime_type submatches lv_ext.
+        data(l_subrc) = find_regex(
+          exporting
+            i_regex     = '([^/]*)$'
+            i_in        = i_mime_type
+          changing
+            c_submatch1 = lv_ext ).
+        if l_subrc = 0.
           lv_len = strlen( lv_ext ).
           if lv_len >= 2 and lv_len <= 4.
             e_extension = lv_ext.
@@ -916,6 +1033,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>GET_FULL_URL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_URL                          TYPE        TS_URL
+* | [<-()] E_URL                          TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_full_url.
 
     data:
@@ -940,6 +1063,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->GET_REQUEST_PROP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_AUTH_METHOD                  TYPE        STRING (default =C_DEFAULT)
+* | [<-()] E_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_request_prop.
 
     e_request_prop-url-protocol    = 'http'.
@@ -953,6 +1082,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->GET_REST_CLIENT
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_CLIENT                       TYPE        TS_CLIENT
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_rest_client.
 
     data:
@@ -982,12 +1118,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
 
     " set 'Content-Type' header
     if not i_request_prop-header_content_type is initial.
-      set_request_header( i_client = e_client i_name = zif_ibmc_service_arch~c_header_content_type i_value = ls_request_prop-header_content_type ).
+      set_request_header( i_client = e_client i_name = ZIF_IBMC_service_arch~c_header_content_type i_value = ls_request_prop-header_content_type ).
     endif.
 
     " set 'Accept' header
     if not i_request_prop-header_accept is initial.
-      set_request_header( i_client = e_client i_name = zif_ibmc_service_arch~c_header_accept i_value = ls_request_prop-header_accept ).
+      set_request_header( i_client = e_client i_name = ZIF_IBMC_service_arch~c_header_accept i_value = ls_request_prop-header_accept ).
     endif.
 
     " set additional headers
@@ -1000,6 +1136,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_DELETE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method http_delete.
 
     data:
@@ -1009,7 +1152,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     lo_client = get_rest_client( i_request_prop = i_request_prop ).
 
     " execute DELETE request
-    e_response = execute( i_client = lo_client i_method = zif_ibmc_service_arch~c_method_delete ).
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_delete ).
 
     " check response
     check_http_response(
@@ -1019,6 +1162,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_GET
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method http_get.
 
     data:
@@ -1028,7 +1178,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     lo_client = get_rest_client( i_request_prop = i_request_prop ).
 
     " execute GET request
-    e_response = execute( i_client = lo_client i_method = zif_ibmc_service_arch~c_method_get ).
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_get ).
 
     " check response
     check_http_response(
@@ -1038,6 +1188,47 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_PATCH
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method http_patch.
+
+    data:
+      lo_client    type ts_client.
+
+    " create REST client
+    lo_client = get_rest_client( i_request_prop = i_request_prop ).
+
+    " set request body
+    if not i_request_prop-body is initial.
+      set_request_body_cdata( i_client = lo_client i_data = i_request_prop-body ).
+    endif.
+    if not i_request_prop-body_bin is initial.
+      set_request_body_xdata( i_client = lo_client i_data = i_request_prop-body_bin ).
+    endif.
+
+    " execute PATCH request
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_patch ).
+
+    " check response
+    check_http_response(
+      i_response = e_response
+      i_url      = i_request_prop-url ).
+
+  endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_POST
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method http_post.
 
     data:
@@ -1058,11 +1249,11 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     " workaround: set an empty json object for request body
     if i_request_prop-body is initial and i_request_prop-body_bin is initial.
       set_request_body_cdata( i_client = lo_client i_data = `{}` ).
-      set_request_header( i_client = lo_client i_name = zif_ibmc_service_arch~c_header_content_type i_value = zif_ibmc_service_arch~c_mediatype-appl_json ).
+      set_request_header( i_client = lo_client i_name = ZIF_IBMC_service_arch~c_header_content_type i_value = ZIF_IBMC_service_arch~c_mediatype-appl_json ).
     endif.
 
     " execute POST request
-    e_response = execute( i_client = lo_client i_method = zif_ibmc_service_arch~c_method_post ).
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_post ).
 
     " check response
     check_http_response(
@@ -1072,7 +1263,15 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
-  method HTTP_POST_MULTIPART.
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_POST_MULTIPART
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [--->] IT_FORM_PART                   TYPE        TT_FORM_PART
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method http_post_multipart.
 
     data:
       lo_client    type ts_client.
@@ -1084,7 +1283,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     add_form_part( i_client = lo_client it_form_part = it_form_part ).
 
     " execute POST request
-    e_response = execute( i_client = lo_client i_method = zif_ibmc_service_arch~c_method_post ).
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_post ).
 
     " check response
     check_http_response(
@@ -1094,6 +1293,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->HTTP_PUT
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method http_put.
 
     data:
@@ -1111,7 +1317,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     endif.
 
     " execute PUT request
-    e_response = execute( i_client = lo_client i_method = zif_ibmc_service_arch~c_method_put ).
+    e_response = execute( i_client = lo_client i_method = ZIF_IBMC_service_arch~c_method_put ).
 
     " check response
     check_http_response(
@@ -1121,6 +1327,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Protected Method ZCL_IBMC_SERVICE=>MERGE_STRUCTURE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_ALTERNATIVE                  TYPE        ANY
+* | [<-->] C_BASE                         TYPE        ANY
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method merge_structure.
 
     data:
@@ -1148,7 +1360,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
           i_field = <lv_comp_base>
         importing
           e_technical_type = lv_type ).
-      if lv_type eq zif_ibmc_service_arch~c_datatype-struct or lv_type eq zif_ibmc_service_arch~c_datatype-struct_deep.
+      if lv_type eq ZIF_IBMC_service_arch~c_datatype-struct or lv_type eq ZIF_IBMC_service_arch~c_datatype-struct_deep.
         assign component <lv_compname> of structure i_alternative to <lv_comp_alt>.
         check sy-subrc = 0.
         merge_structure(
@@ -1158,7 +1370,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
             c_base        = <lv_comp_base> ).
       else.
         if <lv_comp_base> is initial.
-          if lv_type eq zif_ibmc_service_arch~c_datatype-itab.
+          if lv_type eq ZIF_IBMC_service_arch~c_datatype-itab.
             assign component <lv_compname> of structure c_base to <lv_tab_base>.
             check sy-subrc = 0.
             assign component <lv_compname> of structure i_alternative to <lv_tab_alt>.
@@ -1178,6 +1390,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>MOVE_DATA_REFERENCE_TO_ABAP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_DATA_REFERENCE               TYPE        DATA_REFERENCE
+* | [<---] E_ABAP                         TYPE        ANY
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method move_data_reference_to_abap.
 
     data:
@@ -1289,6 +1508,11 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>NORMALIZE_URL
+* +-------------------------------------------------------------------------------------------------+
+* | [<-->] C_URL                          TYPE        TS_URL
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method normalize_url.
 
     check not c_url is initial.
@@ -1322,7 +1546,15 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     shift lv_url_full left deleting leading space.
 
     clear: c_url-protocol, c_url-host, c_url-path_base, c_url-path.  " do not clear other components
-    find regex '^(http.?:\/\/)?([^\/]*)(.*)$' in lv_url_full submatches c_url-protocol c_url-host c_url-path.
+    "find regex '^(http.?:\/\/)?([^\/]*)(.*)$' in lv_url_full submatches c_url-protocol c_url-host c_url-path.
+    find_regex(
+      exporting
+        i_regex     = '^(http.?:\/\/)?([^\/]*)(.*)$'
+        i_in        = lv_url_full
+      changing
+        c_submatch1 = c_url-protocol
+        c_submatch2 = c_url-host
+        c_submatch3 = c_url-path ).
 
     shift c_url-protocol right deleting trailing '/'.
     shift c_url-protocol right deleting trailing ':'.
@@ -1345,11 +1577,19 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
-  method PARSE_JSON.
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>PARSE_JSON
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_JSON                         TYPE        STRING
+* | [--->] I_DICTIONARY                   TYPE        ANY(optional)
+* | [<-->] C_ABAP                         TYPE        ANY
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method parse_json.
 
     data:
       lv_json       type string,
-      lt_dictionary type zif_ibmc_service_arch~tt_string,
+      lt_dictionary type ZIF_IBMC_service_arch~tt_string,
       lv_dictionary type string,
       lv_orgname    type string,
       lv_abapname   type string,
@@ -1378,7 +1618,13 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
           if lv_dictionary ne lv_orgname.
             lv_regex = `"` && <lv_orgname> && `"\s*:`.
             lv_abapname = `"` && lv_dictionary && `":`.
-            replace all occurrences of regex lv_regex in lv_json with lv_abapname.
+            "replace all occurrences of regex lv_regex in lv_json with lv_abapname.
+            find_regex(
+              exporting
+                i_regex = lv_regex
+                i_with  = lv_abapname
+              changing
+                c_in    = lv_json ).
           endif.
         endloop.
 
@@ -1389,7 +1635,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       try.
           lo_json->deserialize_int( exporting json = lv_json changing data = c_abap ).
           catch cx_sy_move_cast_error into lr_exception.
-            zcl_ibmc_service=>raise_exception(
+            ZCL_IBMC_service=>raise_exception(
               exporting
                 i_msgno = 20 ).
         endtry.
@@ -1399,12 +1645,26 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>RAISE_EXCEPTION
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MSGNO                        TYPE        SY-MSGNO(optional)
+* | [--->] I_MSGV1                        TYPE        STRING(optional)
+* | [--->] I_MSGV2                        TYPE        STRING(optional)
+* | [--->] I_MSGV3                        TYPE        STRING(optional)
+* | [--->] I_MSGV4                        TYPE        STRING(optional)
+* | [--->] I_TEXT                         TYPE        STRING(optional)
+* | [--->] I_SUBRC                        TYPE        SY-SUBRC (default =C_SUBRC_UNKNOWN)
+* | [--->] I_PREVIOUS                     TYPE REF TO CX_ROOT(optional)
+* | [--->] I_HTTP_STATUS                  TYPE        TS_HTTP_STATUS(optional)
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method raise_exception.
 
     data:
       ls_msg               like if_t100_message=>t100key,
       lv_charval(11)       type c,
-      lo_service_exception type ref to zcx_ibmc_service_exception.
+      lo_service_exception type ref to ZCX_IBMC_service_exception.
 
     ls_msg-msgid = c_msgid.
 
@@ -1451,12 +1711,17 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       endif.
     endif.
 
-    raise exception type zcx_ibmc_service_exception
+    raise exception type ZCX_IBMC_service_exception
       message id c_msgid type 'E' number ls_msg-msgno with ls_msg-attr1 ls_msg-attr2 ls_msg-attr3 ls_msg-attr4.
 
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE->SET_ACCESS_TOKEN
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_ACCESS_TOKEN                 TYPE        TS_ACCESS_TOKEN
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_access_token.
 
     p_request_prop_default-access_token = i_access_token.
@@ -1470,6 +1735,11 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Protected Method ZCL_IBMC_SERVICE->SET_DEFAULT_QUERY_PARAMETERS
+* +-------------------------------------------------------------------------------------------------+
+* | [<-->] C_URL                          TYPE        TS_URL
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_default_query_parameters.
 
     if not p_version is initial.
@@ -1484,6 +1754,14 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Protected Method ZCL_IBMC_SERVICE->SET_URI_AND_AUTHORIZATION
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<-()] E_URI                          TYPE        STRING
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_uri_and_authorization.
 
     data:
@@ -1552,7 +1830,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
           lv_body = `{ "userid": "` && i_request_prop-username && `", "password": "` && i_request_prop-password && `" }`  ##NO_TEXT.
         endif.
         set_request_body_cdata( i_client = i_client i_data = lv_body ).
-        set_request_header( i_client = i_client i_name = zif_ibmc_service_arch~c_header_content_type i_value = zif_ibmc_service_arch~c_mediatype-appl_json ).
+        set_request_header( i_client = i_client i_name = ZIF_IBMC_service_arch~c_header_content_type i_value = ZIF_IBMC_service_arch~c_mediatype-appl_json ).
       endif.
     endif.
 
@@ -1561,6 +1839,12 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE=>UNESCAPE_UNICODE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_IN                           TYPE        STRING
+* | [<-()] E_OUT                          TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method unescape_unicode.
 
     data:
@@ -1575,8 +1859,15 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
     e_out = i_in.
 
     do.
-      find regex '(\\u[A-Fa-f0-9]{4})' in e_out ignoring case submatches lv_match  ##NO_TEXT.
-      if sy-subrc <> 0.
+      "find regex '(\\u[A-Fa-f0-9]{4})' in e_out ignoring case submatches lv_match  ##NO_TEXT.
+      data(l_subrc) = find_regex(
+        exporting
+          i_regex         = '(\\u[A-Fa-f0-9]{4})'
+          i_ignoring_case = 'X'
+          i_in            = e_out
+        changing
+          c_submatch1     = lv_match )  ##NO_TEXT.
+      if l_subrc <> 0.
         exit.
       endif.
 
@@ -1584,7 +1875,7 @@ CLASS ZCL_IBMC_SERVICE IMPLEMENTATION.
       translate lv_cp_str to upper case.
       lv_cp_hex = lv_cp_str.
 
-      assign lv_cp_hex to <lv_c> CASTING.
+      assign lv_cp_hex to <lv_c> casting.
       lv_ucchar = <lv_c>.
 
       replace all occurrences of lv_match in e_out with lv_ucchar.

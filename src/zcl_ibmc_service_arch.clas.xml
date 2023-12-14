@@ -44,6 +44,12 @@
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
+     <CMPNAME>FIND_REGEX</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Finds (and replaces) a regular expression.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_IBMC_SERVICE_ARCH</CLSNAME>
      <CMPNAME>GET_DEFAULT_PROXY</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Returns the default proxy host and port.</DESCRIPT>

@@ -1,4 +1,4 @@
-* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ public section.
       "!   The type of action to invoke.
       TYPE type STRING,
       "!   A map of key/value pairs to be provided to the action.
-      PARAMETERS type MAP,
+      PARAMETERS type JSONOBJECT,
       "!   The location in the dialog context where the result of the action is stored.
       RESULT_VARIABLE type STRING,
       "!   The name of the context variable that the client application will use to pass in
@@ -68,9 +68,9 @@ public section.
       NONE_OF_THE_ABOVE_PROMPT type STRING,
       "!   Whether the disambiguation feature is enabled for the workspace.
       ENABLED type BOOLEAN,
-      "!   The sensitivity of the disambiguation feature to intent detection conflicts. Set
-      "!    to **high** if you want the disambiguation feature to be triggered more often.
-      "!    This can be useful for testing or demonstration purposes.
+      "!   The sensitivity of the disambiguation feature to intent detection uncertainty.
+      "!    Higher sensitivity means that the disambiguation feature is triggered more
+      "!    often and includes more choices.
       SENSITIVITY type STRING,
       "!   Whether the order in which disambiguation suggestions are presented should be
       "!    randomized (but still influenced by relative confidence).
@@ -116,12 +116,20 @@ public section.
       "!        If you specify `jump_to`, then you must also specify a value for the
       "!    `dialog_node` property.
       BEHAVIOR type STRING,
-      "!   The ID of the dialog node to process next. This parameter is required if
+      "!   The unique ID of the dialog node to process next. This parameter is required if
       "!    **behavior**=`jump_to`.
       DIALOG_NODE type STRING,
       "!   Which part of the dialog node to process next.
       SELECTOR type STRING,
     end of T_DIALOG_NODE_NEXT_STEP.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object describing an error that occurred during</p>
+    "!     processing of an asynchronous operation.
+    begin of T_STATUS_ERROR,
+      "!   The text of the error message.
+      MESSAGE type STRING,
+    end of T_STATUS_ERROR.
   types:
     "! No documentation available.
       T_DIALOG_NODE_OUTPUT_GENERIC type JSONOBJECT.
@@ -151,9 +159,12 @@ public section.
   types:
     "! No documentation available.
     begin of T_DIALOG_NODE,
-      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   The unique ID of the dialog node. This is an internal identifier used to refer
+      "!    to the dialog node from other dialog nodes and in the diagnostic information
+      "!    included with message responses.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       DIALOG_NODE type STRING,
       "!   The description of the dialog node. This string cannot contain carriage return,
       "!    newline, or tab characters.
@@ -161,11 +172,11 @@ public section.
       "!   The condition that will trigger the dialog node. This string cannot contain
       "!    carriage return, newline, or tab characters.
       CONDITIONS type STRING,
-      "!   The ID of the parent dialog node. This property is omitted if the dialog node
-      "!    has no parent.
+      "!   The unique ID of the parent dialog node. This property is omitted if the dialog
+      "!    node has no parent.
       PARENT type STRING,
-      "!   The ID of the previous sibling dialog node. This property is omitted if the
-      "!    dialog node has no previous sibling.
+      "!   The unique ID of the previous sibling dialog node. This property is omitted if
+      "!    the dialog node has no previous sibling.
       PREVIOUS_SIBLING type STRING,
       "!   The output of the dialog node. For more information about how to specify dialog
       "!    node output, see the
@@ -175,13 +186,17 @@ public section.
       "!   The context for the dialog node.
       CONTEXT type T_DIALOG_NODE_CONTEXT,
       "!   The metadata for the dialog node.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   The next step to execute following this dialog node.
       NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      "!   The alias used to identify the dialog node. This string must conform to the
-      "!    following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   A human-readable name for the dialog node. If the node is included in
+      "!    disambiguation, this title is used to populate the **label** property of the
+      "!    corresponding suggestion in the `suggestion` response type (unless it is
+      "!    overridden by the **user_label** property). The title is also used to populate
+      "!    the **topic** property in the `connect_to_agent` response type.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       TITLE type STRING,
       "!   How the dialog node is processed.
       TYPE type STRING,
@@ -198,7 +213,8 @@ public section.
       "!   Whether the user can digress to top-level nodes while filling out slots.
       DIGRESS_OUT_SLOTS type STRING,
       "!   A label that can be displayed externally to describe the purpose of the node to
-      "!    users.
+      "!    users. If set, this label is used to identify the node in disambiguation
+      "!    responses (overriding the value of the **title** property).
       USER_LABEL type STRING,
       "!   Whether the dialog node should be excluded from disambiguation suggestions.
       "!    Valid only when **type**=`standard` or `frame`.
@@ -219,7 +235,7 @@ public section.
       "!   - It cannot consist of only whitespace characters.
       VALUE type STRING,
       "!   Any metadata related to the entity value.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Specifies the type of entity value.
       TYPE type STRING,
       "!   An array of synonyms for the entity value. A value can specify either synonyms
@@ -239,6 +255,20 @@ public section.
       "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_VALUE.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object containing properties that indicate how many</p>
+    "!     intents, entities, and dialog nodes are defined in the workspace. This property
+    "!     is included only in responses from the **Export workspace asynchronously**
+    "!     method, and only when the **verbose** query parameter is set to `true`.
+    begin of T_WORKSPACE_COUNTS,
+      "!   The number of intents defined in the workspace.
+      INTENT type INTEGER,
+      "!   The number of entities defined in the workspace.
+      ENTITY type INTEGER,
+      "!   The number of nodes defined in the workspace.
+      NODE type INTEGER,
+    end of T_WORKSPACE_COUNTS.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    A webhook that can be used by dialog nodes to make</p>
@@ -308,6 +338,22 @@ public section.
     end of T_INTENT.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    Workspace settings related to the version of the training</p>
+    "!     algorithms currently used by the skill.
+    begin of T_WS_SYSTEM_SETTINGS_NLP,
+      "!   The policy the skill follows for selecting the algorithm version to use. For
+      "!    more information, see the
+      "!    [documentation](/docs/watson-assistant?topic=watson-assistant-algorithm-version
+      "!   ). <br/>
+      "!   <br/>
+      "!    On IBM Cloud, you can specify `latest`, `previous`, or `beta`. <br/>
+      "!   <br/>
+      "!    On IBM Cloud Pak for Data, you can specify either `beta` or the date of the
+      "!    version you want to use, in `YYYY-MM-DD` format.
+      MODEL type STRING,
+    end of T_WS_SYSTEM_SETTINGS_NLP.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Workspace settings related to the Watson Assistant user</p>
     "!     interface.
     begin of T_WS_SYSTEM_SETTINGS_TOOLING,
@@ -324,7 +370,7 @@ public section.
       "!   Workspace settings related to the disambiguation feature.
       DISAMBIGUATION type T_WS_SYSTM_STTNGS_DSMBGTN,
       "!   For internal use only.
-      HUMAN_AGENT_ASSIST type MAP,
+      HUMAN_AGENT_ASSIST type JSONOBJECT,
       "!   Whether spelling correction is enabled for the workspace.
       SPELLING_SUGGESTIONS type BOOLEAN,
       "!   Whether autocorrection is enabled for the workspace. If spelling correction is
@@ -338,6 +384,9 @@ public section.
       SYSTEM_ENTITIES type T_WS_SYSTM_STTNGS_SYSTM_ENTTS,
       "!   Workspace settings related to detection of irrelevant input.
       OFF_TOPIC type T_WS_SYSTEM_SETTINGS_OFF_TOPIC,
+      "!   Workspace settings related to the version of the training algorithms currently
+      "!    used by the skill.
+      NLP type T_WS_SYSTEM_SETTINGS_NLP,
     end of T_WORKSPACE_SYSTEM_SETTINGS.
   types:
     "! No documentation available.
@@ -367,7 +416,7 @@ public section.
       "!    newline, or tab characters.
       DESCRIPTION type STRING,
       "!   Any metadata related to the entity.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether to use fuzzy matching for the entity.
       FUZZY_MATCH type BOOLEAN,
       "!   The timestamp for creation of the object.
@@ -400,22 +449,68 @@ public section.
       "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
       "!   Any metadata related to the workspace.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether training data from the workspace (including artifacts such as intents
       "!    and entities) can be used by IBM for general service improvements. `true`
       "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
       "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      "!   The current status of the workspace.
+      "!   The current status of the workspace: <br/>
+      "!    - **Available**: The workspace is available and ready to process messages.
+      "!    <br/>
+      "!    - **Failed**: An asynchronous operation has failed. See the **status_errors**
+      "!    property for more information about the cause of the failure. <br/>
+      "!    - **Non Existent**: The workspace does not exist. <br/>
+      "!    - **Processing**: An asynchronous operation has not yet completed. <br/>
+      "!    - **Training**: The workspace is training based on new data such as intents or
+      "!    examples.
       STATUS type STRING,
+      "!   An array of messages about errors that caused an asynchronous operation to fail.
+      "!
+      STATUS_ERRORS type STANDARD TABLE OF T_STATUS_ERROR WITH NON-UNIQUE DEFAULT KEY,
       "!   No documentation available.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
       "!   An array of intents.
       INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
       "!   An array of objects describing the entities for the workspace.
       ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An object containing properties that indicate how many intents, entities, and
+      "!    dialog nodes are defined in the workspace. This property is included only in
+      "!    responses from the **Export workspace asynchronously** method, and only when
+      "!    the **verbose** query parameter is set to `true`.
+      COUNTS type T_WORKSPACE_COUNTS,
     end of T_WORKSPACE.
+  types:
+    "! No documentation available.
+    begin of T_RESPONSE_GENERIC_CHANNEL,
+      "!   A channel for which the response is intended. <br/>
+      "!   <br/>
+      "!    **Note:** On IBM Cloud Pak for Data, only `chat` is supported.
+      CHANNEL type STRING,
+    end of T_RESPONSE_GENERIC_CHANNEL.
+  types:
+    "! No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_VIDEO,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the video.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the video cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_RUNTIME_RESPONSE_TYPE_VIDEO.
   types:
     "! No documentation available.
     begin of T_SYNONYM,
@@ -431,7 +526,8 @@ public section.
     end of T_SYNONYM.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    The pagination data for the returned objects.</p>
+    "!    The pagination data for the returned objects. For more</p>
+    "!     information about using pagination, see [Pagination](#pagination).
     begin of T_PAGINATION,
       "!   The URL that will return the same page of results.
       REFRESH_URL type STRING,
@@ -452,7 +548,8 @@ public section.
     begin of T_SYNONYM_COLLECTION,
       "!   An array of synonyms.
       SYNONYMS type STANDARD TABLE OF T_SYNONYM WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_SYNONYM_COLLECTION.
   types:
@@ -617,8 +714,6 @@ public section.
       "!   A decimal percentage that represents Watson&apos;s confidence in the recognized
       "!    entity.
       CONFIDENCE type NUMBER,
-      "!   Any metadata for the entity.
-      METADATA type MAP,
       "!   The recognized capture groups for the entity, as defined by the entity pattern.
       GROUPS type STANDARD TABLE OF T_CAPTURE_GROUP WITH NON-UNIQUE DEFAULT KEY,
       "!   An object containing detailed information about the entity recognized in the
@@ -647,7 +742,9 @@ public section.
     begin of T_RUNTIME_INTENT,
       "!   The name of the recognized intent.
       INTENT type STRING,
-      "!   A decimal percentage that represents Watson&apos;s confidence in the intent.
+      "!   A decimal percentage that represents Watson&apos;s confidence in the intent. If
+      "!    you are specifying an intent as part of a request, but you do not have a
+      "!    calculated confidence value, specify `1`.
       CONFIDENCE type DOUBLE,
     end of T_RUNTIME_INTENT.
   types:
@@ -678,21 +775,23 @@ public section.
       VALUE type T_DIA_ND_OUTPUT_OPT_ELEM_VALUE,
     end of T_DIA_NODE_OUTPUT_OPT_ELEMENT.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `option`.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_OPTION,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
-      "!   The description to show with the the response.
+      "!   The description to show with the response.
       DESCRIPTION type STRING,
       "!   The preferred type of control to display.
       PREFERENCE type STRING,
       "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_OPTION.
   types:
     "! No documentation available.
@@ -702,9 +801,7 @@ public section.
       TEXT type STRING,
     end of T_DIA_ND_OTPT_TEXT_VALUES_ELEM.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `text`.
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -717,6 +814,8 @@ public section.
       "!   The delimiter to use as a separator between responses when
       "!    `selection_policy`=`multiline`.
       DELIMITER type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_TEXT.
   types:
     "! No documentation available.
@@ -743,6 +842,91 @@ public section.
     end of T_BASE_WORKSPACE.
   types:
     "! No documentation available.
+    begin of T_RT_RESP_GNRC_RT_RESP_TYP_VD,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the video.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the video cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_RT_RESP_GNRC_RT_RESP_TYP_VD.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information for transferring to the web chat integration.</p>
+    begin of T_CHANNEL_TRANSFER_TARGET_CHAT,
+      "!   The URL of the target web chat.
+      URL type STRING,
+    end of T_CHANNEL_TRANSFER_TARGET_CHAT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    An object specifying target channels available for the</p>
+    "!     transfer. Each property of this object represents an available transfer target.
+    "!     Currently, the only supported property is **chat**, representing the web chat
+    "!     integration.
+    begin of T_CHANNEL_TRANSFER_TARGET,
+      "!   Information for transferring to the web chat integration.
+      CHAT type T_CHANNEL_TRANSFER_TARGET_CHAT,
+    end of T_CHANNEL_TRANSFER_TARGET.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Information used by an integration to transfer the</p>
+    "!     conversation to a different channel.
+    begin of T_CHANNEL_TRANSFER_INFO,
+      "!   An object specifying target channels available for the transfer. Each property
+      "!    of this object represents an available transfer target. Currently, the only
+      "!    supported property is **chat**, representing the web chat integration.
+      TARGET type T_CHANNEL_TRANSFER_TARGET,
+    end of T_CHANNEL_TRANSFER_INFO.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYP_CHNNL_1,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel. <br/>
+      "!   <br/>
+      "!    **Note:** The `channel_transfer` response type is not supported on IBM Cloud
+      "!    Pak for Data.
+      RESPONSE_TYPE type STRING,
+      "!   The message to display to the user when initiating a channel transfer.
+      MESSAGE_TO_USER type STRING,
+      "!   Information used by an integration to transfer the conversation to a different
+      "!    channel.
+      TRANSFER_INFO type T_CHANNEL_TRANSFER_INFO,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_RESP_TYP_CHNNL_1.
+  types:
+    "! No documentation available.
+    begin of T_RT_RESP_TYPE_CHANNEL_TRANS,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel. <br/>
+      "!   <br/>
+      "!    **Note:** The `channel_transfer` response type is not supported on IBM Cloud
+      "!    Pak for Data.
+      RESPONSE_TYPE type STRING,
+      "!   The message to display to the user when initiating a channel transfer.
+      MESSAGE_TO_USER type STRING,
+      "!   Information used by an integration to transfer the conversation to a different
+      "!    channel.
+      TRANSFER_INFO type T_CHANNEL_TRANSFER_INFO,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended only for a built-in
+      "!    integration and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESP_TYPE_CHANNEL_TRANS.
+  types:
+    "! No documentation available.
     begin of T_BASE_ENTITY,
       "!   The name of the entity. This string must conform to the following
       "!    restrictions:<br/>
@@ -754,7 +938,7 @@ public section.
       "!    newline, or tab characters.
       DESCRIPTION type STRING,
       "!   Any metadata related to the entity.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether to use fuzzy matching for the entity.
       FUZZY_MATCH type BOOLEAN,
       "!   The timestamp for creation of the object.
@@ -763,15 +947,17 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_ENTITY.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `text`.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_TEXT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
       "!   The text of the response.
       TEXT type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_TEXT.
   types:
     "! No documentation available.
@@ -832,6 +1018,25 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_EXAMPLE.
   types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYPE_IFRAME,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the embeddable content.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   The URL of an image that shows a preview of the embedded content.
+      IMAGE_URL type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_RESP_TYPE_IFRAME.
+  types:
     "! <p class="shorttext synchronized" lang="en">
     "!    An object describing a contextual entity mention.</p>
     begin of T_ENTITY_MENTION,
@@ -844,24 +1049,40 @@ public section.
       LOCATION type STANDARD TABLE OF INTEGER WITH NON-UNIQUE DEFAULT KEY,
     end of T_ENTITY_MENTION.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `image`.
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_IMG,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
-      "!   The URL of the image.
+      "!   The `https:` URL of the image.
       SOURCE type STRING,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
-      "!   The description to show with the the response.
+      "!   The description to show with the response.
       DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the image cannot be seen.
+      ALT_TEXT type STRING,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_IMG.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `text`.
+    "! No documentation available.
+    begin of T_RT_RESP_TYPE_USER_DEFINED,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   An object containing any properties for the user-defined response type.
+      USER_DEFINED type JSONOBJECT,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESP_TYPE_USER_DEFINED.
+  types:
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP1,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -874,11 +1095,11 @@ public section.
       "!   The delimiter to use as a separator between responses when
       "!    `selection_policy`=`multiline`.
       DELIMITER type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP1.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `search_skill`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -901,18 +1122,22 @@ public section.
       FILTER type STRING,
       "!   The version of the Discovery service API to use for the query.
       DISCOVERY_VERSION type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_RESP_TYP_SRCH_S1.
   types:
     "! No documentation available.
     begin of T_EXAMPLE_COLLECTION,
       "!   An array of objects describing the examples defined for the intent.
       EXAMPLES type STANDARD TABLE OF T_EXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_EXAMPLE_COLLECTION.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    The pagination data for the returned objects.</p>
+    "!    The pagination data for the returned objects. For more</p>
+    "!     information about using pagination, see [Pagination](#pagination).
     begin of T_LOG_PAGINATION,
       "!   The URL that will return the next page of results, if any.
       NEXT_URL type STRING,
@@ -936,9 +1161,7 @@ public section.
       TARGET type MAP,
     end of T_DIA_ND_OTPT_CNNCT_T_AGNT_TR1.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `connect_to_agent`.
+    "! No documentation available.
     begin of T_RT_RESP_TYP_CONNECT_TO_AGENT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -959,15 +1182,17 @@ public section.
       "!    property of the relevant node or the **topic** property of the dialog node
       "!    response.
       TOPIC type STRING,
-      "!   The ID of the dialog node that the **topic** property is taken from. The
+      "!   The unique ID of the dialog node that the **topic** property is taken from. The
       "!    **topic** property is populated using the value of the dialog node&apos;s
       "!    **title** property.
       DIALOG_NODE type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_TYP_CONNECT_TO_AGENT.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `connect_to_agent`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP5,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -984,6 +1209,8 @@ public section.
       "!   Routing or other contextual information to be used by target service desk
       "!    systems.
       TRANSFER_INFO type T_DIA_ND_OTPT_CNNCT_T_AGNT_TR1,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP5.
   types:
     "! No documentation available.
@@ -994,7 +1221,7 @@ public section.
       "!   - It cannot consist of only whitespace characters.
       VALUE type STRING,
       "!   Any metadata related to the entity value.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Specifies the type of entity value.
       TYPE type STRING,
       "!   An array of synonyms for the entity value. A value can specify either synonyms
@@ -1015,10 +1242,33 @@ public section.
       UPDATED type DATETIME,
     end of T_CREATE_VALUE.
   types:
+    "! No documentation available.
+    begin of T_RT_RESP_GNRC_RT_RESP_TYP_CH1,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel. <br/>
+      "!   <br/>
+      "!    **Note:** The `channel_transfer` response type is not supported on IBM Cloud
+      "!    Pak for Data.
+      RESPONSE_TYPE type STRING,
+      "!   The message to display to the user when initiating a channel transfer.
+      MESSAGE_TO_USER type STRING,
+      "!   Information used by an integration to transfer the conversation to a different
+      "!    channel.
+      TRANSFER_INFO type T_CHANNEL_TRANSFER_INFO,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended only for a built-in
+      "!    integration and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESP_GNRC_RT_RESP_TYP_CH1.
+  types:
     "! <p class="shorttext synchronized" lang="en">
     "!    An object defining the message input, intents, and entities</p>
     "!     to be sent to the Watson Assistant service if the user selects the
-    "!     corresponding disambiguation option.
+    "!     corresponding disambiguation option. <br/>
+    "!    <br/>
+    "!     **Note:** These properties must be included in the request body of the next
+    "!     message sent to the assistant. Do not modify or remove any of the included
+    "!     properties.
     begin of T_DIALOG_SUGGESTION_VALUE,
       "!   An input object that includes the input text.
       INPUT type T_MESSAGE_INPUT,
@@ -1031,19 +1281,22 @@ public section.
     "! No documentation available.
     begin of T_DIALOG_SUGGESTION,
       "!   The user-facing label for the disambiguation option. This label is taken from
-      "!    the **title** or **user_label** property of the corresponding dialog node,
-      "!    depending on the disambiguation options.
+      "!    the **title** or **user_label** property of the corresponding dialog node.
       LABEL type STRING,
       "!   An object defining the message input, intents, and entities to be sent to the
       "!    Watson Assistant service if the user selects the corresponding disambiguation
-      "!    option.
+      "!    option. <br/>
+      "!   <br/>
+      "!    **Note:** These properties must be included in the request body of the next
+      "!    message sent to the assistant. Do not modify or remove any of the included
+      "!    properties.
       VALUE type T_DIALOG_SUGGESTION_VALUE,
       "!   The dialog output that will be returned from the Watson Assistant service if the
       "!    user selects the corresponding option.
-      OUTPUT type MAP,
-      "!   The ID of the dialog node that the **label** property is taken from. The
+      OUTPUT type JSONOBJECT,
+      "!   The unique ID of the dialog node that the **label** property is taken from. The
       "!    **label** property is populated using the value of the dialog node&apos;s
-      "!    **user_label** property.
+      "!    **title** or **user_label** property.
       DIALOG_NODE type STRING,
     end of T_DIALOG_SUGGESTION.
   types:
@@ -1058,7 +1311,7 @@ public section.
       "!   - It cannot consist of only whitespace characters.
       VALUE type STRING,
       "!   Any metadata related to the entity value.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Specifies the type of entity value.
       TYPE type STRING,
       "!   An array of synonyms for the entity value. A value can specify either synonyms
@@ -1125,15 +1378,26 @@ public section.
     "! No documentation available.
     begin of T_WORKSPACE_REFERENCE,
       "!   Any metadata related to the workspace.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether training data from the workspace (including artifacts such as intents
       "!    and entities) can be used by IBM for general service improvements. `true`
       "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
       "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      "!   The current status of the workspace.
+      "!   The current status of the workspace: <br/>
+      "!    - **Available**: The workspace is available and ready to process messages.
+      "!    <br/>
+      "!    - **Failed**: An asynchronous operation has failed. See the **status_errors**
+      "!    property for more information about the cause of the failure. <br/>
+      "!    - **Non Existent**: The workspace does not exist. <br/>
+      "!    - **Processing**: An asynchronous operation has not yet completed. <br/>
+      "!    - **Training**: The workspace is training based on new data such as intents or
+      "!    examples.
       STATUS type STRING,
+      "!   An array of messages about errors that caused an asynchronous operation to fail.
+      "!
+      STATUS_ERRORS type STANDARD TABLE OF T_STATUS_ERROR WITH NON-UNIQUE DEFAULT KEY,
       "!   No documentation available.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
     end of T_WORKSPACE_REFERENCE.
@@ -1142,13 +1406,15 @@ public section.
     begin of T_VALUE_COLLECTION,
       "!   An array of entity values.
       VALUES type STANDARD TABLE OF T_VALUE WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_VALUE_COLLECTION.
   types:
     "! No documentation available.
     begin of T_DIALOG_NODE_VISITED_DETAILS,
-      "!   A dialog node that was triggered during processing of the input message.
+      "!   The unique ID of a dialog node that was triggered during processing of the input
+      "!    message.
       DIALOG_NODE type STRING,
       "!   The title of the dialog node.
       TITLE type STRING,
@@ -1157,12 +1423,27 @@ public section.
     end of T_DIALOG_NODE_VISITED_DETAILS.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    An object that identifies the dialog element that generated</p>
+    "!     the error message.
+    begin of T_LOG_MESSAGE_SOURCE,
+      "!   A string that indicates the type of dialog element that generated the error
+      "!    message.
+      TYPE type STRING,
+      "!   The unique identifier of the dialog node that generated the error message.
+      DIALOG_NODE type STRING,
+    end of T_LOG_MESSAGE_SOURCE.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    Log message details.</p>
     begin of T_LOG_MESSAGE,
       "!   The severity of the log message.
       LEVEL type STRING,
       "!   The text of the log message.
       MSG type STRING,
+      "!   A code that indicates the category to which the error message belongs.
+      CODE type STRING,
+      "!   An object that identifies the dialog element that generated the error message.
+      SOURCE type T_LOG_MESSAGE_SOURCE,
     end of T_LOG_MESSAGE.
   types:
     "! No documentation available.
@@ -1182,8 +1463,6 @@ public section.
       NODES_VISITED_DETAILS type STANDARD TABLE OF T_DIALOG_NODE_VISITED_DETAILS WITH NON-UNIQUE DEFAULT KEY,
       "!   An array of up to 50 messages logged with the request.
       LOG_MESSAGES type STANDARD TABLE OF T_LOG_MESSAGE WITH NON-UNIQUE DEFAULT KEY,
-      "!   An array of responses to the user.
-      TEXT type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
       "!   Output intended for any channel. It is the responsibility of the client
       "!    application to implement the supported response types.
       GENERIC type STANDARD TABLE OF T_RUNTIME_RESPONSE_GENERIC WITH NON-UNIQUE DEFAULT KEY,
@@ -1195,24 +1474,42 @@ public section.
       INPUT type STANDARD TABLE OF T_BULK_CLASSIFY_UTTERANCE WITH NON-UNIQUE DEFAULT KEY,
     end of T_BULK_CLASSIFY_INPUT.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `image`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP3,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
-      "!   The URL of the image.
+      "!   The `https:` URL of the image.
       SOURCE type STRING,
       "!   An optional title to show before the response.
       TITLE type STRING,
       "!   An optional description to show with the response.
       DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the image cannot be seen.
+      ALT_TEXT type STRING,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP3.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `connect_to_agent`.
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP7,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel. <br/>
+      "!   <br/>
+      "!    **Note:** The `channel_transfer` response type is not supported on IBM Cloud
+      "!    Pak for Data.
+      RESPONSE_TYPE type STRING,
+      "!   The message to display to the user when initiating a channel transfer.
+      MESSAGE_TO_USER type STRING,
+      "!   Information used by an integration to transfer the conversation to a different
+      "!    channel.
+      TRANSFER_INFO type T_CHANNEL_TRANSFER_INFO,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP7.
+  types:
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_CN1,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1233,10 +1530,14 @@ public section.
       "!    property of the relevant node or the **topic** property of the dialog node
       "!    response.
       TOPIC type STRING,
-      "!   The ID of the dialog node that the **topic** property is taken from. The
+      "!   The unique ID of the dialog node that the **topic** property is taken from. The
       "!    **topic** property is populated using the value of the dialog node&apos;s
       "!    **title** property.
       DIALOG_NODE type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_CN1.
   types:
     "! <p class="shorttext synchronized" lang="en">
@@ -1244,7 +1545,8 @@ public section.
     begin of T_DIALOG_NODE_COLLECTION,
       "!   An array of objects describing the dialog nodes defined for the workspace.
       DIALOG_NODES type STANDARD TABLE OF T_DIALOG_NODE WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_DIALOG_NODE_COLLECTION.
   types:
@@ -1256,9 +1558,15 @@ public section.
       DEPLOYMENT type STRING,
       "!   A string value that identifies the user who is interacting with the workspace.
       "!    The client must provide a unique identifier for each individual end user who
-      "!    accesses the application. For Plus and Premium plans, this user ID is used to
+      "!    accesses the application. For user-based plans, this user ID is used to
       "!    identify unique users for billing purposes. This string cannot contain carriage
-      "!    return, newline, or tab characters.
+      "!    return, newline, or tab characters. If no value is specified in the input,
+      "!    **user_id** is automatically set to the value of
+      "!    **context.conversation_id**.<br/>
+      "!   <br/>
+      "!   **Note:** This property is the same as the **user_id** property at the root of
+      "!    the message body. If **user_id** is specified in both locations in a message
+      "!    request, the value specified at the root is used.
       USER_ID type STRING,
     end of T_MESSAGE_CONTEXT_METADATA.
   types:
@@ -1266,10 +1574,12 @@ public section.
     "!    State information for the conversation. To maintain state,</p>
     "!     include the context from the previous response.
     begin of T_CONTEXT,
-      "!   The unique identifier of the conversation.
+      "!   The unique identifier of the conversation. The conversation ID cannot contain
+      "!    any of the following characters: `+` `=` `&&` `||` `&gt;` `&lt;` `!` `(` `)`
+      "!    `&#123;` `&#125;` `[` `]` `^` `&quot;` `~` `*` `?` `:` `\` `/`.
       CONVERSATION_ID type STRING,
       "!   For internal use only.
-      SYSTEM type MAP,
+      SYSTEM type JSONOBJECT,
       "!   Metadata related to the message.
       METADATA type T_MESSAGE_CONTEXT_METADATA,
     end of T_CONTEXT.
@@ -1296,6 +1606,18 @@ public section.
       OUTPUT type T_OUTPUT_DATA,
       "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   A string value that identifies the user who is interacting with the workspace.
+      "!    The client must provide a unique identifier for each individual end user who
+      "!    accesses the application. For user-based plans, this user ID is used to
+      "!    identify unique users for billing purposes. This string cannot contain carriage
+      "!    return, newline, or tab characters. If no value is specified in the input,
+      "!    **user_id** is automatically set to the value of
+      "!    **context.conversation_id**.<br/>
+      "!   <br/>
+      "!   **Note:** This property is the same as the **user_id** property in the context
+      "!    metadata. If **user_id** is specified in both locations in a message request,
+      "!    the value specified at the root is used.
+      USER_ID type STRING,
     end of T_MESSAGE_RESPONSE.
   types:
     "! No documentation available.
@@ -1306,7 +1628,7 @@ public section.
       "!   - It cannot consist of only whitespace characters.
       VALUE type STRING,
       "!   Any metadata related to the entity value.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Specifies the type of entity value.
       TYPE type STRING,
       "!   An array of synonyms for the entity value. A value can specify either synonyms
@@ -1339,7 +1661,7 @@ public section.
       "!    newline, or tab characters.
       DESCRIPTION type STRING,
       "!   Any metadata related to the entity.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether to use fuzzy matching for the entity.
       FUZZY_MATCH type BOOLEAN,
       "!   The timestamp for creation of the object.
@@ -1352,9 +1674,12 @@ public section.
   types:
     "! No documentation available.
     begin of T_UPDATE_DIALOG_NODE,
-      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   The unique ID of the dialog node. This is an internal identifier used to refer
+      "!    to the dialog node from other dialog nodes and in the diagnostic information
+      "!    included with message responses.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       DIALOG_NODE type STRING,
       "!   The description of the dialog node. This string cannot contain carriage return,
       "!    newline, or tab characters.
@@ -1362,11 +1687,11 @@ public section.
       "!   The condition that will trigger the dialog node. This string cannot contain
       "!    carriage return, newline, or tab characters.
       CONDITIONS type STRING,
-      "!   The ID of the parent dialog node. This property is omitted if the dialog node
-      "!    has no parent.
+      "!   The unique ID of the parent dialog node. This property is omitted if the dialog
+      "!    node has no parent.
       PARENT type STRING,
-      "!   The ID of the previous sibling dialog node. This property is omitted if the
-      "!    dialog node has no previous sibling.
+      "!   The unique ID of the previous sibling dialog node. This property is omitted if
+      "!    the dialog node has no previous sibling.
       PREVIOUS_SIBLING type STRING,
       "!   The output of the dialog node. For more information about how to specify dialog
       "!    node output, see the
@@ -1376,13 +1701,17 @@ public section.
       "!   The context for the dialog node.
       CONTEXT type T_DIALOG_NODE_CONTEXT,
       "!   The metadata for the dialog node.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   The next step to execute following this dialog node.
       NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      "!   The alias used to identify the dialog node. This string must conform to the
-      "!    following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   A human-readable name for the dialog node. If the node is included in
+      "!    disambiguation, this title is used to populate the **label** property of the
+      "!    corresponding suggestion in the `suggestion` response type (unless it is
+      "!    overridden by the **user_label** property). The title is also used to populate
+      "!    the **topic** property in the `connect_to_agent` response type.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       TITLE type STRING,
       "!   How the dialog node is processed.
       TYPE type STRING,
@@ -1399,7 +1728,8 @@ public section.
       "!   Whether the user can digress to top-level nodes while filling out slots.
       DIGRESS_OUT_SLOTS type STRING,
       "!   A label that can be displayed externally to describe the purpose of the node to
-      "!    users.
+      "!    users. If set, this label is used to identify the node in disambiguation
+      "!    responses (overriding the value of the **title** property).
       USER_LABEL type STRING,
       "!   Whether the dialog node should be excluded from disambiguation suggestions.
       "!    Valid only when **type**=`standard` or `frame`.
@@ -1412,9 +1742,7 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_DIALOG_NODE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `pause`.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_PAUSE,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1423,11 +1751,26 @@ public section.
       TIME type INTEGER,
       "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RUNTIME_RESPONSE_TYPE_PAUSE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `connect_to_agent`.
+    "! No documentation available.
+    begin of T_RT_RESP_GNRC_RT_RESP_TYP_US1,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   An object containing any properties for the user-defined response type.
+      USER_DEFINED type JSONOBJECT,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESP_GNRC_RT_RESP_TYP_US1.
+  types:
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1444,11 +1787,52 @@ public section.
       "!   Routing or other contextual information to be used by target service desk
       "!    systems.
       TRANSFER_INFO type T_DIA_ND_OTPT_CNNCT_T_AGNT_TR1,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_RESP_TYP_CNNCT_1.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `pause`.
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OT10,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the audio clip.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the audio player cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_DIA_ND_OTPT_GNRC_DIA_ND_OT10.
+  types:
+    "! No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_IFRAME,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the embeddable content.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   The URL of an image that shows a preview of the embedded content.
+      IMAGE_URL type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RUNTIME_RESPONSE_TYPE_IFRAME.
+  types:
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_PS,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1457,6 +1841,10 @@ public section.
       TIME type INTEGER,
       "!   Whether to send a &quot;user is typing&quot; event during the pause.
       TYPING type BOOLEAN,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_PS.
   types:
     "! No documentation available.
@@ -1500,7 +1888,7 @@ public section.
       "!    newline, or tab characters.
       DESCRIPTION type STRING,
       "!   Any metadata related to the entity.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether to use fuzzy matching for the entity.
       FUZZY_MATCH type BOOLEAN,
       "!   The timestamp for creation of the object.
@@ -1533,15 +1921,26 @@ public section.
       "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
       "!   Any metadata related to the workspace.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether training data from the workspace (including artifacts such as intents
       "!    and entities) can be used by IBM for general service improvements. `true`
       "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
       "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      "!   The current status of the workspace.
+      "!   The current status of the workspace: <br/>
+      "!    - **Available**: The workspace is available and ready to process messages.
+      "!    <br/>
+      "!    - **Failed**: An asynchronous operation has failed. See the **status_errors**
+      "!    property for more information about the cause of the failure. <br/>
+      "!    - **Non Existent**: The workspace does not exist. <br/>
+      "!    - **Processing**: An asynchronous operation has not yet completed. <br/>
+      "!    - **Training**: The workspace is training based on new data such as intents or
+      "!    examples.
       STATUS type STRING,
+      "!   An array of messages about errors that caused an asynchronous operation to fail.
+      "!
+      STATUS_ERRORS type STANDARD TABLE OF T_STATUS_ERROR WITH NON-UNIQUE DEFAULT KEY,
       "!   No documentation available.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
       "!   An array of objects defining the intents for the workspace.
@@ -1554,7 +1953,8 @@ public section.
     begin of T_COUNTEREXAMPLE_COLLECTION,
       "!   An array of objects describing the examples marked as irrelevant input.
       COUNTEREXAMPLES type STANDARD TABLE OF T_COUNTEREXAMPLE WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_COUNTEREXAMPLE_COLLECTION.
   types:
@@ -1606,7 +2006,8 @@ public section.
     begin of T_ENTITY_COLLECTION,
       "!   An array of objects describing the entities defined for the workspace.
       ENTITIES type STANDARD TABLE OF T_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_ENTITY_COLLECTION.
   types:
@@ -1614,13 +2015,12 @@ public section.
     begin of T_INTENT_COLLECTION,
       "!   An array of objects describing the intents defined for the workspace.
       INTENTS type STANDARD TABLE OF T_INTENT WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_INTENT_COLLECTION.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `pause`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_RESP_TYPE_PAUSE,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1630,11 +2030,11 @@ public section.
       "!   Whether to send a &quot;user is typing&quot; event during the pause. Ignored if
       "!    the channel does not support this event.
       TYPING type BOOLEAN,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_RESP_TYPE_PAUSE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `suggestion`.
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_SG1,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1644,21 +2044,28 @@ public section.
       "!   An array of objects describing the possible matching dialog nodes from which the
       "!    user can choose.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_SG1.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `image`.
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_IMG,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
-      "!   The URL of the image.
+      "!   The `https:` URL of the image.
       SOURCE type STRING,
       "!   An optional title to show before the response.
       TITLE type STRING,
       "!   An optional description to show with the response.
       DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the image cannot be seen.
+      ALT_TEXT type STRING,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_IMG.
   types:
     "! No documentation available.
@@ -1671,9 +2078,29 @@ public section.
       CODE type INTEGER,
     end of T_ERROR_RESPONSE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `option`.
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYPE_AUDIO,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the audio clip.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the audio player cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_DIA_ND_OTPT_RESP_TYPE_AUDIO.
+  types:
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP4,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1687,7 +2114,21 @@ public section.
       "!   An array of objects describing the options from which the user can choose. You
       "!    can include up to 20 options.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP4.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP8,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   An object containing any properties for the user-defined response type. The
+      "!    total size of this object cannot exceed 5000 bytes.
+      USER_DEFINED type JSONOBJECT,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP8.
   types:
     "! No documentation available.
     begin of T_BASE_MESSAGE,
@@ -1709,11 +2150,21 @@ public section.
       OUTPUT type T_OUTPUT_DATA,
       "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   A string value that identifies the user who is interacting with the workspace.
+      "!    The client must provide a unique identifier for each individual end user who
+      "!    accesses the application. For user-based plans, this user ID is used to
+      "!    identify unique users for billing purposes. This string cannot contain carriage
+      "!    return, newline, or tab characters. If no value is specified in the input,
+      "!    **user_id** is automatically set to the value of
+      "!    **context.conversation_id**.<br/>
+      "!   <br/>
+      "!   **Note:** This property is the same as the **user_id** property in the context
+      "!    metadata. If **user_id** is specified in both locations in a message request,
+      "!    the value specified at the root is used.
+      USER_ID type STRING,
     end of T_BASE_MESSAGE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `suggestion`.
+    "! No documentation available.
     begin of T_RT_RESPONSE_TYPE_SUGGESTION,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1723,13 +2174,18 @@ public section.
       "!   An array of objects describing the possible matching dialog nodes from which the
       "!    user can choose.
       SUGGESTIONS type STANDARD TABLE OF T_DIALOG_SUGGESTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESPONSE_TYPE_SUGGESTION.
   types:
     "! No documentation available.
     begin of T_ENTITY_MENTION_COLLECTION,
       "!   An array of objects describing the entity mentions defined for an entity.
       EXAMPLES type STANDARD TABLE OF T_ENTITY_MENTION WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_ENTITY_MENTION_COLLECTION.
   types:
@@ -1746,20 +2202,22 @@ public section.
       UPDATED type DATETIME,
     end of T_UPDATE_SYNONYM.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `text`.
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_TXT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
       "!   The text of the response.
       TEXT type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_TXT.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    For internal use only.</p>
-      T_SYSTEM_RESPONSE type MAP.
+      T_SYSTEM_RESPONSE type JSONOBJECT.
   types:
     "! No documentation available.
     begin of T_BASE_INTENT,
@@ -1778,9 +2236,7 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_INTENT.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `pause`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP2,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1790,6 +2246,8 @@ public section.
       "!   Whether to send a &quot;user is typing&quot; event during the pause. Ignored if
       "!    the channel does not support this event.
       TYPING type BOOLEAN,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP2.
   types:
     "! No documentation available.
@@ -1853,9 +2311,7 @@ public section.
       SPECIFIC_YEAR type NUMBER,
     end of T_RT_ENTTY_INTRPRTTN_SYS_DATE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `search_skill`.
+    "! No documentation available.
     begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP6,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.<br/>
@@ -1878,11 +2334,33 @@ public section.
       FILTER type STRING,
       "!   The version of the Discovery service API to use for the query.
       DISCOVERY_VERSION type STRING,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP6.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `option`.
+    "! No documentation available.
+    begin of T_RUNTIME_RESPONSE_TYPE_AUDIO,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the audio clip.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the audio player cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_RUNTIME_RESPONSE_TYPE_AUDIO.
+  types:
+    "! No documentation available.
     begin of T_DIA_ND_OUTPUT_RESP_TYPE_OPT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
@@ -1896,7 +2374,31 @@ public section.
       "!   An array of objects describing the options from which the user can choose. You
       "!    can include up to 20 options.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_DIA_ND_OUTPUT_RESP_TYPE_OPT.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYPE_VIDEO,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the video.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the video cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_DIA_ND_OTPT_RESP_TYPE_VIDEO.
   types:
     "! No documentation available.
     begin of T_BASE_COUNTEREXAMPLE,
@@ -1911,20 +2413,44 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_COUNTEREXAMPLE.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `image`.
+    "! No documentation available.
     begin of T_RUNTIME_RESPONSE_TYPE_IMAGE,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
-      "!   The URL of the image.
+      "!   The `https:` URL of the image.
       SOURCE type STRING,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
-      "!   The description to show with the the response.
+      "!   The description to show with the response.
       DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the image cannot be seen.
+      ALT_TEXT type STRING,
     end of T_RUNTIME_RESPONSE_TYPE_IMAGE.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OT11,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the embeddable content.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   The URL of an image that shows a preview of the embedded content.
+      IMAGE_URL type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_GNRC_DIA_ND_OT11.
   types:
     "! No documentation available.
     begin of T_UPDATE_WORKSPACE,
@@ -1948,15 +2474,26 @@ public section.
       "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
       "!   Any metadata related to the workspace.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   Whether training data from the workspace (including artifacts such as intents
       "!    and entities) can be used by IBM for general service improvements. `true`
       "!    indicates that workspace training data is not to be used.
       LEARNING_OPT_OUT type BOOLEAN,
       "!   Global settings for the workspace.
       SYSTEM_SETTINGS type T_WORKSPACE_SYSTEM_SETTINGS,
-      "!   The current status of the workspace.
+      "!   The current status of the workspace: <br/>
+      "!    - **Available**: The workspace is available and ready to process messages.
+      "!    <br/>
+      "!    - **Failed**: An asynchronous operation has failed. See the **status_errors**
+      "!    property for more information about the cause of the failure. <br/>
+      "!    - **Non Existent**: The workspace does not exist. <br/>
+      "!    - **Processing**: An asynchronous operation has not yet completed. <br/>
+      "!    - **Training**: The workspace is training based on new data such as intents or
+      "!    examples.
       STATUS type STRING,
+      "!   An array of messages about errors that caused an asynchronous operation to fail.
+      "!
+      STATUS_ERRORS type STANDARD TABLE OF T_STATUS_ERROR WITH NON-UNIQUE DEFAULT KEY,
       "!   No documentation available.
       WEBHOOKS type STANDARD TABLE OF T_WEBHOOK WITH NON-UNIQUE DEFAULT KEY,
       "!   An array of objects defining the intents for the workspace.
@@ -1967,9 +2504,12 @@ public section.
   types:
     "! No documentation available.
     begin of T_BASE_DIALOG_NODE,
-      "!   The dialog node ID. This string must conform to the following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   The unique ID of the dialog node. This is an internal identifier used to refer
+      "!    to the dialog node from other dialog nodes and in the diagnostic information
+      "!    included with message responses.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       DIALOG_NODE type STRING,
       "!   The description of the dialog node. This string cannot contain carriage return,
       "!    newline, or tab characters.
@@ -1977,11 +2517,11 @@ public section.
       "!   The condition that will trigger the dialog node. This string cannot contain
       "!    carriage return, newline, or tab characters.
       CONDITIONS type STRING,
-      "!   The ID of the parent dialog node. This property is omitted if the dialog node
-      "!    has no parent.
+      "!   The unique ID of the parent dialog node. This property is omitted if the dialog
+      "!    node has no parent.
       PARENT type STRING,
-      "!   The ID of the previous sibling dialog node. This property is omitted if the
-      "!    dialog node has no previous sibling.
+      "!   The unique ID of the previous sibling dialog node. This property is omitted if
+      "!    the dialog node has no previous sibling.
       PREVIOUS_SIBLING type STRING,
       "!   The output of the dialog node. For more information about how to specify dialog
       "!    node output, see the
@@ -1991,13 +2531,17 @@ public section.
       "!   The context for the dialog node.
       CONTEXT type T_DIALOG_NODE_CONTEXT,
       "!   The metadata for the dialog node.
-      METADATA type MAP,
+      METADATA type JSONOBJECT,
       "!   The next step to execute following this dialog node.
       NEXT_STEP type T_DIALOG_NODE_NEXT_STEP,
-      "!   The alias used to identify the dialog node. This string must conform to the
-      "!    following restrictions:<br/>
-      "!   - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot
-      "!    characters.
+      "!   A human-readable name for the dialog node. If the node is included in
+      "!    disambiguation, this title is used to populate the **label** property of the
+      "!    corresponding suggestion in the `suggestion` response type (unless it is
+      "!    overridden by the **user_label** property). The title is also used to populate
+      "!    the **topic** property in the `connect_to_agent` response type.<br/>
+      "!   <br/>
+      "!   This string can contain only Unicode alphanumeric, space, underscore, hyphen,
+      "!    and dot characters.
       TITLE type STRING,
       "!   How the dialog node is processed.
       TYPE type STRING,
@@ -2014,7 +2558,8 @@ public section.
       "!   Whether the user can digress to top-level nodes while filling out slots.
       DIGRESS_OUT_SLOTS type STRING,
       "!   A label that can be displayed externally to describe the purpose of the node to
-      "!    users.
+      "!    users. If set, this label is used to identify the node in disambiguation
+      "!    responses (overriding the value of the **title** property).
       USER_LABEL type STRING,
       "!   Whether the dialog node should be excluded from disambiguation suggestions.
       "!    Valid only when **type**=`standard` or `frame`.
@@ -2026,6 +2571,28 @@ public section.
       "!   The timestamp for the most recent update to the object.
       UPDATED type DATETIME,
     end of T_BASE_DIALOG_NODE.
+  types:
+    "! No documentation available.
+    begin of T_RT_RESP_GNRC_RT_RESP_TYP_AD,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the audio clip.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the audio player cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_RT_RESP_GNRC_RT_RESP_TYP_AD.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    A request sent to the workspace, including the user input</p>
@@ -2052,6 +2619,18 @@ public section.
       OUTPUT type T_OUTPUT_DATA,
       "!   An array of objects describing any actions requested by the dialog node.
       ACTIONS type STANDARD TABLE OF T_DIALOG_NODE_ACTION WITH NON-UNIQUE DEFAULT KEY,
+      "!   A string value that identifies the user who is interacting with the workspace.
+      "!    The client must provide a unique identifier for each individual end user who
+      "!    accesses the application. For user-based plans, this user ID is used to
+      "!    identify unique users for billing purposes. This string cannot contain carriage
+      "!    return, newline, or tab characters. If no value is specified in the input,
+      "!    **user_id** is automatically set to the value of
+      "!    **context.conversation_id**.<br/>
+      "!   <br/>
+      "!   **Note:** This property is the same as the **user_id** property in the context
+      "!    metadata. If **user_id** is specified in both locations in a message request,
+      "!    the value specified at the root is used.
+      USER_ID type STRING,
     end of T_MESSAGE_REQUEST.
   types:
     "! No documentation available.
@@ -2091,9 +2670,32 @@ public section.
     begin of T_LOG_COLLECTION,
       "!   An array of objects describing log events.
       LOGS type STANDARD TABLE OF T_LOG WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_LOG_PAGINATION,
     end of T_LOG_COLLECTION.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP9,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the video.
+      SOURCE type STRING,
+      "!   An optional title to show before the response.
+      TITLE type STRING,
+      "!   An optional description to show with the response.
+      DESCRIPTION type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+      "!   For internal use only.
+      CHANNEL_OPTIONS type JSONOBJECT,
+      "!   Descriptive text that can be used for screen readers or other situations where
+      "!    the video cannot be seen.
+      ALT_TEXT type STRING,
+    end of T_DIA_ND_OTPT_GNRC_DIA_ND_OTP9.
   types:
     "! No documentation available.
     begin of T_AUDIT_PROPERTIES,
@@ -2108,7 +2710,8 @@ public section.
       "!   An array of objects describing the workspaces associated with the service
       "!    instance.
       WORKSPACES type STANDARD TABLE OF T_WORKSPACE WITH NON-UNIQUE DEFAULT KEY,
-      "!   The pagination data for the returned objects.
+      "!   The pagination data for the returned objects. For more information about using
+      "!    pagination, see [Pagination](#pagination).
       PAGINATION type T_PAGINATION,
     end of T_WORKSPACE_COLLECTION.
   types:
@@ -2125,22 +2728,55 @@ public section.
       UPDATED type DATETIME,
     end of T_BASE_SYNONYM.
   types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    An object that describes a response with response type</p>
-    "!     `option`.
+    "! No documentation available.
+    begin of T_RT_RESP_GNRC_RT_RESP_TYP_IF1,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   The `https:` URL of the embeddable content.
+      SOURCE type STRING,
+      "!   The title or introductory text to show before the response.
+      TITLE type STRING,
+      "!   The description to show with the response.
+      DESCRIPTION type STRING,
+      "!   The URL of an image that shows a preview of the embedded content.
+      IMAGE_URL type STRING,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_RT_RESP_GNRC_RT_RESP_TYP_IF1.
+  types:
+    "! No documentation available.
     begin of T_RT_RESP_GNRC_RT_RESP_TYP_OPT,
       "!   The type of response returned by the dialog node. The specified response type
       "!    must be supported by the client application or channel.
       RESPONSE_TYPE type STRING,
       "!   The title or introductory text to show before the response.
       TITLE type STRING,
-      "!   The description to show with the the response.
+      "!   The description to show with the response.
       DESCRIPTION type STRING,
       "!   The preferred type of control to display.
       PREFERENCE type STRING,
       "!   An array of objects describing the options from which the user can choose.
       OPTIONS type STANDARD TABLE OF T_DIA_NODE_OUTPUT_OPT_ELEMENT WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of objects specifying channels for which the response is intended. If
+      "!    **channels** is present, the response is intended for a built-in integration
+      "!    and should not be handled by an API client.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
     end of T_RT_RESP_GNRC_RT_RESP_TYP_OPT.
+  types:
+    "! No documentation available.
+    begin of T_DIA_ND_OTPT_RESP_TYP_USR_DF1,
+      "!   The type of response returned by the dialog node. The specified response type
+      "!    must be supported by the client application or channel.
+      RESPONSE_TYPE type STRING,
+      "!   An object containing any properties for the user-defined response type. The
+      "!    total size of this object cannot exceed 5000 bytes.
+      USER_DEFINED type JSONOBJECT,
+      "!   An array of objects specifying channels for which the response is intended.
+      CHANNELS type STANDARD TABLE OF T_RESPONSE_GENERIC_CHANNEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_DIA_ND_OTPT_RESP_TYP_USR_DF1.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    For internal use only.</p>
@@ -2155,20 +2791,25 @@ constants:
     T_WS_SYSTM_STTNGS_DSMBGTN type string value '|',
     T_DIALOG_NODE_OUTPUT_MODIFIERS type string value '|',
     T_DIALOG_NODE_NEXT_STEP type string value '|BEHAVIOR|',
+    T_STATUS_ERROR type string value '|',
     T_DIALOG_NODE_OUTPUT type string value '|',
     T_DIALOG_NODE_CONTEXT type string value '|',
     T_DIALOG_NODE type string value '|DIALOG_NODE|',
     T_VALUE type string value '|VALUE|TYPE|',
+    T_WORKSPACE_COUNTS type string value '|',
     T_WEBHOOK type string value '|URL|NAME|',
     T_WS_SYSTM_STTNGS_SYSTM_ENTTS type string value '|',
     T_MENTION type string value '|ENTITY|LOCATION|',
     T_EXAMPLE type string value '|TEXT|',
     T_INTENT type string value '|INTENT|',
+    T_WS_SYSTEM_SETTINGS_NLP type string value '|',
     T_WS_SYSTEM_SETTINGS_TOOLING type string value '|',
     T_WORKSPACE_SYSTEM_SETTINGS type string value '|',
     T_COUNTEREXAMPLE type string value '|TEXT|',
     T_ENTITY type string value '|ENTITY|',
-    T_WORKSPACE type string value '|NAME|LANGUAGE|WORKSPACE_ID|LEARNING_OPT_OUT|',
+    T_WORKSPACE type string value '|NAME|LANGUAGE|LEARNING_OPT_OUT|',
+    T_RESPONSE_GENERIC_CHANNEL type string value '|',
+    T_RUNTIME_RESPONSE_TYPE_VIDEO type string value '|RESPONSE_TYPE|SOURCE|',
     T_SYNONYM type string value '|SYNONYM|',
     T_PAGINATION type string value '|REFRESH_URL|',
     T_SYNONYM_COLLECTION type string value '|SYNONYMS|PAGINATION|',
@@ -2177,20 +2818,28 @@ constants:
     T_CAPTURE_GROUP type string value '|GROUP|',
     T_RUNTIME_ENTITY_ALTERNATIVE type string value '|',
     T_RUNTIME_ENTITY_ROLE type string value '|',
-    T_RUNTIME_ENTITY type string value '|ENTITY|LOCATION|VALUE|',
-    T_RUNTIME_INTENT type string value '|INTENT|CONFIDENCE|',
+    T_RUNTIME_ENTITY type string value '|ENTITY|VALUE|',
+    T_RUNTIME_INTENT type string value '|INTENT|',
     T_DIA_ND_OUTPUT_OPT_ELEM_VALUE type string value '|',
     T_DIA_NODE_OUTPUT_OPT_ELEMENT type string value '|LABEL|VALUE|',
     T_RUNTIME_RESPONSE_TYPE_OPTION type string value '|RESPONSE_TYPE|TITLE|OPTIONS|',
     T_DIA_ND_OTPT_TEXT_VALUES_ELEM type string value '|',
     T_DIA_ND_OUTPUT_RESP_TYPE_TEXT type string value '|RESPONSE_TYPE|VALUES|',
     T_BASE_WORKSPACE type string value '|',
+    T_RT_RESP_GNRC_RT_RESP_TYP_VD type string value '|RESPONSE_TYPE|SOURCE|',
+    T_CHANNEL_TRANSFER_TARGET_CHAT type string value '|',
+    T_CHANNEL_TRANSFER_TARGET type string value '|',
+    T_CHANNEL_TRANSFER_INFO type string value '|TARGET|',
+    T_DIA_ND_OTPT_RESP_TYP_CHNNL_1 type string value '|RESPONSE_TYPE|MESSAGE_TO_USER|TRANSFER_INFO|',
+    T_RT_RESP_TYPE_CHANNEL_TRANS type string value '|RESPONSE_TYPE|MESSAGE_TO_USER|TRANSFER_INFO|',
     T_BASE_ENTITY type string value '|',
     T_RUNTIME_RESPONSE_TYPE_TEXT type string value '|RESPONSE_TYPE|TEXT|',
     T_RT_ENTTY_INTRPRTTN_SYS_TIME type string value '|',
     T_UPDATE_EXAMPLE type string value '|',
+    T_DIA_ND_OTPT_RESP_TYPE_IFRAME type string value '|RESPONSE_TYPE|SOURCE|',
     T_ENTITY_MENTION type string value '|TEXT|INTENT|LOCATION|',
     T_RT_RESP_GNRC_RT_RESP_TYP_IMG type string value '|RESPONSE_TYPE|SOURCE|',
+    T_RT_RESP_TYPE_USER_DEFINED type string value '|RESPONSE_TYPE|USER_DEFINED|',
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP1 type string value '|RESPONSE_TYPE|VALUES|',
     T_DIA_ND_OTPT_RESP_TYP_SRCH_S1 type string value '|RESPONSE_TYPE|QUERY|QUERY_TYPE|',
     T_EXAMPLE_COLLECTION type string value '|EXAMPLES|PAGINATION|',
@@ -2200,6 +2849,7 @@ constants:
     T_RT_RESP_TYP_CONNECT_TO_AGENT type string value '|RESPONSE_TYPE|',
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP5 type string value '|RESPONSE_TYPE|',
     T_CREATE_VALUE type string value '|VALUE|',
+    T_RT_RESP_GNRC_RT_RESP_TYP_CH1 type string value '|RESPONSE_TYPE|MESSAGE_TO_USER|TRANSFER_INFO|',
     T_DIALOG_SUGGESTION_VALUE type string value '|',
     T_DIALOG_SUGGESTION type string value '|LABEL|VALUE|',
     T_UPDATE_VALUE type string value '|',
@@ -2210,20 +2860,25 @@ constants:
     T_WORKSPACE_REFERENCE type string value '|',
     T_VALUE_COLLECTION type string value '|VALUES|PAGINATION|',
     T_DIALOG_NODE_VISITED_DETAILS type string value '|',
-    T_LOG_MESSAGE type string value '|LEVEL|MSG|',
-    T_OUTPUT_DATA type string value '|LOG_MESSAGES|TEXT|',
+    T_LOG_MESSAGE_SOURCE type string value '|',
+    T_LOG_MESSAGE type string value '|LEVEL|MSG|CODE|',
+    T_OUTPUT_DATA type string value '|LOG_MESSAGES|',
     T_BULK_CLASSIFY_INPUT type string value '|INPUT|',
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP3 type string value '|RESPONSE_TYPE|SOURCE|',
+    T_DIA_ND_OTPT_GNRC_DIA_ND_OTP7 type string value '|RESPONSE_TYPE|MESSAGE_TO_USER|TRANSFER_INFO|',
     T_RT_RESP_GNRC_RT_RESP_TYP_CN1 type string value '|RESPONSE_TYPE|',
     T_DIALOG_NODE_COLLECTION type string value '|DIALOG_NODES|PAGINATION|',
     T_MESSAGE_CONTEXT_METADATA type string value '|',
     T_CONTEXT type string value '|',
-    T_MESSAGE_RESPONSE type string value '|INPUT|INTENTS|ENTITIES|CONTEXT|OUTPUT|',
+    T_MESSAGE_RESPONSE type string value '|INPUT|INTENTS|ENTITIES|CONTEXT|OUTPUT|USER_ID|',
     T_BASE_VALUE type string value '|',
     T_UPDATE_ENTITY type string value '|',
     T_UPDATE_DIALOG_NODE type string value '|',
     T_RUNTIME_RESPONSE_TYPE_PAUSE type string value '|RESPONSE_TYPE|TIME|',
+    T_RT_RESP_GNRC_RT_RESP_TYP_US1 type string value '|RESPONSE_TYPE|USER_DEFINED|',
     T_DIA_ND_OTPT_RESP_TYP_CNNCT_1 type string value '|RESPONSE_TYPE|',
+    T_DIA_ND_OTPT_GNRC_DIA_ND_OT10 type string value '|RESPONSE_TYPE|SOURCE|',
+    T_RUNTIME_RESPONSE_TYPE_IFRAME type string value '|RESPONSE_TYPE|SOURCE|',
     T_RT_RESP_GNRC_RT_RESP_TYP_PS type string value '|RESPONSE_TYPE|TIME|',
     T_ERROR_DETAIL type string value '|MESSAGE|',
     T_CREATE_INTENT type string value '|INTENT|',
@@ -2239,7 +2894,9 @@ constants:
     T_RT_RESP_GNRC_RT_RESP_TYP_SG1 type string value '|RESPONSE_TYPE|TITLE|SUGGESTIONS|',
     T_DIA_ND_OUTPUT_RESP_TYPE_IMG type string value '|RESPONSE_TYPE|SOURCE|',
     T_ERROR_RESPONSE type string value '|ERROR|CODE|',
+    T_DIA_ND_OTPT_RESP_TYPE_AUDIO type string value '|RESPONSE_TYPE|SOURCE|',
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP4 type string value '|RESPONSE_TYPE|TITLE|OPTIONS|',
+    T_DIA_ND_OTPT_GNRC_DIA_ND_OTP8 type string value '|RESPONSE_TYPE|USER_DEFINED|',
     T_BASE_MESSAGE type string value '|',
     T_RT_RESPONSE_TYPE_SUGGESTION type string value '|RESPONSE_TYPE|TITLE|SUGGESTIONS|',
     T_ENTITY_MENTION_COLLECTION type string value '|EXAMPLES|PAGINATION|',
@@ -2249,19 +2906,26 @@ constants:
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP2 type string value '|RESPONSE_TYPE|TIME|',
     T_RT_ENTTY_INTRPRTTN_SYS_DATE type string value '|',
     T_DIA_ND_OTPT_GNRC_DIA_ND_OTP6 type string value '|RESPONSE_TYPE|QUERY|QUERY_TYPE|',
+    T_RUNTIME_RESPONSE_TYPE_AUDIO type string value '|RESPONSE_TYPE|SOURCE|',
     T_DIA_ND_OUTPUT_RESP_TYPE_OPT type string value '|RESPONSE_TYPE|TITLE|OPTIONS|',
+    T_DIA_ND_OTPT_RESP_TYPE_VIDEO type string value '|RESPONSE_TYPE|SOURCE|',
     T_BASE_COUNTEREXAMPLE type string value '|',
     T_RUNTIME_RESPONSE_TYPE_IMAGE type string value '|RESPONSE_TYPE|SOURCE|',
+    T_DIA_ND_OTPT_GNRC_DIA_ND_OT11 type string value '|RESPONSE_TYPE|SOURCE|',
     T_UPDATE_WORKSPACE type string value '|',
     T_BASE_DIALOG_NODE type string value '|',
+    T_RT_RESP_GNRC_RT_RESP_TYP_AD type string value '|RESPONSE_TYPE|SOURCE|',
     T_MESSAGE_REQUEST type string value '|',
     T_LOG type string value '|REQUEST|RESPONSE|LOG_ID|REQUEST_TIMESTAMP|RESPONSE_TIMESTAMP|WORKSPACE_ID|LANGUAGE|',
     T_BASE_OUTPUT type string value '|',
     T_LOG_COLLECTION type string value '|LOGS|PAGINATION|',
+    T_DIA_ND_OTPT_GNRC_DIA_ND_OTP9 type string value '|RESPONSE_TYPE|SOURCE|',
     T_AUDIT_PROPERTIES type string value '|',
     T_WORKSPACE_COLLECTION type string value '|WORKSPACES|PAGINATION|',
     T_BASE_SYNONYM type string value '|',
+    T_RT_RESP_GNRC_RT_RESP_TYP_IF1 type string value '|RESPONSE_TYPE|SOURCE|',
     T_RT_RESP_GNRC_RT_RESP_TYP_OPT type string value '|RESPONSE_TYPE|TITLE|OPTIONS|',
+    T_DIA_ND_OTPT_RESP_TYP_USR_DF1 type string value '|RESPONSE_TYPE|USER_DEFINED|',
     __DUMMY type string value SPACE,
   end of C_REQUIRED_FIELDS .
 
@@ -2301,6 +2965,7 @@ constants:
      INTENTS type string value 'intents',
      ENTITIES type string value 'entities',
      ALTERNATE_INTENTS type string value 'alternate_intents',
+     USER_ID type string value 'user_id',
      NODES_VISITED type string value 'nodes_visited',
      NODES_VISITED_DETAILS type string value 'nodes_visited_details',
      SYNONYM type string value 'synonym',
@@ -2316,6 +2981,9 @@ constants:
      COUNTEREXAMPLE type string value 'counterexample',
      GROUP type string value 'group',
      LOCATION type string value 'location',
+     TARGET type string value 'target',
+     CHAT type string value 'chat',
+     URL type string value 'url',
      CONVERSATION_ID type string value 'conversation_id',
      SYSTEM type string value 'system',
      PAGINATION type string value 'pagination',
@@ -2325,6 +2993,7 @@ constants:
      LEARNING_OPT_OUT type string value 'learning_opt_out',
      SYSTEM_SETTINGS type string value 'system_settings',
      STATUS type string value 'status',
+     STATUS_ERRORS type string value 'status_errors',
      WEBHOOKS type string value 'webhooks',
      PARAMETERS type string value 'parameters',
      RESULT_VARIABLE type string value 'result_variable',
@@ -2337,12 +3006,16 @@ constants:
      OVERWRITE type string value 'overwrite',
      LABEL type string value 'label',
      RESPONSE_TYPE type string value 'response_type',
+     SOURCE type string value 'source',
+     CHANNELS type string value 'channels',
+     CHANNEL_OPTIONS type string value 'channel_options',
+     ALT_TEXT type string value 'alt_text',
+     MESSAGE_TO_USER type string value 'message_to_user',
+     TRANSFER_INFO type string value 'transfer_info',
      MESSAGE_TO_HUMAN_AGENT type string value 'message_to_human_agent',
      AGENT_AVAILABLE type string value 'agent_available',
      AGENT_UNAVAILABLE type string value 'agent_unavailable',
-     TRANSFER_INFO type string value 'transfer_info',
-     TARGET type string value 'target',
-     SOURCE type string value 'source',
+     IMAGE_URL type string value 'image_url',
      PREFERENCE type string value 'preference',
      OPTIONS type string value 'options',
      TIME type string value 'time',
@@ -2353,6 +3026,7 @@ constants:
      DISCOVERY_VERSION type string value 'discovery_version',
      SELECTION_POLICY type string value 'selection_policy',
      DELIMITER type string value 'delimiter',
+     USER_DEFINED type string value 'user_defined',
      PATH type string value 'path',
      ERROR type string value 'error',
      ERRORS type string value 'errors',
@@ -2369,7 +3043,6 @@ constants:
      MATCHED type string value 'matched',
      NEXT_CURSOR type string value 'next_cursor',
      DEPLOYMENT type string value 'deployment',
-     USER_ID type string value 'user_id',
      SPELLING_SUGGESTIONS type string value 'spelling_suggestions',
      SPELLING_AUTO_CORRECT type string value 'spelling_auto_correct',
      SUGGESTED_TEXT type string value 'suggested_text',
@@ -2378,6 +3051,7 @@ constants:
      REFRESH_URL type string value 'refresh_url',
      TOTAL type string value 'total',
      REFRESH_CURSOR type string value 'refresh_cursor',
+     CHANNEL type string value 'channel',
      CONFIDENCE type string value 'confidence',
      GROUPS type string value 'groups',
      INTERPRETATION type string value 'interpretation',
@@ -2411,14 +3085,16 @@ constants:
      TIMEZONE type string value 'timezone',
      TOPIC type string value 'topic',
      SUGGESTIONS type string value 'suggestions',
-     URL type string value 'url',
      HEADERS type string value 'headers',
+     COUNTS type string value 'counts',
      WORKSPACES type string value 'workspaces',
+     NODE type string value 'node',
      TOOLING type string value 'tooling',
      DISAMBIGUATION type string value 'disambiguation',
      HUMAN_AGENT_ASSIST type string value 'human_agent_assist',
      SYSTEM_ENTITIES type string value 'system_entities',
      OFF_TOPIC type string value 'off_topic',
+     NLP type string value 'nlp',
      PROMPT type string value 'prompt',
      NONE_OF_THE_ABOVE_PROMPT type string value 'none_of_the_above_prompt',
      ENABLED type string value 'enabled',
@@ -2426,6 +3102,7 @@ constants:
      RANDOMIZE type string value 'randomize',
      MAX_SUGGESTIONS type string value 'max_suggestions',
      SUGGESTION_TEXT_POLICY type string value 'suggestion_text_policy',
+     MODEL type string value 'model',
      STORE_GENERIC_RESPONSES type string value 'store_generic_responses',
   end of C_ABAPNAME_DICTIONARY .
 
@@ -2478,7 +3155,7 @@ constants:
     "!    method is useful for testing and comparing the performance of different
     "!    workspaces.<br/>
     "!   <br/>
-    "!   This method is available only with Premium plans.
+    "!   This method is available only with Enterprise with Data Isolation plans.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2522,7 +3199,7 @@ constants:
     "!
   methods LIST_WORKSPACES
     importing
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -2534,7 +3211,10 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Create workspace</p>
     "!   Create a workspace based on component objects. You must provide workspace
-    "!    components defining the content of the new workspace.
+    "!    components defining the content of the new workspace.<br/>
+    "!   <br/>
+    "!   **Note:** The new workspace data cannot be larger than 1.5 MB. For larger
+    "!    requests, use the **Create workspace asynchronously** method.
     "!
     "! @parameter I_BODY |
     "!   No documentation available.
@@ -2589,7 +3269,10 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Update workspace</p>
     "!   Update an existing workspace with new or modified data. You must provide
-    "!    component objects defining the content of the updated workspace.
+    "!    component objects defining the content of the updated workspace.<br/>
+    "!   <br/>
+    "!   **Note:** The new workspace data cannot be larger than 1.5 MB. For larger
+    "!    requests, use the **Update workspace asynchronously** method.
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -2642,6 +3325,111 @@ constants:
       !I_accept      type string default 'application/json'
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Create workspace asynchronously</p>
+    "!   Create a workspace asynchronously based on component objects. You must provide
+    "!    workspace components defining the content of the new workspace.<br/>
+    "!   <br/>
+    "!   A successful call to this method only initiates asynchronous creation of the
+    "!    workspace. The new workspace is not available until processing completes. To
+    "!    check the status of the asynchronous operation, use the **Get information about
+    "!    a workspace** method.
+    "!
+    "! @parameter I_BODY |
+    "!   No documentation available.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods CREATE_WORKSPACE_ASYNC
+    importing
+      !I_BODY type T_CREATE_WORKSPACE optional
+      !I_contenttype type string default 'application/json'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_WORKSPACE
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Update workspace asynchronously</p>
+    "!   Update an existing workspace asynchronously with new or modified data. You must
+    "!    provide component objects defining the content of the updated workspace.<br/>
+    "!   <br/>
+    "!   A successful call to this method only initiates an asynchronous update of the
+    "!    workspace. The updated workspace is not available until processing completes.
+    "!    To check the status of the asynchronous operation, use the **Get information
+    "!    about a workspace** method.
+    "!
+    "! @parameter I_WORKSPACE_ID |
+    "!   Unique identifier of the workspace.
+    "! @parameter I_BODY |
+    "!   Valid data defining the new and updated workspace content.<br/>
+    "!   <br/>
+    "!   The maximum size for this data is 50MB. If you need to import a larger amount of
+    "!    workspace data, consider importing components such as intents and entities
+    "!    using separate operations.
+    "! @parameter I_APPEND |
+    "!   Whether the new data is to be appended to the existing data in the object. If
+    "!    **append**=`false`, elements included in the new data completely replace the
+    "!    corresponding existing elements, including all subelements. For example, if the
+    "!    new data for a workspace includes **entities** and **append**=`false`, all
+    "!    existing entities in the workspace are discarded and replaced with the new
+    "!    entities.<br/>
+    "!   <br/>
+    "!   If **append**=`true`, existing elements are preserved, and the new elements are
+    "!    added. If any elements in the new data collide with existing elements, the
+    "!    update request fails.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods UPDATE_WORKSPACE_ASYNC
+    importing
+      !I_WORKSPACE_ID type STRING
+      !I_BODY type T_UPDATE_WORKSPACE optional
+      !I_APPEND type BOOLEAN default c_boolean_false
+      !I_contenttype type string default 'application/json'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_WORKSPACE
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Export workspace asynchronously</p>
+    "!   Export the entire workspace asynchronously, including all workspace
+    "!    content.<br/>
+    "!   <br/>
+    "!   A successful call to this method only initiates an asynchronous export. The
+    "!    exported JSON data is not available until processing completes. After the
+    "!    initial request is submitted, you can continue to poll by calling the same
+    "!    request again and checking the value of the **status** property. When
+    "!    processing has completed, the request returns the exported JSON data. Remember
+    "!    that the usual rate limits apply.
+    "!
+    "! @parameter I_WORKSPACE_ID |
+    "!   Unique identifier of the workspace.
+    "! @parameter I_INCLUDE_AUDIT |
+    "!   Whether to include the audit properties (`created` and `updated` timestamps) in
+    "!    the response.
+    "! @parameter I_SORT |
+    "!   Indicates how the returned workspace data will be sorted. Specify `sort=stable`
+    "!    to sort all workspace objects by unique identifier, in ascending alphabetical
+    "!    order.
+    "! @parameter I_VERBOSE |
+    "!   Whether the response should include the `counts` property, which indicates how
+    "!    many of each component (such as intents and entities) the workspace contains.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_WORKSPACE
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods EXPORT_WORKSPACE_ASYNC
+    importing
+      !I_WORKSPACE_ID type STRING
+      !I_INCLUDE_AUDIT type BOOLEAN default c_boolean_false
+      !I_SORT type STRING optional
+      !I_VERBOSE type BOOLEAN default c_boolean_false
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_WORKSPACE
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! <p class="shorttext synchronized" lang="en">List intents</p>
     "!   List the intents for a workspace.
@@ -2675,7 +3463,7 @@ constants:
     importing
       !I_WORKSPACE_ID type STRING
       !I_EXPORT type BOOLEAN default c_boolean_false
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -2841,7 +3629,7 @@ constants:
     importing
       !I_WORKSPACE_ID type STRING
       !I_INTENT type STRING
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -2990,7 +3778,7 @@ constants:
   methods LIST_COUNTEREXAMPLES
     importing
       !I_WORKSPACE_ID type STRING
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -3133,7 +3921,7 @@ constants:
     importing
       !I_WORKSPACE_ID type STRING
       !I_EXPORT type BOOLEAN default c_boolean_false
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -3334,7 +4122,7 @@ constants:
       !I_WORKSPACE_ID type STRING
       !I_ENTITY type STRING
       !I_EXPORT type BOOLEAN default c_boolean_false
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -3514,7 +4302,7 @@ constants:
       !I_WORKSPACE_ID type STRING
       !I_ENTITY type STRING
       !I_VALUE type STRING
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -3676,7 +4464,7 @@ constants:
   methods LIST_DIALOG_NODES
     importing
       !I_WORKSPACE_ID type STRING
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_INCLUDE_COUNT type BOOLEAN default c_boolean_false
       !I_SORT type STRING optional
       !I_CURSOR type STRING optional
@@ -3720,7 +4508,7 @@ constants:
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
     "! @parameter I_DIALOG_NODE |
-    "!   The dialog node ID (for example, `get_order`).
+    "!   The dialog node ID (for example, `node_1_1479323581900`).
     "! @parameter I_INCLUDE_AUDIT |
     "!   Whether to include the audit properties (`created` and `updated` timestamps) in
     "!    the response.
@@ -3747,7 +4535,7 @@ constants:
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
     "! @parameter I_DIALOG_NODE |
-    "!   The dialog node ID (for example, `get_order`).
+    "!   The dialog node ID (for example, `node_1_1479323581900`).
     "! @parameter I_BODY |
     "!   The updated content of the dialog node.<br/>
     "!   <br/>
@@ -3781,7 +4569,7 @@ constants:
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
     "! @parameter I_DIALOG_NODE |
-    "!   The dialog node ID (for example, `get_order`).
+    "!   The dialog node ID (for example, `node_1_1479323581900`).
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_DIALOG_NODE
@@ -3793,7 +4581,14 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
 
     "! <p class="shorttext synchronized" lang="en">List log events in a workspace</p>
-    "!   List the events from the log of a specific workspace.
+    "!   List the events from the log of a specific workspace.<br/>
+    "!   <br/>
+    "!   This method requires Manager access.<br/>
+    "!   <br/>
+    "!   **Note:** If you use the **cursor** parameter to retrieve results one page at a
+    "!    time, subsequent requests must be no more than 5 minutes apart. Any returned
+    "!    value for the **cursor** parameter becomes invalid after 5 minutes. For more
+    "!    information about using pagination, see [Pagination](#pagination).
     "!
     "! @parameter I_WORKSPACE_ID |
     "!   Unique identifier of the workspace.
@@ -3818,7 +4613,7 @@ constants:
       !I_WORKSPACE_ID type STRING
       !I_SORT type STRING optional
       !I_FILTER type STRING optional
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_CURSOR type STRING optional
       !I_accept      type string default 'application/json'
     exporting
@@ -3826,13 +4621,19 @@ constants:
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">List log events in all workspaces</p>
-    "!   List the events from the logs of all workspaces in the service instance.
+    "!   List the events from the logs of all workspaces in the service instance.<br/>
+    "!   <br/>
+    "!   **Note:** If you use the **cursor** parameter to retrieve results one page at a
+    "!    time, subsequent requests must be no more than 5 minutes apart. Any returned
+    "!    value for the **cursor** parameter becomes invalid after 5 minutes. For more
+    "!    information about using pagination, see [Pagination](#pagination).
     "!
     "! @parameter I_FILTER |
     "!   A cacheable parameter that limits the results to those matching the specified
     "!    filter. You must specify a filter query that includes a value for `language`,
     "!    as well as a value for `request.context.system.assistant_id`, `workspace_id`,
-    "!    or `request.context.metadata.deployment`. For more information, see the
+    "!    or `request.context.metadata.deployment`. These required filters must be
+    "!    specified using the exact match (`::`) operator. For more information, see the
     "!    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-ref
     "!   erence#filter-reference).
     "! @parameter I_SORT |
@@ -3850,7 +4651,7 @@ constants:
     importing
       !I_FILTER type STRING
       !I_SORT type STRING optional
-      !I_PAGE_LIMIT type INTEGER optional
+      !I_PAGE_LIMIT type INTEGER default 100
       !I_CURSOR type STRING optional
       !I_accept      type string default 'application/json'
     exporting
@@ -3866,7 +4667,14 @@ constants:
     "!    with a request that passes data. For more information about personal data and
     "!    customer IDs, see [Information
     "!    security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-secu
-    "!   rity#information-security).
+    "!   rity#information-security).<br/>
+    "!   <br/>
+    "!   **Note:** This operation is intended only for deleting data associated with a
+    "!    single specific customer, not for deleting data associated with multiple
+    "!    customers or for any other purpose. For more information, see [Labeling and
+    "!    deleting data in Watson
+    "!    Assistant](https://cloud.ibm.com/docs/assistant?topic=assistant-information-sec
+    "!   urity#information-security-gdpr-wa).
     "!
     "! @parameter I_CUSTOMER_ID |
     "!   The customer ID for which all data is to be deleted.
@@ -3944,7 +4752,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20210312144425'.
+    e_sdk_version_date = '20231212104228'.
 
   endmethod.
 
@@ -4025,13 +4833,24 @@ method MESSAGE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -4114,13 +4933,24 @@ method BULK_CLASSIFY.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -4145,7 +4975,7 @@ endmethod.
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_WORKSPACES
 * +-------------------------------------------------------------------------------------------------+
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -4320,13 +5150,24 @@ method CREATE_WORKSPACE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -4519,13 +5360,24 @@ method UPDATE_WORKSPACE.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -4585,13 +5437,308 @@ method DELETE_WORKSPACE.
 
 endmethod.
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_ASSISTANT_V1->CREATE_WORKSPACE_ASYNC
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_BODY        TYPE T_CREATE_WORKSPACE(optional)
+* | [--->] I_contenttype       TYPE string (default ='application/json')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method CREATE_WORKSPACE_ASYNC.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/workspaces_async'.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+    " process body parameters
+    data:
+      lv_body      type string,
+      lv_bodyparam type string,
+      lv_datatype  type char.
+    field-symbols:
+      <lv_text> type any.
+    lv_separator = ''.
+    if not i_BODY is initial.
+    lv_datatype = get_datatype( i_BODY ).
+
+    if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+       lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
+       ls_request_prop-header_content_type cp '*json*'.
+      if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+         lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      else.
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
+      endif.
+      lv_body = lv_body && lv_separator && lv_bodyparam.
+    else.
+      assign i_BODY to <lv_text>.
+      lv_bodyparam = <lv_text>.
+      concatenate lv_body lv_bodyparam into lv_body.
+    endif.
+    endif.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
+    endif.
+
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
+
+
+    " execute HTTP POST request
+    lo_response = HTTP_POST( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_ASSISTANT_V1->UPDATE_WORKSPACE_ASYNC
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_BODY        TYPE T_UPDATE_WORKSPACE(optional)
+* | [--->] I_APPEND        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_contenttype       TYPE string (default ='application/json')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method UPDATE_WORKSPACE_ASYNC.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/workspaces_async/{workspace_id}'.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+    " process query parameters
+    data:
+      lv_queryparam type string.
+
+    if i_APPEND is supplied.
+    lv_queryparam = i_APPEND.
+    add_query_parameter(
+      exporting
+        i_parameter  = `append`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+
+
+
+    " process body parameters
+    data:
+      lv_body      type string,
+      lv_bodyparam type string,
+      lv_datatype  type char.
+    field-symbols:
+      <lv_text> type any.
+    lv_separator = ''.
+    if not i_BODY is initial.
+    lv_datatype = get_datatype( i_BODY ).
+
+    if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+       lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep or
+       ls_request_prop-header_content_type cp '*json*'.
+      if lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct or
+         lv_datatype eq ZIF_IBMC_SERVICE_ARCH~c_datatype-struct_deep.
+        lv_bodyparam = abap_to_json( i_value = i_BODY i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      else.
+        lv_bodyparam = abap_to_json( i_name = 'body' i_value = i_BODY ).
+      endif.
+      lv_body = lv_body && lv_separator && lv_bodyparam.
+    else.
+      assign i_BODY to <lv_text>.
+      lv_bodyparam = <lv_text>.
+      concatenate lv_body lv_bodyparam into lv_body.
+    endif.
+    endif.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
+    endif.
+
+    if ls_request_prop-header_content_type cp '*charset=utf-8*'.
+      ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
+    else.
+      ls_request_prop-body = lv_body.
+    endif.
+
+
+    " execute HTTP POST request
+    lo_response = HTTP_POST( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_ASSISTANT_V1->EXPORT_WORKSPACE_ASYNC
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_WORKSPACE_ID        TYPE STRING
+* | [--->] I_INCLUDE_AUDIT        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_SORT        TYPE STRING(optional)
+* | [--->] I_VERBOSE        TYPE BOOLEAN (default =c_boolean_false)
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_WORKSPACE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method EXPORT_WORKSPACE_ASYNC.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/workspaces_async/{workspace_id}/export'.
+    replace all occurrences of `{workspace_id}` in ls_request_prop-url-path with i_WORKSPACE_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+    " process query parameters
+    data:
+      lv_queryparam type string.
+
+    if i_INCLUDE_AUDIT is supplied.
+    lv_queryparam = i_INCLUDE_AUDIT.
+    add_query_parameter(
+      exporting
+        i_parameter  = `include_audit`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_SORT is supplied.
+    lv_queryparam = escape( val = i_SORT format = cl_abap_format=>e_uri_full ).
+    add_query_parameter(
+      exporting
+        i_parameter  = `sort`
+        i_value      = lv_queryparam
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+    if i_VERBOSE is supplied.
+    lv_queryparam = i_VERBOSE.
+    add_query_parameter(
+      exporting
+        i_parameter  = `verbose`
+        i_value      = lv_queryparam
+        i_is_boolean = c_boolean_true
+      changing
+        c_url        = ls_request_prop-url )  ##NO_TEXT.
+    endif.
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_INTENTS
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -4778,13 +5925,24 @@ method CREATE_INTENT.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -4968,13 +6126,24 @@ method UPDATE_INTENT.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -5042,7 +6211,7 @@ endmethod.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_INTENT        TYPE STRING
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -5221,13 +6390,24 @@ method CREATE_EXAMPLE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -5391,13 +6571,24 @@ method UPDATE_EXAMPLE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -5466,7 +6657,7 @@ endmethod.
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_COUNTEREXAMPLES
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_WORKSPACE_ID        TYPE STRING
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -5642,13 +6833,24 @@ method CREATE_COUNTEREXAMPLE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -5808,13 +7010,24 @@ method UPDATE_COUNTEREXAMPLE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -5882,7 +7095,7 @@ endmethod.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -6069,13 +7282,24 @@ method CREATE_ENTITY.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -6259,13 +7483,24 @@ method UPDATE_ENTITY.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -6411,7 +7646,7 @@ endmethod.
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_ENTITY        TYPE STRING
 * | [--->] I_EXPORT        TYPE BOOLEAN (default =c_boolean_false)
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -6601,13 +7836,24 @@ method CREATE_VALUE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -6795,13 +8041,24 @@ method UPDATE_VALUE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -6872,7 +8129,7 @@ endmethod.
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_ENTITY        TYPE STRING
 * | [--->] I_VALUE        TYPE STRING
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -7054,13 +8311,24 @@ method CREATE_SYNONYM.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -7228,13 +8496,24 @@ method UPDATE_SYNONYM.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -7305,7 +8584,7 @@ endmethod.
 * | Instance Public Method ZCL_IBMC_ASSISTANT_V1->LIST_DIALOG_NODES
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_WORKSPACE_ID        TYPE STRING
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_INCLUDE_COUNT        TYPE BOOLEAN (default =c_boolean_false)
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_CURSOR        TYPE STRING(optional)
@@ -7481,13 +8760,24 @@ method CREATE_DIALOG_NODE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -7647,13 +8937,24 @@ method UPDATE_DIALOG_NODE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -7722,7 +9023,7 @@ endmethod.
 * | [--->] I_WORKSPACE_ID        TYPE STRING
 * | [--->] I_SORT        TYPE STRING(optional)
 * | [--->] I_FILTER        TYPE STRING(optional)
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_CURSOR        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_LOG_COLLECTION
@@ -7815,7 +9116,7 @@ endmethod.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_FILTER        TYPE STRING
 * | [--->] I_SORT        TYPE STRING(optional)
-* | [--->] I_PAGE_LIMIT        TYPE INTEGER(optional)
+* | [--->] I_PAGE_LIMIT        TYPE INTEGER (default =100)
 * | [--->] I_CURSOR        TYPE STRING(optional)
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_LOG_COLLECTION
