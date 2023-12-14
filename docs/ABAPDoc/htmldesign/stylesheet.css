@@ -6,7 +6,8 @@ td { border: 1px solid black; padding: 3px; }
 h2 { font-size: 22px; }
 h4 { font-size: 18px; }
 h5 { font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-a { color: black; }
+a { color: darkblue; text-decoration: none}
+a:hover { color: blue; text-decoration: underline}
 #header { border-bottom: 3px solid grey; background-color: ghostwhite; width: 100%; padding: 4px; padding-left: 8px; }
 #headerTitle { padding: 5px; font-size: 22px }
 #content { margin: 8px; }
@@ -20,11 +21,15 @@ a { color: black; }
 .parametersTable { border: 0px; }
 .fieldName {}
 .methodName {}
+.typeName {}
+.eventName {}
 .parameterName {}
 .exceptionName {}
 .objectName { text-transform: uppercase; }
+.className { font-weight: normal; }
 .interfaceName { font-weight: normal; }
 .exceptions { border: 0px; width: auto; }
 .exceptions td { border: 0px; padding: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 5px; }
 .abapDocComment p { margin-top: 0px; }
+.abapDocLink { font-style: italic }
 .shorttext { margin-top: 0px; }

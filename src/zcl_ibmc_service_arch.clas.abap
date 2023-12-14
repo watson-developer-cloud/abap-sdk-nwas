@@ -1,4 +1,4 @@
-* Copyright 2019,2020 IBM Corp. All Rights Reserved.
+* Copyright 2019,2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -11,13 +11,13 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-class zcl_ibmc_service_arch definition
+class ZCL_IBMC_SERVICE_ARCH definition
   public
   create public .
 
   public section.
 
-    interfaces zif_ibmc_service_arch .
+    interfaces ZIF_IBMC_SERVICE_ARCH .
 
     types to_http_client type ref to if_http_client .
     types to_rest_client type ref to cl_rest_http_client .
@@ -31,12 +31,12 @@ class zcl_ibmc_service_arch definition
         http type to_http_client,
         rest type to_rest_client,
       end of ts_client .
-    types ts_http_status type zif_ibmc_service_arch~ts_http_status .
-    types ts_header type zif_ibmc_service_arch~ts_header .
-    types tt_header type zif_ibmc_service_arch~tt_header .
-    types ts_url type zif_ibmc_service_arch~ts_url .
-    types ts_access_token type zif_ibmc_service_arch~ts_access_token .
-    types ts_request_prop type zif_ibmc_service_arch~ts_request_prop .
+    types ts_http_status type ZIF_IBMC_SERVICE_ARCH~ts_http_status .
+    types ts_header type ZIF_IBMC_SERVICE_ARCH~ts_header .
+    types tt_header type ZIF_IBMC_SERVICE_ARCH~tt_header .
+    types ts_url type ZIF_IBMC_SERVICE_ARCH~ts_url .
+    types ts_access_token type ZIF_IBMC_SERVICE_ARCH~ts_access_token .
+    types ts_request_prop type ZIF_IBMC_SERVICE_ARCH~ts_request_prop .
 
     "! <p class="shorttext synchronized" lang="en">Returns a HTTP response header.</p>
     "!
@@ -56,7 +56,7 @@ class zcl_ibmc_service_arch definition
     "!
     class-methods get_timezone
       returning
-        value(e_timezone) type zif_ibmc_service_arch~ty_timezone .
+        value(e_timezone) type ZIF_IBMC_SERVICE_ARCH~ty_timezone .
     "! <p class="shorttext synchronized" lang="en">Returns an ABAP module identifier.</p>
     "!
     "! @parameter E_PROGNAME | ABAP module identifier
@@ -101,7 +101,7 @@ class zcl_ibmc_service_arch definition
     methods add_form_part
       importing
         !i_client     type ts_client
-        !it_form_part type zif_ibmc_service_arch=>tt_form_part
+        !it_form_part type ZIF_IBMC_SERVICE_ARCH=>tt_form_part
       raising
         zcx_ibmc_service_exception .
     "! <p class="shorttext synchronized" lang="en">Returns the default proxy host and port.</p>
@@ -157,7 +157,7 @@ class zcl_ibmc_service_arch definition
     class-methods execute
       importing
         !i_client         type ts_client
-        !i_method         type zif_ibmc_service_arch~char default zif_ibmc_service_arch~c_method_get
+        !i_method         type ZIF_IBMC_SERVICE_ARCH~char default ZIF_IBMC_SERVICE_ARCH~c_method_get
       returning
         value(e_response) type to_rest_response
       raising
@@ -232,6 +232,36 @@ class zcl_ibmc_service_arch definition
         value(e_utf8) type xstring
       raising
         zcx_ibmc_service_exception .
+    "! <p class="shorttext synchronized" lang="en">Finds (and replaces) a regular expression.</p>
+    "!
+    "! @parameter I_REGEX | Regular expression
+    "! @parameter I_WITH | Replacement (if omitted, FIND is performed)
+    "! @parameter I_ALL_OCCURRENCES | 'X' if ALL OCCURRENCES OF should be used
+    "! @parameter I_IGNORING_CASE | 'X', if IGNORING CASE should be used
+    "! @parameter I_IN | String to be searched
+    "! @parameter E_OFFSET | Returns position of occurrence
+    "! @parameter C_SUBMATCH1 | 1st submatch
+    "! @parameter C_SUBMATCH2 | 2nd submatch
+    "! @parameter C_SUBMATCH3 | 3rd submatch
+    "! @parameter C_IN | String to be searched and returned
+    "! @parameter E_SUBRC | sy-subrc of FIND / REPLACE
+    "!
+    class-methods find_regex
+      importing
+        !i_regex           type string
+        !i_with            type string optional
+        !i_all_occurrences type ZIF_IBMC_SERVICE_ARCH=>boolean default 'X'
+        !i_ignoring_case   type ZIF_IBMC_SERVICE_ARCH=>boolean optional
+        !i_in              type string optional
+      exporting
+        !e_offset          type int4
+      changing
+        !c_submatch1       type string optional
+        !c_submatch2       type string optional
+        !c_submatch3       type string optional
+        !c_in              type string optional
+      returning
+        value(e_subrc)     type sysubrc .
   protected section.
   private section.
 ENDCLASS.
@@ -241,10 +271,17 @@ ENDCLASS.
 CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_ARCH->ADD_FORM_PART
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] IT_FORM_PART                   TYPE        ZIF_IBMC_SERVICE_ARCH=>TT_FORM_PART
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method add_form_part.
 
     data:
-      ls_form_part type zif_ibmc_service_arch=>ts_form_part,
+      ls_form_part type ZIF_IBMC_SERVICE_ARCH=>ts_form_part,
       lo_part      type to_form_part.
 
     loop at it_form_part into ls_form_part.
@@ -271,6 +308,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>BASE64_DECODE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_BASE64                       TYPE        STRING
+* | [<-()] E_BINARY                       TYPE        XSTRING
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method base64_decode.
 
     call function 'SCMS_BASE64_DECODE_STR'
@@ -289,6 +333,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>CONVERT_STRING_TO_UTF8
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_STRING                       TYPE        STRING
+* | [<-()] E_UTF8                         TYPE        XSTRING
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method convert_string_to_utf8.
 
     data:
@@ -324,6 +375,14 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>CREATE_CLIENT_BY_URL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_URL                          TYPE        STRING
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* | [<---] E_CLIENT                       TYPE        TS_CLIENT
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method create_client_by_url.
 
     data:
@@ -367,6 +426,14 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>EXECUTE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_METHOD                       TYPE        ZIF_IBMC_SERVICE_ARCH~CHAR (default =ZIF_IBMC_SERVICE_ARCH~C_METHOD_GET)
+* | [<-()] E_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method execute.
 
     data:
@@ -377,18 +444,18 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
 
     try.
         case i_method.
-          when zif_ibmc_service_arch~c_method_get.
+          when ZIF_IBMC_SERVICE_ARCH~c_method_get.
             lv_method = 'GET'  ##NO_TEXT.
             i_client-rest->if_rest_client~get( ).
-          when zif_ibmc_service_arch~c_method_post.
+          when ZIF_IBMC_SERVICE_ARCH~c_method_post.
             lv_method = 'POST'  ##NO_TEXT.
             lo_request = get_rest_request( i_client = i_client ).
             i_client-rest->if_rest_client~post( lo_request ).
-          when zif_ibmc_service_arch~c_method_put.
+          when ZIF_IBMC_SERVICE_ARCH~c_method_put.
             lv_method = 'PUT'  ##NO_TEXT.
             lo_request = get_rest_request( i_client = i_client ).
             i_client-rest->if_rest_client~put( lo_request ).
-          when zif_ibmc_service_arch~c_method_delete.
+          when ZIF_IBMC_SERVICE_ARCH~c_method_delete.
             lv_method = 'DELETE'  ##NO_TEXT.
             i_client-rest->if_rest_client~delete( ).
           when others.
@@ -405,6 +472,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_DEFAULT_PROXY
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_URL                          TYPE        TS_URL(optional)
+* | [<---] E_PROXY_HOST                   TYPE        STRING
+* | [<---] E_PROXY_PORT                   TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_default_proxy.
 
     data:
@@ -442,6 +516,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_HTTP_STATUS
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REST_RESPONSE                TYPE        TO_REST_RESPONSE
+* | [<-()] E_STATUS                       TYPE        TS_HTTP_STATUS
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_http_status.
 
     e_status-code   = i_rest_response->get_header_field( '~status_code' ).
@@ -451,6 +531,11 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_PROGNAME
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] E_PROGNAME                     TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_progname.
 
     e_progname = sy-cprog.
@@ -458,6 +543,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_RESPONSE_BINARY
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [<-()] E_DATA                         TYPE        XSTRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_response_binary.
 
     e_data = i_response->get_binary_data( ).
@@ -465,6 +556,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_RESPONSE_HEADER
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [--->] I_HEADER_FIELD                 TYPE        STRING
+* | [<-()] E_VALUE                        TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_response_header.
 
     e_value = i_response->get_header_field( iv_name = i_header_field ).
@@ -472,6 +570,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_RESPONSE_STRING
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_RESPONSE                     TYPE        TO_REST_RESPONSE
+* | [<-()] E_DATA                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_response_string.
 
     e_data = i_response->get_string_data( ).
@@ -479,6 +583,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_REST_REQUEST
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [<-()] E_REST_REQUEST                 TYPE        TO_REST_REQUEST
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_rest_request.
 
     e_rest_request = i_client-rest->if_rest_client~create_request_entity( ).
@@ -486,6 +596,11 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>GET_TIMEZONE
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] E_TIMEZONE                     TYPE        ZIF_IBMC_SERVICE_ARCH~TY_TIMEZONE
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_timezone.
 
     e_timezone = sy-zonlo.
@@ -493,6 +608,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>SET_AUTHENTICATION_BASIC
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_USERNAME                     TYPE        STRING
+* | [--->] I_PASSWORD                     TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_authentication_basic.
 
     i_client-http->authenticate( username = i_username password = i_password ).
@@ -500,6 +622,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>SET_REQUEST_BODY_CDATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_DATA                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_request_body_cdata.
 
     i_client-http->request->if_http_entity~set_cdata( data = i_data ).
@@ -507,6 +635,12 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>SET_REQUEST_BODY_XDATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_DATA                         TYPE        XSTRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_request_body_xdata.
 
     i_client-http->request->if_http_entity~set_data( data = i_data ).
@@ -514,6 +648,13 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>SET_REQUEST_HEADER
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_NAME                         TYPE        STRING
+* | [--->] I_VALUE                        TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_request_header.
 
     i_client-rest->if_rest_client~set_request_header( iv_name = i_name iv_value = i_value ) .
@@ -521,12 +662,95 @@ CLASS ZCL_IBMC_SERVICE_ARCH IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>SET_REQUEST_URI
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_CLIENT                       TYPE        TS_CLIENT
+* | [--->] I_URI                          TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_request_uri.
 
     cl_http_utility=>set_request_uri(
       exporting
         request = i_client-http->request
         uri     = i_uri ).
+
+  endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_ARCH=>FIND_REGEX
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REGEX                        TYPE        STRING
+* | [--->] I_WITH                         TYPE        STRING(optional)
+* | [--->] I_ALL_OCCURRENCES              TYPE        BOOLEAN (default ='X')
+* | [--->] I_IGNORING_CASE                TYPE        BOOLEAN(optional)
+* | [--->] I_IN                           TYPE        STRING(optional)
+* | [<---] E_OFFSET                       TYPE        INT4
+* | [<-->] C_SUBMATCH1                    TYPE        STRING(optional)
+* | [<-->] C_SUBMATCH2                    TYPE        STRING(optional)
+* | [<-->] C_SUBMATCH3                    TYPE        STRING(optional)
+* | [<-->] C_IN                           TYPE        STRING
+* | [<-()] E_SUBRC                        TYPE        SYSUBRC
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method find_regex.
+
+    data:
+      l_in type string.
+
+    if not i_with is supplied.
+      " FIND
+      if i_in is supplied.
+        l_in = i_in.
+      else.
+        l_in = c_in.
+      endif.
+      if c_submatch3 is supplied.
+        if i_ignoring_case eq 'X'.
+          find regex i_regex in l_in match offset e_offset ignoring case submatches c_submatch1 c_submatch2 c_submatch3.
+        else.
+          find regex i_regex in l_in match offset e_offset submatches c_submatch1 c_submatch2 c_submatch3.
+        endif.
+      elseif c_submatch2 is supplied.
+        if i_ignoring_case eq 'X'.
+          find regex i_regex in l_in match offset e_offset ignoring case submatches c_submatch1 c_submatch2.
+        else.
+          find regex i_regex in l_in match offset e_offset submatches c_submatch1 c_submatch2.
+        endif.
+      elseif c_submatch1 is supplied.
+        if i_ignoring_case eq 'X'.
+          find regex i_regex in l_in match offset e_offset ignoring case submatches c_submatch1.
+        else.
+          find regex i_regex in l_in match offset e_offset submatches c_submatch1.
+        endif.
+      else.
+        if i_ignoring_case eq 'X'.
+          find regex i_regex in c_in match offset e_offset ignoring case.
+        else.
+          find regex i_regex in c_in match offset e_offset.
+        endif.
+      endif.
+
+    else.
+      " REPLACE
+      e_offset = 0.
+      if i_all_occurrences eq 'X'.
+        if i_ignoring_case eq 'X'.
+          replace all occurrences of regex i_regex in c_in with i_with ignoring case.
+        else.
+          replace all occurrences of regex i_regex in c_in with i_with.
+        endif.
+      else.
+        if i_ignoring_case eq 'X'.
+          replace first occurrence of regex i_regex in c_in with i_with ignoring case.
+        else.
+          replace first occurrence of regex i_regex in c_in with i_with.
+        endif.
+      endif.
+
+    endif.
+
+    e_subrc = sy-subrc.
 
   endmethod.
 ENDCLASS.

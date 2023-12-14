@@ -1,0 +1,1157 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_DISCOVERY_V2</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_DISCOVERY_V2</span></h2><p>public inheriting from <span class="identifier className"><a href="../classes/zcl_ibmc_service_ext.html">zcl_ibmc_service_ext</a></span> create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Discovery v2</p>
+ IBM Watson&reg; Discovery is a cognitive search and content analytics engine
+  that you can add to applications to identify patterns, trends and actionable
+  insights to drive better decision-making. Securely unify structured and
+  unstructured data with pre-enriched content, and use a simplified query
+  language to eliminate the need for manual filtering of results. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span id="t_analyzed_document" class="identifier typeName">t_analyzed_document</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains the converted document and any</p>
+     identified enrichments. Root-level fields from the original file are returned
+     also.</span></td></tr><tr ><td>public</td><td><span id="t_analyzed_result" class="identifier typeName">t_analyzed_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result of the document analysis.</p></span></td></tr><tr ><td>public</td><td><span id="t_classifier_federated_model" class="identifier typeName">t_classifier_federated_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object with details for creating federated document</p>
+     classifier models.</span></td></tr><tr ><td>public</td><td><span id="t_classifier_model_evaluation" class="identifier typeName">t_classifier_model_evaluation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains information about a trained document</p>
+     classifier model.</span></td></tr><tr ><td>public</td><td><span id="t_cllctn_dtls_smrt_doc_undrst1" class="identifier typeName">t_cllctn_dtls_smrt_doc_undrst1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that describes the Smart Document Understanding</p>
+     model for a collection.</span></td></tr><tr ><td>public</td><td><span id="t_cmpnnt_settings_fields_shown" class="identifier typeName">t_cmpnnt_settings_fields_shown</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Fields shown in the results section of the UI.</p></span></td></tr><tr ><td>public</td><td><span id="t_cmpnnt_sttngs_flds_shwn_body" class="identifier typeName">t_cmpnnt_sttngs_flds_shwn_body</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Body label.</p></span></td></tr><tr ><td>public</td><td><span id="t_cmpnnt_sttngs_flds_shwn_ttl" class="identifier typeName">t_cmpnnt_sttngs_flds_shwn_ttl</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Title label.</p></span></td></tr><tr ><td>public</td><td><span id="t_collection" class="identifier typeName">t_collection</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A collection for storing documents.</p></span></td></tr><tr ><td>public</td><td><span id="t_collection_details" class="identifier typeName">t_collection_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A collection for storing documents.</p></span></td></tr><tr ><td>public</td><td><span id="t_collection_enrichment" class="identifier typeName">t_collection_enrichment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object describing an enrichment for a collection.</p></span></td></tr><tr ><td>public</td><td><span id="t_completions" class="identifier typeName">t_completions</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains an array of autocompletion</p>
+     suggestions.</span></td></tr><tr ><td>public</td><td><span id="t_component_settings_aggr" class="identifier typeName">t_component_settings_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Display settings for aggregations.</p></span></td></tr><tr ><td>public</td><td><span id="t_component_settings_response" class="identifier typeName">t_component_settings_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The default component settings for this project.</p></span></td></tr><tr ><td>public</td><td><span id="t_create_document_classifier" class="identifier typeName">t_create_document_classifier</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that manages the settings and data that is</p>
+     required to train a document classification model.</span></td></tr><tr ><td>public</td><td><span id="t_create_enrichment" class="identifier typeName">t_create_enrichment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a specific enrichment.</p></span></td></tr><tr ><td>public</td><td><span id="t_curated_results" class="identifier typeName">t_curated_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains an array of curated results.</p></span></td></tr><tr ><td>public</td><td><span id="t_curation" class="identifier typeName">t_curation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Curated query and responses.</p></span></td></tr><tr ><td>public</td><td><span id="t_curations" class="identifier typeName">t_curations</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Array of queries with curated responses for the specified</p>
+     project.</span></td></tr><tr ><td>public</td><td><span id="t_curation_result" class="identifier typeName">t_curation_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result information for a curated query.</p></span></td></tr><tr ><td>public</td><td><span id="t_curation_status" class="identifier typeName">t_curation_status</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Curation status information.</p></span></td></tr><tr ><td>public</td><td><span id="t_default_query_params" class="identifier typeName">t_default_query_params</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Default query parameters for this project.</p></span></td></tr><tr ><td>public</td><td><span id="t_delete_document_response" class="identifier typeName">t_delete_document_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information returned when a document is deleted.</p></span></td></tr><tr ><td>public</td><td><span id="t_dflt_qry_params_tab_results" class="identifier typeName">t_dflt_qry_params_tab_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Default project query settings for table results.</p></span></td></tr><tr ><td>public</td><td><span id="t_dflt_qry_prms_sggstd_rfnmnts" class="identifier typeName">t_dflt_qry_prms_sggstd_rfnmnts</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains suggested refinement settings.</p><br/>
+    <br/>
+    **Note**: The `suggested_refinements` parameter that identified dynamic facets
+     from the data is deprecated.</span></td></tr><tr ><td>public</td><td><span id="t_dflt_query_params_passages" class="identifier typeName">t_dflt_query_params_passages</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Default settings configuration for passage search options.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_accepted" class="identifier typeName">t_document_accepted</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information returned after an uploaded document is accepted.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_attribute" class="identifier typeName">t_document_attribute</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    List of document attributes.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_classifier" class="identifier typeName">t_document_classifier</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a document classifier.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_classifiers" class="identifier typeName">t_document_classifiers</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains a list of document classifier</p>
+     definitions.</span></td></tr><tr ><td>public</td><td><span id="t_document_classifier_model" class="identifier typeName">t_document_classifier_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a document classifier model.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_classifier_models" class="identifier typeName">t_document_classifier_models</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains a list of document classifier model</p>
+     definitions.</span></td></tr><tr ><td>public</td><td><span id="t_document_details" class="identifier typeName">t_document_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a document.</p></span></td></tr><tr ><td>public</td><td><span id="t_document_details_children" class="identifier typeName">t_document_details_children</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about the child documents that are generated</p>
+     from a single document during ingestion or other processing.</span></td></tr><tr ><td>public</td><td><span id="t_doc_classifier_enrichment" class="identifier typeName">t_doc_classifier_enrichment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that describes enrichments that are applied to the</p>
+     training and test data that is used by the document classifier.</span></td></tr><tr ><td>public</td><td><span id="t_doc_classifier_model_train" class="identifier typeName">t_doc_classifier_model_train</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains configuration settings for a</p>
+     document classifier model training run.</span></td></tr><tr ><td>public</td><td><span id="t_enrichment" class="identifier typeName">t_enrichment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information about a specific enrichment.</p></span></td></tr><tr ><td>public</td><td><span id="t_enrichments" class="identifier typeName">t_enrichments</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains an array of enrichment definitions.</p></span></td></tr><tr ><td>public</td><td><span id="t_enrichment_options" class="identifier typeName">t_enrichment_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains options for the current enrichment.</p>
+     Starting with version `2020-08-30`, the enrichment options are not included in
+     responses from the List Enrichments method.</span></td></tr><tr ><td>public</td><td><span id="t_error_response" class="identifier typeName">t_error_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Error response information.</p></span></td></tr><tr ><td>public</td><td><span id="t_expansion" class="identifier typeName">t_expansion</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An expansion definition. Each object respresents one set of</p>
+     expandable strings. For example, you could have expansions for the word `hot`
+     in one object, and expansions for the word `cold` in another. Follow these
+     guidelines when you add terms:<br/>
+    <br/>
+    * Specify the terms in lowercase. Lowercase terms expand to uppercase.<br/>
+    <br/>
+    * Multiword terms are supported only in bidirectional expansions.<br/>
+    <br/>
+    * Do not specify a term that is specified in the stop words list for the
+     collection.</span></td></tr><tr ><td>public</td><td><span id="t_expansions" class="identifier typeName">t_expansions</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The query expansion definitions for the specified</p>
+     collection.</span></td></tr><tr ><td>public</td><td><span id="t_field" class="identifier typeName">t_field</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains field details.</p></span></td></tr><tr ><td>public</td><td><span id="t_list_collections_response" class="identifier typeName">t_list_collections_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Response object that contains an array of collection</p>
+     details.</span></td></tr><tr ><td>public</td><td><span id="t_list_documents_response" class="identifier typeName">t_list_documents_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Response object that contains an array of documents.</p></span></td></tr><tr ><td>public</td><td><span id="t_list_fields_response" class="identifier typeName">t_list_fields_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The list of fetched fields.</p><br/>
+    <br/>
+    The fields are returned using a fully qualified name format, however, the format
+     differs slightly from that used by the query operations.<br/>
+    <br/>
+      * Fields which contain nested objects are assigned a type of
+     &quot;nested&quot;.<br/>
+    <br/>
+      * Fields which belong to a nested object are prefixed with `.properties` (for
+     example, `warnings.properties.severity` means that the `warnings` object has a
+     property called `severity`).</span></td></tr><tr ><td>public</td><td><span id="t_list_projects_response" class="identifier typeName">t_list_projects_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A list of projects in this instance.</p></span></td></tr><tr ><td>public</td><td><span id="t_mdl_evaluation_macro_average" class="identifier typeName">t_mdl_evaluation_macro_average</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A macro-average computes metric independently for each class</p>
+     and then takes the average. Class refers to the classification label that is
+     specified in the **answer_field**.</span></td></tr><tr ><td>public</td><td><span id="t_mdl_evaluation_micro_average" class="identifier typeName">t_mdl_evaluation_micro_average</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A micro-average aggregates the contributions of all classes</p>
+     to compute the average metric. Classes refers to the classification labels that
+     are specified in the **answer_field**.</span></td></tr><tr ><td>public</td><td><span id="t_notice" class="identifier typeName">t_notice</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A notice produced for the collection.</p></span></td></tr><tr ><td>public</td><td><span id="t_per_class_model_evaluation" class="identifier typeName">t_per_class_model_evaluation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that measures the metrics from a training run for</p>
+     each classification label separately.</span></td></tr><tr ><td>public</td><td><span id="t_prjct_lst_dtls_rlvncy_trnng1" class="identifier typeName">t_prjct_lst_dtls_rlvncy_trnng1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Relevancy training status information for this project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_creation" class="identifier typeName">t_project_creation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detailed information about the specified project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_creation_details" class="identifier typeName">t_project_creation_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Details about a specific project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_details" class="identifier typeName">t_project_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detailed information about the specified project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_list_details" class="identifier typeName">t_project_list_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Details about a specific project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_name" class="identifier typeName">t_project_name</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains a new name for the specified project.</p></span></td></tr><tr ><td>public</td><td><span id="t_project_rel_train_status" class="identifier typeName">t_project_rel_train_status</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Relevancy training status information for this project.</p></span></td></tr><tr ><td>public</td><td><span id="t_qry_aggr_qry_clcltn_aggr" class="identifier typeName">t_qry_aggr_qry_clcltn_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns a scalar calculation across all documents for the</p>
+     field specified. Possible calculations include min, max, sum, average, and
+     unique_count.</span></td></tr><tr ><td>public</td><td><span id="t_qry_aggr_qry_histogram_aggr" class="identifier typeName">t_qry_aggr_qry_histogram_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Numeric interval segments to categorize documents by using</p>
+     field values from a single numeric field to describe the category.</span></td></tr><tr ><td>public</td><td><span id="t_qry_aggr_qry_timeslice_aggr" class="identifier typeName">t_qry_aggr_qry_timeslice_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A specialized histogram aggregation that uses dates to</p>
+     create interval segments.</span></td></tr><tr ><td>public</td><td><span id="t_qry_aggr_query_group_by_aggr" class="identifier typeName">t_qry_aggr_query_group_by_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Separates document results into groups that meet the</p>
+     conditions you specify.</span></td></tr><tr ><td>public</td><td><span id="t_qry_aggr_query_top_hits_aggr" class="identifier typeName">t_qry_aggr_query_top_hits_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns the top documents ranked by the score of the query.</p></span></td></tr><tr ><td>public</td><td><span id="t_qry_lrg_sggstd_refinements" class="identifier typeName">t_qry_lrg_sggstd_refinements</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Configuration for suggested refinements.</p><br/>
+    <br/>
+    **Note**: The **suggested_refinements** parameter that identified dynamic facets
+     from the data is deprecated.</span></td></tr><tr ><td>public</td><td><span id="t_query_aggregation" class="identifier typeName">t_query_aggregation</span> type jsonobject</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that defines how to aggregate query results.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_filter_aggr" class="identifier typeName">t_query_aggr_query_filter_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A modifier that narrows the document set of the</p>
+     subaggregations it precedes.</span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_nested_aggr" class="identifier typeName">t_query_aggr_query_nested_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A restriction that alters the document set that is used by</p>
+     the aggregations that it precedes. Subsequent aggregations are applied to
+     nested documents from the specified field.</span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_pair_aggr" class="identifier typeName">t_query_aggr_query_pair_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Calculates relevancy values using combinations of document</p>
+     sets from results of the specified pair of aggregations.</span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_term_aggr" class="identifier typeName">t_query_aggr_query_term_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns results from the field that is specified.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_topic_aggr" class="identifier typeName">t_query_aggr_query_topic_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detects how much the frequency of a given facet value</p>
+     deviates from the expected average for the given time period. This aggregation
+     type does not use data from previous time periods. It calculates an index by
+     using the averages of frequency counts of other facet values for the given time
+     period.</span></td></tr><tr ><td>public</td><td><span id="t_query_aggr_query_trend_aggr" class="identifier typeName">t_query_aggr_query_trend_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detects sharp and unexpected changes in the frequency of a</p>
+     facet or facet value over time based on the past history of frequency changes
+     of the facet value.</span></td></tr><tr ><td>public</td><td><span id="t_query_calculation_aggr" class="identifier typeName">t_query_calculation_aggr</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns a scalar calculation across all documents for the</p>
+     field specified. Possible calculations include min, max, sum, average, and
+     unique_count.</span></td></tr><tr ><td>public</td><td><span id="t_query_filter_aggregation" class="identifier typeName">t_query_filter_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A modifier that narrows the document set of the</p>
+     subaggregations it precedes.</span></td></tr><tr ><td>public</td><td><span id="t_query_group_by_aggregation" class="identifier typeName">t_query_group_by_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Separates document results into groups that meet the</p>
+     conditions you specify.</span></td></tr><tr ><td>public</td><td><span id="t_query_group_by_aggr_result" class="identifier typeName">t_query_group_by_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result group for the `group_by` aggregation.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_histogram_aggregation" class="identifier typeName">t_query_histogram_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Numeric interval segments to categorize documents by using</p>
+     field values from a single numeric field to describe the category.</span></td></tr><tr ><td>public</td><td><span id="t_query_histogram_aggr_result" class="identifier typeName">t_query_histogram_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Histogram numeric interval result.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_large" class="identifier typeName">t_query_large</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that describes a long query.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_large_passages" class="identifier typeName">t_query_large_passages</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Configuration for passage retrieval.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_large_similar" class="identifier typeName">t_query_large_similar</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Finds results from documents that are similar to documents</p>
+     of interest. Use this parameter to add a *More like these* function to your
+     search. You can include this parameter with or without a **query**, **filter**
+     or **natural_language_query** parameter.</span></td></tr><tr ><td>public</td><td><span id="t_query_large_table_results" class="identifier typeName">t_query_large_table_results</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Configuration for table retrieval.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_nested_aggregation" class="identifier typeName">t_query_nested_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A restriction that alters the document set that is used by</p>
+     the aggregations that it precedes. Subsequent aggregations are applied to
+     nested documents from the specified field.</span></td></tr><tr ><td>public</td><td><span id="t_query_notices_response" class="identifier typeName">t_query_notices_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains notice query results.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_pair_aggregation" class="identifier typeName">t_query_pair_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Calculates relevancy values using combinations of document</p>
+     sets from results of the specified pair of aggregations.</span></td></tr><tr ><td>public</td><td><span id="t_query_pair_aggr_result" class="identifier typeName">t_query_pair_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result for the `pair` aggregation.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_response" class="identifier typeName">t_query_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A response that contains the documents and aggregations for</p>
+     the query.</span></td></tr><tr ><td>public</td><td><span id="t_query_response_passage" class="identifier typeName">t_query_response_passage</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A passage query response.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_result" class="identifier typeName">t_query_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result document for the specified query.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_result_metadata" class="identifier typeName">t_query_result_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Metadata of a query result.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_result_passage" class="identifier typeName">t_query_result_passage</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A passage query result.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_sub_aggregation" class="identifier typeName">t_query_sub_aggregation</span> type jsonobject</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Aggregation results. For more information about supported</p>
+     aggregation types, see the [product
+     documentation](/docs/discovery-data?topic=discovery-data-query-aggregations).</span></td></tr><tr ><td>public</td><td><span id="t_query_suggested_refinement" class="identifier typeName">t_query_suggested_refinement</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A suggested additional query term or terms user to filter</p>
+     results. **Note**: The `suggested_refinements` parameter is deprecated.</span></td></tr><tr ><td>public</td><td><span id="t_query_table_result" class="identifier typeName">t_query_table_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A tables whose content or context match a search query.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_term_aggregation" class="identifier typeName">t_query_term_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns results from the field that is specified.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_term_aggr_result" class="identifier typeName">t_query_term_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Top value result for the `term` aggregation.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_timeslice_aggregation" class="identifier typeName">t_query_timeslice_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A specialized histogram aggregation that uses dates to</p>
+     create interval segments.</span></td></tr><tr ><td>public</td><td><span id="t_query_timeslice_aggr_result" class="identifier typeName">t_query_timeslice_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A timeslice interval segment.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_topic_aggregation" class="identifier typeName">t_query_topic_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detects how much the frequency of a given facet value</p>
+     deviates from the expected average for the given time period. This aggregation
+     type does not use data from previous time periods. It calculates an index by
+     using the averages of frequency counts of other facet values for the given time
+     period.</span></td></tr><tr ><td>public</td><td><span id="t_query_topic_aggr_result" class="identifier typeName">t_query_topic_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result for the `topic` aggregation.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_top_hits_aggregation" class="identifier typeName">t_query_top_hits_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Returns the top documents ranked by the score of the query.</p></span></td></tr><tr ><td>public</td><td><span id="t_query_top_hits_aggr_result" class="identifier typeName">t_query_top_hits_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A query response that contains the matching documents for</p>
+     the preceding aggregations.</span></td></tr><tr ><td>public</td><td><span id="t_query_trend_aggregation" class="identifier typeName">t_query_trend_aggregation</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Detects sharp and unexpected changes in the frequency of a</p>
+     facet or facet value over time based on the past history of frequency changes
+     of the facet value.</span></td></tr><tr ><td>public</td><td><span id="t_query_trend_aggr_result" class="identifier typeName">t_query_trend_aggr_result</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Result for the `trend` aggregation.</p></span></td></tr><tr ><td>public</td><td><span id="t_result_passage_answer" class="identifier typeName">t_result_passage_answer</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains a potential answer to the specified</p>
+     query.</span></td></tr><tr ><td>public</td><td><span id="t_retrieval_details" class="identifier typeName">t_retrieval_details</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object contain retrieval type information.</p></span></td></tr><tr ><td>public</td><td><span id="t_stop_word_list" class="identifier typeName">t_stop_word_list</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    List of words to filter out of text that is submitted in</p>
+     queries.</span></td></tr><tr ><td>public</td><td><span id="t_table_body_cells" class="identifier typeName">t_table_body_cells</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Cells that are not table header, column header, or row</p>
+     header cells.</span></td></tr><tr ><td>public</td><td><span id="t_table_cell_key" class="identifier typeName">t_table_cell_key</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A key in a key-value pair.</p></span></td></tr><tr ><td>public</td><td><span id="t_table_cell_value" class="identifier typeName">t_table_cell_value</span> type standard table of t_table_cell_values with non-unique default key</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A list of values in a key-value pair.</p></span></td></tr><tr ><td>public</td><td><span id="t_table_cell_values" class="identifier typeName">t_table_cell_values</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A value in a key-value pair.</p></span></td></tr><tr ><td>public</td><td><span id="t_table_column_headers" class="identifier typeName">t_table_column_headers</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Column-level cells, each applicable as a header to other</p>
+     cells in the same column as itself, of the current table.</span></td></tr><tr ><td>public</td><td><span id="t_table_column_header_ids" class="identifier typeName">t_table_column_header_ids</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An array of values, each being the `id` value of a column</p>
+     header that is applicable to the current cell.</span></td></tr><tr ><td>public</td><td><span id="t_table_column_header_texts" class="identifier typeName">t_table_column_header_texts</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An array of values, each being the `text` value of a column</p>
+     header that is applicable to the current cell.</span></td></tr><tr ><td>public</td><td><span id="t_table_element_location" class="identifier typeName">t_table_element_location</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The numeric location of the identified element in the</p>
+     document, represented with two integers labeled `begin` and `end`.</span></td></tr><tr ><td>public</td><td><span id="t_table_headers" class="identifier typeName">t_table_headers</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The contents of the current table&apos;s header.</p></span></td></tr><tr ><td>public</td><td><span id="t_table_key_value_pairs" class="identifier typeName">t_table_key_value_pairs</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Key-value pairs detected across cell boundaries.</p></span></td></tr><tr ><td>public</td><td><span id="t_table_result_table" class="identifier typeName">t_table_result_table</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Full table object retrieved from Table Understanding</p>
+     Enrichment.</span></td></tr><tr ><td>public</td><td><span id="t_table_row_headers" class="identifier typeName">t_table_row_headers</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Row-level cells, each applicable as a header to other cells</p>
+     in the same row as itself, of the current table.</span></td></tr><tr ><td>public</td><td><span id="t_table_row_header_ids" class="identifier typeName">t_table_row_header_ids</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An array of values, each being the `id` value of a row</p>
+     header that is applicable to this body cell.</span></td></tr><tr ><td>public</td><td><span id="t_table_row_header_texts" class="identifier typeName">t_table_row_header_texts</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An array of values, each being the `text` value of a row</p>
+     header that is applicable to this body cell.</span></td></tr><tr ><td>public</td><td><span id="t_table_text_location" class="identifier typeName">t_table_text_location</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Text and associated location within a table.</p></span></td></tr><tr ><td>public</td><td><span id="t_tab_column_header_texts_norm" class="identifier typeName">t_tab_column_header_texts_norm</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    If you provide customization input, the normalized version</p>
+     of the column header texts according to the customization; otherwise, the same
+     value as `column_header_texts`.</span></td></tr><tr ><td>public</td><td><span id="t_tab_row_header_texts_norm" class="identifier typeName">t_tab_row_header_texts_norm</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    If you provide customization input, the normalized version</p>
+     of the row header texts according to the customization; otherwise, the same
+     value as `row_header_texts`.</span></td></tr><tr ><td>public</td><td><span id="t_training_example" class="identifier typeName">t_training_example</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains example response details for a training</p>
+     query.</span></td></tr><tr ><td>public</td><td><span id="t_training_query" class="identifier typeName">t_training_query</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object that contains training query details.</p></span></td></tr><tr ><td>public</td><td><span id="t_training_query_set" class="identifier typeName">t_training_query_set</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Object specifying the training queries contained in the</p>
+     identified training set.</span></td></tr><tr ><td>public</td><td><span id="t_update_collection" class="identifier typeName">t_update_collection</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that represents the collection to be updated.</p></span></td></tr><tr ><td>public</td><td><span id="t_update_document_classifier" class="identifier typeName">t_update_document_classifier</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains a new name or description for a</p>
+     document classifier, updated training data, or new or updated test data.</span></td></tr><tr ><td>public</td><td><span id="t_update_enrichment" class="identifier typeName">t_update_enrichment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains a new name and description for an</p>
+     enrichment.</span></td></tr><tr ><td>public</td><td><span id="t_upd_doc_classifier_model" class="identifier typeName">t_upd_doc_classifier_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that contains a new name or description for a</p>
+     document classifier model.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span id="data:c_abapname_dictionary" class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span id="data:c_required_fields" class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:add_document" class="identifier methodName">add_document</span> </td></tr><tr><td>importing</td><td><span id="meth:add_document.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:add_document.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:add_document.data:i_file" class="identifier parameterName">i_file</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:add_document.data:i_filename" class="identifier parameterName">i_filename</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:add_document.data:i_file_content_type" class="identifier parameterName">i_file_content_type</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:add_document.data:i_metadata" class="identifier parameterName">i_metadata</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:add_document.data:i_x_watson_discovery_force" class="identifier parameterName">i_x_watson_discovery_force</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:add_document.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:add_document.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:add_document.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_accepted</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Add a document</p>
+   Add a document to a collection with optional metadata.<br/>
+   <br/>
+   Returns immediately after the system has accepted the document for
+    processing.<br/>
+   <br/>
+   Use this method to upload a file to the collection. You cannot use this method
+    to crawl an external data source.<br/>
+   <br/>
+    * For a list of supported file types, see the [product
+    documentation](/docs/discovery-data?topic=discovery-data-collections#supportedf
+   iletypes).<br/>
+   <br/>
+    * You must provide document content, metadata, or both. If the request is
+    missing both document content and metadata, it is rejected.<br/>
+   <br/>
+     * You can set the **Content-Type** parameter on the **file** part to indicate
+    the media type of the document. If the **Content-Type** parameter is missing or
+    is one of the generic media types (for example, `application/octet-stream`),
+    then the service attempts to automatically detect the document&apos;s media
+    type.<br/>
+   <br/>
+    *  If the document is uploaded to a collection that shares its data with
+    another collection, the **X-Watson-Discovery-Force** header must be set to
+    `true`.<br/>
+   <br/>
+    * In curl requests only, you can assign an ID to a document that you add by
+    appending the ID to the endpoint
+    (`/v2/projects/&#123;project_id&#125;/collections/&#123;collection_id&#125;/doc
+   uments/&#123;document_id&#125;`). If a document already exists with the
+    specified ID, it is replaced.<br/>
+   <br/>
+   For more information about how certain file types and field names are handled
+    when a file is added to a collection, see the [product
+    documentation](/docs/discovery-data?topic=discovery-data-index-overview#field-n
+   ame-limits).
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
+   When adding a document, the content of the document to ingest. For maximum
+    supported file size limits, see [the
+    documentation](/docs/discovery-data?topic=discovery-data-collections#collection
+   s-doc-limits).<br/>
+   <br/>
+   When analyzing a document, the content of the document to analyze but not
+    ingest. Only the `application/json` content type is supported currently. For
+    maximum supported file size limits, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-
+   limits).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filename</span></td><td><span class="abapDocComment">
+   The filename for file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file_content_type</span></td><td><span class="abapDocComment">
+   The content type of file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_metadata</span></td><td><span class="abapDocComment">
+   Add information about the file that you want to include in the response.<br/>
+   <br/>
+   The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
+    MB are rejected.<br/>
+   <br/>
+   Example:<br/>
+   <br/>
+    ``` <br/>
+    &#123; <br/>
+     &quot;filename&quot;: &quot;favorites2.json&quot;,<br/>
+     &quot;file_type&quot;: &quot;json&quot;<br/>
+    &#125;.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_x_watson_discovery_force</span></td><td><span class="abapDocComment">
+   When `true`, the uploaded document is added to the collection even if the data
+    for that collection is shared with other collections.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_ACCEPTED
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:analyze_document" class="identifier methodName">analyze_document</span> </td></tr><tr><td>importing</td><td><span id="meth:analyze_document.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_file" class="identifier parameterName">i_file</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_filename" class="identifier parameterName">i_filename</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_file_content_type" class="identifier parameterName">i_file_content_type</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_metadata" class="identifier parameterName">i_metadata</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:analyze_document.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:analyze_document.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_analyzed_document</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Analyze a Document</p>
+   Process a document and return it for realtime use. Supports JSON files
+    only.<br/>
+   <br/>
+   The file is not stored in the collection, but is processed according to the
+    collection&apos;s configuration settings. To get results, enrichments must be
+    applied to a field in the collection that also exists in the file that you want
+    to analyze. For example, to analyze text in a `Quote` field, you must apply
+    enrichments to the `Quote` field in the collection configuration. Then, when
+    you analyze the file, the text in the `Quote` field is analyzed and results are
+    written to a field named `enriched_Quote`.<br/>
+   <br/>
+   **Note:** This method is supported with Enterprise plan deployments and
+    installed deployments only.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
+   When adding a document, the content of the document to ingest. For maximum
+    supported file size limits, see [the
+    documentation](/docs/discovery-data?topic=discovery-data-collections#collection
+   s-doc-limits).<br/>
+   <br/>
+   When analyzing a document, the content of the document to analyze but not
+    ingest. Only the `application/json` content type is supported currently. For
+    maximum supported file size limits, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-
+   limits).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filename</span></td><td><span class="abapDocComment">
+   The filename for file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file_content_type</span></td><td><span class="abapDocComment">
+   The content type of file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_metadata</span></td><td><span class="abapDocComment">
+   Add information about the file that you want to include in the response.<br/>
+   <br/>
+   The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
+    MB are rejected.<br/>
+   <br/>
+   Example:<br/>
+   <br/>
+    ``` <br/>
+    &#123; <br/>
+     &quot;filename&quot;: &quot;favorites2.json&quot;,<br/>
+     &quot;file_type&quot;: &quot;json&quot;<br/>
+    &#125;.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ANALYZED_DOCUMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_collection" class="identifier methodName">create_collection</span> </td></tr><tr><td>importing</td><td><span id="meth:create_collection.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_collection.data:i_collectiondetails" class="identifier parameterName">i_collectiondetails</span></td><td>type t_collection_details</td></tr><tr><td></td><td><span id="meth:create_collection.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_collection.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_collection.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_collection_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a collection</p>
+   Create a new collection in the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collectiondetails</span></td><td><span class="abapDocComment">
+   An object that represents the collection to be created.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COLLECTION_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_document_classifier" class="identifier methodName">create_document_classifier</span> </td></tr><tr><td>importing</td><td><span id="meth:create_document_classifier.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_training_data" class="identifier parameterName">i_training_data</span></td><td>type file</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_classifier" class="identifier parameterName">i_classifier</span></td><td>type t_create_document_classifier</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_test_data" class="identifier parameterName">i_test_data</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_training_data_ct" class="identifier parameterName">i_training_data_ct</span></td><td>type string default zif_ibmc_service_arch~c_mediatype-all</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_test_data_ct" class="identifier parameterName">i_test_data_ct</span></td><td>type string default zif_ibmc_service_arch~c_mediatype-all</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:create_document_classifier.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_document_classifier.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a document classifier</p>
+   Create a document classifier. You can use the API to create a document
+    classifier in any project type. After you create a document classifier, you can
+    use the Enrichments API to create a classifier enrichment, and then the
+    Collections API to apply the enrichment to a collection in the project.<br/>
+   <br/>
+   **Note:** This method is supported on installed instances (IBM Cloud Pak for
+    Data) or IBM Cloud-managed Premium or Enterprise plan instances.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_training_data</span></td><td><span class="abapDocComment">
+   The training data CSV file to upload. The CSV file must have headers. The file
+    must include a field that contains the text you want to classify and a field
+    that contains the classification labels that you want to use to classify your
+    data. If you want to specify multiple values in a single field, use a semicolon
+    as the value separator. For a sample file, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier</span></td><td><span class="abapDocComment">
+   An object that manages the settings and data that is required to train a
+    document classification model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_test_data</span></td><td><span class="abapDocComment">
+   The CSV with test data to upload. The column values in the test file must be the
+    same as the column values in the training data file. If no test data is
+    provided, the training data is split into two separate groups of training and
+    test data.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_enrichment" class="identifier methodName">create_enrichment</span> </td></tr><tr><td>importing</td><td><span id="meth:create_enrichment.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_enrichment.data:i_enrichment" class="identifier parameterName">i_enrichment</span></td><td>type t_create_enrichment</td></tr><tr><td></td><td><span id="meth:create_enrichment.data:i_file" class="identifier parameterName">i_file</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:create_enrichment.data:i_file_ct" class="identifier parameterName">i_file_ct</span></td><td>type string default zif_ibmc_service_arch~c_mediatype-all</td></tr><tr><td></td><td><span id="meth:create_enrichment.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:create_enrichment.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_enrichment.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_enrichment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create an enrichment</p>
+   Create an enrichment for use with the specified project. To apply the enrichment
+    to a collection in the project, use the [Collections
+    API](/apidocs/discovery-data#createcollection).
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_enrichment</span></td><td><span class="abapDocComment">
+   Information about a specific enrichment.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
+   The enrichment file to upload. Expected file types per enrichment are as
+    follows:<br/>
+   <br/>
+   * CSV for `dictionary`<br/>
+   <br/>
+   * PEAR for `uima_annotator` and `rule_based` (Explorer)<br/>
+   <br/>
+   * ZIP for `watson_knowledge_studio_model` and `rule_based` (Studio Advanced Rule
+    Editor).
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENRICHMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_expansions" class="identifier methodName">create_expansions</span> </td></tr><tr><td>importing</td><td><span id="meth:create_expansions.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_expansions.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_expansions.data:i_body" class="identifier parameterName">i_body</span></td><td>type t_expansions</td></tr><tr><td></td><td><span id="meth:create_expansions.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_expansions.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_expansions.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_expansions</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create or update an expansion list</p>
+   Creates or replaces the expansion list for this collection. An expansion list
+    introduces alternative wording for key terms that are mentioned in your
+    collection. By identifying synonyms or common misspellings, you expand the
+    scope of a query beyond exact matches. The maximum number of expanded terms
+    allowed per collection is 5,000.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   An object that defines the expansion list.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXPANSIONS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_project" class="identifier methodName">create_project</span> </td></tr><tr><td>importing</td><td><span id="meth:create_project.data:i_projectcreation" class="identifier parameterName">i_projectcreation</span></td><td>type t_project_creation</td></tr><tr><td></td><td><span id="meth:create_project.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_project.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_project.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_project_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a project</p>
+   Create a new project for this instance
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_projectcreation</span></td><td><span class="abapDocComment">
+   An object that represents the project to be created.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_PROJECT_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_stopword_list" class="identifier methodName">create_stopword_list</span> </td></tr><tr><td>importing</td><td><span id="meth:create_stopword_list.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_stopword_list.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_stopword_list.data:i_stopwordlist" class="identifier parameterName">i_stopwordlist</span></td><td>type t_stop_word_list optional</td></tr><tr><td></td><td><span id="meth:create_stopword_list.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_stopword_list.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_stopword_list.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_stop_word_list</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a custom stop words list</p>
+   Adds a list of custom stop words. Stop words are words that you want the service
+    to ignore when they occur in a query because they&apos;re not useful in
+    distinguishing the semantic meaning of the query. The stop words list cannot
+    contain more than 1 million characters.<br/>
+   <br/>
+   A default stop words list is used by all collections. The default list is
+    applied both at indexing time and at query time. A custom stop words list that
+    you add is used at query time only.<br/>
+   <br/>
+   The custom stop words list augments the default stop words list; you cannot
+    remove stop words. For information about the default stop words lists per
+    language, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-stopwords).
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_stopwordlist</span></td><td><span class="abapDocComment">
+   No documentation available.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_STOP_WORD_LIST
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_training_query" class="identifier methodName">create_training_query</span> </td></tr><tr><td>importing</td><td><span id="meth:create_training_query.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_training_query.data:i_trainingquery" class="identifier parameterName">i_trainingquery</span></td><td>type t_training_query</td></tr><tr><td></td><td><span id="meth:create_training_query.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_training_query.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_training_query.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_training_query</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create training query</p>
+   Add a query to the training data for this project. The query can contain a
+    filter and natural language query.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_trainingquery</span></td><td><span class="abapDocComment">
+   An object that represents the query to be submitted. At least 50 queries are
+    required for training to begin. A maximum of 10,000 queries are allowed.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRAINING_QUERY
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:cre_document_classifier_model" class="identifier methodName">cre_document_classifier_model</span> </td></tr><tr><td>importing</td><td><span id="meth:cre_document_classifier_model.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:cre_document_classifier_model.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:cre_document_classifier_model.data:i_documentclassifiermodeltrain" class="identifier parameterName">i_documentclassifiermodeltrain</span></td><td>type t_doc_classifier_model_train</td></tr><tr><td></td><td><span id="meth:cre_document_classifier_model.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:cre_document_classifier_model.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:cre_document_classifier_model.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier_model</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a document classifier model</p>
+   Create a document classifier model by training a model that uses the data and
+    classifier settings defined in the specified document classifier.<br/>
+   <br/>
+   **Note:** This method is supported on installed intances (IBM Cloud Pak for
+    Data) or IBM Cloud-managed Premium or Enterprise plan instances.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_documentclassifiermodeltrain</span></td><td><span class="abapDocComment">
+   An object that contains the training configuration information for the document
+    classifier to be trained.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER_MODEL
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_collection" class="identifier methodName">delete_collection</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_collection.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_collection.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a collection</p>
+   Deletes the specified collection from the project. All documents stored in the
+    specified collection and not shared is also deleted.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_document" class="identifier methodName">delete_document</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_document.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_document.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_document.data:i_document_id" class="identifier parameterName">i_document_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_document.data:i_x_watson_discovery_force" class="identifier parameterName">i_x_watson_discovery_force</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:delete_document.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:delete_document.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_delete_document_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a document</p>
+   Deletes the document with the document ID that you specify from the collection.
+    Removes uploaded documents from the collection permanently. If you delete a
+    document that was added by crawling an external data source, the document will
+    be added again with the next scheduled crawl of the data source. The delete
+    function removes the document from the collection, not from the external data
+    source.<br/>
+   <br/>
+   **Note:** Files such as CSV or JSON files generate subdocuments when they are
+    added to a collection. If you delete a subdocument, and then repeat the action
+    that created it, the deleted document is added back in to your collection. To
+    remove subdocuments that are generated by an uploaded file, delete the original
+    document instead. You can get the document ID of the original document from the
+    `parent_document_id` of the subdocument result.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   The ID of the document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_x_watson_discovery_force</span></td><td><span class="abapDocComment">
+   When `true`, the uploaded document is added to the collection even if the data
+    for that collection is shared with other collections.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DELETE_DOCUMENT_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_document_classifier" class="identifier methodName">delete_document_classifier</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_document_classifier.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_document_classifier.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a document classifier</p>
+   Deletes an existing document classifier from the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_enrichment" class="identifier methodName">delete_enrichment</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_enrichment.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_enrichment.data:i_enrichment_id" class="identifier parameterName">i_enrichment_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete an enrichment</p>
+   Deletes an existing enrichment from the specified project. <br/>
+   <br/>
+   **Note:** Only enrichments that have been manually created can be deleted.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_enrichment_id</span></td><td><span class="abapDocComment">
+   The ID of the enrichment.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_expansions" class="identifier methodName">delete_expansions</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_expansions.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_expansions.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete the expansion list</p>
+   Removes the expansion information for this collection. To disable query
+    expansion for a collection, delete the expansion list.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_project" class="identifier methodName">delete_project</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_project.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a project</p>
+   Deletes the specified project. <br/>
+   <br/>
+   **Important:** Deleting a project deletes everything that is part of the
+    specified project, including all collections.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_stopword_list" class="identifier methodName">delete_stopword_list</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_stopword_list.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_stopword_list.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a custom stop words list</p>
+   Deletes a custom stop words list to stop using it in queries against the
+    collection. After a custom stop words list is deleted, the default stop words
+    list is used.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_training_queries" class="identifier methodName">delete_training_queries</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_training_queries.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete training queries</p>
+   Removes all training queries for the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_training_query" class="identifier methodName">delete_training_query</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_training_query.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_training_query.data:i_query_id" class="identifier parameterName">i_query_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a training data query</p>
+   Removes details from a training data query, including the query string and all
+    examples.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query_id</span></td><td><span class="abapDocComment">
+   The ID of the query used for training.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_user_data" class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_user_data.data:i_customer_id" class="identifier parameterName">i_customer_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+   Deletes all data associated with a specified customer ID. The method has no
+    effect if no data is associated with the customer ID. <br/>
+   <br/>
+   You associate a customer ID with data by passing the **X-Watson-Metadata**
+    header with a request that passes data. For more information about personal
+    data and customer IDs, see [Information
+    security](/docs/discovery-data?topic=discovery-data-information-security#inform
+   ation-security). <br/>
+   <br/>
+   **Note:** This method is only supported on IBM Cloud instances of Discovery.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customer_id</span></td><td><span class="abapDocComment">
+   The customer ID for which all data is to be deleted.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:del_document_classifier_model" class="identifier methodName">del_document_classifier_model</span> </td></tr><tr><td>importing</td><td><span id="meth:del_document_classifier_model.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:del_document_classifier_model.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:del_document_classifier_model.data:i_model_id" class="identifier parameterName">i_model_id</span></td><td>type string</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete a document classifier model</p>
+   Deletes an existing document classifier model from the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier model.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span id="meth:get_appname" class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_autocompletion" class="identifier methodName">get_autocompletion</span> </td></tr><tr><td>importing</td><td><span id="meth:get_autocompletion.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_autocompletion.data:i_prefix" class="identifier parameterName">i_prefix</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_autocompletion.data:i_collection_ids" class="identifier parameterName">i_collection_ids</span></td><td>type tt_string optional</td></tr><tr><td></td><td><span id="meth:get_autocompletion.data:i_field" class="identifier parameterName">i_field</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:get_autocompletion.data:i_count" class="identifier parameterName">i_count</span></td><td>type integer default 5</td></tr><tr><td></td><td><span id="meth:get_autocompletion.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_autocompletion.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_completions</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get Autocomplete Suggestions</p>
+   Returns completion query suggestions for the specified prefix.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_prefix</span></td><td><span class="abapDocComment">
+   The prefix to use for autocompletion. For example, the prefix `Ho` could
+    autocomplete to `hot`, `housing`, or `how`.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_ids</span></td><td><span class="abapDocComment">
+   Comma separated list of the collection IDs. If this parameter is not specified,
+    all collections in the project are used.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_field</span></td><td><span class="abapDocComment">
+   The field in the result documents that autocompletion suggestions are identified
+    from.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_count</span></td><td><span class="abapDocComment">
+   The number of autocompletion suggestions to return.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COMPLETIONS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_collection" class="identifier methodName">get_collection</span> </td></tr><tr><td>importing</td><td><span id="meth:get_collection.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_collection.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_collection.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_collection.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_collection_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get collection</p>
+   Get details about the specified collection.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COLLECTION_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_component_settings" class="identifier methodName">get_component_settings</span> </td></tr><tr><td>importing</td><td><span id="meth:get_component_settings.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_component_settings.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_component_settings.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_component_settings_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List component settings</p>
+   Returns default configuration settings for components.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COMPONENT_SETTINGS_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_document" class="identifier methodName">get_document</span> </td></tr><tr><td>importing</td><td><span id="meth:get_document.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document.data:i_document_id" class="identifier parameterName">i_document_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_document.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get document details</p>
+   Get details about a specific document, whether the document is added by
+    uploading a file or by crawling an external data source.<br/>
+   <br/>
+   **Note**: This method is available only from Cloud Pak for Data version 4.0.9
+    and later installed instances and from Plus and Enterprise plan IBM
+    Cloud-managed instances. It is not currently available from Premium plan
+    instances.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   The ID of the document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_document_classifier" class="identifier methodName">get_document_classifier</span> </td></tr><tr><td>importing</td><td><span id="meth:get_document_classifier.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document_classifier.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document_classifier.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_document_classifier.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a document classifier</p>
+   Get details about a specific document classifier.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_document_classifier_model" class="identifier methodName">get_document_classifier_model</span> </td></tr><tr><td>importing</td><td><span id="meth:get_document_classifier_model.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document_classifier_model.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document_classifier_model.data:i_model_id" class="identifier parameterName">i_model_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_document_classifier_model.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_document_classifier_model.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier_model</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a document classifier model</p>
+   Get details about a specific document classifier model.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER_MODEL
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_enrichment" class="identifier methodName">get_enrichment</span> </td></tr><tr><td>importing</td><td><span id="meth:get_enrichment.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_enrichment.data:i_enrichment_id" class="identifier parameterName">i_enrichment_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_enrichment.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_enrichment.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_enrichment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get enrichment</p>
+   Get details about a specific enrichment.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_enrichment_id</span></td><td><span class="abapDocComment">
+   The ID of the enrichment.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENRICHMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_project" class="identifier methodName">get_project</span> </td></tr><tr><td>importing</td><td><span id="meth:get_project.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_project.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_project.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_project_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get project</p>
+   Get details on the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_PROJECT_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span id="meth:get_request_prop" class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span id="meth:get_sdk_version_date" class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_stopword_list" class="identifier methodName">get_stopword_list</span> </td></tr><tr><td>importing</td><td><span id="meth:get_stopword_list.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_stopword_list.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_stopword_list.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_stopword_list.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_stop_word_list</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a custom stop words list</p>
+   Returns the custom stop words list that is used by the collection. For
+    information about the default stop words lists that are applied to queries, see
+    [the product
+    documentation](/docs/discovery-data?topic=discovery-data-stopwords).
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_STOP_WORD_LIST
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_training_query" class="identifier methodName">get_training_query</span> </td></tr><tr><td>importing</td><td><span id="meth:get_training_query.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_training_query.data:i_query_id" class="identifier parameterName">i_query_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_training_query.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_training_query.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_training_query</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get a training data query</p>
+   Get details for a specific training data query, including the query string and
+    all examples
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query_id</span></td><td><span class="abapDocComment">
+   The ID of the query used for training.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRAINING_QUERY
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_collections" class="identifier methodName">list_collections</span> </td></tr><tr><td>importing</td><td><span id="meth:list_collections.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_collections.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_collections.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_list_collections_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List collections</p>
+   Lists existing collections for the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LIST_COLLECTIONS_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_documents" class="identifier methodName">list_documents</span> </td></tr><tr><td>importing</td><td><span id="meth:list_documents.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_count" class="identifier parameterName">i_count</span></td><td>type integer default 1000</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_status" class="identifier parameterName">i_status</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_has_notices" class="identifier parameterName">i_has_notices</span></td><td>type boolean optional</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_is_parent" class="identifier parameterName">i_is_parent</span></td><td>type boolean optional</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_parent_document_id" class="identifier parameterName">i_parent_document_id</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_sha256" class="identifier parameterName">i_sha256</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_documents.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_documents.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_list_documents_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List documents</p>
+   Lists the documents in the specified collection. The list includes only the
+    document ID of each document and returns information for up to 10,000
+    documents.<br/>
+   <br/>
+   **Note**: This method is available only from Cloud Pak for Data version 4.0.9
+    and later installed instances and from Plus and Enterprise plan IBM
+    Cloud-managed instances. It is not currently available from Premium plan
+    instances.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_count</span></td><td><span class="abapDocComment">
+   The maximum number of documents to return. Up to 1,000 documents are returned by
+    default. The maximum number allowed is 10,000.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_status</span></td><td><span class="abapDocComment">
+   Filters the documents to include only documents with the specified ingestion
+    status. The options include:<br/>
+   <br/>
+   * `available`: Ingestion is finished and the document is indexed.<br/>
+   <br/>
+   * `failed`: Ingestion is finished, but the document is not indexed because of an
+    error.<br/>
+   <br/>
+   * `pending`: The document is uploaded, but the ingestion process is not
+    started.<br/>
+   <br/>
+   * `processing`: Ingestion is in progress.<br/>
+   <br/>
+   You can specify one status value or add a comma-separated list of more than one
+    status value. For example, `available,failed`.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_has_notices</span></td><td><span class="abapDocComment">
+   If set to `true`, only documents that have notices, meaning documents for which
+    warnings or errors were generated during the ingestion, are returned. If set to
+    `false`, only documents that don&apos;t have notices are returned. If
+    unspecified, no filter based on notices is applied.<br/>
+   <br/>
+   Notice details are not available in the result, but you can use the [Query
+    collection notices](#querycollectionnotices) method to find details by adding
+    the parameter `query=notices.document_id:&#123;document-id&#125;`.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_is_parent</span></td><td><span class="abapDocComment">
+   If set to `true`, only parent documents, meaning documents that were split
+    during the ingestion process and resulted in two or more child documents, are
+    returned. If set to `false`, only child documents are returned. If unspecified,
+    no filter based on the parent or child relationship is applied.<br/>
+   <br/>
+   CSV files, for example, are split into separate documents per line and JSON
+    files are split into separate documents per object.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_parent_document_id</span></td><td><span class="abapDocComment">
+   Filters the documents to include only child documents that were generated when
+    the specified parent document was processed.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sha256</span></td><td><span class="abapDocComment">
+   Filters the documents to include only documents with the specified SHA-256 hash.
+    Format the hash as a hexadecimal string.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LIST_DOCUMENTS_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_document_classifiers" class="identifier methodName">list_document_classifiers</span> </td></tr><tr><td>importing</td><td><span id="meth:list_document_classifiers.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_document_classifiers.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_document_classifiers.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifiers</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List document classifiers</p>
+   Get a list of the document classifiers in a project. Returns only the name and
+    classifier ID of each document classifier.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIERS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_enrichments" class="identifier methodName">list_enrichments</span> </td></tr><tr><td>importing</td><td><span id="meth:list_enrichments.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_enrichments.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_enrichments.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_enrichments</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List enrichments</p>
+   Lists the enrichments available to this project. The *Part of Speech* and
+    *Sentiment of Phrases* enrichments might be listed, but are reserved for
+    internal use only.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENRICHMENTS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_expansions" class="identifier methodName">list_expansions</span> </td></tr><tr><td>importing</td><td><span id="meth:list_expansions.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_expansions.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_expansions.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_expansions.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_expansions</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get the expansion list</p>
+   Returns the current expansion list for the specified collection. If an expansion
+    list is not specified, an empty expansions array is returned.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_EXPANSIONS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_fields" class="identifier methodName">list_fields</span> </td></tr><tr><td>importing</td><td><span id="meth:list_fields.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_fields.data:i_collection_ids" class="identifier parameterName">i_collection_ids</span></td><td>type tt_string optional</td></tr><tr><td></td><td><span id="meth:list_fields.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_fields.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_list_fields_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List fields</p>
+   Gets a list of the unique fields (and their types) stored in the specified
+    collections.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_ids</span></td><td><span class="abapDocComment">
+   Comma separated list of the collection IDs. If this parameter is not specified,
+    all collections in the project are used.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LIST_FIELDS_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_projects" class="identifier methodName">list_projects</span> </td></tr><tr><td>importing</td><td><span id="meth:list_projects.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_projects.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_list_projects_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List projects</p>
+   Lists existing projects for this instance.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_LIST_PROJECTS_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_training_queries" class="identifier methodName">list_training_queries</span> </td></tr><tr><td>importing</td><td><span id="meth:list_training_queries.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_training_queries.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_training_queries.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_training_query_set</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List training queries</p>
+   List the training queries for the specified project.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRAINING_QUERY_SET
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:lst_document_classifier_models" class="identifier methodName">lst_document_classifier_models</span> </td></tr><tr><td>importing</td><td><span id="meth:lst_document_classifier_models.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:lst_document_classifier_models.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:lst_document_classifier_models.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:lst_document_classifier_models.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier_models</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List document classifier models</p>
+   Get a list of the document classifier models in a project. Returns only the name
+    and model ID of each document classifier model.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER_MODELS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:query" class="identifier methodName">query</span> </td></tr><tr><td>importing</td><td><span id="meth:query.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:query.data:i_query_long" class="identifier parameterName">i_query_long</span></td><td>type t_query_large optional</td></tr><tr><td></td><td><span id="meth:query.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:query.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:query.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_query_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Query a project</p>
+   Search your data by submitting queries that are written in natural language or
+    formatted in the Discovery Query Language. For more information, see the
+    [Discovery
+    documentation](/docs/discovery-data?topic=discovery-data-query-concepts). The
+    default query parameters differ by project type. For more information about the
+    project default settings, see the [Discovery
+    documentation](/docs/discovery-data?topic=discovery-data-query-defaults). See
+    [the Projects API documentation](#create-project) for details about how to set
+    custom default query settings. <br/>
+   <br/>
+   The length of the UTF-8 encoding of the POST body cannot exceed 10,000 bytes,
+    which is roughly equivalent to 10,000 characters in English.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query_long</span></td><td><span class="abapDocComment">
+   An object that represents the query to be submitted.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_QUERY_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:query_collection_notices" class="identifier methodName">query_collection_notices</span> </td></tr><tr><td>importing</td><td><span id="meth:query_collection_notices.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_filter" class="identifier parameterName">i_filter</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_query" class="identifier parameterName">i_query</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_natural_language_query" class="identifier parameterName">i_natural_language_query</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_count" class="identifier parameterName">i_count</span></td><td>type integer default 10</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_offset" class="identifier parameterName">i_offset</span></td><td>type integer optional</td></tr><tr><td></td><td><span id="meth:query_collection_notices.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:query_collection_notices.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_query_notices_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Query collection notices</p>
+   Finds collection-level notices (errors and warnings) that are generated when
+    documents are ingested.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filter</span></td><td><span class="abapDocComment">
+   Searches for documents that match the Discovery Query Language criteria that is
+    specified as input. Filter calls are cached and are faster than query calls
+    because the results are not ordered by relevance. When used with the
+    `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
+    parameter runs first. This parameter is useful for limiting results to those
+    that contain specific metadata values.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query</span></td><td><span class="abapDocComment">
+   A query search that is written in the Discovery Query Language and returns all
+    matching documents in your data set with full enrichments and full text, and
+    with the most relevant documents listed first.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_natural_language_query</span></td><td><span class="abapDocComment">
+   A natural language query that returns relevant documents by using training data
+    and natural language understanding.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_count</span></td><td><span class="abapDocComment">
+   Number of results to return. The maximum for the **count** and **offset** values
+    together in any one query is **10,000**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_offset</span></td><td><span class="abapDocComment">
+   The number of query results to skip at the beginning. For example, if the total
+    number of results that are returned is 10 and the offset is 8, it returns the
+    last two results. The maximum for the **count** and **offset** values together
+    in any one query is **10000**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_QUERY_NOTICES_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:query_notices" class="identifier methodName">query_notices</span> </td></tr><tr><td>importing</td><td><span id="meth:query_notices.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_filter" class="identifier parameterName">i_filter</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_query" class="identifier parameterName">i_query</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_natural_language_query" class="identifier parameterName">i_natural_language_query</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_count" class="identifier parameterName">i_count</span></td><td>type integer default 10</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_offset" class="identifier parameterName">i_offset</span></td><td>type integer optional</td></tr><tr><td></td><td><span id="meth:query_notices.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:query_notices.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_query_notices_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Query project notices</p>
+   Finds project-level notices (errors and warnings). Currently, project-level
+    notices are generated by relevancy training.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filter</span></td><td><span class="abapDocComment">
+   Searches for documents that match the Discovery Query Language criteria that is
+    specified as input. Filter calls are cached and are faster than query calls
+    because the results are not ordered by relevance. When used with the
+    `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
+    parameter runs first. This parameter is useful for limiting results to those
+    that contain specific metadata values.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query</span></td><td><span class="abapDocComment">
+   A query search that is written in the Discovery Query Language and returns all
+    matching documents in your data set with full enrichments and full text, and
+    with the most relevant documents listed first.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_natural_language_query</span></td><td><span class="abapDocComment">
+   A natural language query that returns relevant documents by using training data
+    and natural language understanding.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_count</span></td><td><span class="abapDocComment">
+   Number of results to return. The maximum for the **count** and **offset** values
+    together in any one query is **10,000**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_offset</span></td><td><span class="abapDocComment">
+   The number of query results to skip at the beginning. For example, if the total
+    number of results that are returned is 10 and the offset is 8, it returns the
+    last two results. The maximum for the **count** and **offset** values together
+    in any one query is **10000**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_QUERY_NOTICES_RESPONSE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_collection" class="identifier methodName">update_collection</span> </td></tr><tr><td>importing</td><td><span id="meth:update_collection.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_collection.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_collection.data:i_updatecollection" class="identifier parameterName">i_updatecollection</span></td><td>type t_update_collection</td></tr><tr><td></td><td><span id="meth:update_collection.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_collection.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_collection.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_collection_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a collection</p>
+   Updates the specified collection&apos;s name, description, and enrichments.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_updatecollection</span></td><td><span class="abapDocComment">
+   An object that represents the collection to be updated.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_COLLECTION_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_document" class="identifier methodName">update_document</span> </td></tr><tr><td>importing</td><td><span id="meth:update_document.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_document.data:i_collection_id" class="identifier parameterName">i_collection_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_document.data:i_document_id" class="identifier parameterName">i_document_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_document.data:i_file" class="identifier parameterName">i_file</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:update_document.data:i_filename" class="identifier parameterName">i_filename</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:update_document.data:i_file_content_type" class="identifier parameterName">i_file_content_type</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:update_document.data:i_metadata" class="identifier parameterName">i_metadata</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:update_document.data:i_x_watson_discovery_force" class="identifier parameterName">i_x_watson_discovery_force</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:update_document.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:update_document.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_document.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_accepted</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a document</p>
+   Replace an existing document or add a document with a specified document ID.
+    Starts ingesting a document with optional metadata.<br/>
+   <br/>
+   Use this method to upload a file to a collection. You cannot use this method to
+    crawl an external data source.<br/>
+   <br/>
+   If the document is uploaded to a collection that shares its data with another
+    collection, the **X-Watson-Discovery-Force** header must be set to `true`.<br/>
+   <br/>
+   **Notes:**<br/>
+   <br/>
+    * Uploading a new document with this method automatically replaces any existing
+    document stored with the same document ID.<br/>
+   <br/>
+    * If an uploaded document is split into child documents during ingestion, all
+    existing child documents are overwritten, even if the updated version of the
+    document has fewer child documents.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_collection_id</span></td><td><span class="abapDocComment">
+   The ID of the collection.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_document_id</span></td><td><span class="abapDocComment">
+   The ID of the document.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file</span></td><td><span class="abapDocComment">
+   When adding a document, the content of the document to ingest. For maximum
+    supported file size limits, see [the
+    documentation](/docs/discovery-data?topic=discovery-data-collections#collection
+   s-doc-limits).<br/>
+   <br/>
+   When analyzing a document, the content of the document to analyze but not
+    ingest. Only the `application/json` content type is supported currently. For
+    maximum supported file size limits, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-
+   limits).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_filename</span></td><td><span class="abapDocComment">
+   The filename for file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_file_content_type</span></td><td><span class="abapDocComment">
+   The content type of file.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_metadata</span></td><td><span class="abapDocComment">
+   Add information about the file that you want to include in the response.<br/>
+   <br/>
+   The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
+    MB are rejected.<br/>
+   <br/>
+   Example:<br/>
+   <br/>
+    ``` <br/>
+    &#123; <br/>
+     &quot;filename&quot;: &quot;favorites2.json&quot;,<br/>
+     &quot;file_type&quot;: &quot;json&quot;<br/>
+    &#125;.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_x_watson_discovery_force</span></td><td><span class="abapDocComment">
+   When `true`, the uploaded document is added to the collection even if the data
+    for that collection is shared with other collections.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_ACCEPTED
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_document_classifier" class="identifier methodName">update_document_classifier</span> </td></tr><tr><td>importing</td><td><span id="meth:update_document_classifier.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_classifier" class="identifier parameterName">i_classifier</span></td><td>type t_update_document_classifier</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_training_data" class="identifier parameterName">i_training_data</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_test_data" class="identifier parameterName">i_test_data</span></td><td>type file optional</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_training_data_ct" class="identifier parameterName">i_training_data_ct</span></td><td>type string default zif_ibmc_service_arch~c_mediatype-all</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_test_data_ct" class="identifier parameterName">i_test_data_ct</span></td><td>type string default zif_ibmc_service_arch~c_mediatype-all</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'multipart/form-data'</td></tr><tr><td></td><td><span id="meth:update_document_classifier.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_document_classifier.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a document classifier</p>
+   Update the document classifier name or description, update the training data, or
+    add or update the test data.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier</span></td><td><span class="abapDocComment">
+   An object that contains a new name or description for a document classifier,
+    updated training data, or new or updated test data.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_training_data</span></td><td><span class="abapDocComment">
+   The training data CSV file to upload. The CSV file must have headers. The file
+    must include a field that contains the text you want to classify and a field
+    that contains the classification labels that you want to use to classify your
+    data. If you want to specify multiple values in a single column, use a
+    semicolon as the value separator. For a sample file, see [the product
+    documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_test_data</span></td><td><span class="abapDocComment">
+   The CSV with test data to upload. The column values in the test file must be the
+    same as the column values in the training data file. If no test data is
+    provided, the training data is split into two separate groups of training and
+    test data.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_enrichment" class="identifier methodName">update_enrichment</span> </td></tr><tr><td>importing</td><td><span id="meth:update_enrichment.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_enrichment.data:i_enrichment_id" class="identifier parameterName">i_enrichment_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_enrichment.data:i_updateenrichment" class="identifier parameterName">i_updateenrichment</span></td><td>type t_update_enrichment</td></tr><tr><td></td><td><span id="meth:update_enrichment.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_enrichment.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_enrichment.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_enrichment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update an enrichment</p>
+   Updates an existing enrichment&apos;s name and description.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_enrichment_id</span></td><td><span class="abapDocComment">
+   The ID of the enrichment.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_updateenrichment</span></td><td><span class="abapDocComment">
+   An object that lists the new name and description for an enrichment.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENRICHMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_project" class="identifier methodName">update_project</span> </td></tr><tr><td>importing</td><td><span id="meth:update_project.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_project.data:i_projectname" class="identifier parameterName">i_projectname</span></td><td>type t_project_name optional</td></tr><tr><td></td><td><span id="meth:update_project.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_project.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_project.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_project_details</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a project</p>
+   Update the specified project&apos;s name.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_projectname</span></td><td><span class="abapDocComment">
+   An object that represents the new name of the project.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_PROJECT_DETAILS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_training_query" class="identifier methodName">update_training_query</span> </td></tr><tr><td>importing</td><td><span id="meth:update_training_query.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_training_query.data:i_query_id" class="identifier parameterName">i_query_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_training_query.data:i_body" class="identifier parameterName">i_body</span></td><td>type t_training_query</td></tr><tr><td></td><td><span id="meth:update_training_query.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_training_query.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_training_query.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_training_query</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a training query</p>
+   Updates an existing training query and it&apos;s examples.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_query_id</span></td><td><span class="abapDocComment">
+   The ID of the query used for training.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_body</span></td><td><span class="abapDocComment">
+   The body of the example that is to be added to the specified query.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_TRAINING_QUERY
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:upd_document_classifier_model" class="identifier methodName">upd_document_classifier_model</span> </td></tr><tr><td>importing</td><td><span id="meth:upd_document_classifier_model.data:i_project_id" class="identifier parameterName">i_project_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:upd_document_classifier_model.data:i_classifier_id" class="identifier parameterName">i_classifier_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:upd_document_classifier_model.data:i_model_id" class="identifier parameterName">i_model_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:upd_document_classifier_model.data:i_updtdcmntclssfrmdl" class="identifier parameterName">i_updtdcmntclssfrmdl</span></td><td>type t_upd_doc_classifier_model</td></tr><tr><td></td><td><span id="meth:upd_document_classifier_model.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:upd_document_classifier_model.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:upd_document_classifier_model.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_document_classifier_model</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update a document classifier model</p>
+   Update the document classifier model name or description.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_project_id</span></td><td><span class="abapDocComment">
+   The ID of the project. This information can be found from the *Integrate and
+    Deploy* page in Discovery.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_classifier_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_model_id</span></td><td><span class="abapDocComment">
+   The ID of the classifier model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_updtdcmntclssfrmdl</span></td><td><span class="abapDocComment">
+   An object that lists a new name or description for a document classifier model.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_DOCUMENT_CLASSIFIER_MODEL
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12/08/2023</div></body></html>

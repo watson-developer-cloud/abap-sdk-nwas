@@ -19,27 +19,31 @@ Additionally, as the ABAP SDK is a community release it is not updated with the 
 <details>
   <summary>Table of Contents</summary>
 
-  * [Announcements](#announcements)
-  * [Before you begin](#before-you-begin)
-  * [Installation](#installation)
-  * [SAP System Configuration](#sap-system-configuration)
-    * [SAP Profile Parameters](#sap-profile-parameters)
-    * [Proxy configuration](#proxy-configuration)
-    * [SSL Certificates](#ssl-certificates)
-  * [Credentials](#credentials)
-  * [Configuration table](#configuration-table)
-  * [IAM Authentication](#iam-authentication)
-  * [Usage](#usage)
-  * [API Reference](#api-reference)
-  * [Questions](#questions)
-  * [License](#license)
-  * [Contributors](#contributors)
-  * [Acknowledgements](#acknowledgements)
+- [Announcements](#announcements)
+- [Before you begin](#before-you-begin)
+- [Installation](#installation)
+- [SAP System Configuration](#sap-system-configuration)
+  - [SAP Profile Parameters](#sap-profile-parameters)
+  - [Proxy configuration](#proxy-configuration)
+  - [SSL Certificates](#ssl-certificates)
+    - [Determine required certificate](#determine-required-certificate)
+    - [Add an SSL certificate to the PSE](#add-an-ssl-certificate-to-the-pse)
+    - [Restart the ICM (Internet Communication Manager)](#restart-the-icm-internet-communication-manager)
+- [Credentials](#credentials)
+- [Configuration table](#configuration-table)
+- [IAM Authentication](#iam-authentication)
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Questions](#questions)
+- [License](#license)
+- [Contributors](#contributors)
+- [Acknowledgements](#acknowledgements)
+
 </details>
 
 ## ANNOUNCEMENTS
-### Major version 1.0.0 released
-Version v1.0.0 of the SDK has been released and includes breaking changes - see what's changed in the [migration guide](MIGRATION-V1.0.0.md).
+### Major version 2.0.0 released
+Version v2.0.0 of the SDK has been released and includes breaking changes - see what's changed in the [migration guide](MIGRATION-V2.0.0.md).
 
 ## Before you begin
 * You need an [IBM Cloud][ibm_cloud_onboarding] account.
@@ -59,7 +63,7 @@ The following SAP profile parameter settings are recommended.
 icm/HTTPS/client_sni_enabled = TRUE
 ssl/ciphersuites = 135:PFS:HIGH::EC_P256:EC_HIGH
 ssl/client_ciphersuites = 150:PFS:HIGH::EC_P256:EC_HIGH
-wdisp/ssl_ignore_host_mismatch = TRUE   
+wdisp/ssl_ignore_host_mismatch = TRUE
 ```
 
 ### Proxy configuration
@@ -68,7 +72,7 @@ The client library respects the ABAP proxy settings. If you are using a central 
 2. Click *Execute* (or press F8).
 3. Select menu item *Client* &rarr; *Proxy Settings*.
 4. On tab *Global Settings*: Select *Proxy Setting is Active* and *No Proxy Setting for Local Server*.
-5. On tabs *HTTP Log* and *HTTPS Log* specify the proxy *Host Name* and *Port*. If the proxy server requires logon credentials, also specify *User Name* and *Password*.
+5. On tabs *HTTP Protocol* and *HTTPS Protocol* specify the proxy *Host Name* and *Port*. If the proxy server requires logon credentials, also specify *User Name* and *Password*.
 6. Click *Execute (F8)* and *OK*.
 
 
@@ -186,17 +190,11 @@ The following Watson services are currently supported:
 
 | Service                        | ABAP Class Name                     |
 |:------------------------------ |:----------------------------------- |
-| Compare and Comply             | ZCL_IBMC_COMPARE_COMPLY_V1 (\*)     |
-| Discovery                      | ZCL_IBMC_DISCOVERY_V1               |
-| Language Translator            | ZCL_IBMC_LANG_TRANSLATOR_V3         |
-| Natural Language Classifier    | ZCL_IBMC_NAT_LANG_CLASS_V1          |
+| Discovery                      | ZCL_IBMC_DISCOVERY_V2               |
+| Language Translator            | ZCL_IBMC_LANG_TRANSLATOR_V3 (\*)    |
 | Natural Language Understanding | ZCL_IBMC_NAT_LANG_UNDRSTND_V1       |
-| Personality Insights           | ZCL_IBMC_PERSONAL_INSIGHTS_V3 (\*)  |
 | Speech to Text                 | ZCL_IBMC_SPEECH_TO_TEXT_V1          |
 | Text to Speech                 | ZCL_IBMC_TEXT_TO_SPEECH_V1          |
-| Tone Analyzer                  | ZCL_IBMC_TONE_ANALYZER_V3           |
-| Visual Recognition             | ZCL_IBMC_VISUAL_RECOGNITION_V3 (\*) |
-|                                | ZCL_IBMC_VISUAL_RECOGNITION_V4 (\*) |
 | Watson Assistant               | ZCL_IBMC_ASSISTANT_V1               |
 |                                | ZCL_IBMC_ASSISTANT_V2               |
 
@@ -214,7 +212,7 @@ Using the client library requires two steps:
       i_url      = <url>
       i_apikey   = <api key>
       ...
-    importing   
+    importing
       eo_instance = lo_service_class ).
 ```
 
@@ -242,8 +240,8 @@ Using the client library requires two steps:
     lv_apikey            type string value '...',
     lo_text_to_speech    type ref to zcl_ibmc_text_to_speech_v1,
     lo_service_exception type ref to zcx_ibmc_service_exception,
-    ls_voice             type zcl_ibmc_text_to_speech=>t_voice,
-    lt_voices            type zcl_ibmc_text_to_speech=>t_voices.
+    ls_voice             type zcl_ibmc_text_to_speech_v1=>t_voice,
+    lt_voices            type zcl_ibmc_text_to_speech_v1=>t_voices.
 
   " get Watson Text-to-Speech service instance
   zcl_ibmc_service_ext=>get_instance(
@@ -333,7 +331,7 @@ Using the client library requires two steps:
     lo_service_exception type ref to zcx_ibmc_service_exception,
     ls_request           type zcl_ibmc_lang_translator_v3=>t_translate_request,
     lv_text              type string,
-    ls_trans             type zcl_ibmc_lang_translator_v3=>t_translation_result.    
+    ls_trans             type zcl_ibmc_lang_translator_v3=>t_translation_result.
 
   " get Watson Language Translator service instance
   zcl_ibmc_service_ext=>get_instance(
@@ -349,7 +347,7 @@ Using the client library requires two steps:
   append lv_text to ls_request-text.
   ls_request-model_id = 'en-de'.
   ls_request-source = 'EN'.
-  ls_request-target = 'DE'.  
+  ls_request-target = 'DE'.
 
   " call Watson Language Translator service to translate the text in ls_request
   try.
@@ -393,6 +391,7 @@ This library is licensed under the [Apache 2.0 license][license].
 * Joachim Rese
 * Jochen Röhrig
 * Aleksandar Debelic
+* Stefan Diederichs
 
 ## Acknowledgements
 

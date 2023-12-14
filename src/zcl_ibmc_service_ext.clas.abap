@@ -1,4 +1,4 @@
-* Copyright 2019,2020 IBM Corp. All Rights Reserved.
+* Copyright 2019,2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -82,7 +82,7 @@ public section.
       value(E_VALUE) type ZIBMC_CONFIG-VALUE
     raising
       ZCX_IBMC_SERVICE_EXCEPTION .
-  "! <p class="shorttext synchronized" lang="en">Factory method to instantiate a service specific wrapper class.</p>
+  "! <p class="shorttext synchronized" lang="en">Factory method to instantiate a service wrapper class.</p>
   "!
   "! @parameter I_INSTANCE_ID |
   "!   Value of field INSTANCE_UID in table ZIBMC_CONFIG.
@@ -200,6 +200,13 @@ ENDCLASS.
 CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Private Method ZCL_IBMC_SERVICE_EXT=>ADD_CONFIG_PROP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_SERVICENAME                  TYPE        TY_SERVICENAME
+* | [--->] I_INSTANCE_ID                  TYPE        TY_INSTANCE_ID(optional)
+* | [<-->] C_REQUEST_PROP                 TYPE        ANY
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method add_config_prop.
 
     data:
@@ -287,6 +294,17 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Private Method ZCL_IBMC_SERVICE_EXT=>ADD_IMAGE_TO_ZIP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IS_TABLELINE                   TYPE        ANY
+* | [--->] IO_ZIP                         TYPE REF TO CL_ABAP_ZIP
+* | [--->] IV_BASE64                      TYPE        BOOLEAN
+* | [--->] IV_FILENAME                    TYPE        STRING(optional)
+* | [--->] IV_FIELD_IMAGE                 TYPE        FIELDNAME
+* | [--->] IV_FIELD_FILENAME              TYPE        FIELDNAME(optional)
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method add_image_to_zip.
     data:
       lx_image       type xstring,
@@ -326,6 +344,13 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->GET_ACCESS_TOKEN
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_REQUEST_PROP                 TYPE        TS_REQUEST_PROP(optional)
+* | [<-()] E_ACCESS_TOKEN                 TYPE        TS_ACCESS_TOKEN
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_access_token.
     data:
       lo_response         type to_rest_response,
@@ -440,7 +465,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
 
             " parse expected response:
             "   { "username": "joe", "role": "User", "uid": "1003",
-            "     "accessToken": "eyJhbGc…1AjT_w",
+            "     "accessToken": "eyJhbGc...1AjT_w",
             "     "messageCode": "success", "message": "success" }
             data:
               begin of ls_access_token_icp4d,
@@ -480,7 +505,7 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       if ls_token-expires_in > 0.
         get time stamp field lv_timestamp.
         lv_seconds = ls_token-expires_in - 300.  " subtract 5 minutes to be save
-        ls_token-expires_ts = cl_abap_tstmp=>add( tstmp = lv_timestamp secs = lv_seconds ).
+        ls_token-expires_ts = cl_abap_tstmp=>add( tstmp = lv_timestamp secs = lv_seconds )  ##TYPE.
       endif.
 
       ls_token-service = p_servicename.
@@ -499,6 +524,11 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->GET_BEARER_TOKEN
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] E_BEARER_TOKEN                 TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_bearer_token.
 
     data:
@@ -520,6 +550,14 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->GET_CONFIG_VALUE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_DEFAULT                      TYPE        ZIBMC_CONFIG-VALUE(optional)
+* | [--->] I_PARAM                        TYPE        ZIBMC_CONFIG-PARAM
+* | [<-()] E_VALUE                        TYPE        ZIBMC_CONFIG-VALUE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_config_value.
 
 
@@ -551,6 +589,19 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Private Method ZCL_IBMC_SERVICE_EXT=>GET_FIELD_DATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IS_TABLELINE                   TYPE        ANY
+* | [--->] IV_FIELD_CLASS                 TYPE        FIELDNAME(optional)
+* | [--->] IV_FIELD_FILENAME              TYPE        FIELDNAME(optional)
+* | [--->] IV_FIELD_IMAGE                 TYPE        FIELDNAME(optional)
+* | [<---] EV_FIELD_CLASS                 TYPE        FIELDNAME
+* | [<---] EV_FIELD_FILENAME              TYPE        FIELDNAME
+* | [<---] EV_FIELD_IMAGE                 TYPE        FIELDNAME
+* | [<---] EV_FIELD_IMAGE_BASE64          TYPE        FIELDNAME
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_field_data.
 
     data:
@@ -696,6 +747,25 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_EXT=>GET_INSTANCE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_INSTANCE_ID                  TYPE        TY_INSTANCE_ID(optional)
+* | [--->] I_URL                          TYPE        STRING(optional)
+* | [--->] I_HOST                         TYPE        STRING(optional)
+* | [--->] I_USERNAME                     TYPE        STRING(optional)
+* | [--->] I_PASSWORD                     TYPE        STRING(optional)
+* | [--->] I_PROXY_HOST                   TYPE        STRING(optional)
+* | [--->] I_PROXY_PORT                   TYPE        STRING(optional)
+* | [--->] I_APIKEY                       TYPE        STRING(optional)
+* | [--->] I_AUTH_METHOD                  TYPE        STRING (default =C_DEFAULT)
+* | [--->] I_OAUTH_PROP                   TYPE        TS_OAUTH_PROP(optional)
+* | [--->] I_ACCESS_TOKEN                 TYPE        TS_ACCESS_TOKEN(optional)
+* | [--->] I_TOKEN_GENERATION             TYPE        CHAR (default =C_TOKEN_GENERATION_AUTO)
+* | [--->] I_REQUEST_HEADERS              TYPE        STRING(optional)
+* | [--->] I_VERSION                      TYPE        STRING(optional)
+* | [<---] EO_INSTANCE                    TYPE        ANY
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_instance.
     data:
       lv_classname    type string,
@@ -703,7 +773,8 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
       lo_instance     type ref to zcl_ibmc_service_ext,
       lt_headerstr    type tt_string,
       lv_headerstr    type string,
-      ls_header       type ts_header.
+      ls_header       type ts_header,
+      lv_str          type string.
 
     " instantiate object of type of exporting parameter
     get_field_type(
@@ -726,12 +797,36 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
 
     " Set service name (= class name without namespace and prefix 'CL_')
     if lv_classname cp 'Z*'.
-      find first occurrence of regex 'ZCL_[^_]*_([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      "find first occurrence of regex 'ZCL_[^_]*_([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      find_regex(
+        exporting
+          i_regex           = 'ZCL_[^_]*_([^\/]*)$'
+          i_all_occurrences = space
+          i_in              = lv_classname
+        changing
+          c_submatch1       = lv_str ).
+      lo_instance->p_servicename = conv #( lv_str ).
     else.
-      find first occurrence of regex 'CL_([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      "find first occurrence of regex 'CL_([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      find_regex(
+        exporting
+          i_regex           = 'CL_([^\/]*)$'
+          i_all_occurrences = space
+          i_in              = lv_classname
+        changing
+          c_submatch1       = lv_str ).
+      lo_instance->p_servicename = conv #( lv_str ).
     endif.
     if lo_instance->p_servicename is initial.
-      find first occurrence of regex '([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      "find first occurrence of regex '([^\/]*)$' in lv_classname submatches lo_instance->p_servicename.
+      find_regex(
+        exporting
+          i_regex           = '([^\/]*)$'
+          i_all_occurrences = space
+          i_in              = lv_classname
+        changing
+          c_submatch1       = lv_str ).
+      lo_instance->p_servicename = conv #( lv_str ).
       if lo_instance->p_servicename is initial.
         lo_instance->p_servicename = lv_classname.
       endif.
@@ -828,6 +923,12 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->GET_REQUEST_PROP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_AUTH_METHOD                  TYPE        STRING (default =C_DEFAULT)
+* | [<-()] E_REQUEST_PROP                 TYPE        TS_REQUEST_PROP
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_request_prop.
     data:
       lv_auth_method type string.
@@ -860,6 +961,11 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->GET_SDK_VERSION_DATE
+* +-------------------------------------------------------------------------------------------------+
+* | [<-()] E_SDK_VERSION_DATE             TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
     e_sdk_version_date = ''.
@@ -867,6 +973,18 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_SERVICE_EXT=>GET_ZIPDATA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IT_EXAMPLES                    TYPE        ANY TABLE
+* | [--->] IV_FIELD_CLASS                 TYPE        FIELDNAME (default =C_FIELD_NONE)
+* | [--->] IV_FIELD_FILENAME              TYPE        FIELDNAME(optional)
+* | [--->] IV_FIELD_IMAGE                 TYPE        FIELDNAME(optional)
+* | [--->] IV_IMAGE_FORMAT                TYPE        TY_IMAGE_FORMAT(optional)
+* | [--->] IV_IMAGE_NAME                  TYPE        STRING(optional)
+* | [<---] ET_ZIPDATA                     TYPE        TT_MAP_FILE
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_zipdata.
 
     constants:
@@ -972,7 +1090,13 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
           assign component lv_field_filename of structure <ls_examples> to <lv_filename>.
           if sy-subrc = 0.
             " remove path from filename
-            find regex '([^/\\]*)$' in <lv_filename> submatches lv_filename.
+            "find regex '([^/\\]*)$' in <lv_filename> submatches lv_filename.
+            find_regex(
+              exporting
+                i_regex     = '([^/\\]*)$'
+                i_in        = <lv_filename>
+              changing
+                c_submatch1 = lv_filename ).
           endif.
         endif.
 
@@ -1034,6 +1158,11 @@ CLASS ZCL_IBMC_SERVICE_EXT IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_SERVICE_EXT->SET_BEARER_TOKEN
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_BEARER_TOKEN                 TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method set_bearer_token.
 
     data:

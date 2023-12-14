@@ -1,4 +1,4 @@
-* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -22,6 +22,17 @@
 "!  models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural
 "! -language-understanding-customizing) with Watson Knowledge Studio to detect
 "!  custom entities and relations in Natural Language Understanding. <br/>
+"! <br/>
+"! IBM is sunsetting Watson Natural Language Understanding Custom Sentiment (BETA).
+"!  From **June 1, 2023** onward, you will no longer be able to use the Custom
+"!  Sentiment feature.&lt;br /&gt;&lt;br /&gt;To ensure we continue providing our
+"!  clients with robust and powerful text classification capabilities, IBM recently
+"!  announced the general availability of a new [single-label text classification
+"!  capability](https://cloud.ibm.com/docs/natural-language-understanding?topic=nat
+"! ural-language-understanding-classifications). This new feature includes extended
+"!  language support and training data customizations suited for building a custom
+"!  sentiment classifier.&lt;br /&gt;&lt;br /&gt;If you would like more information
+"!  or further guidance, please contact IBM Cloud Support.&#123;: deprecated&#125; <br/>
 class ZCL_IBMC_NAT_LANG_UNDRSTND_V1 DEFINITION
   public
   inheriting from ZCL_IBMC_SERVICE_EXT
@@ -115,21 +126,68 @@ public section.
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
       "!   The description of the version.
       VERSION_DESCRIPTION type STRING,
     end of T_MODEL_METADATA.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    A list of messages describing model training issues when</p>
+    "!     model status is `error`.
+    begin of T_NOTICE,
+      "!   Describes deficiencies or inconsistencies in training data.
+      MESSAGE type STRING,
+    end of T_NOTICE.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Classifications model.</p>
+    begin of T_CLASSIFICATIONS_MODEL,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type JSONOBJECT,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   The service features that are supported by the custom model.
+      FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   When the status is `available`, the model is ready to use.
+      STATUS type STRING,
+      "!   Unique model ID.
+      MODEL_ID type STRING,
+      "!   dateTime indicating when the model was created.
+      CREATED type DATETIME,
+      "!   No documentation available.
+      NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
+      "!   dateTime of last successful model training.
+      LAST_TRAINED type DATETIME,
+      "!   dateTime of last successful model deployment.
+      LAST_DEPLOYED type DATETIME,
+    end of T_CLASSIFICATIONS_MODEL.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of classifications models.</p>
+    begin of T_CLASSIFICATIONS_MODEL_LIST,
+      "!   The classifications models.
+      MODELS type STANDARD TABLE OF T_CLASSIFICATIONS_MODEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_CLASSIFICATIONS_MODEL_LIST.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    An entity that corresponds with an argument in a relation.</p>
@@ -393,6 +451,16 @@ public section.
     end of T_SYNTAX_RESULT.
   types:
     "! <p class="shorttext synchronized" lang="en">
+    "!    A classification of the analyzed text.</p>
+    begin of T_CLASSIFICATIONS_RESULT,
+      "!   Classification assigned to the text.
+      CLASS_NAME type STRING,
+      "!   Confidence score for the classification. Higher values indicate greater
+      "!    confidence.
+      CONFIDENCE type DOUBLE,
+    end of T_CLASSIFICATIONS_RESULT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
     "!    The general concepts referenced or alluded to in the</p>
     "!     analyzed text.
     begin of T_CONCEPTS_RESULT,
@@ -418,7 +486,7 @@ public section.
     "! <p class="shorttext synchronized" lang="en">
     "!    A categorization of the analyzed text.</p>
     begin of T_CATEGORIES_RESULT,
-      "!   The path to the category through the 5-level taxonomy hierarchy. For more
+      "!   The path to the category through the multi-level taxonomy hierarchy. For more
       "!    information about the categories, see [Categories
       "!    hierarchy](https://cloud.ibm.com/docs/natural-language-understanding?topic=natu
       "!   ral-language-understanding-categories#categories-hierarchy).
@@ -452,6 +520,8 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_KEYWORDS_RESULT WITH NON-UNIQUE DEFAULT KEY,
       "!   The categories that the service assigned to the analyzed text.
       CATEGORIES type STANDARD TABLE OF T_CATEGORIES_RESULT WITH NON-UNIQUE DEFAULT KEY,
+      "!   The classifications assigned to the analyzed text.
+      CLASSIFICATIONS type STANDARD TABLE OF T_CLASSIFICATIONS_RESULT WITH NON-UNIQUE DEFAULT KEY,
       "!   The anger, disgust, fear, joy, or sadness conveyed by the content.
       EMOTION type T_EMOTION_RESULT,
       "!   Webpage metadata, such as the author and the title of the page.
@@ -557,26 +627,40 @@ public section.
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
       "!   The description of the version.
       VERSION_DESCRIPTION type STRING,
+      "!   The advanced rules feature is deprecated. Existing models are supported until 24
+      "!    June 2021, but after 10 June 2021, you will not be able to deploy advanced
+      "!    rules models to Natural Language Understanding. After 24 June 2021, advanced
+      "!    rules models will not run in Natural Language Understanding.<br/>
+      "!   <br/>
       "!   Model file exported from the advanced rules editor in Watson Knowledge Studio.
       "!    For more information, see [Creating an advanced rules
       "!    model](https://cloud.ibm.com/docs/watson-knowledge-studio?topic=watson-knowledg
       "!   e-studio-create-advanced-rules-model#create-advanced-rules-model-procedure).
       MODEL type FILE,
     end of T_FILE_AND_METADATA.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    (Experimental) Returns a summary of content. </p><br/>
+    "!    <br/>
+    "!    Supported languages: English only. <br/>
+    "!    <br/>
+    "!    Supported regions: Dallas region only.
+    begin of T_SUMMARIZATION_OPTIONS,
+      "!   Maximum number of summary sentences to return.
+      LIMIT type INTEGER,
+    end of T_SUMMARIZATION_OPTIONS.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Returns important keywords in the content.</p><br/>
@@ -657,8 +741,22 @@ public section.
     end of T_SYNTAX_OPTIONS.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    Returns a five-level taxonomy of the content. The top three</p>
-    "!     categories are returned. <br/>
+    "!    Returns text classifications for the content.</p>
+    begin of T_CLASSIFICATIONS_OPTIONS,
+      "!   Enter a [custom
+      "!    model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
+      "!   language-understanding-customizing) ID of the classifications model to be used.
+      "!    <br/>
+      "!   <br/>
+      "!   You can analyze tone by using a language-specific model ID. See [Tone analytics
+      "!    (Classifications)](https://cloud.ibm.com/docs/natural-language-understanding?to
+      "!   pic=natural-language-understanding-tone_analytics) for more information.
+      MODEL type STRING,
+    end of T_CLASSIFICATIONS_OPTIONS.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Returns a hierarchical taxonomy of the content. The top</p>
+    "!     three categories are returned by default. <br/>
     "!    <br/>
     "!    Supported languages: Arabic, English, French, German, Italian, Japanese, Korean,
     "!     Portuguese, Spanish.
@@ -668,22 +766,18 @@ public section.
       EXPLANATION type BOOLEAN,
       "!   Maximum number of categories to return.
       LIMIT type INTEGER,
-      "!   Enter a [custom
+      "!   (Beta) Enter a [custom
       "!    model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-
       "!   language-understanding-customizing) ID to override the standard categories
-      "!    model. <br/>
-      "!   <br/>
-      "!   The custom categories experimental feature will be retired on 19 December 2019.
-      "!    On that date, deployed custom categories models will no longer be accessible in
-      "!    Natural Language Understanding. The feature will be removed from Knowledge
-      "!    Studio on an earlier date. Custom categories models will no longer be
-      "!    accessible in Knowledge Studio on 17 December 2019.
+      "!    model. **This is available only for English categories.**.
       MODEL type STRING,
     end of T_CATEGORIES_OPTIONS.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Analysis features and options.</p>
     begin of T_FEATURES,
+      "!   Returns text classifications for the content.
+      CLASSIFICATIONS type T_CLASSIFICATIONS_OPTIONS,
       "!   Returns high-level concepts in the content. For example, a research paper about
       "!    deep learning might return the concept, &quot;Artificial Intelligence&quot;
       "!    although the term is not mentioned.<br/>
@@ -738,8 +832,14 @@ public section.
       "!    Supported languages: Arabic, English, French, German, Italian, Japanese,
       "!    Korean, Portuguese, Russian, Spanish.
       SENTIMENT type T_SENTIMENT_OPTIONS,
-      "!   Returns a five-level taxonomy of the content. The top three categories are
-      "!    returned. <br/>
+      "!   (Experimental) Returns a summary of content. <br/>
+      "!   <br/>
+      "!   Supported languages: English only. <br/>
+      "!   <br/>
+      "!   Supported regions: Dallas region only.
+      SUMMARIZATION type T_SUMMARIZATION_OPTIONS,
+      "!   Returns a hierarchical taxonomy of the content. The top three categories are
+      "!    returned by default. <br/>
       "!   <br/>
       "!   Supported languages: Arabic, English, French, German, Italian, Japanese, Korean,
       "!    Portuguese, Spanish.
@@ -749,20 +849,50 @@ public section.
     end of T_FEATURES.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    Advanced rules model.</p>
-    begin of T_BASE_ADVANCED_RULES_MODEL,
+    "!    Metadata associated with this custom model.</p>
+    begin of T_CLSSFCTNS_MDL_FL_AND_MTDT,
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   Training data in JSON format. For more information, see [Classifications
+      "!    training data
+      "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+      "!   atural-language-understanding-classifications#classification-training-data-requi
+      "!   rements).
+      TRAINING_DATA type FILE,
+    end of T_CLSSFCTNS_MDL_FL_AND_MTDT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The advanced rules feature is deprecated. Existing models</p>
+    "!     are supported until 24 June 2021, but after 10 June 2021, you will not be able
+    "!     to deploy advanced rules models to Natural Language Understanding. After 24
+    "!     June 2021, advanced rules models will not run in Natural Language
+    "!     Understanding.<br/>
+    "!    <br/>
+    "!    Advanced rules model.
+    begin of T_BASE_ADVANCED_RULES_MODEL,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type JSONOBJECT,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
@@ -776,6 +906,8 @@ public section.
       MODEL_ID type STRING,
       "!   dateTime indicating when the model was created.
       CREATED type DATETIME,
+      "!   No documentation available.
+      NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
       "!   dateTime of last successful model training.
       LAST_TRAINED type DATETIME,
       "!   dateTime of last successful model deployment.
@@ -812,6 +944,8 @@ public section.
       KEYWORDS type STANDARD TABLE OF T_KEYWORDS_RESULT WITH NON-UNIQUE DEFAULT KEY,
       "!   The categories that the service assigned to the analyzed text.
       CATEGORIES type STANDARD TABLE OF T_CATEGORIES_RESULT WITH NON-UNIQUE DEFAULT KEY,
+      "!   The classifications assigned to the analyzed text.
+      CLASSIFICATIONS type STANDARD TABLE OF T_CLASSIFICATIONS_RESULT WITH NON-UNIQUE DEFAULT KEY,
       "!   The anger, disgust, fear, joy, or sadness conveyed by the content.
       EMOTION type T_EMOTION_RESULT,
       "!   Webpage metadata, such as the author and the title of the page.
@@ -826,47 +960,19 @@ public section.
       SYNTAX type T_SYNTAX_RESULT,
     end of T_ANALYSIS_RESULTS.
   types:
-    "! No documentation available.
-    begin of T_SEMANTIC_ROLES_SUBJECT,
-      "!   Text that corresponds to the subject role.
-      TEXT type STRING,
-      "!   An array of extracted entities.
-      ENTITIES type STANDARD TABLE OF T_SEMANTIC_ROLES_ENTITY WITH NON-UNIQUE DEFAULT KEY,
-      "!   An array of extracted keywords.
-      KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
-    end of T_SEMANTIC_ROLES_SUBJECT.
-  types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    (Experimental) Returns a summary of content.</p><br/>
-    "!    <br/>
-    "!    Supported languages: English only.
-    begin of T_SUMMARIZATION_OPTIONS,
-      "!   Maximum number of summary sentences to return.
-      LIMIT type INTEGER,
-    end of T_SUMMARIZATION_OPTIONS.
-  types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    (Experimental) Summary of content.</p>
-    begin of T_SUMMARIZATION_RESULT,
-      "!   Summary sentences of input source.
-      TEXT type STRING,
-    end of T_SUMMARIZATION_RESULT.
-  types:
-    "! <p class="shorttext synchronized" lang="en">
-    "!    Advanced rules model.</p>
-    begin of T_ADVANCED_RULES_MODEL,
+    "!    Categories model.</p>
+    begin of T_CATEGORIES_MODEL,
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
@@ -880,6 +986,108 @@ public section.
       MODEL_ID type STRING,
       "!   dateTime indicating when the model was created.
       CREATED type DATETIME,
+      "!   No documentation available.
+      NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
+      "!   dateTime of last successful model training.
+      LAST_TRAINED type DATETIME,
+      "!   dateTime of last successful model deployment.
+      LAST_DEPLOYED type DATETIME,
+    end of T_CATEGORIES_MODEL.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    List of categories models.</p>
+    begin of T_CATEGORIES_MODEL_LIST,
+      "!   The categories models.
+      MODELS type STANDARD TABLE OF T_CATEGORIES_MODEL WITH NON-UNIQUE DEFAULT KEY,
+    end of T_CATEGORIES_MODEL_LIST.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Optional classifications training parameters along with</p>
+    "!     model train requests.
+    begin of T_CLSSFCTNS_TRNNG_PARAMETERS,
+      "!   Model type selector to train either a single_label or a multi_label classifier.
+      MODEL_TYPE type STRING,
+    end of T_CLSSFCTNS_TRNNG_PARAMETERS.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
+    begin of T_CLSSFCTNS_MDL_FL_MTDT_AND_T1,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type JSONOBJECT,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   Training data in JSON format. For more information, see [Classifications
+      "!    training data
+      "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+      "!   atural-language-understanding-classifications#classification-training-data-requi
+      "!   rements).
+      TRAINING_DATA type FILE,
+      "!   Optional classifications training parameters along with model train requests.
+      TRAINING_PARAMETERS type T_CLSSFCTNS_TRNNG_PARAMETERS,
+    end of T_CLSSFCTNS_MDL_FL_MTDT_AND_T1.
+  types:
+    "! No documentation available.
+    begin of T_SEMANTIC_ROLES_SUBJECT,
+      "!   Text that corresponds to the subject role.
+      TEXT type STRING,
+      "!   An array of extracted entities.
+      ENTITIES type STANDARD TABLE OF T_SEMANTIC_ROLES_ENTITY WITH NON-UNIQUE DEFAULT KEY,
+      "!   An array of extracted keywords.
+      KEYWORDS type STANDARD TABLE OF T_SEMANTIC_ROLES_KEYWORD WITH NON-UNIQUE DEFAULT KEY,
+    end of T_SEMANTIC_ROLES_SUBJECT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    (Experimental) Summary of content.</p>
+    begin of T_SUMMARIZATION_RESULT,
+      "!   Summary sentences of input source.
+      TEXT type STRING,
+    end of T_SUMMARIZATION_RESULT.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    The advanced rules feature is deprecated. Existing models</p>
+    "!     are supported until 24 June 2021, but after 10 June 2021, you will not be able
+    "!     to deploy advanced rules models to Natural Language Understanding. After 24
+    "!     June 2021, advanced rules models will not run in Natural Language
+    "!     Understanding.<br/>
+    "!    <br/>
+    "!    Advanced rules model.
+    begin of T_ADVANCED_RULES_MODEL,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type JSONOBJECT,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   The service features that are supported by the custom model.
+      FEATURES type STANDARD TABLE OF STRING WITH NON-UNIQUE DEFAULT KEY,
+      "!   When the status is `available`, the model is ready to use.
+      STATUS type STRING,
+      "!   Unique model ID.
+      MODEL_ID type STRING,
+      "!   dateTime indicating when the model was created.
+      CREATED type DATETIME,
+      "!   No documentation available.
+      NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
       "!   dateTime of last successful model training.
       LAST_TRAINED type DATETIME,
       "!   dateTime of last successful model deployment.
@@ -887,7 +1095,13 @@ public section.
     end of T_ADVANCED_RULES_MODEL.
   types:
     "! <p class="shorttext synchronized" lang="en">
-    "!    List of advanced rules models.</p>
+    "!    The advanced rules feature is deprecated. Existing models</p>
+    "!     are supported until 24 June 2021, but after 10 June 2021, you will not be able
+    "!     to deploy advanced rules models to Natural Language Understanding. After 24
+    "!     June 2021, advanced rules models will not run in Natural Language
+    "!     Understanding.<br/>
+    "!    <br/>
+    "!    List of advanced rules models.
     begin of T_ADVANCED_RULES_MODEL_LIST,
       "!   The advanced rules models.
       MODELS type STANDARD TABLE OF T_ADVANCED_RULES_MODEL WITH NON-UNIQUE DEFAULT KEY,
@@ -971,21 +1185,47 @@ public section.
       "!   A name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
+      "!   No documentation available.
+      NOTICES type STANDARD TABLE OF T_NOTICE WITH NON-UNIQUE DEFAULT KEY,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
       "!   The description of the version.
       VERSION_DESCRIPTION type STRING,
     end of T_SENTIMENT_MODEL.
+  types:
+    "! <p class="shorttext synchronized" lang="en">
+    "!    Metadata associated with this custom model.</p>
+    begin of T_CTGRS_MDL_FILE_AND_METADATA,
+      "!   An optional name for the model.
+      NAME type STRING,
+      "!   An optional map of metadata key-value pairs to store with this model.
+      USER_METADATA type JSONOBJECT,
+      "!   The 2-letter language code of this model.
+      LANGUAGE type STRING,
+      "!   An optional description of the model.
+      DESCRIPTION type STRING,
+      "!   An optional version string.
+      MODEL_VERSION type STRING,
+      "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+      "!    Language Understanding.
+      WORKSPACE_ID type STRING,
+      "!   The description of the version.
+      VERSION_DESCRIPTION type STRING,
+      "!   Training data in JSON format. For more information, see [Categories training
+      "!    data
+      "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+      "!   atural-language-understanding-categories##categories-training-data-requirements)
+      "!   .
+      TRAINING_DATA type FILE,
+    end of T_CTGRS_MDL_FILE_AND_METADATA.
   types:
     "! <p class="shorttext synchronized" lang="en">
     "!    Link to the corresponding DBpedia resource.</p>
@@ -997,15 +1237,13 @@ public section.
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
@@ -1013,8 +1251,8 @@ public section.
       VERSION_DESCRIPTION type STRING,
       "!   Training data in CSV format. For more information, see [Sentiment training data
       "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
-      "!   atural-language-understanding-customizing#sentiment-training-data-requirements).
-      "!
+      "!   atural-language-understanding-custom-sentiment#sentiment-training-data-requireme
+      "!   nts).
       TRAINING_DATA type FILE,
     end of T_SNTMNT_MDL_FILE_AND_METADATA.
   types:
@@ -1024,15 +1262,13 @@ public section.
       "!   An optional name for the model.
       NAME type STRING,
       "!   An optional map of metadata key-value pairs to store with this model.
-      USER_METADATA type MAP,
+      USER_METADATA type JSONOBJECT,
       "!   The 2-letter language code of this model.
       LANGUAGE type STRING,
       "!   An optional description of the model.
       DESCRIPTION type STRING,
       "!   An optional version string.
       MODEL_VERSION type STRING,
-      "!   Deprecated — use `model_version`.
-      VERSION type STRING,
       "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
       "!    Language Understanding.
       WORKSPACE_ID type STRING,
@@ -1064,6 +1300,9 @@ constants:
     T_SEMANTIC_ROLES_RESULT type string value '|',
     T_SEMANTIC_ROLES_OPTIONS type string value '|',
     T_MODEL_METADATA type string value '|LANGUAGE|',
+    T_NOTICE type string value '|',
+    T_CLASSIFICATIONS_MODEL type string value '|LANGUAGE|STATUS|MODEL_ID|CREATED|',
+    T_CLASSIFICATIONS_MODEL_LIST type string value '|',
     T_RELATION_ENTITY type string value '|',
     T_RELATION_ARGUMENT type string value '|',
     T_RELATIONS_RESULT type string value '|',
@@ -1086,6 +1325,7 @@ constants:
     T_TOKEN_RESULT type string value '|',
     T_SENTENCE_RESULT type string value '|',
     T_SYNTAX_RESULT type string value '|',
+    T_CLASSIFICATIONS_RESULT type string value '|',
     T_CONCEPTS_RESULT type string value '|',
     T_CTGRS_RESULT_EXPLANATION type string value '|',
     T_CATEGORIES_RESULT type string value '|',
@@ -1099,18 +1339,24 @@ constants:
     T_SEMANTIC_ROLES_ACTION type string value '|',
     T_SYNTAX_OPTIONS_TOKENS type string value '|',
     T_FILE_AND_METADATA type string value '|LANGUAGE|',
+    T_SUMMARIZATION_OPTIONS type string value '|',
     T_KEYWORDS_OPTIONS type string value '|',
     T_RELATIONS_OPTIONS type string value '|',
     T_ENTITIES_OPTIONS type string value '|',
     T_CONCEPTS_OPTIONS type string value '|',
     T_SYNTAX_OPTIONS type string value '|',
+    T_CLASSIFICATIONS_OPTIONS type string value '|',
     T_CATEGORIES_OPTIONS type string value '|',
     T_FEATURES type string value '|',
+    T_CLSSFCTNS_MDL_FL_AND_MTDT type string value '|LANGUAGE|TRAINING_DATA|',
     T_BASE_ADVANCED_RULES_MODEL type string value '|LANGUAGE|',
     T_ANALYSIS_RESULTS_USAGE type string value '|',
     T_ANALYSIS_RESULTS type string value '|',
+    T_CATEGORIES_MODEL type string value '|LANGUAGE|STATUS|MODEL_ID|CREATED|',
+    T_CATEGORIES_MODEL_LIST type string value '|',
+    T_CLSSFCTNS_TRNNG_PARAMETERS type string value '|',
+    T_CLSSFCTNS_MDL_FL_MTDT_AND_T1 type string value '|LANGUAGE|TRAINING_DATA|',
     T_SEMANTIC_ROLES_SUBJECT type string value '|',
-    T_SUMMARIZATION_OPTIONS type string value '|',
     T_SUMMARIZATION_RESULT type string value '|',
     T_ADVANCED_RULES_MODEL type string value '|LANGUAGE|STATUS|MODEL_ID|CREATED|',
     T_ADVANCED_RULES_MODEL_LIST type string value '|',
@@ -1118,6 +1364,7 @@ constants:
     T_SEMANTIC_ROLES_OBJECT type string value '|',
     T_PARAMETERS type string value '|FEATURES|',
     T_SENTIMENT_MODEL type string value '|',
+    T_CTGRS_MDL_FILE_AND_METADATA type string value '|LANGUAGE|TRAINING_DATA|',
     T_SNTMNT_MDL_FILE_AND_METADATA type string value '|LANGUAGE|TRAINING_DATA|',
     T_MODEL_FILE_AND_METADATA type string value '|LANGUAGE|FILE|',
     T_DELETE_MODEL_RESULTS type string value '|',
@@ -1133,13 +1380,13 @@ constants:
      LANGUAGE type string value 'language',
      DESCRIPTION type string value 'description',
      MODEL_VERSION type string value 'model_version',
-     VERSION type string value 'version',
      WORKSPACE_ID type string value 'workspace_id',
      VERSION_DESCRIPTION type string value 'version_description',
      FEATURES type string value 'features',
      STATUS type string value 'status',
      MODEL_ID type string value 'model_id',
      CREATED type string value 'created',
+     NOTICES type string value 'notices',
      LAST_TRAINED type string value 'last_trained',
      LAST_DEPLOYED type string value 'last_deployed',
      MODELS type string value 'models',
@@ -1152,6 +1399,7 @@ constants:
      FALLBACK_TO_RAW type string value 'fallback_to_raw',
      RETURN_ANALYZED_TEXT type string value 'return_analyzed_text',
      LIMIT_TEXT_CHARACTERS type string value 'limit_text_characters',
+     CLASSIFICATIONS type string value 'classifications',
      CONCEPTS type string value 'concepts',
      EMOTION type string value 'emotion',
      ENTITIES type string value 'entities',
@@ -1160,9 +1408,11 @@ constants:
      RELATIONS type string value 'relations',
      SEMANTIC_ROLES type string value 'semantic_roles',
      SENTIMENT type string value 'sentiment',
+     SUMMARIZATION type string value 'summarization',
      CATEGORIES type string value 'categories',
      SYNTAX type string value 'syntax',
      DELETED type string value 'deleted',
+     VERSION type string value 'version',
      TRAINING_DATA type string value 'training_data',
      FILE type string value 'file',
      ANALYZED_TEXT type string value 'analyzed_text',
@@ -1170,6 +1420,7 @@ constants:
      USAGE type string value 'usage',
      TEXT_CHARACTERS type string value 'text_characters',
      TEXT_UNITS type string value 'text_units',
+     MESSAGE type string value 'message',
      RELEVANCE type string value 'relevance',
      DBPEDIA_RESOURCE type string value 'dbpedia_resource',
      SUBTYPE type string value 'subtype',
@@ -1182,6 +1433,7 @@ constants:
      LABEL type string value 'label',
      SCORE type string value 'score',
      EXPLANATION type string value 'explanation',
+     CLASS_NAME type string value 'class_name',
      DOCUMENT type string value 'document',
      TARGETS type string value 'targets',
      ANGER type string value 'anger',
@@ -1208,8 +1460,10 @@ constants:
      PART_OF_SPEECH type string value 'part_of_speech',
      LEMMA type string value 'lemma',
      LIMIT type string value 'limit',
+     TRAINING_PARAMETERS type string value 'training_parameters',
      CODE type string value 'code',
      ERROR type string value 'error',
+     MODEL_TYPE type string value 'model_type',
      RELEVANT_TEXT type string value 'relevant_text',
   end of C_ABAPNAME_DICTIONARY .
 
@@ -1225,6 +1479,7 @@ constants:
     "! <p class="shorttext synchronized" lang="en">Analyze text</p>
     "!   Analyzes text, HTML, or a public webpage for the following features:<br/>
     "!   - Categories<br/>
+    "!   - Classifications<br/>
     "!   - Concepts<br/>
     "!   - Emotion<br/>
     "!   - Entities<br/>
@@ -1285,6 +1540,315 @@ constants:
     "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
     "!
   methods DELETE_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_DELETE_MODEL_RESULTS
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+
+    "! <p class="shorttext synchronized" lang="en">Create categories model</p>
+    "!   (Beta) Creates a custom categories model by uploading training data and
+    "!    associated metadata. The model begins the training and deploying process and is
+    "!    ready to use when the `status` is `available`.
+    "!
+    "! @parameter I_LANGUAGE |
+    "!   The 2-letter language code of this model.
+    "! @parameter I_TRAINING_DATA |
+    "!   Training data in JSON format. For more information, see [Categories training
+    "!    data
+    "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+    "!   atural-language-understanding-categories##categories-training-data-requirements)
+    "!   .
+    "! @parameter I_TRAINING_DATA_CONTENT_TYPE |
+    "!   The content type of trainingData.
+    "! @parameter I_NAME |
+    "!   An optional name for the model.
+    "! @parameter I_USER_METADATA |
+    "!   An optional map of metadata key-value pairs to store with this model.
+    "! @parameter I_DESCRIPTION |
+    "!   An optional description of the model.
+    "! @parameter I_MODEL_VERSION |
+    "!   An optional version string.
+    "! @parameter I_WORKSPACE_ID |
+    "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+    "!    Language Understanding.
+    "! @parameter I_VERSION_DESCRIPTION |
+    "!   The description of the version.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CATEGORIES_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods CREATE_CATEGORIES_MODEL
+    importing
+      !I_LANGUAGE type STRING
+      !I_TRAINING_DATA type FILE
+      !I_TRAINING_DATA_CONTENT_TYPE type STRING optional
+      !I_NAME type STRING optional
+      !I_USER_METADATA type JSONOBJECT optional
+      !I_DESCRIPTION type STRING optional
+      !I_MODEL_VERSION type STRING optional
+      !I_WORKSPACE_ID type STRING optional
+      !I_VERSION_DESCRIPTION type STRING optional
+      !I_contenttype type string default 'multipart/form-data'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CATEGORIES_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">List categories models</p>
+    "!   (Beta) Returns all custom categories models associated with this service
+    "!    instance.
+    "!
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CATEGORIES_MODEL_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods LIST_CATEGORIES_MODELS
+    importing
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CATEGORIES_MODEL_LIST
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Get categories model details</p>
+    "!   (Beta) Returns the status of the categories model with the given model ID.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CATEGORIES_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods GET_CATEGORIES_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CATEGORIES_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Update categories model</p>
+    "!   (Beta) Overwrites the training data associated with this custom categories model
+    "!    and retrains the model. The new model replaces the current deployment.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter I_LANGUAGE |
+    "!   The 2-letter language code of this model.
+    "! @parameter I_TRAINING_DATA |
+    "!   Training data in JSON format. For more information, see [Categories training
+    "!    data
+    "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+    "!   atural-language-understanding-categories##categories-training-data-requirements)
+    "!   .
+    "! @parameter I_TRAINING_DATA_CONTENT_TYPE |
+    "!   The content type of trainingData.
+    "! @parameter I_NAME |
+    "!   An optional name for the model.
+    "! @parameter I_USER_METADATA |
+    "!   An optional map of metadata key-value pairs to store with this model.
+    "! @parameter I_DESCRIPTION |
+    "!   An optional description of the model.
+    "! @parameter I_MODEL_VERSION |
+    "!   An optional version string.
+    "! @parameter I_WORKSPACE_ID |
+    "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+    "!    Language Understanding.
+    "! @parameter I_VERSION_DESCRIPTION |
+    "!   The description of the version.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CATEGORIES_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods UPDATE_CATEGORIES_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_LANGUAGE type STRING
+      !I_TRAINING_DATA type FILE
+      !I_TRAINING_DATA_CONTENT_TYPE type STRING optional
+      !I_NAME type STRING optional
+      !I_USER_METADATA type JSONOBJECT optional
+      !I_DESCRIPTION type STRING optional
+      !I_MODEL_VERSION type STRING optional
+      !I_WORKSPACE_ID type STRING optional
+      !I_VERSION_DESCRIPTION type STRING optional
+      !I_contenttype type string default 'multipart/form-data'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CATEGORIES_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Delete categories model</p>
+    "!   (Beta) Un-deploys the custom categories model with the given model ID and
+    "!    deletes all associated customer data, including any training data or binary
+    "!    artifacts.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_DELETE_MODEL_RESULTS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods DELETE_CATEGORIES_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_DELETE_MODEL_RESULTS
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+
+    "! <p class="shorttext synchronized" lang="en">Create classifications model</p>
+    "!   Creates a custom classifications model by uploading training data and associated
+    "!    metadata. The model begins the training and deploying process and is ready to
+    "!    use when the `status` is `available`.
+    "!
+    "! @parameter I_LANGUAGE |
+    "!   The 2-letter language code of this model.
+    "! @parameter I_TRAINING_DATA |
+    "!   Training data in JSON format. For more information, see [Classifications
+    "!    training data
+    "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+    "!   atural-language-understanding-classifications#classification-training-data-requi
+    "!   rements).
+    "! @parameter I_TRAINING_DATA_CONTENT_TYPE |
+    "!   The content type of trainingData.
+    "! @parameter I_NAME |
+    "!   An optional name for the model.
+    "! @parameter I_USER_METADATA |
+    "!   An optional map of metadata key-value pairs to store with this model.
+    "! @parameter I_DESCRIPTION |
+    "!   An optional description of the model.
+    "! @parameter I_MODEL_VERSION |
+    "!   An optional version string.
+    "! @parameter I_WORKSPACE_ID |
+    "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+    "!    Language Understanding.
+    "! @parameter I_VERSION_DESCRIPTION |
+    "!   The description of the version.
+    "! @parameter I_TRAINING_PARAMETERS |
+    "!   Optional classifications training parameters along with model train requests.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CLASSIFICATIONS_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods CREATE_CLASSIFICATIONS_MODEL
+    importing
+      !I_LANGUAGE type STRING
+      !I_TRAINING_DATA type FILE
+      !I_TRAINING_DATA_CONTENT_TYPE type STRING optional
+      !I_NAME type STRING optional
+      !I_USER_METADATA type JSONOBJECT optional
+      !I_DESCRIPTION type STRING optional
+      !I_MODEL_VERSION type STRING optional
+      !I_WORKSPACE_ID type STRING optional
+      !I_VERSION_DESCRIPTION type STRING optional
+      !I_TRAINING_PARAMETERS type T_CLSSFCTNS_TRNNG_PARAMETERS optional
+      !I_contenttype type string default 'multipart/form-data'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CLASSIFICATIONS_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">List classifications models</p>
+    "!   Returns all custom classifications models associated with this service instance.
+    "!
+    "!
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CLASSIFICATIONS_MODEL_LIST
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods LIST_CLASSIFICATIONS_MODELS
+    importing
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CLASSIFICATIONS_MODEL_LIST
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Get classifications model details</p>
+    "!   Returns the status of the classifications model with the given model ID.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CLASSIFICATIONS_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods GET_CLASSIFICATIONS_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CLASSIFICATIONS_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Update classifications model</p>
+    "!   Overwrites the training data associated with this custom classifications model
+    "!    and retrains the model. The new model replaces the current deployment.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter I_LANGUAGE |
+    "!   The 2-letter language code of this model.
+    "! @parameter I_TRAINING_DATA |
+    "!   Training data in JSON format. For more information, see [Classifications
+    "!    training data
+    "!    requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=n
+    "!   atural-language-understanding-classifications#classification-training-data-requi
+    "!   rements).
+    "! @parameter I_TRAINING_DATA_CONTENT_TYPE |
+    "!   The content type of trainingData.
+    "! @parameter I_NAME |
+    "!   An optional name for the model.
+    "! @parameter I_USER_METADATA |
+    "!   An optional map of metadata key-value pairs to store with this model.
+    "! @parameter I_DESCRIPTION |
+    "!   An optional description of the model.
+    "! @parameter I_MODEL_VERSION |
+    "!   An optional version string.
+    "! @parameter I_WORKSPACE_ID |
+    "!   ID of the Watson Knowledge Studio workspace that deployed this model to Natural
+    "!    Language Understanding.
+    "! @parameter I_VERSION_DESCRIPTION |
+    "!   The description of the version.
+    "! @parameter I_TRAINING_PARAMETERS |
+    "!   Optional classifications training parameters along with model train requests.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_CLASSIFICATIONS_MODEL
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods UPDATE_CLASSIFICATIONS_MODEL
+    importing
+      !I_MODEL_ID type STRING
+      !I_LANGUAGE type STRING
+      !I_TRAINING_DATA type FILE
+      !I_TRAINING_DATA_CONTENT_TYPE type STRING optional
+      !I_NAME type STRING optional
+      !I_USER_METADATA type JSONOBJECT optional
+      !I_DESCRIPTION type STRING optional
+      !I_MODEL_VERSION type STRING optional
+      !I_WORKSPACE_ID type STRING optional
+      !I_VERSION_DESCRIPTION type STRING optional
+      !I_TRAINING_PARAMETERS type T_CLSSFCTNS_TRNNG_PARAMETERS optional
+      !I_contenttype type string default 'multipart/form-data'
+      !I_accept      type string default 'application/json'
+    exporting
+      !E_RESPONSE type T_CLASSIFICATIONS_MODEL
+    raising
+      ZCX_IBMC_SERVICE_EXCEPTION .
+    "! <p class="shorttext synchronized" lang="en">Delete classifications model</p>
+    "!   Un-deploys the custom classifications model with the given model ID and deletes
+    "!    all associated customer data, including any training data or binary artifacts.
+    "!
+    "! @parameter I_MODEL_ID |
+    "!   ID of the model.
+    "! @parameter E_RESPONSE |
+    "!   Service return value of type T_DELETE_MODEL_RESULTS
+    "! @raising ZCX_IBMC_SERVICE_EXCEPTION | Exception being raised in case of an error.
+    "!
+  methods DELETE_CLASSIFICATIONS_MODEL
     importing
       !I_MODEL_ID type STRING
       !I_accept      type string default 'application/json'
@@ -1358,7 +1922,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20210312144437'.
+    e_sdk_version_date = '20231212104237'.
 
   endmethod.
 
@@ -1421,13 +1985,24 @@ method ANALYZE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -1513,6 +2088,896 @@ method DELETE_MODEL.
       lv_json         type string  ##NEEDED.
 
     ls_request_prop-url-path = '/v1/models/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP DELETE request
+    lo_response = HTTP_DELETE( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->CREATE_CATEGORIES_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_LANGUAGE        TYPE STRING
+* | [--->] I_TRAINING_DATA        TYPE FILE
+* | [--->] I_TRAINING_DATA_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_NAME        TYPE STRING(optional)
+* | [--->] I_USER_METADATA        TYPE JSONOBJECT(optional)
+* | [--->] I_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_MODEL_VERSION        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING(optional)
+* | [--->] I_VERSION_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CATEGORIES_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method CREATE_CATEGORIES_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/categories'.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+    " process form parameters
+    data:
+      ls_form_part     type ts_form_part,
+      lt_form_part     type tt_form_part,
+      lv_formdata      type string value is initial ##NEEDED,
+      lv_value         type string ##NEEDED,
+      lv_index(3)      type n value '000' ##NEEDED,
+      lv_keypattern    type string ##NEEDED,
+      lv_base_name     type string ##NEEDED,
+      lv_extension     type string ##NEEDED.
+
+
+    if not i_LANGUAGE is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="language"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_LANGUAGE.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_NAME is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_NAME.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_USER_METADATA is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="user_metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_USER_METADATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_MODEL_VERSION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="model_version"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_MODEL_VERSION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_WORKSPACE_ID is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="workspace_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_WORKSPACE_ID.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_VERSION_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="version_description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_VERSION_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+
+    if not i_TRAINING_DATA is initial.
+      lv_extension = get_file_extension( I_training_data_content_type ).
+      lv_value = `form-data; name="training_data"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
+      lv_index = lv_index + 1.
+      clear ls_form_part.
+      ls_form_part-content_type = I_training_data_content_type.
+      ls_form_part-content_disposition = lv_value.
+      ls_form_part-xdata = i_TRAINING_DATA.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+    " execute HTTP POST request
+    lo_response = HTTP_POST_MULTIPART( i_request_prop = ls_request_prop it_form_part = lt_form_part ).
+
+
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->LIST_CATEGORIES_MODELS
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CATEGORIES_MODEL_LIST
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method LIST_CATEGORIES_MODELS.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/categories'.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->GET_CATEGORIES_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CATEGORIES_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method GET_CATEGORIES_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/categories/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->UPDATE_CATEGORIES_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_LANGUAGE        TYPE STRING
+* | [--->] I_TRAINING_DATA        TYPE FILE
+* | [--->] I_TRAINING_DATA_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_NAME        TYPE STRING(optional)
+* | [--->] I_USER_METADATA        TYPE JSONOBJECT(optional)
+* | [--->] I_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_MODEL_VERSION        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING(optional)
+* | [--->] I_VERSION_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CATEGORIES_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method UPDATE_CATEGORIES_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/categories/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+    " process form parameters
+    data:
+      ls_form_part     type ts_form_part,
+      lt_form_part     type tt_form_part,
+      lv_formdata      type string value is initial ##NEEDED,
+      lv_value         type string ##NEEDED,
+      lv_index(3)      type n value '000' ##NEEDED,
+      lv_keypattern    type string ##NEEDED,
+      lv_base_name     type string ##NEEDED,
+      lv_extension     type string ##NEEDED.
+
+
+    if not i_LANGUAGE is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="language"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_LANGUAGE.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_NAME is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_NAME.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_USER_METADATA is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="user_metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_USER_METADATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_MODEL_VERSION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="model_version"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_MODEL_VERSION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_WORKSPACE_ID is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="workspace_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_WORKSPACE_ID.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_VERSION_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="version_description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_VERSION_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+
+    if not i_TRAINING_DATA is initial.
+      lv_extension = get_file_extension( I_training_data_content_type ).
+      lv_value = `form-data; name="training_data"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
+      lv_index = lv_index + 1.
+      clear ls_form_part.
+      ls_form_part-content_type = I_training_data_content_type.
+      ls_form_part-content_disposition = lv_value.
+      ls_form_part-xdata = i_TRAINING_DATA.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+    " execute HTTP PUT request
+    lo_response = HTTP_POST_MULTIPART( i_request_prop = ls_request_prop it_form_part = lt_form_part ).
+
+
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->DELETE_CATEGORIES_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_DELETE_MODEL_RESULTS
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method DELETE_CATEGORIES_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/categories/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP DELETE request
+    lo_response = HTTP_DELETE( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->CREATE_CLASSIFICATIONS_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_LANGUAGE        TYPE STRING
+* | [--->] I_TRAINING_DATA        TYPE FILE
+* | [--->] I_TRAINING_DATA_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_NAME        TYPE STRING(optional)
+* | [--->] I_USER_METADATA        TYPE JSONOBJECT(optional)
+* | [--->] I_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_MODEL_VERSION        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING(optional)
+* | [--->] I_VERSION_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_TRAINING_PARAMETERS        TYPE T_CLSSFCTNS_TRNNG_PARAMETERS(optional)
+* | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATIONS_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method CREATE_CLASSIFICATIONS_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/classifications'.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+    " process form parameters
+    data:
+      ls_form_part     type ts_form_part,
+      lt_form_part     type tt_form_part,
+      lv_formdata      type string value is initial ##NEEDED,
+      lv_value         type string ##NEEDED,
+      lv_index(3)      type n value '000' ##NEEDED,
+      lv_keypattern    type string ##NEEDED,
+      lv_base_name     type string ##NEEDED,
+      lv_extension     type string ##NEEDED.
+
+
+    if not i_LANGUAGE is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="language"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_LANGUAGE.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_NAME is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_NAME.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_USER_METADATA is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="user_metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_USER_METADATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_MODEL_VERSION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="model_version"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_MODEL_VERSION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_WORKSPACE_ID is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="workspace_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_WORKSPACE_ID.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_VERSION_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="version_description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_VERSION_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_TRAINING_PARAMETERS is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="training_parameters"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_TRAINING_PARAMETERS i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+
+    if not i_TRAINING_DATA is initial.
+      lv_extension = get_file_extension( I_training_data_content_type ).
+      lv_value = `form-data; name="training_data"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
+      lv_index = lv_index + 1.
+      clear ls_form_part.
+      ls_form_part-content_type = I_training_data_content_type.
+      ls_form_part-content_disposition = lv_value.
+      ls_form_part-xdata = i_TRAINING_DATA.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+    " execute HTTP POST request
+    lo_response = HTTP_POST_MULTIPART( i_request_prop = ls_request_prop it_form_part = lt_form_part ).
+
+
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->LIST_CLASSIFICATIONS_MODELS
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATIONS_MODEL_LIST
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method LIST_CLASSIFICATIONS_MODELS.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/classifications'.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->GET_CLASSIFICATIONS_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATIONS_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method GET_CLASSIFICATIONS_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/classifications/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+
+
+
+    " execute HTTP GET request
+    lo_response = HTTP_GET( i_request_prop = ls_request_prop ).
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->UPDATE_CLASSIFICATIONS_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_LANGUAGE        TYPE STRING
+* | [--->] I_TRAINING_DATA        TYPE FILE
+* | [--->] I_TRAINING_DATA_CONTENT_TYPE        TYPE STRING(optional)
+* | [--->] I_NAME        TYPE STRING(optional)
+* | [--->] I_USER_METADATA        TYPE JSONOBJECT(optional)
+* | [--->] I_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_MODEL_VERSION        TYPE STRING(optional)
+* | [--->] I_WORKSPACE_ID        TYPE STRING(optional)
+* | [--->] I_VERSION_DESCRIPTION        TYPE STRING(optional)
+* | [--->] I_TRAINING_PARAMETERS        TYPE T_CLSSFCTNS_TRNNG_PARAMETERS(optional)
+* | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_CLASSIFICATIONS_MODEL
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method UPDATE_CLASSIFICATIONS_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/classifications/{model_id}'.
+    replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
+
+    " standard headers
+    ls_request_prop-header_content_type = I_contenttype.
+    ls_request_prop-header_accept = I_accept.
+    set_default_query_parameters(
+      changing
+        c_url =  ls_request_prop-url ).
+
+
+
+
+
+    " process form parameters
+    data:
+      ls_form_part     type ts_form_part,
+      lt_form_part     type tt_form_part,
+      lv_formdata      type string value is initial ##NEEDED,
+      lv_value         type string ##NEEDED,
+      lv_index(3)      type n value '000' ##NEEDED,
+      lv_keypattern    type string ##NEEDED,
+      lv_base_name     type string ##NEEDED,
+      lv_extension     type string ##NEEDED.
+
+
+    if not i_LANGUAGE is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="language"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_LANGUAGE.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_NAME is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="name"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_NAME.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_USER_METADATA is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="user_metadata"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_USER_METADATA i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_MODEL_VERSION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="model_version"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_MODEL_VERSION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_WORKSPACE_ID is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="workspace_id"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_WORKSPACE_ID.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_VERSION_DESCRIPTION is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="version_description"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-TEXT_PLAIN.
+      lv_formdata = i_VERSION_DESCRIPTION.
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+    if not i_TRAINING_PARAMETERS is initial.
+      clear ls_form_part.
+      ls_form_part-content_disposition = 'form-data; name="training_parameters"'  ##NO_TEXT.
+      ls_form_part-content_type = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-APPL_JSON.
+      lv_formdata = abap_to_json( i_value = i_TRAINING_PARAMETERS i_dictionary = c_abapname_dictionary i_required_fields = c_required_fields ).
+      ls_form_part-cdata = lv_formdata.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+
+    if not i_TRAINING_DATA is initial.
+      lv_extension = get_file_extension( I_training_data_content_type ).
+      lv_value = `form-data; name="training_data"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
+      lv_index = lv_index + 1.
+      clear ls_form_part.
+      ls_form_part-content_type = I_training_data_content_type.
+      ls_form_part-content_disposition = lv_value.
+      ls_form_part-xdata = i_TRAINING_DATA.
+      append ls_form_part to lt_form_part.
+    endif.
+
+
+    " execute HTTP PUT request
+    lo_response = HTTP_POST_MULTIPART( i_request_prop = ls_request_prop it_form_part = lt_form_part ).
+
+
+
+
+    " retrieve JSON data
+    lv_json = get_response_string( lo_response ).
+    parse_json(
+      exporting
+        i_json       = lv_json
+        i_dictionary = c_abapname_dictionary
+      changing
+        c_abap       = e_response ).
+
+endmethod.
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL_IBMC_NAT_LANG_UNDRSTND_V1->DELETE_CLASSIFICATIONS_MODEL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_MODEL_ID        TYPE STRING
+* | [--->] I_accept            TYPE string (default ='application/json')
+* | [<---] E_RESPONSE                    TYPE        T_DELETE_MODEL_RESULTS
+* | [!CX!] ZCX_IBMC_SERVICE_EXCEPTION
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+method DELETE_CLASSIFICATIONS_MODEL.
+
+    data:
+      ls_request_prop type ts_request_prop,
+      lv_separator(1) type c  ##NEEDED,
+      lv_sep(1)       type c  ##NEEDED,
+      lo_response     type to_rest_response,
+      lv_json         type string  ##NEEDED.
+
+    ls_request_prop-url-path = '/v1/models/classifications/{model_id}'.
     replace all occurrences of `{model_id}` in ls_request_prop-url-path with i_MODEL_ID ignoring case.
 
     " standard headers

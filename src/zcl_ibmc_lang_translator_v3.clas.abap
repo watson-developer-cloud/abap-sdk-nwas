@@ -1,4 +1,4 @@
-* Copyright 2019, 2020 IBM Corp. All Rights Reserved.
+* Copyright 2019, 2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -186,11 +186,25 @@ public section.
       "!    enter the `document_id` of the document.
       DOCUMENT_ID type STRING,
       "!   The contents of the source file to translate. The maximum file size for document
-      "!    translation is 20 MB for service instances on the Standard, Advanced, and
-      "!    Premium plans, and 2 MB for service instances on the Lite plan. For more
-      "!    information, see [Supported file formats
-      "!    (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translato
-      "!   r-document-translator-tutorial#supported-file-formats).
+      "!    translation is<br/>
+      "!   * **2 MB** for service instances on the Lite plan<br/>
+      "!   * **20 MB** for service instances on the Standard plan<br/>
+      "!   * **50 MB** for service instances on the Advanced plan<br/>
+      "!   * **150 MB** for service instances on the Premium plan <br/>
+      "!   <br/>
+      "!   You can specify the format of the file to be translated in one of two ways:<br/>
+      "!   * By specifying the appropriate file extension for the format.<br/>
+      "!   * By specifying the content type (MIME type) of the format as the `type` of the
+      "!    `file` parameter. <br/>
+      "!   <br/>
+      "!   In some cases, especially for subtitle file formats, you must use either the
+      "!    file extension or the content type. <br/>
+      "!   <br/>
+      "!   For more information about all supported file formats, their file extensions and
+      "!    content types, and how and when to specify the file extension or content type,
+      "!    see [Supported file
+      "!    formats](https://cloud.ibm.com/docs/language-translator?topic=language-translat
+      "!   or-document-translator-tutorial#supported-file-formats).
       FILE type FILE,
     end of T_INLINE_OBJECT1.
   types:
@@ -585,6 +599,8 @@ constants:
     "!    method description. <br/>
     "!   <br/>
     "!   *With `curl`, use `--form forced_glossary=&#64;&#123;filename&#125;`.*.
+    "! @parameter I_FORCED_GLOSSARY_CONTENT_TYPE |
+    "!   The content type of forcedGlossary.
     "! @parameter I_PARALLEL_CORPUS |
     "!   A file with parallel sentences for the source and target languages. You can
     "!    upload multiple parallel corpus files in one request by repeating the
@@ -597,6 +613,8 @@ constants:
     "!    information, see **Supported file formats** in the method description. <br/>
     "!   <br/>
     "!   *With `curl`, use `--form parallel_corpus=&#64;&#123;filename&#125;`.*.
+    "! @parameter I_PARALLEL_CORPUS_CONTENT_TYPE |
+    "!   The content type of parallelCorpus.
     "! @parameter I_NAME |
     "!   An optional model name that you can use to identify the model. Valid characters
     "!    are letters, numbers, dashes, underscores, spaces, and apostrophes. The maximum
@@ -609,10 +627,10 @@ constants:
     importing
       !I_BASE_MODEL_ID type STRING
       !I_FORCED_GLOSSARY type FILE optional
+      !I_FORCED_GLOSSARY_CONTENT_TYPE type STRING optional
       !I_PARALLEL_CORPUS type FILE optional
+      !I_PARALLEL_CORPUS_CONTENT_TYPE type STRING optional
       !I_NAME type STRING optional
-      !I_FORCED_GLOSSARY_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
-      !I_PARALLEL_CORPUS_CT type STRING default ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-ALL
       !I_contenttype type string default 'multipart/form-data'
       !I_accept      type string default 'application/json'
     exporting
@@ -638,8 +656,8 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Get model details</p>
     "!   Gets information about a translation model, including training status for custom
-    "!    models. Use this API call to poll the status of your customization request. A
-    "!    successfully completed training has a status of `available`.
+    "!    models. Use this method to poll the status of your customization request. A
+    "!    successfully completed training request has a status of `available`.
     "!
     "! @parameter I_MODEL_ID |
     "!   Model ID of the model to get.
@@ -672,18 +690,50 @@ constants:
       ZCX_IBMC_SERVICE_EXCEPTION .
     "! <p class="shorttext synchronized" lang="en">Translate document</p>
     "!   Submit a document for translation. You can submit the document contents in the
-    "!    `file` parameter, or you can reference a previously submitted document by
+    "!    `file` parameter, or you can specify a previously submitted document by
     "!    document ID. The maximum file size for document translation is<br/>
-    "!   * 20 MB for service instances on the Standard, Advanced, and Premium plans<br/>
-    "!   * 2 MB for service instances on the Lite plan
+    "!   * **2 MB** for service instances on the Lite plan<br/>
+    "!   * **20 MB** for service instances on the Standard plan<br/>
+    "!   * **50 MB** for service instances on the Advanced plan<br/>
+    "!   * **150 MB** for service instances on the Premium plan <br/>
+    "!   <br/>
+    "!   You can specify the format of the file to be translated in one of two ways:<br/>
+    "!   * By specifying the appropriate file extension for the format.<br/>
+    "!   * By specifying the content type (MIME type) of the format as the `type` of the
+    "!    `file` parameter. <br/>
+    "!   <br/>
+    "!   In some cases, especially for subtitle file formats, you must use either the
+    "!    file extension or the content type. For more information about all supported
+    "!    file formats, their file extensions and content types, and how and when to
+    "!    specify the file extension or content type, see [Supported file
+    "!    formats](https://cloud.ibm.com/docs/language-translator?topic=language-translat
+    "!   or-document-translator-tutorial#supported-file-formats). <br/>
+    "!   <br/>
+    "!   **Note:** When translating a previously submitted document, the target language
+    "!    must be different from the target language of the original request when the
+    "!    document was initially submitted.
     "!
     "! @parameter I_FILE |
     "!   The contents of the source file to translate. The maximum file size for document
-    "!    translation is 20 MB for service instances on the Standard, Advanced, and
-    "!    Premium plans, and 2 MB for service instances on the Lite plan. For more
-    "!    information, see [Supported file formats
-    "!    (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translato
-    "!   r-document-translator-tutorial#supported-file-formats).
+    "!    translation is<br/>
+    "!   * **2 MB** for service instances on the Lite plan<br/>
+    "!   * **20 MB** for service instances on the Standard plan<br/>
+    "!   * **50 MB** for service instances on the Advanced plan<br/>
+    "!   * **150 MB** for service instances on the Premium plan <br/>
+    "!   <br/>
+    "!   You can specify the format of the file to be translated in one of two ways:<br/>
+    "!   * By specifying the appropriate file extension for the format.<br/>
+    "!   * By specifying the content type (MIME type) of the format as the `type` of the
+    "!    `file` parameter. <br/>
+    "!   <br/>
+    "!   In some cases, especially for subtitle file formats, you must use either the
+    "!    file extension or the content type. <br/>
+    "!   <br/>
+    "!   For more information about all supported file formats, their file extensions and
+    "!    content types, and how and when to specify the file extension or content type,
+    "!    see [Supported file
+    "!    formats](https://cloud.ibm.com/docs/language-translator?topic=language-translat
+    "!   or-document-translator-tutorial#supported-file-formats).
     "! @parameter I_FILENAME |
     "!   The filename for file.
     "! @parameter I_FILE_CONTENT_TYPE |
@@ -848,7 +898,7 @@ endmethod.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_sdk_version_date.
 
-    e_sdk_version_date = '20210312144434'.
+    e_sdk_version_date = '20231212104235'.
 
   endmethod.
 
@@ -958,13 +1008,24 @@ method TRANSLATE.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -1089,13 +1150,24 @@ method IDENTIFY.
       lv_bodyparam = <lv_text>.
       concatenate lv_body lv_bodyparam into lv_body.
     endif.
-    if ls_request_prop-header_content_type cp '*json*' and lv_body(1) ne '{'.
-      lv_body = `{` && lv_body && `}`.
+    if ls_request_prop-header_content_type cp '*json*'.
+      if lv_body is initial.
+        lv_body = '{}'.
+      elseif lv_body(1) ne '{'.
+        lv_body = `{` && lv_body && `}`.
+      endif.
     endif.
 
     if ls_request_prop-header_content_type cp '*charset=utf-8*'.
       ls_request_prop-body_bin = convert_string_to_utf8( i_string = lv_body ).
-      replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      "replace all occurrences of regex ';\s*charset=utf-8' in ls_request_prop-header_content_type with '' ignoring case.
+      find_regex(
+        exporting
+          i_regex = ';\s*charset=utf-8'
+          i_with = ''
+          i_ignoring_case = 'X'
+        changing
+          c_in = ls_request_prop-header_content_type ).
     else.
       ls_request_prop-body = lv_body.
     endif.
@@ -1204,10 +1276,10 @@ endmethod.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] I_BASE_MODEL_ID        TYPE STRING
 * | [--->] I_FORCED_GLOSSARY        TYPE FILE(optional)
+* | [--->] I_FORCED_GLOSSARY_CONTENT_TYPE        TYPE STRING(optional)
 * | [--->] I_PARALLEL_CORPUS        TYPE FILE(optional)
+* | [--->] I_PARALLEL_CORPUS_CONTENT_TYPE        TYPE STRING(optional)
 * | [--->] I_NAME        TYPE STRING(optional)
-* | [--->] I_FORCED_GLOSSARY_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
-* | [--->] I_PARALLEL_CORPUS_CT     TYPE STRING (default = ZIF_IBMC_SERVICE_ARCH~C_MEDIATYPE-all)
 * | [--->] I_contenttype       TYPE string (default ='multipart/form-data')
 * | [--->] I_accept            TYPE string (default ='application/json')
 * | [<---] E_RESPONSE                    TYPE        T_TRANSLATION_MODEL
@@ -1270,22 +1342,22 @@ method CREATE_MODEL.
 
 
     if not i_FORCED_GLOSSARY is initial.
-      lv_extension = get_file_extension( I_FORCED_GLOSSARY_CT ).
+      lv_extension = get_file_extension( I_forced_glossary_content_type ).
       lv_value = `form-data; name="forced_glossary"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_FORCED_GLOSSARY_CT.
+      ls_form_part-content_type = I_forced_glossary_content_type.
       ls_form_part-content_disposition = lv_value.
       ls_form_part-xdata = i_FORCED_GLOSSARY.
       append ls_form_part to lt_form_part.
     endif.
 
     if not i_PARALLEL_CORPUS is initial.
-      lv_extension = get_file_extension( I_PARALLEL_CORPUS_CT ).
+      lv_extension = get_file_extension( I_parallel_corpus_content_type ).
       lv_value = `form-data; name="parallel_corpus"; filename="file` && lv_index && `.` && lv_extension && `"`  ##NO_TEXT.
       lv_index = lv_index + 1.
       clear ls_form_part.
-      ls_form_part-content_type = I_PARALLEL_CORPUS_CT.
+      ls_form_part-content_type = I_parallel_corpus_content_type.
       ls_form_part-content_disposition = lv_value.
       ls_form_part-xdata = i_PARALLEL_CORPUS.
       append ls_form_part to lt_form_part.

@@ -1,4 +1,4 @@
-* Copyright 2019,2020 IBM Corp. All Rights Reserved.
+* Copyright 2019,2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -11,7 +11,7 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-class ZCL_IBMC_UTIL definition
+class ZCL_IBMC_util definition
   public
   final
   create public .
@@ -28,14 +28,14 @@ public section.
   "! @parameter IT_EXCLUDED_FIELDS | Internal table of table fields in I_ITAB that should not occur in result.
   "! @parameter E_JSON | JSON string.
   "!
-  class-methods ITAB_TO_TABLESCHEMA
+  class-methods itab_to_tableschema
     importing
-      !I_ITAB type ANY TABLE
-      !I_DICTIONARY type ANY optional
-      !I_LOWER_CASE type ZCL_IBMC_SERVICE=>BOOLEAN default ZCL_IBMC_SERVICE=>C_BOOLEAN_FALSE
-      !IT_EXCLUDED_FIELDS type ZCL_IBMC_SERVICE=>TT_STRING optional
+      !i_itab type any table
+      !i_dictionary type any optional
+      !i_lower_case type ZCL_IBMC_service=>boolean default ZCL_IBMC_service=>c_boolean_false
+      !it_excluded_fields type ZCL_IBMC_service=>tt_string optional
     returning
-      value(E_JSON) type STRING .
+      value(e_json) type string .
   "! Converts a JSON string in table schema format to an internal table.
   "!   E.g.: '&#123;"tableschema_key": &#123;"fields": ["PET", "NUMBER"], "values": [["Cat",5],["Rabbit",2]]&#125;&#125;'
   "!
@@ -43,64 +43,64 @@ public section.
   "! @parameter I_TABLESCHEMA_KEY | Key in JSON string that holds the table schema.
   "! @parameter E_ITAB | Internal table containing converted data.
   "!
-  class-methods TABLESCHEMA_TO_ITAB
+  class-methods tableschema_to_itab
     importing
-      !I_JSON type STRING
-      !I_TABLESCHEMA_KEY type STRING optional
+      !i_json type string
+      !i_tableschema_key type string optional
     exporting
-      !E_ITAB type ANY TABLE .
+      !e_itab type any table .
   "! Converts a timestamp in UTC to a timestamp in local time.
   "!
   "! @parameter IV_TIMESTAMP | Timestamp (UTC).
   "! @parameter EV_LOCAL | Timestamp (local time).
   "!
-  class-methods CONVERT_TIMESTAMP_TO_LOCAL
+  class-methods convert_timestamp_to_local
     importing
-      !IV_TIMESTAMP type TIMESTAMP
+      !iv_timestamp type timestamp
     returning
-      value(EV_LOCAL) type STRING .
+      value(ev_local) type string .
   "! Determine MIME type from a file name, e.g. 'docu.txt' -&gt; 'text_/plain'.
   "!
   "! @parameter I_FILENAME | Filename with extension.
   "! @parameter E_MIMETYPE | MIME type.
   "!
-  class-methods GET_MIMETYPE_FROM_EXTENSION
+  class-methods get_mimetype_from_extension
     importing
-      !I_FILENAME type STRING
+      !i_filename type string
     returning
-      value(E_MIMETYPE) type STRING .
+      value(e_mimetype) type string .
   "! Converts a timestamp in UTC to a timestamp in another timezone.
   "!
   "! @parameter I_TIMESTAMP | Timestamp (UTC).
   "! @parameter I_TIMEZONE | Time zone
   "! @parameter E_TIMESTAMP | Timestamp in give time zone.
   "!
-  class-methods UTC_TO_TIMEZONE
+  class-methods utc_to_timezone
     importing
-      !I_TIMESTAMP type TIMESTAMP
-      !I_TIMEZONE type ZIF_IBMC_SERVICE_ARCH=>TY_TIMEZONE optional
+      !i_timestamp type timestamp
+      !i_timezone type ZIF_IBMC_service_arch=>ty_timezone optional
     returning
-      value(E_TIMESTAMP) type TIMESTAMP .
+      value(e_timestamp) type timestamp .
   "! Converts datetime format to a timestamp, i.e. yyyy-mm-ddThh:mm:ssZ -&gt; YYYYMMDDHHMMSS
   "!
   "! @parameter I_DATETIME | Input in datetime format.
   "! @parameter E_TIMESTAMP | Timestamp.
   "!
-  class-methods CONVERT_DATETIME_TO_TIMESTAMP
+  class-methods convert_datetime_to_timestamp
     importing
-      !I_DATETIME type ZCL_IBMC_SERVICE=>DATETIME
+      !i_datetime type ZCL_IBMC_service=>datetime
     returning
-      value(E_TIMESTAMP) type TIMESTAMP .
+      value(e_timestamp) type timestamp .
   "! Converts a timestamp to datetime format, i.e. YYYYMMDDHHMMSS -&gt; yyyy-mm-ddThh:mm:ssZ
   "!
   "! @parameter I_TIMESTAMP | Timestamp.
   "! @parameter E_DATETIME | Datetime format.
   "!
-  class-methods CONVERT_TIMESTAMP_TO_DATETIME
+  class-methods convert_timestamp_to_datetime
     importing
-      !I_TIMESTAMP type TIMESTAMP
+      !i_timestamp type timestamp
     returning
-      value(E_DATETIME) type ZCL_IBMC_SERVICE=>DATETIME .
+      value(e_datetime) type ZCL_IBMC_service=>datetime .
 protected section.
 private section.
 ENDCLASS.
@@ -110,7 +110,13 @@ ENDCLASS.
 CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
 
 
-  method CONVERT_DATETIME_TO_TIMESTAMP.
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>CONVERT_DATETIME_TO_TIMESTAMP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_DATETIME                     TYPE        ZCL_IBMC_SERVICE=>DATETIME
+* | [<-()] E_TIMESTAMP                    TYPE        TIMESTAMP
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method convert_datetime_to_timestamp.
 
     constants:
       c_zero type timestamp value '0'.  " avoid conversion at runtime
@@ -133,7 +139,13 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
   endmethod.
 
 
-  method CONVERT_TIMESTAMP_TO_DATETIME.
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>CONVERT_TIMESTAMP_TO_DATETIME
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_TIMESTAMP                    TYPE        TIMESTAMP
+* | [<-()] E_DATETIME                     TYPE        ZCL_IBMC_SERVICE=>DATETIME
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method convert_timestamp_to_datetime.
 
     data:
       lv_year(4) type n,
@@ -162,17 +174,23 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>CONVERT_TIMESTAMP_TO_LOCAL
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IV_TIMESTAMP                   TYPE        TIMESTAMP
+* | [<-()] EV_LOCAL                       TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method convert_timestamp_to_local.
 
     data:
       lv_dats     type d,
       lv_tims     type t,
-      lv_timezone type zif_ibmc_service_arch=>ty_timezone,
+      lv_timezone type ZIF_IBMC_service_arch=>ty_timezone,
       lv_datc(10) type c,
       lv_timc(8)  type c.
 
     " split timestamp to date and time according to time zone
-    lv_timezone = zcl_ibmc_service_arch=>get_timezone( ).
+    lv_timezone = ZCL_IBMC_service_arch=>get_timezone( ).
     convert time stamp iv_timestamp time zone lv_timezone
             into date lv_dats time lv_tims.
 
@@ -184,33 +202,54 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>GET_MIMETYPE_FROM_EXTENSION
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_FILENAME                     TYPE        STRING
+* | [<-()] E_MIMETYPE                     TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method get_mimetype_from_extension.
     data:
       l_extension type string.
 
     if i_filename is initial.
-      e_mimetype = zif_ibmc_service_arch=>c_mediatype-all.
+      e_mimetype = ZIF_IBMC_service_arch=>c_mediatype-all.
       exit.
     endif.
 
-    find regex '\.([^\.]*)$' in i_filename submatches l_extension.
-    if sy-subrc <> 0.
+    "find regex '\.([^\.]*)$' in i_filename submatches l_extension.
+    data(l_subrc) = zcl_ibmc_service=>find_regex(
+      exporting
+        i_regex     = '\.([^\.]*)$'
+        i_in        = i_filename
+      changing
+        c_submatch1 = l_extension ).
+    if l_subrc <> 0.
       l_extension = i_filename.
     endif.
 
     translate l_extension to lower case.
 
     case l_extension.
-      when 'jpg' or 'jpeg'. e_mimetype = zif_ibmc_service_arch=>c_mediatype-image_jpeg.
-      when 'png'. e_mimetype = zif_ibmc_service_arch=>c_mediatype-image_png.
-      when 'txt'. e_mimetype = zif_ibmc_service_arch=>c_mediatype-text_plain.
-      when 'csv'. e_mimetype = zif_ibmc_service_arch=>c_mediatype-text_csv.
+      when 'jpg' or 'jpeg'. e_mimetype = ZIF_IBMC_service_arch=>c_mediatype-image_jpeg.
+      when 'png'. e_mimetype = ZIF_IBMC_service_arch=>c_mediatype-image_png.
+      when 'txt'. e_mimetype = ZIF_IBMC_service_arch=>c_mediatype-text_plain.
+      when 'csv'. e_mimetype = ZIF_IBMC_service_arch=>c_mediatype-text_csv.
       when others. e_mimetype = `application/` && l_extension ##NO_TEXT.
     endcase.
 
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>ITAB_TO_TABLESCHEMA
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_ITAB                         TYPE        ANY TABLE
+* | [--->] I_DICTIONARY                   TYPE        ANY(optional)
+* | [--->] I_LOWER_CASE                   TYPE        ZCL_IBMC_SERVICE=>BOOLEAN (default =ZCL_IBMC_SERVICE=>C_BOOLEAN_FALSE)
+* | [--->] IT_EXCLUDED_FIELDS             TYPE        ZCL_IBMC_SERVICE=>TT_STRING(optional)
+* | [<-()] E_JSON                         TYPE        STRING
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method itab_to_tableschema.
     " Converts an internal table to a JSON object string with keys "fields" and "values".
     " Example:   I_ITAB  =  | PET    | NUMBER |
@@ -223,7 +262,7 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
     "            PET type string value 'MyPet',
     "          END OF i_dictionary.
     "      -->   E_JSON  =  '{"fields": ["MyPet", "NUMBER"], "values": [["Cat",5],["Rabbit",2]]}'
-    " Field names are translated to lower case, if I_LOWER_CASE = zcl_ibmc_service=>c_boolean_true.
+    " Field names are translated to lower case, if I_LOWER_CASE = ZCL_IBMC_service=>c_boolean_true.
     " Field types must be elementary or table of elementary.
     " Field names in table IT_EXCLUDED_FIELDS are skipped and will not appear in the JSON string.
 
@@ -272,7 +311,7 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
           lv_fieldname = <lv_jsonname>.
         endif.
       endif.
-      if i_lower_case eq zcl_ibmc_service=>c_boolean_true.
+      if i_lower_case eq ZCL_IBMC_service=>c_boolean_true.
         translate lv_fieldname to lower case.
       endif.
       e_json = e_json && lv_sep1 && `"` && lv_fieldname && `"`.
@@ -334,6 +373,13 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>TABLESCHEMA_TO_ITAB
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_JSON                         TYPE        STRING
+* | [--->] I_TABLESCHEMA_KEY              TYPE        STRING(optional)
+* | [<---] E_ITAB                         TYPE        ANY TABLE
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method tableschema_to_itab.
 
     data:
@@ -387,13 +433,13 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
 
     " parse JSON
     try.
-        zcl_ibmc_service=>parse_json(
+        ZCL_IBMC_service=>parse_json(
         exporting
           i_json       = lv_json
           "i_dictionary = c_abapname_dictionary
         changing
           c_abap       = <ls_root> ).
-      catch zcx_ibmc_service_exception.
+      catch ZCX_IBMC_service_exception.
         return.
     endtry.
     assign component lv_tableschema_key of structure <ls_root> to <lr_data>.
@@ -538,15 +584,22 @@ CLASS ZCL_IBMC_UTIL IMPLEMENTATION.
   endmethod.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL_IBMC_UTIL=>UTC_TO_TIMEZONE
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_TIMESTAMP                    TYPE        TIMESTAMP
+* | [--->] I_TIMEZONE                     TYPE        ZIF_IBMC_SERVICE_ARCH=>TY_TIMEZONE(optional)
+* | [<-()] E_TIMESTAMP                    TYPE        TIMESTAMP
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   method utc_to_timezone.
 
     data:
-      lv_timezone type zif_ibmc_service_arch=>ty_timezone,
+      lv_timezone type ZIF_IBMC_service_arch=>ty_timezone,
       lv_date     type d,
       lv_time     type t.
 
     if i_timezone is initial.
-      lv_timezone = zcl_ibmc_service_arch=>get_timezone( ).
+      lv_timezone = ZCL_IBMC_service_arch=>get_timezone( ).
     else.
       lv_timezone = i_timezone.
     endif.

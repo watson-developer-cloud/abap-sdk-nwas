@@ -1,109 +1,130 @@
-<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_ASSISTANT_V2</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_ASSISTANT_V2</span></h2><p>public inheriting from ZCL_IBMC_SERVICE_EXT create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Watson Assistant v2</p>
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><title>Class ZCL_IBMC_ASSISTANT_V2</title><link rel="stylesheet" href="../../../htmldesign/stylesheet.css" type="text/css"></head><body><div id="header"><div id="navigationMenu"><a href="#types">Types</a> | <a href="#constants">Constants</a> | <a href="#methods">Methods</a></div></div><div id="content"><h2>Class <span class="identifier objectName">ZCL_IBMC_ASSISTANT_V2</span></h2><p>public inheriting from <span class="identifier className"><a href="../classes/zcl_ibmc_service_ext.html">zcl_ibmc_service_ext</a></span> create public</p><h4>Documentation</h4><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Watson Assistant v2</p>
  The IBM Watson&trade; Assistant service combines machine learning, natural
   language understanding, and an integrated dialog editor to create conversation
   flows between your apps and your users.<br/>
  <br/>
  The Assistant v2 API provides runtime methods your client application can use to
-  send user input to an assistant and receive a response. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span class="identifier fieldName">t_agent_availability_message</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_message_context_global</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+  send user input to an assistant and receive a response. <br/></span><h4 id="types">Types</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public</td><td><span id="t_agent_availability_message" class="identifier typeName">t_agent_availability_message</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_assistant_collection" class="identifier typeName">t_assistant_collection</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_assistant_data" class="identifier typeName">t_assistant_data</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_assistant_skill" class="identifier typeName">t_assistant_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_assistant_state" class="identifier typeName">t_assistant_state</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Status information about the skills for the assistant.</p>
+     Included in responses only if **status**=`Available`.</span></td></tr><tr ><td>public</td><td><span id="t_audit_properties" class="identifier typeName">t_audit_properties</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_base_environment" class="identifier typeName">t_base_environment</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_base_env_orchestration" class="identifier typeName">t_base_env_orchestration</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The search skill orchestration settings for the environment.</p></span></td></tr><tr ><td>public</td><td><span id="t_base_env_release_reference" class="identifier typeName">t_base_env_release_reference</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object describing the release that is currently deployed</p>
+     in the environment.</span></td></tr><tr ><td>public</td><td><span id="t_base_message_context_global" class="identifier typeName">t_base_message_context_global</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Session context data that is shared by all skills used by</p>
-     the Assistant.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_message_input</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_base_message_input_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_bulk_classify_input</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_bulk_classify_output</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_bulk_classify_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_bulk_classify_utterance</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The user input utterance to classify.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_capture_group</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_log_message</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Dialog log message details.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_nodes_visited</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_node_action</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_suggestion</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dialog_suggestion_value</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     the assistant.</span></td></tr><tr ><td>public</td><td><span id="t_base_message_context_skill" class="identifier typeName">t_base_message_context_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_base_message_input" class="identifier typeName">t_base_message_input</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span id="t_base_message_input_options" class="identifier typeName">t_base_message_input_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span id="t_base_skill" class="identifier typeName">t_base_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_base_skill_reference" class="identifier typeName">t_base_skill_reference</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_bulk_classify_input" class="identifier typeName">t_bulk_classify_input</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_bulk_classify_output" class="identifier typeName">t_bulk_classify_output</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_bulk_classify_response" class="identifier typeName">t_bulk_classify_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_bulk_classify_utterance" class="identifier typeName">t_bulk_classify_utterance</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The user input utterance to classify.</p></span></td></tr><tr ><td>public</td><td><span id="t_capture_group" class="identifier typeName">t_capture_group</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_channel_transfer_info" class="identifier typeName">t_channel_transfer_info</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information used by an integration to transfer the</p>
+     conversation to a different channel.</span></td></tr><tr ><td>public</td><td><span id="t_channel_transfer_target" class="identifier typeName">t_channel_transfer_target</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object specifying target channels available for the</p>
+     transfer. Each property of this object represents an available transfer target.
+     Currently, the only supported property is **chat**, representing the web chat
+     integration.</span></td></tr><tr ><td>public</td><td><span id="t_channel_transfer_target_chat" class="identifier typeName">t_channel_transfer_target_chat</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Information for transferring to the web chat integration.</p></span></td></tr><tr ><td>public</td><td><span id="t_create_session" class="identifier typeName">t_create_session</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_deploy_release_request" class="identifier typeName">t_deploy_release_request</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A request to deploy a release to the specified environment.</p></span></td></tr><tr ><td>public</td><td><span id="t_dialog_log_message" class="identifier typeName">t_dialog_log_message</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Dialog log message details.</p></span></td></tr><tr ><td>public</td><td><span id="t_dialog_node_action" class="identifier typeName">t_dialog_node_action</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_dialog_node_visited" class="identifier typeName">t_dialog_node_visited</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An objects containing detailed diagnostic information about</p>
+     a dialog node that was visited during processing of the input message.</span></td></tr><tr ><td>public</td><td><span id="t_dialog_suggestion" class="identifier typeName">t_dialog_suggestion</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_dialog_suggestion_value" class="identifier typeName">t_dialog_suggestion_value</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     An object defining the message input to be sent to the</p>
-     assistant if the user selects the corresponding disambiguation option.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_otpt_cnnct_t_agnt_tr1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     assistant if the user selects the corresponding disambiguation option. <br/>
+    <br/>
+     **Note:** This entire message input object must be included in the request body
+     of the next message sent to the assistant. Do not modify or remove any of the
+     included properties.</span></td></tr><tr ><td>public</td><td><span id="t_dia_nd_otpt_cnnct_t_agnt_tr1" class="identifier typeName">t_dia_nd_otpt_cnnct_t_agnt_tr1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Routing or other contextual information to be used by target</p>
-     service desk systems.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_nd_output_opt_elem_value</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     service desk systems.</span></td></tr><tr ><td>public</td><td><span id="t_dia_nd_output_opt_elem_value" class="identifier typeName">t_dia_nd_output_opt_elem_value</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     An object defining the message input to be sent to the</p>
-     assistant if the user selects the corresponding option.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_dia_node_output_opt_element</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_empty_response</span> type JSONOBJECT</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_detail</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_error_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log_collection</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_log_pagination</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The pagination data for the returned objects.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_global</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     assistant if the user selects the corresponding option.</span></td></tr><tr ><td>public</td><td><span id="t_dia_node_output_opt_element" class="identifier typeName">t_dia_node_output_opt_element</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_empty_response" class="identifier typeName">t_empty_response</span> type jsonobject</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_environment" class="identifier typeName">t_environment</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_environment_collection" class="identifier typeName">t_environment_collection</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_environment_reference" class="identifier typeName">t_environment_reference</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_environment_skill" class="identifier typeName">t_environment_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_error_detail" class="identifier typeName">t_error_detail</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_error_response" class="identifier typeName">t_error_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_integration_reference" class="identifier typeName">t_integration_reference</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_log" class="identifier typeName">t_log</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_log_collection" class="identifier typeName">t_log_collection</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_log_message_source" class="identifier typeName">t_log_message_source</span> type jsonobject</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that identifies the dialog element that generated</p>
+     the error message.</span></td></tr><tr ><td>public</td><td><span id="t_log_message_source_action" class="identifier typeName">t_log_message_source_action</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that identifies the dialog element that generated</p>
+     the error message.</span></td></tr><tr ><td>public</td><td><span id="t_log_message_source_dia_node" class="identifier typeName">t_log_message_source_dia_node</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that identifies the dialog element that generated</p>
+     the error message.</span></td></tr><tr ><td>public</td><td><span id="t_log_message_source_handler" class="identifier typeName">t_log_message_source_handler</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that identifies the dialog element that generated</p>
+     the error message.</span></td></tr><tr ><td>public</td><td><span id="t_log_message_source_step" class="identifier typeName">t_log_message_source_step</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object that identifies the dialog element that generated</p>
+     the error message.</span></td></tr><tr ><td>public</td><td><span id="t_log_pagination" class="identifier typeName">t_log_pagination</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The pagination data for the returned objects. For more</p>
+     information about using pagination, see [Pagination](#pagination).</span></td></tr><tr ><td>public</td><td><span id="t_message_context" class="identifier typeName">t_message_context</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_message_context_global" class="identifier typeName">t_message_context_global</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Session context data that is shared by all skills used by</p>
-     the Assistant.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_skill</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Contains information specific to a particular skill used by</p>
-     the Assistant. The property name must be the same as the name of the skill (for
-     example, `main skill`).</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_skills</span> type MAP</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Information specific to particular skills used by the</p>
-     assistant.<br/>
+     the assistant.</span></td></tr><tr ><td>public</td><td><span id="t_message_context_skills" class="identifier typeName">t_message_context_skills</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Context data specific to particular skills used by the</p>
+     assistant.</span></td></tr><tr ><td>public</td><td><span id="t_message_context_skill_action" class="identifier typeName">t_message_context_skill_action</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Context variables that are used by the action skill.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_context_skill_dialog" class="identifier typeName">t_message_context_skill_dialog</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Context variables that are used by the dialog skill.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_context_skill_system" class="identifier typeName">t_message_context_skill_system</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    System context data used by the skill.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_context_stateless" class="identifier typeName">t_message_context_stateless</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_message_input" class="identifier typeName">t_message_input</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_input_attachment" class="identifier typeName">t_message_input_attachment</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A reference to a media file to be sent as an attachment with</p>
+     the message.</span></td></tr><tr ><td>public</td><td><span id="t_message_input_options" class="identifier typeName">t_message_input_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_input_opt_auto_learn" class="identifier typeName">t_message_input_opt_auto_learn</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Autolearning options for the message. For more information</p>
+     about autolearning, see the
+     [documentation](/docs/watson-assistant?topic=watson-assistant-autolearn). <br/>
     <br/>
-    **Note:** Currently, only a single child property is supported, containing
-     variables that apply to the dialog skill used by the assistant.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_skill_system</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    System context data used by the skill.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_context_stateless</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input_options</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input_opt_auto_learn</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Autolearning options for the message.</p><br/>
-    <br/>
-    **Note:** Autolearning is a beta feature.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input_opt_spelling</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     **Note:** Autolearning is a beta feature.</span></td></tr><tr ><td>public</td><td><span id="t_message_input_opt_spelling" class="identifier typeName">t_message_input_opt_spelling</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Spelling correction options for the message. Any options</p>
      specified on an individual message override the settings configured for the
-     skill.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input_opt_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_input_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_output</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Assistant output to be rendered or processed by the client.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_output_debug</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     skill.</span></td></tr><tr ><td>public</td><td><span id="t_message_input_opt_stateless" class="identifier typeName">t_message_input_opt_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Optional properties that control how the assistant responds.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_input_stateless" class="identifier typeName">t_message_input_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An input object that includes the input text.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_output" class="identifier typeName">t_message_output</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Assistant output to be rendered or processed by the client.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_output_debug" class="identifier typeName">t_message_output_debug</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Additional detailed information about a message response and</p>
-     how it was generated.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_output_spelling</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     how it was generated.</span></td></tr><tr ><td>public</td><td><span id="t_message_output_spelling" class="identifier typeName">t_message_output_spelling</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Properties describing any spelling corrections in the user</p>
-     input that was received.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_request</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     input that was received.</span></td></tr><tr ><td>public</td><td><span id="t_message_request" class="identifier typeName">t_message_request</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     A stateful message request formatted for the Watson</p>
-     Assistant service.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_request_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     Assistant service.</span></td></tr><tr ><td>public</td><td><span id="t_message_request_stateless" class="identifier typeName">t_message_request_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     A stateless message request formatted for the Watson</p>
-     Assistant service.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    A response from the Watson Assistant service.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_message_response_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    A stateless response from the Watson Assistant service.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_mssg_cntxt_global_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     Assistant service.</span></td></tr><tr ><td>public</td><td><span id="t_message_response" class="identifier typeName">t_message_response</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A response from the Watson Assistant service.</p></span></td></tr><tr ><td>public</td><td><span id="t_message_response_stateless" class="identifier typeName">t_message_response_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A stateless response from the Watson Assistant service.</p></span></td></tr><tr ><td>public</td><td><span id="t_mssg_cntxt_global_stateless" class="identifier typeName">t_mssg_cntxt_global_stateless</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Session context data that is shared by all skills used by</p>
-     the Assistant.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_mssg_context_global_system</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     the assistant.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_context_global_system" class="identifier typeName">t_mssg_context_global_system</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     Built-in system properties that apply to all skills used by</p>
-     the assistant.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_mssg_otpt_dbg_at_learn_model</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Detailed information about how an autolearned model affected</p>
-     the response.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_mssg_output_debug_auto_learn</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    Detailed information about how autolearning (if enabled)</p>
-     affected the response.<br/>
-    <br/>
-    **Note:** Autolearning is a beta feature.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entity_interpretation</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_date</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_num</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_entty_intrprttn_sys_time</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_response_type_suggestion</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `suggestion`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_cn1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `connect_to_agent`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_img</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `image`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_opt</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `option`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_ps</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `pause`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_sg1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `suggestion`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_sr1</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `search`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_gnrc_rt_resp_typ_txt</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `text`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_rt_resp_typ_connect_to_agent</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `connect_to_agent`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    The entity value that was recognized in the user input.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity_alternative</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An alternative value for the recognized entity.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_entity_role</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     the assistant.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_1" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_2" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_2</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_3" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_3</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_4" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_4</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_5" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_5</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_6" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_6</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_7" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_7</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_otpt_dbg_trn_evnt_trn_8" class="identifier typeName">t_mssg_otpt_dbg_trn_evnt_trn_8</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_mssg_output_debug_turn_event" class="identifier typeName">t_mssg_output_debug_turn_event</span> type jsonobject</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_pagination" class="identifier typeName">t_pagination</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The pagination data for the returned objects. For more</p>
+     information about using pagination, see [Pagination](#pagination).</span></td></tr><tr ><td>public</td><td><span id="t_release" class="identifier typeName">t_release</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_release_collection" class="identifier typeName">t_release_collection</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_release_content" class="identifier typeName">t_release_content</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object identifying the versionable content objects (such</p>
+     as skill snapshots) that are included in the release.</span></td></tr><tr ><td>public</td><td><span id="t_release_skill" class="identifier typeName">t_release_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_request_analytics" class="identifier typeName">t_request_analytics</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An optional object containing analytics data. Currently,</p>
+     this data is used only for events sent to the Segment extension.</span></td></tr><tr ><td>public</td><td><span id="t_response_generic_channel" class="identifier typeName">t_response_generic_channel</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_entity_interpretation" class="identifier typeName">t_rt_entity_interpretation</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_entty_intrprttn_sys_date" class="identifier typeName">t_rt_entty_intrprttn_sys_date</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_entty_intrprttn_sys_num" class="identifier typeName">t_rt_entty_intrprttn_sys_num</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_entty_intrprttn_sys_time" class="identifier typeName">t_rt_entty_intrprttn_sys_time</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_response_type_suggestion" class="identifier typeName">t_rt_response_type_suggestion</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_ad" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_ad</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_ch1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_ch1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_cn1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_cn1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_dt" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_dt</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_if1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_if1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_img" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_img</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_opt" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_opt</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_ps" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_ps</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_sg1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_sg1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_sr1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_sr1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_txt" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_txt</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_us1" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_us1</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_gnrc_rt_resp_typ_vd" class="identifier typeName">t_rt_resp_gnrc_rt_resp_typ_vd</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_type_channel_trans" class="identifier typeName">t_rt_resp_type_channel_trans</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_type_user_defined" class="identifier typeName">t_rt_resp_type_user_defined</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_rt_resp_typ_connect_to_agent" class="identifier typeName">t_rt_resp_typ_connect_to_agent</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_entity" class="identifier typeName">t_runtime_entity</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The entity value that was recognized in the user input.</p></span></td></tr><tr ><td>public</td><td><span id="t_runtime_entity_alternative" class="identifier typeName">t_runtime_entity_alternative</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An alternative value for the recognized entity.</p></span></td></tr><tr ><td>public</td><td><span id="t_runtime_entity_role" class="identifier typeName">t_runtime_entity_role</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     An object describing the role played by a system entity that</p>
      is specifies the beginning or end of a range recognized in the user input. This
-     property is included only if the new system entities are enabled for the skill.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_intent</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An intent identified in the user input.</p></span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_generic</span> type JSONOBJECT</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_image</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `image`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_option</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `option`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_pause</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `pause`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_search</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `search`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_runtime_response_type_text</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
-    An object that describes a response with response type</p>
-     `text`.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_search_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_search_result_highlight</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     property is included only if the new system entities are enabled for the skill.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_intent" class="identifier typeName">t_runtime_intent</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An intent identified in the user input.</p></span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_generic" class="identifier typeName">t_runtime_response_generic</span> type jsonobject</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_audio" class="identifier typeName">t_runtime_response_type_audio</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_date" class="identifier typeName">t_runtime_response_type_date</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_iframe" class="identifier typeName">t_runtime_response_type_iframe</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_image" class="identifier typeName">t_runtime_response_type_image</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_option" class="identifier typeName">t_runtime_response_type_option</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_pause" class="identifier typeName">t_runtime_response_type_pause</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_search" class="identifier typeName">t_runtime_response_type_search</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_text" class="identifier typeName">t_runtime_response_type_text</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_runtime_response_type_video" class="identifier typeName">t_runtime_response_type_video</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_search_result" class="identifier typeName">t_search_result</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_search_result_answer" class="identifier typeName">t_search_result_answer</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object specifing a segment of text that was identified as</p>
+     a direct answer to the search query.</span></td></tr><tr ><td>public</td><td><span id="t_search_result_highlight" class="identifier typeName">t_search_result_highlight</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     An object containing segments of text from search results</p>
-     with query-matching text highlighted using HTML `&lt;em&gt;` tags.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_search_result_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+     with query-matching text highlighted using HTML `&lt;em&gt;` tags.</span></td></tr><tr ><td>public</td><td><span id="t_search_result_metadata" class="identifier typeName">t_search_result_metadata</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
     An object containing search result metadata from the</p>
-     Discovery service.</span></td></tr><tr ><td>public</td><td><span class="identifier fieldName">t_session_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">bulk_classify</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_skill_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_request</span></td><td>type T_BULK_CLASSIFY_INPUT optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_BULK_CLASSIFY_RESPONSE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Identify intents and entities in multiple user utterances</p>
+     Discovery service.</span></td></tr><tr ><td>public</td><td><span id="t_search_settings" class="identifier typeName">t_search_settings</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object describing the search skill configuration.</p></span></td></tr><tr ><td>public</td><td><span id="t_search_settings_discovery" class="identifier typeName">t_search_settings_discovery</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Configuration settings for the Watson Discovery service</p>
+     instance used by the search integration.</span></td></tr><tr ><td>public</td><td><span id="t_search_settings_messages" class="identifier typeName">t_search_settings_messages</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The messages included with responses from the search</p>
+     integration.</span></td></tr><tr ><td>public</td><td><span id="t_search_skill_warning" class="identifier typeName">t_search_skill_warning</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    A warning describing an error in the search skill</p>
+     configuration.</span></td></tr><tr ><td>public</td><td><span id="t_session_response" class="identifier typeName">t_session_response</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_skill" class="identifier typeName">t_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_skills_async_request_status" class="identifier typeName">t_skills_async_request_status</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_skills_export" class="identifier typeName">t_skills_export</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_skills_import" class="identifier typeName">t_skills_import</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_skill_import" class="identifier typeName">t_skill_import</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_srch_settings_schema_mapping" class="identifier typeName">t_srch_settings_schema_mapping</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    The mapping between fields in the Watson Discovery</p>
+     collection and properties in the search response.</span></td></tr><tr ><td>public</td><td><span id="t_srch_sttngs_dscvry_athntctn" class="identifier typeName">t_srch_sttngs_dscvry_athntctn</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    Authentication information for the Watson Discovery service.</p>
+     For more information, see the [Watson Discovery
+     documentation](https://cloud.ibm.com/apidocs/discovery-data#authentication).
+     <br/>
+    <br/>
+     **Note:** You must specify either **basic** or **bearer**, but not both.</span></td></tr><tr ><td>public</td><td><span id="t_status_error" class="identifier typeName">t_status_error</span> (structured type)</td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">
+    An object describing an error that occurred during</p>
+     processing of an asynchronous operation.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_action_finished" class="identifier typeName">t_turn_event_action_finished</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_action_source" class="identifier typeName">t_turn_event_action_source</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_action_visited" class="identifier typeName">t_turn_event_action_visited</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_callout" class="identifier typeName">t_turn_event_callout</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_callout_callout" class="identifier typeName">t_turn_event_callout_callout</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_callout_error" class="identifier typeName">t_turn_event_callout_error</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_handler_visited" class="identifier typeName">t_turn_event_handler_visited</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_node_source" class="identifier typeName">t_turn_event_node_source</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_node_visited" class="identifier typeName">t_turn_event_node_visited</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_search" class="identifier typeName">t_turn_event_search</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_search_error" class="identifier typeName">t_turn_event_search_error</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_step_answered" class="identifier typeName">t_turn_event_step_answered</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_turn_event_step_visited" class="identifier typeName">t_turn_event_step_visited</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_update_environment" class="identifier typeName">t_update_environment</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr><tr ><td>public</td><td><span id="t_update_skill" class="identifier typeName">t_update_skill</span> (structured type)</td><td><span class="abapDocComment"> No documentation available.</span></td></tr></table><h4 id="constants">Constants</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public static</td><td><span id="data:c_abapname_dictionary" class="identifier fieldName">c_abapname_dictionary</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Map ABAP identifiers to service identifiers.</p></span></td></tr><tr ><td>public static</td><td><span id="data:c_required_fields" class="identifier fieldName">c_required_fields</span> (structured type) </td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List of required fields per type.</p></span></td></tr></table><h4 id="methods">Methods</h4><table><thead><tr><th>Visibility and Level</th><th>Name</th><th>Documentation</th></tr></thead><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:bulk_classify" class="identifier methodName">bulk_classify</span> </td></tr><tr><td>importing</td><td><span id="meth:bulk_classify.data:i_skill_id" class="identifier parameterName">i_skill_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:bulk_classify.data:i_request" class="identifier parameterName">i_request</span></td><td>type t_bulk_classify_input</td></tr><tr><td></td><td><span id="meth:bulk_classify.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:bulk_classify.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:bulk_classify.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_bulk_classify_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Identify intents and entities in multiple user utterances</p>
    Send multiple user inputs to a dialog skill in a single request and receive
     information about the intents and entities recognized in each input. This
     method is useful for testing and comparing the performance of different skills
     or skill versions.<br/>
    <br/>
-   This method is available only with Premium plans.
+   This method is available only with Enterprise with Data Isolation plans.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_skill_id</span></td><td><span class="abapDocComment">
    Unique identifier of the skill. To find the skill ID in the Watson Assistant
@@ -113,7 +134,43 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_BULK_CLASSIFY_RESPONSE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">create_session</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_assistant_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_SESSION_RESPONSE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a session</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_assistant" class="identifier methodName">create_assistant</span> </td></tr><tr><td>importing</td><td><span id="meth:create_assistant.data:i_request" class="identifier parameterName">i_request</span></td><td>type t_assistant_data optional</td></tr><tr><td></td><td><span id="meth:create_assistant.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_assistant.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_assistant.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_assistant_data</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create an assistant</p>
+   Create a new assistant.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
+   The properties of the new assistant.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ASSISTANT_DATA
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_release" class="identifier methodName">create_release</span> </td></tr><tr><td>importing</td><td><span id="meth:create_release.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_release.data:i_release" class="identifier parameterName">i_release</span></td><td>type t_release optional</td></tr><tr><td></td><td><span id="meth:create_release.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_release.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_release.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_release</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create release</p>
+   Create a new release using the current content of the dialog and action skills
+    in the draft environment. (In the Watson Assistant user interface, a release is
+    called a *version*.)<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_release</span></td><td><span class="abapDocComment">
+   An object describing the release.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_RELEASE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:create_session" class="identifier methodName">create_session</span> </td></tr><tr><td>importing</td><td><span id="meth:create_session.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:create_session.data:i_createsession" class="identifier parameterName">i_createsession</span></td><td>type t_create_session optional</td></tr><tr><td></td><td><span id="meth:create_session.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:create_session.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:create_session.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_session_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Create a session</p>
    Create a new session. A session is used to send user input to a skill and
     receive responses. It also maintains the state of the conversation. A session
     persists until it is deleted, or until it times out because of inactivity. (For
@@ -122,34 +179,91 @@
    settings).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
-   Unique identifier of the assistant. To find the assistant ID in the Watson
-    Assistant user interface, open the assistant settings and click **API
-    Details**. For information about creating assistants, see the
-    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
-   add#assistant-add-task).<br/>
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
    <br/>
-   **Note:** Currently, the v2 API does not support creating assistants.
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_createsession</span></td><td><span class="abapDocComment">
+   No documentation available.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_SESSION_RESPONSE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_session</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_assistant_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_session_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete session</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_assistant" class="identifier methodName">delete_assistant</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_assistant.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_assistant.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete assistant</p>
+   Delete an assistant.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_release" class="identifier methodName">delete_release</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_release.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_release.data:i_release" class="identifier parameterName">i_release</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_release.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete release</p>
+   Delete a release. (In the Watson Assistant user interface, a release is called a
+    *version*.)<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_release</span></td><td><span class="abapDocComment">
+   Unique identifier of the release.
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_session" class="identifier methodName">delete_session</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_session.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_session.data:i_session_id" class="identifier parameterName">i_session_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_session.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete session</p>
    Deletes a session explicitly before it times out. (For more information about
     the session inactivity timeout, see the
     [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
    settings)).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
-   Unique identifier of the assistant. To find the assistant ID in the Watson
-    Assistant user interface, open the assistant settings and click **API
-    Details**. For information about creating assistants, see the
-    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
-   add#assistant-add-task).<br/>
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
    <br/>
-   **Note:** Currently, the v2 API does not support creating assistants.
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_session_id</span></td><td><span class="abapDocComment">
    Unique identifier of the session.
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_customer_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete labeled data</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:delete_user_data" class="identifier methodName">delete_user_data</span> </td></tr><tr><td>importing</td><td><span id="meth:delete_user_data.data:i_customer_id" class="identifier parameterName">i_customer_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:delete_user_data.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Delete labeled data</p>
    Deletes all data associated with a specified customer ID. The method has no
     effect if no data is associated with the customer ID. <br/>
    <br/>
@@ -159,25 +273,320 @@
     security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-secu
    rity#information-security).<br/>
    <br/>
-   This operation is limited to 4 requests per minute. For more information, see
-    **Rate limiting**.
+   **Note:** This operation is intended only for deleting data associated with a
+    single specific customer, not for deleting data associated with multiple
+    customers or for any other purpose. For more information, see [Labeling and
+    deleting data in Watson
+    Assistant](https://cloud.ibm.com/docs/assistant?topic=assistant-information-sec
+   urity#information-security-gdpr-wa).
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_customer_id</span></td><td><span class="abapDocComment">
    The customer ID for which all data is to be deleted.
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">list_logs</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_assistant_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_sort</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_filter</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_page_limit</span></td><td>type INTEGER optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_cursor</span></td><td>type STRING optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_LOG_COLLECTION</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List log events for an assistant</p>
-   List the events from the log of an assistant.<br/>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:deploy_release" class="identifier methodName">deploy_release</span> </td></tr><tr><td>importing</td><td><span id="meth:deploy_release.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:deploy_release.data:i_release" class="identifier parameterName">i_release</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:deploy_release.data:i_request" class="identifier parameterName">i_request</span></td><td>type t_deploy_release_request</td></tr><tr><td></td><td><span id="meth:deploy_release.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:deploy_release.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:deploy_release.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:deploy_release.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_environment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Deploy release</p>
+   Update the environment with the content of the release. All snapshots saved as
+    part of the release become active in the environment.<br/>
    <br/>
-   This method is available only with Premium plans.
+   This method is available only with Enterprise plans.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
-   Unique identifier of the assistant. To find the assistant ID in the Watson
-    Assistant user interface, open the assistant settings and click **API
-    Details**. For information about creating assistants, see the
-    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
-   add#assistant-add-task).<br/>
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
    <br/>
-   **Note:** Currently, the v2 API does not support creating assistants.
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_release</span></td><td><span class="abapDocComment">
+   Unique identifier of the release.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
+   An input object that identifies the environment where the release is to be
+    deployed.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENVIRONMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:export_skills" class="identifier methodName">export_skills</span> </td></tr><tr><td>importing</td><td><span id="meth:export_skills.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:export_skills.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:export_skills.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:export_skills.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_skills_export</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Export skills</p>
+   Asynchronously export the action skill and dialog skill (if enabled) for the
+    assistant. Use this method to save all skill data so that you can import it to
+    a different assistant using the **Import skills** method. <br/>
+   <br/>
+    A successful call to this method only initiates an asynchronous export. The
+    exported JSON data is not available until processing completes. <br/>
+   <br/>
+    After the initial request is submitted, you can poll the status of the
+    operation by calling the same request again and checking the value of the
+    **status** property. If an error occurs (indicated by a **status** value of
+    `Failed`), the `status_description` property provides more information about
+    the error, and the `status_errors` property contains an array of error messages
+    that caused the failure. <br/>
+   <br/>
+    When processing has completed, the request returns the exported JSON data.
+    Remember that the usual rate limits apply.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SKILLS_EXPORT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span id="meth:get_appname" class="identifier methodName">get_appname</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_environment" class="identifier methodName">get_environment</span> </td></tr><tr><td>importing</td><td><span id="meth:get_environment.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_environment.data:i_environment_id" class="identifier parameterName">i_environment_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_environment.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:get_environment.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_environment.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_environment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get environment</p>
+   Get information about an environment. For more information about environments,
+    see
+    [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assista
+   nt-publish-overview#environments).<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_environment_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the environment. To find the environment ID in the Watson
+    Assistant user interface, open the environment settings and click **API
+    Details**. **Note:** Currently, the API does not support creating environments.
+
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENVIRONMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_release" class="identifier methodName">get_release</span> </td></tr><tr><td>importing</td><td><span id="meth:get_release.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_release.data:i_release" class="identifier parameterName">i_release</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_release.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:get_release.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_release.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_release</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get release</p>
+   Get information about a release.<br/>
+   <br/>
+   Release data is not available until publishing of the release completes. If
+    publishing is still in progress, you can continue to poll by calling the same
+    request again and checking the value of the **status** property. When
+    processing has completed, the request returns the release data.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_release</span></td><td><span class="abapDocComment">
+   Unique identifier of the release.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_RELEASE
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><span id="meth:get_request_prop" class="identifier methodName">get_request_prop</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><span id="meth:get_sdk_version_date" class="identifier methodName">get_sdk_version_date</span> redefinition</td><td>&#160;</td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:get_skill" class="identifier methodName">get_skill</span> </td></tr><tr><td>importing</td><td><span id="meth:get_skill.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_skill.data:i_skill_id" class="identifier parameterName">i_skill_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:get_skill.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:get_skill.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_skill</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get skill</p>
+   Get information about a skill.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_skill_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the skill. To find the skill ID in the Watson Assistant
+    user interface, open the skill settings and click **API Details**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SKILL
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:import_skills" class="identifier methodName">import_skills</span> </td></tr><tr><td>importing</td><td><span id="meth:import_skills.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:import_skills.data:i_skillsimport" class="identifier parameterName">i_skillsimport</span></td><td>type t_skills_import</td></tr><tr><td></td><td><span id="meth:import_skills.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:import_skills.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:import_skills.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:import_skills.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_skills_async_request_status</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Import skills</p>
+   Asynchronously import skills into an existing assistant from a previously
+    exported file. <br/>
+   <br/>
+    The request body for this method should contain the response data that was
+    received from a previous call to the **Export skills** method, without
+    modification. <br/>
+   <br/>
+    A successful call to this method initiates an asynchronous import. The updated
+    skills belonging to the assistant are not available until processing completes.
+    To check the status of the asynchronous import operation, use the **Get status
+    of skills import** method.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_skillsimport</span></td><td><span class="abapDocComment">
+   An input object that contains the skills to import.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SKILLS_ASYNC_REQUEST_STATUS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:import_skills_status" class="identifier methodName">import_skills_status</span> </td></tr><tr><td>importing</td><td><span id="meth:import_skills_status.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:import_skills_status.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:import_skills_status.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_skills_async_request_status</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Get status of skills import</p>
+   Retrieve the status of an asynchronous import operation previously initiated by
+    using the **Import skills** method.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SKILLS_ASYNC_REQUEST_STATUS
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_assistants" class="identifier methodName">list_assistants</span> </td></tr><tr><td>importing</td><td><span id="meth:list_assistants.data:i_page_limit" class="identifier parameterName">i_page_limit</span></td><td>type integer default 100</td></tr><tr><td></td><td><span id="meth:list_assistants.data:i_include_count" class="identifier parameterName">i_include_count</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_assistants.data:i_sort" class="identifier parameterName">i_sort</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_assistants.data:i_cursor" class="identifier parameterName">i_cursor</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_assistants.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_assistants.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_assistants.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_assistant_collection</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List assistants</p>
+   List the assistants associated with a Watson Assistant service instance.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_count</span></td><td><span class="abapDocComment">
+   Whether to include information about the number of records that satisfy the
+    request, regardless of the page limit. If this parameter is `true`, the
+    `pagination` object in the response includes the `total` property.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned assistants will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ASSISTANT_COLLECTION
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_environments" class="identifier methodName">list_environments</span> </td></tr><tr><td>importing</td><td><span id="meth:list_environments.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_page_limit" class="identifier parameterName">i_page_limit</span></td><td>type integer default 100</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_include_count" class="identifier parameterName">i_include_count</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_sort" class="identifier parameterName">i_sort</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_cursor" class="identifier parameterName">i_cursor</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_environments.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_environments.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_environment_collection</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List environments</p>
+   List the environments associated with an assistant.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_count</span></td><td><span class="abapDocComment">
+   Whether to include information about the number of records that satisfy the
+    request, regardless of the page limit. If this parameter is `true`, the
+    `pagination` object in the response includes the `total` property.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned environments will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENVIRONMENT_COLLECTION
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_logs" class="identifier methodName">list_logs</span> </td></tr><tr><td>importing</td><td><span id="meth:list_logs.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_logs.data:i_sort" class="identifier parameterName">i_sort</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_logs.data:i_filter" class="identifier parameterName">i_filter</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_logs.data:i_page_limit" class="identifier parameterName">i_page_limit</span></td><td>type integer default 100</td></tr><tr><td></td><td><span id="meth:list_logs.data:i_cursor" class="identifier parameterName">i_cursor</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_logs.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_logs.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_log_collection</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List log events for an assistant</p>
+   List the events from the log of an assistant.<br/>
+   <br/>
+   This method requires Manager access, and is available only with Plus and
+    Enterprise plans.<br/>
+   <br/>
+   **Note:** If you use the **cursor** parameter to retrieve results one page at a
+    time, subsequent requests must be no more than 5 minutes apart. Any returned
+    value for the **cursor** parameter becomes invalid after 5 minutes. For more
+    information about using pagination, see [Pagination](#pagination).
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
    How to sort the returned log events. You can sort by **request_timestamp**. To
     reverse the sort order, prefix the parameter value with a minus sign (`-`).
@@ -193,19 +602,62 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_LOG_COLLECTION
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">message</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_assistant_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_session_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_request</span></td><td>type T_MESSAGE_REQUEST optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_MESSAGE_RESPONSE</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Send user input to assistant (stateful)</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:list_releases" class="identifier methodName">list_releases</span> </td></tr><tr><td>importing</td><td><span id="meth:list_releases.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_page_limit" class="identifier parameterName">i_page_limit</span></td><td>type integer default 100</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_include_count" class="identifier parameterName">i_include_count</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_sort" class="identifier parameterName">i_sort</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_cursor" class="identifier parameterName">i_cursor</span></td><td>type string optional</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_include_audit" class="identifier parameterName">i_include_audit</span></td><td>type boolean default c_boolean_false</td></tr><tr><td></td><td><span id="meth:list_releases.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:list_releases.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_release_collection</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">List releases</p>
+   List the releases associated with an assistant. (In the Watson Assistant user
+    interface, a release is called a *version*.)<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_page_limit</span></td><td><span class="abapDocComment">
+   The number of records to return in each page of results.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_count</span></td><td><span class="abapDocComment">
+   Whether to include information about the number of records that satisfy the
+    request, regardless of the page limit. If this parameter is `true`, the
+    `pagination` object in the response includes the `total` property.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_sort</span></td><td><span class="abapDocComment">
+   The attribute by which returned workspaces will be sorted. To reverse the sort
+    order, prefix the value with a minus sign (`-`).
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_cursor</span></td><td><span class="abapDocComment">
+   A token identifying the page of results to retrieve.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_include_audit</span></td><td><span class="abapDocComment">
+   Whether to include the audit properties (`created` and `updated` timestamps) in
+    the response.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_RELEASE_COLLECTION
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:message" class="identifier methodName">message</span> </td></tr><tr><td>importing</td><td><span id="meth:message.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:message.data:i_session_id" class="identifier parameterName">i_session_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:message.data:i_request" class="identifier parameterName">i_request</span></td><td>type t_message_request optional</td></tr><tr><td></td><td><span id="meth:message.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:message.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:message.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_message_response</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Send user input to assistant (stateful)</p>
    Send user input to an assistant and receive a response, with conversation state
     (including context data) stored by Watson Assistant for the duration of the
     session.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
-   Unique identifier of the assistant. To find the assistant ID in the Watson
-    Assistant user interface, open the assistant settings and click **API
-    Details**. For information about creating assistants, see the
-    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
-   add#assistant-add-task).<br/>
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
    <br/>
-   **Note:** Currently, the v2 API does not support creating assistants.
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_session_id</span></td><td><span class="abapDocComment">
    Unique identifier of the session.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
@@ -214,22 +666,91 @@
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_MESSAGE_RESPONSE
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span class="identifier methodName">message_stateless</span> </td></tr><tr><td>importing</td><td><span class="identifier parameterName">i_assistant_id</span></td><td>type STRING</td></tr><tr><td></td><td><span class="identifier parameterName">i_request</span></td><td>type T_MESSAGE_REQUEST_STATELESS optional</td></tr><tr><td></td><td><span class="identifier parameterName">i_contenttype</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td></td><td><span class="identifier parameterName">i_accept</span></td><td>type STRING default &#x27;application&#x2f;json&#x27;</td></tr><tr><td>exporting</td><td><span class="identifier parameterName">e_response</span></td><td>type T_MESSAGE_RESPONSE_STATELESS</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Send user input to assistant (stateless)</p>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:message_stateless" class="identifier methodName">message_stateless</span> </td></tr><tr><td>importing</td><td><span id="meth:message_stateless.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:message_stateless.data:i_request" class="identifier parameterName">i_request</span></td><td>type t_message_request_stateless optional</td></tr><tr><td></td><td><span id="meth:message_stateless.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:message_stateless.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:message_stateless.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_message_response_stateless</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Send user input to assistant (stateless)</p>
    Send user input to an assistant and receive a response, with conversation state
     (including context data) managed by your application.
 
  </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
-   Unique identifier of the assistant. To find the assistant ID in the Watson
-    Assistant user interface, open the assistant settings and click **API
-    Details**. For information about creating assistants, see the
-    [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-
-   add#assistant-add-task).<br/>
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
    <br/>
-   **Note:** Currently, the v2 API does not support creating assistants.
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
  </span></td></tr><tr ><td><span class="identifier parameterName">i_request</span></td><td><span class="abapDocComment">
    The message to be sent. This includes the user&apos;s input, context data, and
     optional content such as intents and entities.
  </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
    Service return value of type T_MESSAGE_RESPONSE_STATELESS
  </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
-</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 22.04.2021</div></body></html>
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_environment" class="identifier methodName">update_environment</span> </td></tr><tr><td>importing</td><td><span id="meth:update_environment.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_environment.data:i_environment_id" class="identifier parameterName">i_environment_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_environment.data:i_updateenvironment" class="identifier parameterName">i_updateenvironment</span></td><td>type t_update_environment optional</td></tr><tr><td></td><td><span id="meth:update_environment.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_environment.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_environment.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_environment</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update environment</p>
+   Update an environment with new or modified data. For more information about
+    environments, see
+    [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assista
+   nt-publish-overview#environments).<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_environment_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the environment. To find the environment ID in the Watson
+    Assistant user interface, open the environment settings and click **API
+    Details**. **Note:** Currently, the API does not support creating environments.
+
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_updateenvironment</span></td><td><span class="abapDocComment">
+   The updated properties of the environment.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_ENVIRONMENT
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr><tr ><td>public instance</td><td><table class="methodSignature"><tr><td colspan="3"><span id="meth:update_skill" class="identifier methodName">update_skill</span> </td></tr><tr><td>importing</td><td><span id="meth:update_skill.data:i_assistant_id" class="identifier parameterName">i_assistant_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_skill.data:i_skill_id" class="identifier parameterName">i_skill_id</span></td><td>type string</td></tr><tr><td></td><td><span id="meth:update_skill.data:i_updateskill" class="identifier parameterName">i_updateskill</span></td><td>type t_update_skill</td></tr><tr><td></td><td><span id="meth:update_skill.data:i_contenttype" class="identifier parameterName">i_contenttype</span></td><td>type string default 'application/json'</td></tr><tr><td></td><td><span id="meth:update_skill.data:i_accept" class="identifier parameterName">i_accept</span></td><td>type string default 'application/json'</td></tr><tr><td>exporting</td><td><span id="meth:update_skill.data:e_response" class="identifier parameterName">e_response</span></td><td>type t_skill</td></tr><tr><td>raising</td><td colspan="2"><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td></tr></table></td><td><span class="abapDocComment"> <p class="shorttext synchronized" lang="en">Update skill</p>
+   Update a skill with new or modified data. <br/>
+   <br/>
+     **Note:** The update is performed asynchronously; you can see the status of
+    the update by calling the **Get skill** method and checking the value of the
+    **status** property.<br/>
+   <br/>
+   This method is available only with Enterprise plans.
+
+ </span><h5>Parameters</h5><table class="methodParametersDocumentation"><tr ><td><span class="identifier parameterName">i_assistant_id</span></td><td><span class="abapDocComment">
+   The assistant ID or the environment ID of the environment where the assistant is
+    deployed, depending on the type of request: <br/>
+    - For message, session, and log requests, specify the environment ID of the
+    environment where the assistant is deployed. <br/>
+    - For all other requests, specify the assistant ID of the assistant. <br/>
+   <br/>
+    To find the environment ID or assistant ID in the Watson Assistant user
+    interface, open the assistant settings and scroll to the **Environments**
+    section.<br/>
+   <br/>
+   **Note:** If you are using the classic Watson Assistant experience, always use
+    the assistant ID. To find the assistant ID in the user interface, open the
+    assistant settings and click API Details.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_skill_id</span></td><td><span class="abapDocComment">
+   Unique identifier of the skill. To find the skill ID in the Watson Assistant
+    user interface, open the skill settings and click **API Details**.
+ </span></td></tr><tr ><td><span class="identifier parameterName">i_updateskill</span></td><td><span class="abapDocComment">
+   The updated properties of the skill.
+ </span></td></tr><tr ><td><span class="identifier parameterName">e_response</span></td><td><span class="abapDocComment">
+   Service return value of type T_SKILL
+ </span></td></tr></table><h5>Class-based Exceptions</h5><table class="exceptions"><tr ><td><span class="identifier exceptionName">zcx_ibmc_service_exception</span></td><td><span class="abapDocComment"> Exception being raised in case of an error.
+</span></td></tr></table></td></tr></table></div><div id="footer">Generated on 12/08/2023</div></body></html>

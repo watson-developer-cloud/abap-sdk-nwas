@@ -1,4 +1,4 @@
-* Copyright 2019,2020 IBM Corp. All Rights Reserved.
+* Copyright 2019,2023 IBM Corp. All Rights Reserved.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@ interface ZIF_IBMC_SERVICE_ARCH
 
   constants C_METHOD_GET type CHAR value 'g' ##NO_TEXT.
   constants C_METHOD_POST type CHAR value 'p' ##NO_TEXT.
+  constants C_METHOD_PATCH type CHAR value 'm' ##NO_TEXT.
   constants C_METHOD_CREATE type CHAR value 'c' ##NO_TEXT.
   constants C_METHOD_PUT type CHAR value 'u' ##NO_TEXT.
   constants C_METHOD_DELETE type CHAR value 'd' ##NO_TEXT.
